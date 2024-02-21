@@ -4,11 +4,31 @@
   "description": "app's backend",
   "main": "server.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start": "node server.js"
   },
-  "author": "48285 48295 48338",
+  "type": "module",
+  "contributors": [
+    {
+      "name": "Aureliu Iurcu",
+      "number": "48285"
+    },
+    {
+      "name": "Henrique Fontes",
+      "number": "48295"
+    },
+    {
+      "name": "Miguel Agostinho",
+      "number": "48338"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^6.3.0",
     "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
   }
 }
