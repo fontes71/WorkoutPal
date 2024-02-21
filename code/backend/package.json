@@ -1,0 +1,14 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "app's backend",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "48285 48295 48338",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}
