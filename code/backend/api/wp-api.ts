@@ -9,7 +9,8 @@ export class WpApi {
     this.getExerciseById = this.getExerciseById.bind(this);
   }
 
-  getExerciseById(req: Request, res: Response) {
-    return this.service.getExerciseById(parseInt(req.params.exerciseId));
+  async getExerciseById(req: Request, res: Response) {
+    const exercise = await this.service.getExerciseById(req.params.exerciseId)
+    return res.json({response: exercise});
   }
 }

@@ -9,7 +9,7 @@ export class WpService {
   }
 
   //fazer verificações
-  getExerciseById(id: number) {
+  getExerciseById(id: string) {
     return this.data.getExerciseById(id);
   }
 }
