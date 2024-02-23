@@ -1,24 +1,20 @@
-import fetch from "node-fetch" 
-import {findExerciseById} from './data/mongodb/mongo-utils.js'
-import dotenv from 'dotenv'
-dotenv.config()
+import express from "express";
 
-const foodfacts_url = 'https://world.openfoodfacts.net/api/v2/product/3017624010701';
-const foodfacts_options = {
-  method: 'GET'
-}
 
-export const fetchData = async (url, options) => {
-    const response = await fetch(url, options)
-    const data = await response.json()
-    return data;
-}
 
-async function main() {
-  const foodInfo = await fetchData(foodfacts_url, foodfacts_options)
-  console.log(foodInfo)
-  /*const exercise = await findExerciseById('0006')
-  console.log("exercise-server", exercise)*/
-}
 
-main()
+const services = servicesFunctions(data, moviesData)
+const webAPI = webApiFunctions(services)
+const authRouter = authUIFunction(services)
+const webUI = webUiFunctions(services)
+
+const port = 8080;
+
+const app = express();
+
+app.use(express.json());
+//app.use(express.urlencoded({extended : false}))
+
+app.get("/api/exercise/:exerciseId", webAPI.getMovies);
+
+app.listen(8080, () => console.log(`Listening...\nhttp://localhost:` + port));
