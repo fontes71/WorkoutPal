@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "app's backend",
-  "type": "module",
+  "type": "commonjs",
   "main": "server.ts",
   "scripts": {
     "test": "npm test",
@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "dotenv": "^16.4.5",
-    "typescript": "^5.3.3",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   }
 }

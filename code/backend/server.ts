@@ -1,8 +1,8 @@
 import express from "express";
 
-import { WpApi } from "./api/wp-api.js";
-import { WpService } from "./services/wp-service.js";
-import { WpData } from "./data/wp-data.js";
+import { WpApi } from "./api/wp-api.ts";
+import { WpService } from "./services/wp-service.ts";
+import { WpData } from "./data/wp-data.ts";
 
 const data = new WpData()
 const service = new WpService(data)
