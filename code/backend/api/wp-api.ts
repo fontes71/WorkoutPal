@@ -6,6 +6,7 @@ export class WpApi {
 
   constructor(service: WpService) {
     this.service = service;
+    this.getExerciseById = this.getExerciseById.bind(this);
   }
 
   getExerciseById(req: Request, res: Response) {

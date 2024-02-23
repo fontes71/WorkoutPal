@@ -5,6 +5,7 @@ export class WpService {
 
   constructor(data: WpData) {
     this.data = data;
+    this.getExerciseById = this.getExerciseById.bind(this);
   }
 
   //fazer verificações
