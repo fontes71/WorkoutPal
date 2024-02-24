@@ -1,3 +1,6 @@
+import dotenv from 'dotenv'
+dotenv.config()
+
 export const foodfacts_url = 'https://world.openfoodfacts.net/api/v2/product/3017624010701';
 export const foodfacts_options = {
   method: 'GET'
