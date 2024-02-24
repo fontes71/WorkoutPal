@@ -1,42 +1,45 @@
-import {Db, MongoClient, ServerApiVersion} from 'mongodb'
+import mongoose from 'mongoose';
+import dotenv from 'dotenv'
+import { Exercise, ExerciseDB, convertExerciseDBToExercise } from '../domain/types';
 import { fetchData } from '../utils/functions';
 import { exercisedb_url, exercisedb_options } from '../utils/constants';
-import dotenv from 'dotenv'
 
 dotenv.config()
 
-const WORKOUTPAL_MONGO_URI = process.env.WORKOUTPAL_MONGO_URI as string;
+const WORKOUTPAL_MONGO_URI: string = process.env.WORKOUTPAL_MONGO_URI
 
-const client = new MongoClient(WORKOUTPAL_MONGO_URI, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
+export const exerciseSchema = new mongoose.Schema({
+    _id: String, 
+    name: String, 
+    bodyPart: String, 
+    equipment: String, 
+    gifUrl: String,
+    target: String,
+    secondaryMuscles: [String],
+    instructions: [String]
+}, { versionKey: false });
 
+export const ExerciseModel = mongoose.model('Exercises', exerciseSchema)
 
-export async function mongodbHandler(action: (db: Db) => Promise<any>) {
-    try {
-        await client.connect();
-        const db = client.db(process.env.DB_NAME)
-        return await action(db)
-    } finally {
-        await client.close();
-    }
-  }
-  
-  // !!!!!!!!!!!!!!!!!!!! USE ONLY IN ON SETUP, IT CLONES THE WHOLE DB
-async function cloneExerciseDB() {
-  let exercises = await fetchData(exercisedb_url, exercisedb_options) // fetchData inside server file
-  exercises.forEach(obj => {
-    obj._id = obj.id
-    delete obj.id
+export async function cloneExerciseDB() {
+  const exercisesdb: Array<ExerciseDB> = await fetchData(exercisedb_url, exercisedb_options)
+  let exercises: Array<Exercise> = []
+  exercisesdb.forEach(obj => {
+    const exercise: Exercise = convertExerciseDBToExercise(obj)
+    exercises.push(exercise)
   });
   
-  await mongodbHandler(async (db: Db) => {
-    const exercisesCollection = db.collection("Exercises")
-    await exercisesCollection.insertMany(exercises)
+  await mongodbHandler(async () => {
+    await ExerciseModel.insertMany(exercises)
   })
 }
-// !!!!!!!!!!!!!!!!!!!!
+
+
+export async function mongodbHandler(action: () => Promise<any>) {
+  try {
+    await mongoose.connect(WORKOUTPAL_MONGO_URI);
+    return await action();
+  } finally {
+    await mongoose.connection.close();
+  }
+}

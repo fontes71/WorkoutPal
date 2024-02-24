@@ -1,4 +1,6 @@
 import { WpData } from "../data/wp-data";
+import { Exercise } from "../domain/types";
+import { NotFoundError } from "../errors/app_errors";
 
 export class WpService {
   private data: WpData;
@@ -8,8 +10,9 @@ export class WpService {
     this.getExerciseById = this.getExerciseById.bind(this);
   }
 
-  //fazer verificações
-  getExerciseById(id: string) {
-    return this.data.getExerciseById(id);
+  async getExerciseById(id: string) {
+    const exercise: Exercise = await this.data.getExerciseById(id)
+    if (exercise == null) throw NotFoundError
+    return exercise
   }
 }

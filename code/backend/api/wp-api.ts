@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { WpService } from "../services/wp-service";
+import { Exercise } from "../domain/types";
+import { apiErrorHandler } from "./api-utils";
 
 export class WpApi {
   private service: WpService;
@@ -9,8 +11,10 @@ export class WpApi {
     this.getExerciseById = this.getExerciseById.bind(this);
   }
 
-  async getExerciseById(req: Request, res: Response) {
-    const exercise = await this.service.getExerciseById(req.params.exerciseId)
-    return res.json({response: exercise});
+  getExerciseById(req: Request, res: Response) {
+    apiErrorHandler(res, async () => {
+      const exercise: Exercise = await this.service.getExerciseById(req.params.exerciseId);
+      res.json(exercise);
+    })
   }
 }
