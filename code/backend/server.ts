@@ -1,13 +1,12 @@
 import express from "express";
 
-import { WpApi } from "./api/wp-api.ts";
-import { WpService } from "./services/wp-service.ts";
-import { WpData } from "./data/wp-data.ts";
+import { Api } from "./api/api.ts";
+import { Services } from "./services/services.ts";
+import { Data } from "./data/local/data.ts";
 
-const data = new WpData()
-const service = new WpService(data)
-const api = new WpApi(service)
-
+const data = new Data();
+const service = new Services(data);
+const api = new Api(service);
 
 const port = 8080;
 
