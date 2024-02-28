@@ -12,7 +12,6 @@ export class Api {
   }
 
   getExerciseById(req: Request, res: Response) {
-    console.log("API")
     apiErrorHandler(res, async () => {
       const exercise: Exercise = await this.service.getExerciseById(
         req.params.exerciseId

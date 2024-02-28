@@ -11,7 +11,6 @@ export class Services {
   }
 
   async getExerciseById(id: string) {
-    console.log("Services")
     const exercise: Exercise = await this.data.getExerciseById(id);
     if (exercise == null) throw NotFoundError;
     return exercise;

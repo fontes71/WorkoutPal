@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import { Exercise } from "../../domain/types";
 
 async function getLocalData(path: string) {
     const data = await fs.readFile(path);
@@ -7,7 +8,8 @@ async function getLocalData(path: string) {
 
 export class Data {
   async getExerciseById(id: string) {
-    const data = await getLocalData("data/local/exercises.json");
+    const exercises = await getLocalData("data/local/exercises.json") as ExerciseDB[];
+    const exercise = da
     
   }
 }
