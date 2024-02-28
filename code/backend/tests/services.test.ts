@@ -8,7 +8,7 @@ const data = new Data();
 const service = new Services(data);
 const api = new Api(service);
 
-describe("getExerciseById function tests", () => {
+describe("GetExerciseById function tests", () => {
   test("getExerciseById returns the exercise successfully", () => {
     const id = "0001";
     service

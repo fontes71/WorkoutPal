@@ -18,3 +18,5 @@ app.use(express.json());
 app.get("/api/exercise/:exerciseId", api.getExerciseById);
 
 app.listen(8080, () => console.log(`Listening...\nhttp://localhost:` + port));
+
+export default app;
