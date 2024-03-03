@@ -9,6 +9,7 @@ export class Api {
   constructor(service: Services) {
     this.service = service;
     this.getExerciseById = this.getExerciseById.bind(this);
+    this.cloneExerciseDB = this.cloneExerciseDB.bind(this);
   }
 
   getExerciseById(req: Request, res: Response) {
@@ -17,6 +18,13 @@ export class Api {
         req.params.exerciseId
       );
       res.json(exercise);
+    });
+  }
+
+  cloneExerciseDB(req: Request, res: Response) {
+    apiErrorHandler(res, async () => {
+      this.service.cloneExerciseDB();
+      res.sendStatus(200)
     });
   }
 }

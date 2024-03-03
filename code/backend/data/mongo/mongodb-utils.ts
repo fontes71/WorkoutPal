@@ -28,22 +28,6 @@ export const exerciseSchema = new mongoose.Schema(
 
 export const ExerciseModel = mongoose.model("Exercises", exerciseSchema);
 
-export async function cloneExerciseDB() {
-  const exercisesdb: Array<ExerciseDB> = await fetchData(
-    exercisedb_url,
-    exercisedb_options
-  );
-  let exercises: Array<Exercise> = [];
-  exercisesdb.forEach((obj) => {
-    const exercise: Exercise = convertExerciseDBToExercise(obj);
-    exercises.push(exercise);
-  });
-
-  await mongodbHandler(async () => {
-    await ExerciseModel.insertMany(exercises);
-  });
-}
-
 export async function mongodbHandler(action: () => Promise<any>) {
   try {
     await mongoose.connect(WORKOUTPAL_MONGO_URI);

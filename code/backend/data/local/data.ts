@@ -15,4 +15,6 @@ export class Data {
     const exercise = exercises.find((exercise) => exercise._id === id);
     return exercise || null
   }
+
+  async cloneExerciseDB() {}
 }
