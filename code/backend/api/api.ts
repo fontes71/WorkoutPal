@@ -9,6 +9,7 @@ export class Api {
   constructor(service: Services) {
     this.service = service;
     this.getExerciseById = this.getExerciseById.bind(this);
+    this.searchExercisesByName = this.searchExercisesByName.bind(this);
     this.cloneExerciseDB = this.cloneExerciseDB.bind(this);
   }
 
@@ -18,6 +19,17 @@ export class Api {
         req.params.exerciseId
       );
       res.json(exercise);
+    });
+  }
+
+  searchExercisesByName(req: Request, res: Response) {
+    apiErrorHandler(res, async () => {
+      const exercises: Array<Exercise> = await this.service.searchExercisesByName(
+        req.params.exerciseName,
+        parseInt(req.query.skip as string),
+        parseInt(req.query.limit as string)
+      );
+      res.json(exercises);
     });
   }
 

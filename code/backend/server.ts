@@ -16,6 +16,7 @@ app.use(express.json());
 //app.use(express.urlencoded({extended : false}))
 
 app.get("/api/exercise/:exerciseId", api.getExerciseById);
+app.get("/api/exercises/:exerciseName", api.searchExercisesByName);
 app.get("/api/cloneDatabase", api.cloneExerciseDB);
 
 app.listen(8080, () => {

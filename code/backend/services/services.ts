@@ -9,13 +9,19 @@ export class Services {
   constructor(data: Data) {
     this.data = data;
     this.getExerciseById = this.getExerciseById.bind(this);
-    this.cloneExerciseDB = this.cloneExerciseDB.bind(this)
+    this.searchExercisesByName = this.searchExercisesByName.bind(this);
+    this.cloneExerciseDB = this.cloneExerciseDB.bind(this);
   }
 
   async getExerciseById(id: string) {
     const exercise: Exercise = await this.data.getExerciseById(id);
     if (exercise == null) throw NotFoundError;
     return exercise;
+  }
+
+  async searchExercisesByName(name: string, skip: number, limit: number) {
+    const exercises: Array<Exercise> = await this.data.searchExercisesByName(name, skip, limit);
+    return exercises;
   }
 
   cloneExerciseDBScheduler() {

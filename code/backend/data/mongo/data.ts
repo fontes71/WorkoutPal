@@ -16,6 +16,13 @@ export class Data {
     });
   }
 
+  searchExercisesByName(name: string, skip: number, limit: number) {
+    return mongodbHandler(async () => {
+      const exercises = ExerciseModel.find({'name': {'$regex': `${name}`}}).skip(skip).limit(limit);
+      return exercises;
+    });
+  }
+
   async cloneExerciseDB() {
     const exercisesFromDB: Array<ExerciseDB> = await fetchData(
       exercisedb_url,
