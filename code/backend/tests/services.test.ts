@@ -23,3 +23,32 @@ describe("GetExerciseById function tests", () => {
   });
 });
 
+describe("SearchExercisesByName function tests", () => {
+  test("searchExercisesByName returns the exercises successfully", () => {
+    const name = "sit";
+    service
+      .searchExercisesByName(name, 0, 10)
+      .then((exercises) => expect(exercises[0]._id).toBe("0001"));
+  });
+
+  test("searchExercisesByName throws not found when no exercises are found", () => {
+    service
+      .searchExercisesByName("zzzz", 0, 1)
+      .catch((error) => expect(error).toBe(NotFoundError));
+  });
+
+  test("searchExercisesByName returns the number of exercises requested", () => {
+    const name = "sit";
+    service
+      .searchExercisesByName(name, 0, 1)
+      .then((exercises) => expect(exercises.length).toBe(1));
+  });
+
+  test("searchExercisesByName skips the number of exercises requested", () => {
+    const name = "sit";
+    service
+      .searchExercisesByName(name, 2, 1)
+      .then((exercises) => expect(exercises[0]._id).toBe("1758"));
+  });
+});
+

@@ -2,7 +2,7 @@ import express from "express";
 
 import { Api } from "./api/api.ts";
 import { Services } from "./services/services.ts";
-import { Data } from "./data/mongo/data.ts";
+import { Data } from "./data/local/data.ts";
 
 const data = new Data();
 const service = new Services(data);

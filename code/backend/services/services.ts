@@ -21,6 +21,7 @@ export class Services {
 
   async searchExercisesByName(name: string, skip: number, limit: number) {
     const exercises: Array<Exercise> = await this.data.searchExercisesByName(name, skip, limit);
+    if (exercises.length == 0) throw NotFoundError;
     return exercises;
   }
 

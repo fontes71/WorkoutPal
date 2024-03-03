@@ -9,11 +9,22 @@ async function getLocalData(path: string) {
 export class Data {
   async getExerciseById(id: string) {
     const exercises = (await getLocalData(
-      "data/local/exercises.json"
+      "data/local/files/exercises.json"
     )) as Exercise[];
     
     const exercise = exercises.find((exercise) => exercise._id === id);
     return exercise || null
+  }
+
+  async searchExercisesByName(name: string, skip: number, limit: number) {
+    const exercises = (await getLocalData(
+      "data/local/files/exercises.json"
+    )) as Exercise[];
+    
+    const filteredExercises = exercises.filter((exercise) =>
+      exercise.name.toLowerCase().includes(name.toLowerCase())
+    );
+    return filteredExercises.slice(skip, skip + limit);
   }
 
   async cloneExerciseDB() {}

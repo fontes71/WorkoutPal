@@ -23,11 +23,13 @@ export class Api {
   }
 
   searchExercisesByName(req: Request, res: Response) {
+    const skip = !req.query.skip ? '0' : req.query.skip as string;
+    const limit = !req.query.limit ? '10': req.query.limit as string;
     apiErrorHandler(res, async () => {
       const exercises: Array<Exercise> = await this.service.searchExercisesByName(
         req.params.exerciseName,
-        parseInt(req.query.skip as string),
-        parseInt(req.query.limit as string)
+        parseInt(skip),
+        parseInt(limit)
       );
       res.json(exercises);
     });
