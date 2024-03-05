@@ -11,10 +11,6 @@ export class Api {
     this.getExerciseById = this.getExerciseById.bind(this);
     this.searchExercisesByName = this.searchExercisesByName.bind(this);
     this.cloneExerciseDB = this.cloneExerciseDB.bind(this);
-
-    // need to be inside a class called AuthApi
-    this.signup = this.signup.bind(this);
-    this.login = this.login.bind(this);
   }
 
   getExerciseById(req: Request, res: Response) {
@@ -44,17 +40,5 @@ export class Api {
       this.service.cloneExerciseDB();
       res.sendStatus(200)
     });
-  }
-
-  // need to be inside a class called AuthApi
-  signup(req: Request, res: Response) {
-    apiErrorHandler(res, async () => {
-      const token = await this.service.signup(req.body.username, req.body.password, req.body.mail);
-      res.status(201).json({'authentication_token': token});
-    });
-  }
-
-  login(req: Request, res: Response) {
-    res.json({'status': 'login'});
   }
 }
