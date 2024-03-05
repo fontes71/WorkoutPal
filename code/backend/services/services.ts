@@ -1,6 +1,6 @@
 import { Data } from "../data/mongo/data";
 import { Exercise } from "../domain/types";
-import { NotFoundError } from "../errors/app_errors";
+import { NotFoundError, InalidParamsError, InvalidCredentialsError, NonExistentEmailError, IncorrectPasswordError} from "../errors/app_errors";
 import cron from "node-cron";
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
@@ -14,6 +14,7 @@ export class Services {
     this.getExerciseById = this.getExerciseById.bind(this);
     this.searchExercisesByName = this.searchExercisesByName.bind(this);
     this.cloneExerciseDB = this.cloneExerciseDB.bind(this);
+
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
   }
@@ -31,6 +32,7 @@ export class Services {
   }
 
   async signup(username: string, password: string, mail: string) {
+    if (!username || !password || !mail) throw InalidParamsError;
     // verifications not done
     const token = uuidv4();
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -38,8 +40,12 @@ export class Services {
     return token;
   }
 
-  async login(username: string, password: string) {
-    
+  async login(mail: string, password: string) {
+    if (!mail || !password) throw InalidParamsError;
+    const user = await this.data.getUser(mail);
+    if (!user) throw NonExistentEmailError;
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) throw IncorrectPasswordError;
   }
 
   cloneExerciseDBScheduler() {

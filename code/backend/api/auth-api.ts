@@ -33,7 +33,10 @@ export class AuthApi {
   }
 
   login(req: Request, res: Response) {
-    res.json({'status': 'login'});
+    apiErrorHandler(res, async () => {
+      await this.service.login(req.body.mail, req.body.password);
+      res.status(200).json({'status': "Login successful"});
+    });
   }
 
   authMiddleware(req: Request, res: Response, next: NextFunction) {

@@ -12,6 +12,10 @@ export class Data {
     return
   }
 
+  async getUserByToken(token) {
+    return
+  }
+
   async getExerciseById(id: string) {
     const exercises = (await getLocalData(
       "data/local/files/exercises.json"

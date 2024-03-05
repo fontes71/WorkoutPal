@@ -23,6 +23,13 @@ export class Data {
     });
   }
 
+  getUser(mail: string) {
+    return mongodbHandler(async () => {
+      const user = UserModel.findOne({ mail });
+      return user;
+    });
+  }
+
   getExerciseById(id: string) {
     return mongodbHandler(async () => {
       const exercise = ExerciseModel.findOne({ _id: id });
