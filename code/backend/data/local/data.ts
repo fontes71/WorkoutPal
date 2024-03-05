@@ -7,6 +7,11 @@ async function getLocalData(path: string) {
 }
 
 export class Data {
+  // not yet implemented
+  async createUser(username: string, password: string, mail: string, token: string) {
+    return
+  }
+
   async getExerciseById(id: string) {
     const exercises = (await getLocalData(
       "data/local/files/exercises.json"

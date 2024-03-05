@@ -34,7 +34,8 @@
     "node-cron": "^3.0.0",
     "node-fetch": "^3.3.2",
     "passport": "^0.7.0",
-    "passport-http-bearer": "^1.0.1"
+    "passport-http-bearer": "^1.0.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

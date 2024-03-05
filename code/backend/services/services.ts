@@ -2,7 +2,10 @@ import { Data } from "../data/mongo/data";
 import { Exercise } from "../domain/types";
 import { NotFoundError } from "../errors/app_errors";
 import cron from "node-cron";
+import { v4 as uuidv4 } from 'uuid';
+import bcrypt from 'bcrypt';
 
+// try catch need on services cuz sometimes data throws error and the app stop inside services 
 export class Services {
   private data: Data;
 
@@ -11,6 +14,8 @@ export class Services {
     this.getExerciseById = this.getExerciseById.bind(this);
     this.searchExercisesByName = this.searchExercisesByName.bind(this);
     this.cloneExerciseDB = this.cloneExerciseDB.bind(this);
+    this.signup = this.signup.bind(this);
+    this.login = this.login.bind(this);
   }
 
   async getExerciseById(id: string) {
@@ -23,6 +28,18 @@ export class Services {
     const exercises: Array<Exercise> = await this.data.searchExercisesByName(name, skip, limit);
     if (exercises.length == 0) throw NotFoundError;
     return exercises;
+  }
+
+  async signup(username: string, password: string, mail: string) {
+    // verifications not done
+    const token = uuidv4();
+    const hashedPassword = await bcrypt.hash(password, 10);
+    this.data.createUser(username, hashedPassword, mail, token);
+    return token;
+  }
+
+  async login(username: string, password: string) {
+    
   }
 
   cloneExerciseDBScheduler() {

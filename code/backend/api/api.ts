@@ -48,7 +48,10 @@ export class Api {
 
   // need to be inside a class called AuthApi
   signup(req: Request, res: Response) {
-    res.json({'status': 'signup'});
+    apiErrorHandler(res, async () => {
+      const token = await this.service.signup(req.body.username, req.body.password, req.body.mail);
+      res.status(201).json({'authentication_token': token});
+    });
   }
 
   login(req: Request, res: Response) {

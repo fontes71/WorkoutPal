@@ -12,6 +12,20 @@ dotenv.config();
 
 const WORKOUTPAL_MONGO_URI: string = process.env.WORKOUTPAL_MONGO_URI;
 
+export const userSchema = new mongoose.Schema(
+  {
+    username: String, 
+    mail: String, 
+    password: String, 
+    token: String,
+    workout_plans: [Object],
+    days: [Object]
+  },
+  { versionKey: false }
+);
+
+export const UserModel = mongoose.model("users", userSchema);
+
 export const exerciseSchema = new mongoose.Schema(
   {
     _id: String,
@@ -26,7 +40,7 @@ export const exerciseSchema = new mongoose.Schema(
   { versionKey: false }
 );
 
-export const ExerciseModel = mongoose.model("Exercises", exerciseSchema);
+export const ExerciseModel = mongoose.model("exercises", exerciseSchema);
 
 export async function mongodbHandler(action: () => Promise<any>) {
   try {

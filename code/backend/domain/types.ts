@@ -1,3 +1,6 @@
+import { UUID } from "crypto"
+import { ObjectId } from "mongoose"
+
 export interface Exercise {
     _id: string,
     name: string, 
@@ -23,4 +26,13 @@ export interface ExerciseDB {
 export function convertExerciseDBToExercise(exerciseDB: ExerciseDB): Exercise {
     const { id, ...exercise } = exerciseDB
     return { _id: id, ...exercise }
+}
+
+export interface User {
+    username: string, 
+    mail: string, 
+    password: string, 
+    token: string,
+    workout_plans: Array<Object>,
+    days: Array<Object>
 }

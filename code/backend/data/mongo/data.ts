@@ -1,14 +1,28 @@
-import { ExerciseModel, mongodbHandler } from "./mongodb-utils";
+import { UserModel, ExerciseModel, mongodbHandler } from "./mongodb-utils";
 import {
+  User,
   Exercise,
   ExerciseDB,
   convertExerciseDBToExercise,
 } from "../../domain/types";
-import { fetchData } from "../../utils/functions";
+import { fetchData, rewriteFileWithObject } from "../../utils/functions";
 import { exercisedb_url, exercisedb_options } from "../../utils/constants";
-import { rewriteFileWithObject } from "../../utils/functions";
 
 export class Data {
+  createUser(username: string, password: string, mail: string, token: string) {
+    return mongodbHandler(async () => {
+      const user: User = { username, password, mail, token, workout_plans: [], days: [] }
+      await UserModel.insertMany(user);
+    });
+  }
+
+  getUserByToken(token: string) {
+    return mongodbHandler(async () => {
+      const user = UserModel.findOne({ token });
+      return user;
+    });
+  }
+
   getExerciseById(id: string) {
     return mongodbHandler(async () => {
       const exercise = ExerciseModel.findOne({ _id: id });
