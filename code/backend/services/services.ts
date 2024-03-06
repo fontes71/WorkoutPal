@@ -11,56 +11,46 @@ export class Services {
 
   constructor(data: Data) {
     this.data = data;
-    this.getExerciseById = this.getExerciseById.bind(this);
-    this.searchExercisesByName = this.searchExercisesByName.bind(this);
-    this.searchExercisesByBodyPart = this.searchExercisesByBodyPart.bind(this);
-    this.searchExercisesByEquipment = this.searchExercisesByEquipment.bind(this);
-    this.searchExercisesByTarget = this.searchExercisesByTarget.bind(this);
-    this.searchExercisesBySecondaryMuscle = this.searchExercisesBySecondaryMuscle.bind(this);
-    this.cloneExerciseDB = this.cloneExerciseDB.bind(this);
-
-    this.signup = this.signup.bind(this);
-    this.login = this.login.bind(this);
   }
 
-  async getExerciseById(id: string) {
+  getExerciseById = async (id: string) => {
     const exercise: Exercise = await this.data.getExerciseById(id);
     if (exercise == null) throw NotFoundError;
     return exercise;
   }
 
-  async searchExercisesByName(name: string, skip: number, limit: number) {
+  searchExercisesByName = async (name: string, skip: number, limit: number) => {
     const exercises: Array<Exercise> = await this.data.searchExercisesByName(name, skip, limit);
     if (exercises.length == 0) throw NotFoundError;
     return exercises;
   }
 
-  async searchExercisesByBodyPart(bodyPart: string, skip: number, limit: number) {
+  searchExercisesByBodyPart = async (bodyPart: string, skip: number, limit: number) => {
     const exercises: Array<Exercise> = await this.data.searchExercisesByBodyPart(bodyPart, skip, limit);
     if (exercises.length == 0) throw NotFoundError;
     return exercises;
   }
 
-  async searchExercisesByEquipment(equipment: string, skip: number, limit: number) {
+  searchExercisesByEquipment = async (equipment: string, skip: number, limit: number) => {
     const exercises: Array<Exercise> = await this.data.searchExercisesByEquipment(equipment, skip, limit);
     if (exercises.length == 0) throw NotFoundError;
     return exercises;
   }
 
-  async searchExercisesByTarget(target: string, skip: number, limit: number) {
+  searchExercisesByTarget = async (target: string, skip: number, limit: number) => {
     const exercises: Array<Exercise> = await this.data.searchExercisesByTarget(target, skip, limit);
     if (exercises.length == 0) throw NotFoundError;
     return exercises;
   }
 
 
-  async searchExercisesBySecondaryMuscle(secondaryMuscle: string, skip: number, limit: number) {
+  searchExercisesBySecondaryMuscle = async (secondaryMuscle: string, skip: number, limit: number) => {
     const exercises: Array<Exercise> = await this.data.searchExercisesBySecondaryMuscle(secondaryMuscle, skip, limit);
     if (exercises.length == 0) throw NotFoundError;
     return exercises;
   }
 
-  async signup(username: string, password: string, email: string) {
+  signup = async (username: string, password: string, email: string) => {
     if (!username || !password || !email) throw InvalidParamsError;
     const token = uuidv4();
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -68,7 +58,7 @@ export class Services {
     return token;
   }
 
-  async login(email: string, password: string) {
+  login = async (email: string, password: string) => {
     if (!email || !password) throw InvalidParamsError;
     const user = await this.data.getUserByMail(email);
     if (!user) throw NonExistentEmailError;

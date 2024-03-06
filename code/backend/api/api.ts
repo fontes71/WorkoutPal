@@ -8,16 +8,9 @@ export class Api {
 
   constructor(service: Services) {
     this.service = service;
-    this.getExerciseById = this.getExerciseById.bind(this);
-    this.searchExercisesByName = this.searchExercisesByName.bind(this);
-    this.searchExercisesByBodyPart = this.searchExercisesByBodyPart.bind(this);
-    this.searchExercisesByEquipment = this.searchExercisesByEquipment.bind(this);
-    this.searchExercisesByTarget = this.searchExercisesByTarget.bind(this);
-    this.searchExercisesBySecondaryMuscle = this.searchExercisesBySecondaryMuscle.bind(this)
-    this.cloneExerciseDB = this.cloneExerciseDB.bind(this);
   }
 
-  getExerciseById(req: Request, res: Response) {
+  getExerciseById = (req: Request, res: Response) => {
     apiErrorHandler(res, async () => {
       const exercise: Exercise = await this.service.getExerciseById(
         req.params.exerciseId
@@ -26,7 +19,7 @@ export class Api {
     });
   }
 
-  searchExercisesByName(req: Request, res: Response) {
+  searchExercisesByName = (req: Request, res: Response) => {
     const skip = !req.query.skip ? '0' : req.query.skip as string;
     const limit = !req.query.limit ? '10': req.query.limit as string;
     apiErrorHandler(res, async () => {
@@ -39,7 +32,7 @@ export class Api {
     });
   }
 
-  searchExercisesByBodyPart(req: Request, res: Response) {
+  searchExercisesByBodyPart = (req: Request, res: Response) => {
     const skip = !req.query.skip ? '0' : req.query.skip as string;
     const limit = !req.query.limit ? '10': req.query.limit as string;
     apiErrorHandler(res, async () => {
@@ -52,7 +45,7 @@ export class Api {
     });
   }
 
-  searchExercisesByEquipment(req: Request, res: Response) {
+  searchExercisesByEquipment = (req: Request, res: Response) => {
     const skip = !req.query.skip ? '0' : req.query.skip as string;
     const limit = !req.query.limit ? '10': req.query.limit as string;
     apiErrorHandler(res, async () => {
@@ -65,7 +58,7 @@ export class Api {
     });
   }
 
-  searchExercisesByTarget(req: Request, res: Response) {
+  searchExercisesByTarget = (req: Request, res: Response) => {
     const skip = !req.query.skip ? '0' : req.query.skip as string;
     const limit = !req.query.limit ? '10': req.query.limit as string;
     apiErrorHandler(res, async () => {
@@ -78,7 +71,7 @@ export class Api {
     });
   }
 
-  searchExercisesBySecondaryMuscle(req: Request, res: Response) {
+  searchExercisesBySecondaryMuscle = (req: Request, res: Response) => {
     const skip = !req.query.skip ? '0' : req.query.skip as string;
     const limit = !req.query.limit ? '10': req.query.limit as string;
     apiErrorHandler(res, async () => {
@@ -91,7 +84,7 @@ export class Api {
     });
   }
 
-  cloneExerciseDB(req: Request, res: Response) {
+  cloneExerciseDB = (req: Request, res: Response) => {
     apiErrorHandler(res, async () => {
       this.service.cloneExerciseDB();
       res.sendStatus(200)
