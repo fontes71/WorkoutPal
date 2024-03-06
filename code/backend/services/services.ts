@@ -4,17 +4,18 @@ import { NotFoundError, InvalidParamsError, NonExistentEmailError, IncorrectPass
 import cron from "node-cron";
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
+import { IData, IServices } from "../domain/interfaces";
 
 // try catch need on services cuz sometimes data throws error and the app stop inside services 
-export class Services {
-  private data: Data;
+export class Services implements IServices {
+  private data: IData;
 
-  constructor(data: Data) {
+  constructor(data: IData) {
     this.data = data;
   }
 
   getExerciseById = async (id: string) => {
-    const exercise: Exercise = await this.data.getExerciseById(id);
+    const exercise: Exercise | null = await this.data.getExerciseById(id);
     if (exercise == null) throw NotFoundError;
     return exercise;
   }
@@ -68,12 +69,8 @@ export class Services {
   }
 
   cloneExerciseDBScheduler() {
-    cron.schedule("0 0 0 * * *", function () {
+    cron.schedule("0 0 0 * * *",  () => {
       this.data.cloneExerciseDB()
     });
-  }
-
-  cloneExerciseDB() {
-    this.data.cloneExerciseDB()
   }
 }

@@ -4,7 +4,15 @@
         "esModuleInterop": true,
         "noEmit": true,
         "allowImportingTsExtensions": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true
     },
     "exclude": [
         "node_modules"

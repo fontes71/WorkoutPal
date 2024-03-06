@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const WORKOUTPAL_MONGO_URI: string = process.env.WORKOUTPAL_MONGO_URI;
+const WORKOUTPAL_MONGO_URI: string | undefined = process.env.WORKOUTPAL_MONGO_URI;
 
 export const userSchema = new mongoose.Schema(
   {
@@ -37,7 +37,10 @@ export const ExerciseModel = mongoose.model("exercises", exerciseSchema);
 
 export async function mongodbHandler(action: () => Promise<any>) {
   try {
-    await mongoose.connect(WORKOUTPAL_MONGO_URI);
+    const uri = WORKOUTPAL_MONGO_URI
+    if (uri===undefined)
+      throw("Undefined Mongo Uri")
+    await mongoose.connect(uri);
     return await action();
   } finally {
     await mongoose.connection.close();

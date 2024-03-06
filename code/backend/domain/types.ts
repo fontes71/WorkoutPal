@@ -20,11 +20,6 @@ export interface ExerciseDB {
     instructions: Array<string>
 }
 
-export function convertExerciseDBToExercise(exerciseDB: ExerciseDB): Exercise {
-    const { id, ...exercise } = exerciseDB
-    return { _id: id, ...exercise }
-}
-
 export interface User {
     username: string, 
     email: string, 

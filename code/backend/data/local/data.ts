@@ -1,23 +1,26 @@
 import fs from "node:fs/promises";
-import { Exercise } from "../../domain/types";
+import { Exercise, User } from "../../domain/types";
+import { IData } from "../../domain/interfaces";
 
 async function getLocalData(path: string) {
   const data = await fs.readFile(path);
   return JSON.parse(data.toString());
 }
 
-export class Data {
-  // not yet implemented
+export class Data implements IData {
+  
+  getUserByToken?(token: string): Promise<User | null> {
+    throw new Error("Method not implemented.");
+  }
+  getUserByMail?(email: string): Promise<User | null> {
+    throw new Error("Method not implemented.");
+  }
+  cloneExerciseDB(): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
   async createUser(username: string, password: string, mail: string, token: string) {
-    return
-  }
-
-  async getUserByToken(token) {
-    return
-  }
-
-  async getUserByMail(mail) {
-    return
+    throw new Error("Method not implemented.");
   }
 
   async getExerciseById(id: string) {
@@ -88,6 +91,4 @@ export class Data {
 
     return filteredExercises.slice(skip, skip + limit);
   }
-
-  async cloneExerciseDB() {}
 }

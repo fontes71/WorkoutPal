@@ -3,12 +3,12 @@ import {
   User,
   Exercise,
   ExerciseDB,
-  convertExerciseDBToExercise,
 } from "../../domain/types";
-import { fetchData, rewriteFileWithObject } from "../../utils/functions";
+import { convertExerciseDBToExercise, fetchData, rewriteFileWithObject } from "../../utils/functions";
 import { exercisedb_url, exercisedb_options } from "../../utils/constants";
+import { IData } from "../../domain/interfaces";
 
-export class Data {
+export class Data implements IData {
   createUser(username: string, password: string, email: string, token: string) {
     return mongodbHandler(async () => {
       const user: User = { username, password, email: email, token, workout_plans: [], days: [] }
@@ -83,7 +83,6 @@ export class Data {
       const exercise: Exercise = convertExerciseDBToExercise(obj);
       exercises.push(exercise);
     });
-
 
     await mongodbHandler(async () => {
       await ExerciseModel.deleteMany({});

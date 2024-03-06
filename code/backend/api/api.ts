@@ -1,13 +1,15 @@
 import { Request, Response } from "express";
-import { Services } from "../services/services";
 import { Exercise } from "../domain/types";
 import { apiErrorHandler } from "./api-utils";
+import { IApi, IData, IServices } from "../domain/interfaces";
 
-export class Api {
-  private service: Services;
+export class Api implements IApi {
+  private service: IServices;
+  private data: IData;
 
-  constructor(service: Services) {
+  constructor(service: IServices, data: IData) {
     this.service = service;
+    this.data = data;
   }
 
   getExerciseById = (req: Request, res: Response) => {
@@ -86,7 +88,7 @@ export class Api {
 
   cloneExerciseDB = (req: Request, res: Response) => {
     apiErrorHandler(res, async () => {
-      this.service.cloneExerciseDB();
+      this.data.cloneExerciseDB();
       res.sendStatus(200)
     });
   }

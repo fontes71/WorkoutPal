@@ -1,11 +1,10 @@
 import { Request, Response, NextFunction } from "express";
-import { Services } from "../services/services";
 import passport from 'passport';
 import passport_http_bearer from 'passport-http-bearer';
-import { Data } from "../data/mongo/data.ts";
 import { apiErrorHandler } from "./api-utils";
 import { AuthInfo, AuthInfoUser, UserResponse } from "./model.ts";
 import { User } from "../domain/types.ts";
+import { IData, IServices } from "../domain/interfaces.ts";
 
 declare global {
   namespace Express {
@@ -18,11 +17,11 @@ declare global {
 const BearerStrategy = passport_http_bearer.Strategy
 
 export class AuthApi {
-  private service: Services;
-  private data: Data;
+  private services: IServices;
+  private data: IData;
 
-  constructor(service: Services, data: Data) {
-    this.service = service;
+  constructor(services: IServices, data: IData) {
+    this.services = services;
     this.data = data;
 
     passport.use(new BearerStrategy(async (token, done) => {
@@ -35,14 +34,14 @@ export class AuthApi {
 
   signup = (req: Request, res: Response) => {
     apiErrorHandler(res, async () => {
-      const token = await this.service.signup(req.body.username, req.body.password, req.body.email);
+      const token = await this.services.signup(req.body.username, req.body.password, req.body.email);
       res.status(201).json({'authentication_token': token});
     });
   }
 
   login = (req: Request, res: Response) => {
     apiErrorHandler(res, async () => {
-      const user: User = await this.service.login(req.body.email, req.body.password);
+      const user: User = await this.services.login(req.body.email, req.body.password);
       res.status(200).json({status: "Login successful", user: this.userToUserResponse(user)});
     });
   }
