@@ -23,7 +23,7 @@ app.use(passport.initialize());
 app.post("/api/signup", authApi.signup);
 app.post("/api/login", authApi.login);
 
-app.get("/api/exercise/:exerciseId", authApi.authMiddleware, api.getExerciseById); // auth middleware used as a test on this endpoint
+app.get("/api/exercise/:exerciseId", passport.authenticate('bearer', { session: false }), authApi.authMiddleware, api.getExerciseById); // auth middleware used as a test on this endpoint
 app.get("/api/exercises/:exerciseName", api.searchExercisesByName);
 app.get("/api/cloneDatabase", api.cloneExerciseDB);
 

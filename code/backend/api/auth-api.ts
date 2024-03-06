@@ -4,6 +4,16 @@ import passport from 'passport';
 import passport_http_bearer from 'passport-http-bearer';
 import { Data } from "../data/mongo/data.ts";
 import { apiErrorHandler } from "./api-utils";
+import { AuthInfo, AuthInfoUser, UserResponse } from "./model.ts";
+import { User } from "../domain/types.ts";
+
+declare global {
+  namespace Express {
+    interface Request {
+      authInfo?: AuthInfo; 
+    }
+  }
+}
 
 const BearerStrategy = passport_http_bearer.Strategy
 const data = new Data();
@@ -20,31 +30,39 @@ export class AuthApi {
     passport.use(new BearerStrategy(async (token, done) => {
         const user = await data.getUserByToken(token)
         if (!user) { return done(null, false); }
-        return done(null, user, { scope: 'all' });
+        return done(null, user, { scope: 'all', user: this.userToAuthInfoUser(user) });
       }
     ));
   }
 
   signup(req: Request, res: Response) {
     apiErrorHandler(res, async () => {
-      const token = await this.service.signup(req.body.username, req.body.password, req.body.mail);
+      const token = await this.service.signup(req.body.username, req.body.password, req.body.email);
       res.status(201).json({'authentication_token': token});
     });
   }
 
   login(req: Request, res: Response) {
     apiErrorHandler(res, async () => {
-      await this.service.login(req.body.mail, req.body.password);
-      res.status(200).json({'status': "Login successful"});
+      const user: User = await this.service.login(req.body.email, req.body.password);
+      res.status(200).json({status: "Login successful", user: this.userToUserResponse(user)});
     });
   }
 
+  userToUserResponse(user: User): UserResponse {
+    const {username, email, token, workout_plans, days}: User = user
+    const userResponse: UserResponse = {username, email, token, workout_plans, days}
+    return userResponse
+  }
+
+  userToAuthInfoUser(user: User): AuthInfoUser {
+    const {username, email, token}: User = user
+    const authInfoUser: AuthInfoUser = {username, email, token}
+    return authInfoUser
+  }
+
   authMiddleware(req: Request, res: Response, next: NextFunction) {
-    passport.authenticate('bearer', { session: false }, (err, user, info) => {
-      if (!user) { return res.status(401).json({message: "Unauthorized to access this resource"}) }
-      //console.log("AuthInfo -> ", req.authInfo) // suposedly where the information afeter authentication complete will be found, but there is nothing !!for now!!
-      console.log("User ->", user)
-      next()
-    })(req, res, next);
+    console.log("user ->", req.authInfo.user)
+    next()
   }
 }

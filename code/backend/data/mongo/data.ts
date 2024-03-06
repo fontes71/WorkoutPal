@@ -9,9 +9,9 @@ import { fetchData, rewriteFileWithObject } from "../../utils/functions";
 import { exercisedb_url, exercisedb_options } from "../../utils/constants";
 
 export class Data {
-  createUser(username: string, password: string, mail: string, token: string) {
+  createUser(username: string, password: string, email: string, token: string) {
     return mongodbHandler(async () => {
-      const user: User = { username, password, mail, token, workout_plans: [], days: [] }
+      const user: User = { username, password, email: email, token, workout_plans: [], days: [] }
       await UserModel.insertMany(user);
     });
   }
@@ -23,9 +23,9 @@ export class Data {
     });
   }
 
-  getUser(mail: string) {
+  getUserByMail(email: string) {
     return mongodbHandler(async () => {
-      const user = UserModel.findOne({ mail });
+      const user = UserModel.findOne({ email: email });
       return user;
     });
   }

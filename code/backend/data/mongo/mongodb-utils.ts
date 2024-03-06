@@ -1,12 +1,5 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import {
-  Exercise,
-  ExerciseDB,
-  convertExerciseDBToExercise,
-} from "../../domain/types";
-import { fetchData } from "../../utils/functions";
-import { exercisedb_url, exercisedb_options } from "../../utils/constants";
 
 dotenv.config();
 
@@ -15,7 +8,7 @@ const WORKOUTPAL_MONGO_URI: string = process.env.WORKOUTPAL_MONGO_URI;
 export const userSchema = new mongoose.Schema(
   {
     username: String, 
-    mail: String, 
+    email: String, 
     password: String, 
     token: String,
     workout_plans: [Object],
