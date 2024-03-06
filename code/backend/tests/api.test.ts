@@ -32,10 +32,10 @@ describe("Endpoint: /api/exercise/:exerciseId", () => {
 
 describe("Endpoint: /api/exercises/name/:exerciseName", () => {
   it("GET -> Response contains exercises", async () => {
-    const expectedExerciseId: string = "1758";
+    const expectedExerciseId: string = "2799";
 
     const res = await request(app)
-      .get("/api/exercises/name/sit?limit=1&skip=2")
+      .get("/api/exercises/name/sit?limit=2&skip=2")
       .expect("Content-Type", /json/)
       .expect(200);
 
@@ -52,9 +52,9 @@ describe("Endpoint: /api/exercises/name/:exerciseName", () => {
   });
 });
 
-describe("Endpoint: /api/exercises/bodypart/:bodyPart", () => {
+describe("Endpoint: /api/exercises/bodypart/:exerciseBodyPart", () => {
   it("GET -> Response contains exercises", async () => {
-    const expectedExerciseId: string = "0003";
+    const expectedExerciseId: string = "2333";
 
     const res = await request(app)
       .get("/api/exercises/bodyPart/waist?limit=2&skip=2")
@@ -74,9 +74,9 @@ describe("Endpoint: /api/exercises/bodypart/:bodyPart", () => {
   });
 });
 
-describe("Endpoint: /api/exercises/equipment/:equipment", () => {
+describe("Endpoint: /api/exercises/equipment/:exerciseEquipment", () => {
   it("GET -> Response contains exercises", async () => {
-    const expectedExerciseId: string = "0003";
+    const expectedExerciseId: string = "0006";
 
     const res = await request(app)
       .get("/api/exercises/equipment/body weight?limit=2&skip=2")
@@ -96,9 +96,9 @@ describe("Endpoint: /api/exercises/equipment/:equipment", () => {
   });
 });
 
-describe("Endpoint: /api/exercises/target/:target", () => {
+describe("Endpoint: /api/exercises/target/:exerciseTarget", () => {
   it("GET -> Response contains exercises", async () => {
-    const expectedExerciseId: string = "0003";
+    const expectedExerciseId: string = "2333";
 
     const res = await request(app)
       .get("/api/exercises/target/abs?limit=2&skip=2")
@@ -113,6 +113,28 @@ describe("Endpoint: /api/exercises/target/:target", () => {
   it("GET -> Response does not contain exercises", async () => {
     const res = await request(app)
       .get("/api/exercises/target/-1")
+      .expect("Content-Type", /json/)
+      .expect(404);
+  });
+});
+
+describe("Endpoint: /api/exercises/secondaryMuscle/:exerciseSecondaryMuscle", () => {
+  it("GET -> Response contains exercises", async () => {
+    const expectedExerciseId: string = "1314";
+
+    const res = await request(app)
+      .get("/api/exercises/secondaryMuscle/glutes?limit=2&skip=2")
+      .expect("Content-Type", /json/)
+      .expect(200);
+
+    const receivedBody = res.body as Exercise[];
+    
+    expect(receivedBody[0]._id).toStrictEqual(expectedExerciseId);
+  });
+
+  it("GET -> Response does not contain exercises", async () => {
+    const res = await request(app)
+      .get("/api/exercises/secondaryMuscle/-1")
       .expect("Content-Type", /json/)
       .expect(404);
   });

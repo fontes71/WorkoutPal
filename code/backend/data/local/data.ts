@@ -37,6 +37,7 @@ export class Data {
     const filteredExercises = exercises.filter((exercise) =>
       exercise.name.toLowerCase().includes(name.toLowerCase())
     );
+
     return filteredExercises.slice(skip, skip + limit);
   }
 
@@ -48,6 +49,7 @@ export class Data {
     const filteredExercises = exercises.filter((exercise) =>
       exercise.bodyPart.toLowerCase().includes(bodyPart.toLowerCase())
     );
+
     return filteredExercises.slice(skip, skip + limit);
   }
 
@@ -59,6 +61,7 @@ export class Data {
     const filteredExercises = exercises.filter((exercise) =>
       exercise.equipment.toLowerCase().includes(equipment.toLowerCase())
     );
+
     return filteredExercises.slice(skip, skip + limit);
   }
 
@@ -70,6 +73,19 @@ export class Data {
     const filteredExercises = exercises.filter((exercise) =>
       exercise.target.toLowerCase().includes(target.toLowerCase())
     );
+
+    return filteredExercises.slice(skip, skip + limit);
+  }
+
+  async searchExercisesBySecondaryMuscle(secondaryMuscle: string, skip: number, limit: number) {
+    const exercises = (await getLocalData(
+      "data/local/files/exercises.json"
+    )) as Exercise[];
+    
+    const filteredExercises = exercises.filter((exercise) =>
+      exercise.secondaryMuscles.some((muscle) => muscle.toLowerCase().includes(secondaryMuscle.toLowerCase()))
+    );
+
     return filteredExercises.slice(skip, skip + limit);
   }
 

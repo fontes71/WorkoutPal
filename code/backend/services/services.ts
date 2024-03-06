@@ -16,6 +16,7 @@ export class Services {
     this.searchExercisesByBodyPart = this.searchExercisesByBodyPart.bind(this);
     this.searchExercisesByEquipment = this.searchExercisesByEquipment.bind(this);
     this.searchExercisesByTarget = this.searchExercisesByTarget.bind(this);
+    this.searchExercisesBySecondaryMuscle = this.searchExercisesBySecondaryMuscle.bind(this);
     this.cloneExerciseDB = this.cloneExerciseDB.bind(this);
 
     this.signup = this.signup.bind(this);
@@ -48,6 +49,13 @@ export class Services {
 
   async searchExercisesByTarget(target: string, skip: number, limit: number) {
     const exercises: Array<Exercise> = await this.data.searchExercisesByTarget(target, skip, limit);
+    if (exercises.length == 0) throw NotFoundError;
+    return exercises;
+  }
+
+
+  async searchExercisesBySecondaryMuscle(secondaryMuscle: string, skip: number, limit: number) {
+    const exercises: Array<Exercise> = await this.data.searchExercisesBySecondaryMuscle(secondaryMuscle, skip, limit);
     if (exercises.length == 0) throw NotFoundError;
     return exercises;
   }

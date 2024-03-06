@@ -13,6 +13,7 @@ export class Api {
     this.searchExercisesByBodyPart = this.searchExercisesByBodyPart.bind(this);
     this.searchExercisesByEquipment = this.searchExercisesByEquipment.bind(this);
     this.searchExercisesByTarget = this.searchExercisesByTarget.bind(this);
+    this.searchExercisesBySecondaryMuscle = this.searchExercisesBySecondaryMuscle.bind(this)
     this.cloneExerciseDB = this.cloneExerciseDB.bind(this);
   }
 
@@ -43,7 +44,7 @@ export class Api {
     const limit = !req.query.limit ? '10': req.query.limit as string;
     apiErrorHandler(res, async () => {
       const exercises: Array<Exercise> = await this.service.searchExercisesByBodyPart(
-        req.params.bodyPart,
+        req.params.exerciseBodyPart,
         parseInt(skip),
         parseInt(limit)
       );
@@ -56,7 +57,7 @@ export class Api {
     const limit = !req.query.limit ? '10': req.query.limit as string;
     apiErrorHandler(res, async () => {
       const exercises: Array<Exercise> = await this.service.searchExercisesByEquipment(
-        req.params.equipment,
+        req.params.exerciseEquipment,
         parseInt(skip),
         parseInt(limit)
       );
@@ -69,7 +70,20 @@ export class Api {
     const limit = !req.query.limit ? '10': req.query.limit as string;
     apiErrorHandler(res, async () => {
       const exercises: Array<Exercise> = await this.service.searchExercisesByTarget(
-        req.params.target,
+        req.params.exerciseTarget,
+        parseInt(skip),
+        parseInt(limit)
+      );
+      res.json(exercises);
+    });
+  }
+
+  searchExercisesBySecondaryMuscle(req: Request, res: Response) {
+    const skip = !req.query.skip ? '0' : req.query.skip as string;
+    const limit = !req.query.limit ? '10': req.query.limit as string;
+    apiErrorHandler(res, async () => {
+      const exercises: Array<Exercise> = await this.service.searchExercisesBySecondaryMuscle(
+        req.params.exerciseSecondaryMuscle,
         parseInt(skip),
         parseInt(limit)
       );

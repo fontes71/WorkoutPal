@@ -65,6 +65,13 @@ export class Data {
     });
   }
 
+  searchExercisesBySecondaryMuscle(secondaryMuscle: string, skip: number, limit: number) {
+    return mongodbHandler(async () => {
+      const exercises = ExerciseModel.find({'secondaryMuscles': {'$regex': `${secondaryMuscle}`}}).skip(skip).limit(limit);
+      return exercises;
+    });
+  }
+
   async cloneExerciseDB() {
     const exercisesFromDB: Array<ExerciseDB> = await fetchData(
       exercisedb_url,
