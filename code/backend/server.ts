@@ -8,7 +8,7 @@ import passport from 'passport';
 
 const data = new Data();
 const service = new Services(data);
-const authApi = new AuthApi(service);
+const authApi = new AuthApi(service, data);
 const api = new Api(service);
 
 const port = 8080;
@@ -23,7 +23,7 @@ app.use(passport.initialize());
 app.post("/api/signup", authApi.signup);
 app.post("/api/login", authApi.login);
 
-app.get("/api/exercise/:exerciseId", passport.authenticate('bearer', { session: false }), authApi.authMiddleware, api.getExerciseById); // auth middleware used as a test on this endpoint
+app.get("/api/exercise/:exerciseId", api.getExerciseById);
 app.get("/api/exercises/name/:exerciseName", api.searchExercisesByName);
 app.get("/api/exercises/bodyPart/:exerciseBodyPart", api.searchExercisesByBodyPart);
 app.get("/api/exercises/equipment/:exerciseEquipment", api.searchExercisesByEquipment);

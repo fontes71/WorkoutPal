@@ -1,6 +1,6 @@
 import { Data } from "../data/mongo/data";
 import { Exercise } from "../domain/types";
-import { NotFoundError, InvalidParamsError, InvalidCredentialsError, NonExistentEmailError, IncorrectPasswordError} from "../errors/app_errors";
+import { NotFoundError, InvalidParamsError, NonExistentEmailError, IncorrectPasswordError} from "../errors/app_errors";
 import cron from "node-cron";
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';

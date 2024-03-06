@@ -16,33 +16,31 @@ declare global {
 }
 
 const BearerStrategy = passport_http_bearer.Strategy
-const data = new Data();
 
 export class AuthApi {
   private service: Services;
+  private data: Data;
 
-  constructor(service: Services) {
+  constructor(service: Services, data: Data) {
     this.service = service;
-    this.signup = this.signup.bind(this);
-    this.login = this.login.bind(this);
-    this.authMiddleware = this.authMiddleware.bind(this);
+    this.data = data;
 
     passport.use(new BearerStrategy(async (token, done) => {
-        const user = await data.getUserByToken(token)
+        const user = await this.data.getUserByToken(token)
         if (!user) { return done(null, false); }
         return done(null, user, { scope: 'all', user: this.userToAuthInfoUser(user) });
       }
     ));
   }
 
-  signup(req: Request, res: Response) {
+  signup = (req: Request, res: Response) => {
     apiErrorHandler(res, async () => {
       const token = await this.service.signup(req.body.username, req.body.password, req.body.email);
       res.status(201).json({'authentication_token': token});
     });
   }
 
-  login(req: Request, res: Response) {
+  login = (req: Request, res: Response) => {
     apiErrorHandler(res, async () => {
       const user: User = await this.service.login(req.body.email, req.body.password);
       res.status(200).json({status: "Login successful", user: this.userToUserResponse(user)});
@@ -59,10 +57,5 @@ export class AuthApi {
     const {username, email, token}: User = user
     const authInfoUser: AuthInfoUser = {username, email, token}
     return authInfoUser
-  }
-
-  authMiddleware(req: Request, res: Response, next: NextFunction) {
-    console.log("user ->", req.authInfo.user)
-    next()
   }
 }
