@@ -16,6 +16,10 @@ export class Data {
     return
   }
 
+  async getUserByMail(mail) {
+    return
+  }
+
   async getExerciseById(id: string) {
     const exercises = (await getLocalData(
       "data/local/files/exercises.json"
@@ -32,6 +36,39 @@ export class Data {
     
     const filteredExercises = exercises.filter((exercise) =>
       exercise.name.toLowerCase().includes(name.toLowerCase())
+    );
+    return filteredExercises.slice(skip, skip + limit);
+  }
+
+  async searchExercisesByBodyPart(bodyPart: string, skip: number, limit: number) {
+    const exercises = (await getLocalData(
+      "data/local/files/exercises.json"
+    )) as Exercise[];
+    
+    const filteredExercises = exercises.filter((exercise) =>
+      exercise.bodyPart.toLowerCase().includes(bodyPart.toLowerCase())
+    );
+    return filteredExercises.slice(skip, skip + limit);
+  }
+
+  async searchExercisesByEquipment(equipment: string, skip: number, limit: number) {
+    const exercises = (await getLocalData(
+      "data/local/files/exercises.json"
+    )) as Exercise[];
+    
+    const filteredExercises = exercises.filter((exercise) =>
+      exercise.equipment.toLowerCase().includes(equipment.toLowerCase())
+    );
+    return filteredExercises.slice(skip, skip + limit);
+  }
+
+  async searchExercisesByTarget(target: string, skip: number, limit: number) {
+    const exercises = (await getLocalData(
+      "data/local/files/exercises.json"
+    )) as Exercise[];
+    
+    const filteredExercises = exercises.filter((exercise) =>
+      exercise.target.toLowerCase().includes(target.toLowerCase())
     );
     return filteredExercises.slice(skip, skip + limit);
   }

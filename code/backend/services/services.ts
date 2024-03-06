@@ -13,6 +13,9 @@ export class Services {
     this.data = data;
     this.getExerciseById = this.getExerciseById.bind(this);
     this.searchExercisesByName = this.searchExercisesByName.bind(this);
+    this.searchExercisesByBodyPart = this.searchExercisesByBodyPart.bind(this);
+    this.searchExercisesByEquipment = this.searchExercisesByEquipment.bind(this);
+    this.searchExercisesByTarget = this.searchExercisesByTarget.bind(this);
     this.cloneExerciseDB = this.cloneExerciseDB.bind(this);
 
     this.signup = this.signup.bind(this);
@@ -27,6 +30,24 @@ export class Services {
 
   async searchExercisesByName(name: string, skip: number, limit: number) {
     const exercises: Array<Exercise> = await this.data.searchExercisesByName(name, skip, limit);
+    if (exercises.length == 0) throw NotFoundError;
+    return exercises;
+  }
+
+  async searchExercisesByBodyPart(bodyPart: string, skip: number, limit: number) {
+    const exercises: Array<Exercise> = await this.data.searchExercisesByBodyPart(bodyPart, skip, limit);
+    if (exercises.length == 0) throw NotFoundError;
+    return exercises;
+  }
+
+  async searchExercisesByEquipment(equipment: string, skip: number, limit: number) {
+    const exercises: Array<Exercise> = await this.data.searchExercisesByEquipment(equipment, skip, limit);
+    if (exercises.length == 0) throw NotFoundError;
+    return exercises;
+  }
+
+  async searchExercisesByTarget(target: string, skip: number, limit: number) {
+    const exercises: Array<Exercise> = await this.data.searchExercisesByTarget(target, skip, limit);
     if (exercises.length == 0) throw NotFoundError;
     return exercises;
   }

@@ -24,7 +24,10 @@ app.post("/api/signup", authApi.signup);
 app.post("/api/login", authApi.login);
 
 app.get("/api/exercise/:exerciseId", passport.authenticate('bearer', { session: false }), authApi.authMiddleware, api.getExerciseById); // auth middleware used as a test on this endpoint
-app.get("/api/exercises/:exerciseName", api.searchExercisesByName);
+app.get("/api/exercises/name/:exerciseName", api.searchExercisesByName);
+app.get("/api/exercises/bodyPart/:bodyPart", api.searchExercisesByBodyPart);
+app.get("/api/exercises/equipment/:equipment", api.searchExercisesByEquipment);
+app.get("/api/exercises/target/:target", api.searchExercisesByTarget);
 app.get("/api/cloneDatabase", api.cloneExerciseDB);
 
 app.listen(8080, () => {

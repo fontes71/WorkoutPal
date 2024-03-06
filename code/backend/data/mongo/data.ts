@@ -44,6 +44,27 @@ export class Data {
     });
   }
 
+  searchExercisesByBodyPart(bodyPart: string, skip: number, limit: number) {
+    return mongodbHandler(async () => {
+      const exercises = ExerciseModel.find({'bodyPart': {'$regex': `${bodyPart}`}}).skip(skip).limit(limit);
+      return exercises;
+    });
+  }
+
+  searchExercisesByEquipment(equipment: string, skip: number, limit: number) {
+    return mongodbHandler(async () => {
+      const exercises = ExerciseModel.find({'equipment': {'$regex': `${equipment}`}}).skip(skip).limit(limit);
+      return exercises;
+    });
+  }
+
+  searchExercisesByTarget(target: string, skip: number, limit: number) {
+    return mongodbHandler(async () => {
+      const exercises = ExerciseModel.find({'target': {'$regex': `${target}`}}).skip(skip).limit(limit);
+      return exercises;
+    });
+  }
+
   async cloneExerciseDB() {
     const exercisesFromDB: Array<ExerciseDB> = await fetchData(
       exercisedb_url,
