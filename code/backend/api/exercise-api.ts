@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import { Exercise } from "../domain/types";
 import { apiErrorHandler } from "./api-utils";
-import { IApi, IData, IServices } from "../domain/interfaces";
+import { IExerciseApi, IExerciseData, IExerciseServices } from "../domain/interfaces";
 
-export class Api implements IApi {
-  private service: IServices;
-  private data: IData;
+export class ExerciseApi implements IExerciseApi {
+  private service: IExerciseServices;
+  private data: IExerciseData;
 
-  constructor(service: IServices, data: IData) {
+  constructor(service: IExerciseServices, data: IExerciseData) {
     this.service = service;
     this.data = data;
   }
