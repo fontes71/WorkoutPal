@@ -1,5 +1,5 @@
-import { AuthInfoUser, UserResponse } from "../api/model";
-import { Exercise, User } from "./types";
+import {AuthInfoUser, UserResponse} from "../api/model"
+import { Exercise, User, Food } from "./types";
 import { Request, Response } from "express";
 
 // API
@@ -11,6 +11,10 @@ export interface IExerciseApi {
   searchExercisesByTarget(req: Request, res: Response): void;
   searchExercisesBySecondaryMuscle(req: Request, res: Response): void;
   cloneExerciseDB(req: Request, res: Response): void;
+}
+
+export interface IFoodApi {
+  searchFood(req: Request, res: Response): void;
 }
 
 export interface IAuthApi {
@@ -31,6 +35,10 @@ export interface IExerciseServices {
   cloneExerciseDBScheduler(): void;
 }
 
+export interface IFoodServices {
+  searchFood(query: string, skip: number, limit: number): Promise<Array<Food>>;
+}
+
 export interface IAuthServices {
   signup(username: string, password: string, email: string): Promise<string>;
   login(email: string, password: string): Promise<User>;
@@ -45,6 +53,10 @@ export interface IExerciseData {
   searchExercisesByTarget(target: string,skip: number,limit: number): Promise<Exercise[]>;
   searchExercisesBySecondaryMuscle(secondaryMuscle: string,skip: number,limit: number): Promise<Exercise[]>;
   cloneExerciseDB(): Promise<void>;
+}
+
+export interface IFoodData {
+  searchFood(query: string, skip: number, limit: number): Promise<Array<Food>>;
 }
 
 export interface IAuthData {

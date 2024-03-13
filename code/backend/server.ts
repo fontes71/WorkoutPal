@@ -7,11 +7,19 @@ import { ExerciseServices } from "./services/exercise-services.ts";
 import { ExerciseApi } from "./api/exercise-api.ts";
 import { AuthData } from "./data/mongo/auth-data.ts";
 import { AuthServices } from "./services/auth-services.ts";
+import { FoodApi } from "./api/food-api.ts";
+import { FoodServices } from "./services/food-services.ts";
+import { FoodData } from "./data/mongo/food-data.ts";
 
 // EXERCISE
 const exerciseData = new ExerciseData();
 const exerciseServices = new ExerciseServices(exerciseData);
 const exerciseApi = new ExerciseApi(exerciseServices, exerciseData);
+
+// FOOD
+const foodData = new FoodData();
+const foodServices = new FoodServices(foodData);
+const foodApi = new FoodApi(foodServices, foodData);
 
 // AUTH
 const authData = new AuthData()
@@ -39,6 +47,9 @@ app.get("/api/exercises/equipment/:exerciseEquipment", exerciseApi.searchExercis
 app.get("/api/exercises/target/:exerciseTarget", exerciseApi.searchExercisesByTarget);
 app.get("/api/exercises/secondaryMuscle/:exerciseSecondaryMuscle", exerciseApi.searchExercisesBySecondaryMuscle);
 app.get("/api/cloneDatabase", exerciseApi.cloneExerciseDB);
+
+// Food
+app.get("/api/food/search", foodApi.searchFood);
 
 app.listen(8080, () => {
   console.log(`Listening...\nhttp://localhost:` + port);

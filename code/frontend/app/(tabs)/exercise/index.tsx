@@ -8,12 +8,6 @@ export default function TabTwoScreen() {
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: "Exercise" }} />
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
     </View>
   );
 }

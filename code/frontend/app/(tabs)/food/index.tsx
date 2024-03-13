@@ -4,7 +4,7 @@ import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import { Link, Stack } from "expo-router";
 
-export default function TabOneScreen() {
+export default function FoodScreen() {
   return (
     <View style={styles.container}>
        <Stack.Screen options={{ title: "Food" }} />
