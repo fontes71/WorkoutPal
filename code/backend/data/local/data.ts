@@ -9,12 +9,14 @@ async function getLocalData(path: string) {
 
 export class Data implements IData {
   
-  getUserByToken?(token: string): Promise<User | null> {
+  getUserByToken?(token: string) {
     throw new Error("Method not implemented.");
   }
+  
   getUserByMail?(email: string): Promise<User | null> {
     throw new Error("Method not implemented.");
   }
+
   cloneExerciseDB(): Promise<void> {
     throw new Error("Method not implemented.");
   }

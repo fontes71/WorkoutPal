@@ -6,14 +6,6 @@ import { AuthInfo, AuthInfoUser, UserResponse } from "./model.ts";
 import { User } from "../domain/types.ts";
 import { IData, IServices } from "../domain/interfaces.ts";
 
-declare global {
-  namespace Express {
-    interface Request {
-      authInfo?: AuthInfo; 
-    }
-  }
-}
-
 const BearerStrategy = passport_http_bearer.Strategy
 
 export class AuthApi {
@@ -27,7 +19,7 @@ export class AuthApi {
     passport.use(new BearerStrategy(async (token, done) => {
         const user = await this.data.getUserByToken(token)
         if (!user) { return done(null, false); }
-        return done(null, user, { scope: 'all', user: this.userToAuthInfoUser(user) });
+        return done(null, user, { scope: 'all' });
       }
     ));
   }

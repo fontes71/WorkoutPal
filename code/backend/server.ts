@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended : false}))
 app.use(passport.initialize());
 
- auth endpoints
+//auth endpoints
 app.post("/api/signup", authApi.signup);
 app.post("/api/login", authApi.login);
 
