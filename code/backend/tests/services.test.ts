@@ -1,4 +1,4 @@
-import { Api } from "../api/api.ts";
+import { Api } from "../api/exerciseApi.ts";
 import { Services } from "../services/services.ts";
 import { Data } from "../data/local/data.ts";
 import { NotFoundError } from "../errors/app_errors.ts";

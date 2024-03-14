@@ -2,17 +2,17 @@ import { Request, Response, NextFunction } from "express";
 import passport from 'passport';
 import passport_http_bearer from 'passport-http-bearer';
 import { apiErrorHandler } from "./api-utils";
-import { AuthInfo, AuthInfoUser, UserResponse } from "./model.ts";
+import { AuthInfoUser, UserResponse } from "./model.ts";
 import { User } from "../domain/types.ts";
-import { IData, IServices } from "../domain/interfaces.ts";
+import { IAuthApi, IAuthData, IAuthServices } from "../domain/interfaces.ts";
 
 const BearerStrategy = passport_http_bearer.Strategy
 
-export class AuthApi {
-  private services: IServices;
-  private data: IData;
+export class AuthApi implements IAuthApi {
+  private services: IAuthServices;
+  private data: IAuthData;
 
-  constructor(services: IServices, data: IData) {
+  constructor(services: IAuthServices, data: IAuthData) {
     this.services = services;
     this.data = data;
 

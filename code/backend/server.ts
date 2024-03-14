@@ -1,16 +1,31 @@
 import express from "express";
 
 import { AuthApi } from "./api/auth-api.ts";
-import { Api } from "./api/api.ts";
-import { Services } from "./services/services.ts";
-import { Data } from "./data/mongo/data.ts";
 import passport from 'passport';
-import { IServices } from "./domain/interfaces.ts";
+import { ExerciseData } from "./data/mongo/exercise-data.ts";
+import { ExerciseServices } from "./services/exercise-services.ts";
+import { ExerciseApi } from "./api/exercise-api.ts";
+import { AuthData } from "./data/mongo/auth-data.ts";
+import { AuthServices } from "./services/auth-services.ts";
+import { FoodApi } from "./api/food-api.ts";
+import { FoodServices } from "./services/food-services.ts";
+import { FoodData } from "./data/mongo/food-data.ts";
 
-const data = new Data();
-const services = new Services(data);
-const authApi = new AuthApi(services, data);
-const api = new Api(services, data);
+// EXERCISE
+const exerciseData = new ExerciseData();
+const exerciseServices = new ExerciseServices(exerciseData);
+const exerciseApi = new ExerciseApi(exerciseServices, exerciseData);
+
+// FOOD
+const foodData = new FoodData();
+const foodServices = new FoodServices(foodData);
+const foodApi = new FoodApi(foodServices, foodData);
+
+// AUTH
+const authData = new AuthData()
+const authServices = new AuthServices(authData)
+const authApi = new AuthApi(authServices, authData);
+
 
 const port = 8080;
 
@@ -20,21 +35,25 @@ app.use(express.json());
 app.use(express.urlencoded({extended : false}))
 app.use(passport.initialize());
 
-//auth endpoints
+// Auth 
 app.post("/api/signup", authApi.signup);
 app.post("/api/login", authApi.login);
 
-app.get("/api/exercise/:exerciseId", api.getExerciseById);
-app.get("/api/exercises/name/:exerciseName", api.searchExercisesByName);
-app.get("/api/exercises/bodyPart/:exerciseBodyPart", api.searchExercisesByBodyPart);
-app.get("/api/exercises/equipment/:exerciseEquipment", api.searchExercisesByEquipment);
-app.get("/api/exercises/target/:exerciseTarget", api.searchExercisesByTarget);
-app.get("/api/exercises/secondaryMuscle/:exerciseSecondaryMuscle", api.searchExercisesBySecondaryMuscle);
-app.get("/api/cloneDatabase", api.cloneExerciseDB);
+// Exercise
+app.get("/api/exercise/:exerciseId", exerciseApi.getExerciseById);
+app.get("/api/exercises/name/:exerciseName", exerciseApi.searchExercisesByName);
+app.get("/api/exercises/bodyPart/:exerciseBodyPart", exerciseApi.searchExercisesByBodyPart);
+app.get("/api/exercises/equipment/:exerciseEquipment", exerciseApi.searchExercisesByEquipment);
+app.get("/api/exercises/target/:exerciseTarget", exerciseApi.searchExercisesByTarget);
+app.get("/api/exercises/secondaryMuscle/:exerciseSecondaryMuscle", exerciseApi.searchExercisesBySecondaryMuscle);
+app.get("/api/cloneDatabase", exerciseApi.cloneExerciseDB);
+
+// Food
+app.get("/api/food/search", foodApi.searchFood);
 
 app.listen(8080, () => {
   console.log(`Listening...\nhttp://localhost:` + port);
-  services.cloneExerciseDBScheduler();
+  exerciseServices.cloneExerciseDBScheduler();
 });
 
 export default app;
