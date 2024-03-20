@@ -15,40 +15,28 @@ export class ExerciseData implements IExerciseData {
 
   searchExercisesByName(name: string, skip: number, limit: number) {
     return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({ name: { $regex: `${name}` } })
-        .skip(skip)
-        .limit(limit);
+      const exercises = ExerciseModel.find({'name': {'$regex': `${name.toLowerCase()}`}}).skip(skip).limit(limit);
       return exercises;
     });
   }
 
   searchExercisesByBodyPart(bodyPart: string, skip: number, limit: number) {
     return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({
-        bodyPart: { $regex: `${bodyPart}` },
-      })
-        .skip(skip)
-        .limit(limit);
+      const exercises = ExerciseModel.find({'bodyPart': {'$regex': `${bodyPart.toLowerCase()}`}}).skip(skip).limit(limit);
       return exercises;
     });
   }
 
   searchExercisesByEquipment(equipment: string, skip: number, limit: number) {
     return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({
-        equipment: { $regex: `${equipment}` },
-      })
-        .skip(skip)
-        .limit(limit);
+      const exercises = ExerciseModel.find({'equipment': {'$regex': `${equipment.toLowerCase()}`}}).skip(skip).limit(limit);
       return exercises;
     });
   }
 
   searchExercisesByTarget(target: string, skip: number, limit: number) {
     return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({ target: { $regex: `${target}` } })
-        .skip(skip)
-        .limit(limit);
+      const exercises = ExerciseModel.find({'target': {'$regex': `${target.toLowerCase()}`}}).skip(skip).limit(limit);
       return exercises;
     });
   }
@@ -59,11 +47,7 @@ export class ExerciseData implements IExerciseData {
     limit: number
   ) {
     return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({
-        secondaryMuscles: { $regex: `${secondaryMuscle}` },
-      })
-        .skip(skip)
-        .limit(limit);
+      const exercises = ExerciseModel.find({'secondaryMuscles': {'$regex': `${secondaryMuscle.toLowerCase()}`}}).skip(skip).limit(limit);
       return exercises;
     });
   }
