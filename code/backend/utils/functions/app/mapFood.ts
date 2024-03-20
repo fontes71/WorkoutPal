@@ -1,6 +1,4 @@
-import { FoodFactsApiFood } from "../../domain/types";
-
-
+import { FoodFactsApiFood } from "../../../domain/types";
 
 /*
 const removeStringIfItsInTheName = (name: string, string: string) =>
@@ -51,26 +49,34 @@ export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) => foodFactsApiFoo
 
   */
 
+const stringIsInTheName = (name: string, string: string) =>
+  name.toLowerCase().split(" ").includes(string.toLowerCase());
 
+const formatProperty = (name: string, string: string) =>
+  stringIsInTheName(name, string) ? "" : string;
 
-const stringIsInTheName = (name: string, string: string) => name.toLowerCase().split(" ").includes(string.toLowerCase()) 
+export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
+  foodFactsApiFood.map((apiFood) => {
+    const {
+      brands_tags: [brand],
+      quantity,
+      product_name,
+      product_name_en,
+      id,
+      image_front_thumb_url,
+      nutriments,
+    } = apiFood;
 
-
-  const formatProperty = (name: string, string: string) => stringIsInTheName(name, string) ? "" : string
-
-  export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) => foodFactsApiFood.map((apiFood) => {
-    const { brands_tags: [brand], quantity, product_name, product_name_en, id, image_front_thumb_url, nutriments } = apiFood;
-
-    const nameString = product_name || product_name_en
-    const brandString =  brand ? formatProperty(nameString, brand) : ""
-    const quantityString = quantity ? formatProperty(nameString, quantity) : ""
+    const nameString = product_name || product_name_en;
+    const brandString = brand ? formatProperty(nameString, brand) : "";
+    const quantityString = quantity ? formatProperty(nameString, quantity) : "";
 
     return {
-    id: id,
-    name: nameString,
-    brand: brandString,
-    quantity:  quantityString,
-    imageUrl: image_front_thumb_url,
-    calories: nutriments["energy-kcal"]
-  }
-})
+      id: id,
+      name: nameString,
+      brand: brandString,
+      quantity: quantityString,
+      imageUrl: image_front_thumb_url,
+      calories: nutriments["energy-kcal"],
+    };
+  });

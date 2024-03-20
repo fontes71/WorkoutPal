@@ -1,14 +1,14 @@
-import { ExerciseModel, mongodbHandler } from "./mongodb-utils";
+import { ExerciseModel, mongodbHandler } from "./mongoose";
+import { Exercise, ExerciseDB } from "../../domain/types";
 import {
-  Exercise,
-  ExerciseDB,
-} from "../../domain/types";
-import { convertExerciseDBToExercise, fetchData, rewriteFileWithObject } from "../../utils/functions";
+  convertExerciseDBToExercise,
+  fetchData,
+  rewriteFileWithObject,
+} from "../../utils/functions";
 import { exercisedb_url, exercisedb_options } from "../../utils/constants";
 import { IExerciseData } from "../../domain/interfaces";
 
 export class ExerciseData implements IExerciseData {
-  
   getExerciseById(id: string) {
     return mongodbHandler(async () => {
       const exercise = ExerciseModel.findOne({ _id: id });
@@ -18,35 +18,55 @@ export class ExerciseData implements IExerciseData {
 
   searchExercisesByName(name: string, skip: number, limit: number) {
     return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({'name': {'$regex': `${name}`}}).skip(skip).limit(limit);
+      const exercises = ExerciseModel.find({ name: { $regex: `${name}` } })
+        .skip(skip)
+        .limit(limit);
       return exercises;
     });
   }
 
   searchExercisesByBodyPart(bodyPart: string, skip: number, limit: number) {
     return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({'bodyPart': {'$regex': `${bodyPart}`}}).skip(skip).limit(limit);
+      const exercises = ExerciseModel.find({
+        bodyPart: { $regex: `${bodyPart}` },
+      })
+        .skip(skip)
+        .limit(limit);
       return exercises;
     });
   }
 
   searchExercisesByEquipment(equipment: string, skip: number, limit: number) {
     return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({'equipment': {'$regex': `${equipment}`}}).skip(skip).limit(limit);
+      const exercises = ExerciseModel.find({
+        equipment: { $regex: `${equipment}` },
+      })
+        .skip(skip)
+        .limit(limit);
       return exercises;
     });
   }
 
   searchExercisesByTarget(target: string, skip: number, limit: number) {
     return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({'target': {'$regex': `${target}`}}).skip(skip).limit(limit);
+      const exercises = ExerciseModel.find({ target: { $regex: `${target}` } })
+        .skip(skip)
+        .limit(limit);
       return exercises;
     });
   }
 
-  searchExercisesBySecondaryMuscle(secondaryMuscle: string, skip: number, limit: number) {
+  searchExercisesBySecondaryMuscle(
+    secondaryMuscle: string,
+    skip: number,
+    limit: number
+  ) {
     return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({'secondaryMuscles': {'$regex': `${secondaryMuscle}`}}).skip(skip).limit(limit);
+      const exercises = ExerciseModel.find({
+        secondaryMuscles: { $regex: `${secondaryMuscle}` },
+      })
+        .skip(skip)
+        .limit(limit);
       return exercises;
     });
   }
@@ -68,7 +88,6 @@ export class ExerciseData implements IExerciseData {
       await ExerciseModel.insertMany(exercises);
     });
 
-    rewriteFileWithObject("data/local/files/exercises.json", exercises)
-
+    rewriteFileWithObject("data/local/files/exercises.json", exercises);
   }
 }

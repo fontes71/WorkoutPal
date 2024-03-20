@@ -14,3 +14,5 @@ export const exercisedb_options = {
     'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
   }
 }
+
+export const WORKOUTPAL_MONGO_URI: string | undefined = process.env.WORKOUTPAL_MONGO_URI;

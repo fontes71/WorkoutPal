@@ -1,11 +1,9 @@
-import fs from "node:fs/promises";
+
 import { Exercise, User } from "../../domain/types";
 import { IData } from "../../domain/interfaces";
 
-async function getLocalData(path: string) {
-  const data = await fs.readFile(path);
-  return JSON.parse(data.toString());
-}
+
+
 
 export class Data implements IData {
   

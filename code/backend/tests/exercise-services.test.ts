@@ -3,6 +3,7 @@ import { Services } from "../services/services.ts";
 import { Data } from "../data/local/data.ts";
 import { NotFoundError } from "../errors/app_errors.ts";
 import { NOTFOUND } from "node:dns";
+import { Exercise } from "../domain/types.ts";
 
 const data = new Data();
 const service = new Services(data);
@@ -13,13 +14,13 @@ describe("GetExerciseById function tests", () => {
     const id = "0001";
     service
       .getExerciseById(id)
-      .then((exercise) => expect(exercise._id).toBe(id));
+      .then((exercise: Exercise) => expect(exercise._id).toBe(id));
   });
 
   test("getExerciseById throws not found when exercise does not exist", () => {
     service
       .getExerciseById("1000000000")
-      .catch((error) => expect(error).toBe(NotFoundError));
+      .catch((error: Error) => expect(error).toBe(NotFoundError));
   });
 });
 
@@ -29,20 +30,20 @@ describe("SearchExercisesByName function tests", () => {
     const expectedId = "0992";
     service
       .searchExercisesByName(name, 0, 10)
-      .then((exercises) => expect(exercises[0]._id).toBe(expectedId));
+      .then((exercises: Exercise[]) => expect(exercises[0]._id).toBe(expectedId));
   });
 
   test("searchExercisesByName throws not found when no exercises are found", () => {
     service
       .searchExercisesByName("zzzz", 0, 1)
-      .catch((error) => expect(error).toBe(NotFoundError));
+      .catch((error: Error) => expect(error).toBe(NotFoundError));
   });
 
   test("searchExercisesByName returns the number of exercises requested", () => {
     const name = "sit";
     service
       .searchExercisesByName(name, 0, 1)
-      .then((exercises) => expect(exercises.length).toBe(1));
+      .then((exercises: Exercise[]) => expect(exercises.length).toBe(1));
   });
 
   test("searchExercisesByName skips the number of exercises requested", () => {
@@ -50,7 +51,7 @@ describe("SearchExercisesByName function tests", () => {
     const expectedId = "2799";
     service
       .searchExercisesByName(name, 2, 1)
-      .then((exercises) => expect(exercises[0]._id).toBe(expectedId));
+      .then((exercises: Exercise[]) => expect(exercises[0]._id).toBe(expectedId));
   });
 });
 
@@ -60,20 +61,20 @@ describe("SearchExercisesByBodyPart function tests", () => {
     const expectedId = "0003";
     service
       .searchExercisesByBodyPart(bodyPart, 0, 10)
-      .then((exercises) => expect(exercises[0]._id).toBe(expectedId));
+      .then((exercises: Exercise[]) => expect(exercises[0]._id).toBe(expectedId));
   });
 
   test("searchExercisesByBodyPart throws not found when no exercises are found", () => {
     service
       .searchExercisesByBodyPart("zzzz", 0, 1)
-      .catch((error) => expect(error).toBe(NotFoundError));
+      .catch((error: Error) => expect(error).toBe(NotFoundError));
   });
 
   test("searchExercisesByBodyPart returns the number of exercises requested", () => {
     const bodyPart = "waist";
     service
       .searchExercisesByBodyPart(bodyPart, 0, 1)
-      .then((exercises) => expect(exercises.length).toBe(1));
+      .then((exercises: Exercise[]) => expect(exercises.length).toBe(1));
   });
 
   test("searchExercisesByBodyPart skips the number of exercises requested", () => {
@@ -81,7 +82,7 @@ describe("SearchExercisesByBodyPart function tests", () => {
     const expectedId = "2333";
     service
       .searchExercisesByBodyPart(bodyPart, 2, 1)
-      .then((exercises) => expect(exercises[0]._id).toBe(expectedId));
+      .then((exercises: Exercise[]) => expect(exercises[0]._id).toBe(expectedId));
   });
 });
 
@@ -91,20 +92,20 @@ describe("SearchExercisesByEquipment function tests", () => {
     const expectedId = "0003";
     service
       .searchExercisesByEquipment(equipment, 0, 10)
-      .then((exercises) => expect(exercises[0]._id).toBe(expectedId));
+      .then((exercises: Exercise[]) => expect(exercises[0]._id).toBe(expectedId));
   });
 
   test("searchExercisesByEquipment throws not found when no exercises are found", () => {
     service
       .searchExercisesByEquipment("zzzz", 0, 1)
-      .catch((error) => expect(error).toBe(NotFoundError));
+      .catch((error: Error) => expect(error).toBe(NotFoundError));
   });
 
   test("searchExercisesByEquipment returns the number of exercises requested", () => {
     const equipment = "body weight";
     service
       .searchExercisesByEquipment(equipment, 0, 1)
-      .then((exercises) => expect(exercises.length).toBe(1));
+      .then((exercises: Exercise[]) => expect(exercises.length).toBe(1));
   });
 
   test("searchExercisesByEquipment skips the number of exercises requested", () => {
@@ -112,7 +113,7 @@ describe("SearchExercisesByEquipment function tests", () => {
     const expectedId = "0006";
     service
       .searchExercisesByEquipment(equipment, 2, 1)
-      .then((exercises) => expect(exercises[0]._id).toBe(expectedId));
+      .then((exercises: Exercise[]) => expect(exercises[0]._id).toBe(expectedId));
   });
 });
 
@@ -122,20 +123,20 @@ describe("SearchExercisesByTarget function tests", () => {
     const expectedId = "0003";
     service
       .searchExercisesByTarget(target, 0, 10)
-      .then((exercises) => expect(exercises[0]._id).toBe(expectedId));
+      .then((exercises: Exercise[]) => expect(exercises[0]._id).toBe(expectedId));
   });
 
   test("searchExercisesByTarget throws not found when no exercises are found", () => {
     service
       .searchExercisesByTarget("zzzz", 0, 1)
-      .catch((error) => expect(error).toBe(NotFoundError));
+      .catch((error: Error) => expect(error).toBe(NotFoundError));
   });
 
   test("searchExercisesByTarget returns the number of exercises requested", () => {
     const target = "abs";
     service
       .searchExercisesByTarget(target, 0, 1)
-      .then((exercises) => expect(exercises.length).toBe(1));
+      .then((exercises: Exercise[]) => expect(exercises.length).toBe(1));
   });
 
   test("searchExercisesByTarget skips the number of exercises requested", () => {
@@ -143,7 +144,7 @@ describe("SearchExercisesByTarget function tests", () => {
     const expectedId = "2333";
     service
       .searchExercisesByTarget(target, 2, 1)
-      .then((exercises) => expect(exercises[0]._id).toBe(expectedId));
+      .then((exercises: Exercise[]) => expect(exercises[0]._id).toBe(expectedId));
   });
 });
 
@@ -153,20 +154,20 @@ describe("SearchExercisesBySecondaryMuscle function tests", () => {
     const expectedId = "1512";
     service
       .searchExercisesBySecondaryMuscle(secondaryMuscle, 0, 10)
-      .then((exercises) => expect(exercises[0]._id).toBe(expectedId));
+      .then((exercises: Exercise[]) => expect(exercises[0]._id).toBe(expectedId));
   });
 
   test("searchExercisesBySecondaryMuscle throws not found when no exercises are found", () => {
     service
       .searchExercisesBySecondaryMuscle("zzzz", 0, 1)
-      .catch((error) => expect(error).toBe(NotFoundError));
+      .catch((error: Error) => expect(error).toBe(NotFoundError));
   });
 
   test("searchExercisesBySecondaryMuscle returns the number of exercises requested", () => {
     const secondaryMuscle = "glutes";
     service
       .searchExercisesBySecondaryMuscle(secondaryMuscle, 0, 1)
-      .then((exercises) => expect(exercises.length).toBe(1));
+      .then((exercises: Exercise[]) => expect(exercises.length).toBe(1));
   });
 
   test("searchExercisesBySecondaryMuscle skips the number of exercises requested", () => {
@@ -174,6 +175,6 @@ describe("SearchExercisesBySecondaryMuscle function tests", () => {
     const expectedId = "1314";
     service
       .searchExercisesBySecondaryMuscle(secondaryMuscle, 2, 1)
-      .then((exercises) => expect(exercises[0]._id).toBe(expectedId));
+      .then((exercises: Exercise[]) => expect(exercises[0]._id).toBe(expectedId));
   });
 });

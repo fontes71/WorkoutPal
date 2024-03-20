@@ -1,4 +1,4 @@
-import { ExerciseModel, mongodbHandler } from "./mongodb-utils";
+import { ExerciseModel, mongodbHandler } from "./mongoose";
 import { Exercise, ExerciseDB } from "../../domain/types";
 import {
   convertExerciseDBToExercise,
