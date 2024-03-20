@@ -6,9 +6,11 @@ import { Link, Stack } from "expo-router";
 import { SearchBar } from '@rneui/themed';
 import { useState, useEffect } from "react";
 
+
 export default function SearchExerciseScreen() {
     const [exerciseName, setExerciseName] = useState("");
     const [exercises, setExercises] = useState([]);
+    const [inputValue, setInputValue] = useState('');
      
     useEffect(() => {
         const fetchExercise = async () => {
@@ -24,8 +26,18 @@ export default function SearchExerciseScreen() {
         fetchExercise();
     }, [exerciseName]);
 
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            console.log("update -> ", inputValue);
+            setExerciseName(inputValue);
+        }, 300);
+
+        return () => clearTimeout(timeout);
+    }, [inputValue]);
+
     const updateExerciseName = (value: string) => {
-        setExerciseName(value);
+        console.log("input -> ", value);
+        setInputValue(value);
     }
 
     return (
@@ -34,7 +46,7 @@ export default function SearchExerciseScreen() {
             <SearchBar
                 placeholder="Type Here..."
                 onChangeText={updateExerciseName}
-                value={exerciseName}
+                value={inputValue}
             />
             {exercises[0] !== undefined ? exercises.map(({name}) => <Text>{name}</Text>) : <Text>No exercise found</Text>}
         </View>
