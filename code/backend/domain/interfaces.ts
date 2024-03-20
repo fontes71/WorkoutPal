@@ -1,5 +1,5 @@
 import {AuthInfoUser, UserResponse} from "../api/model"
-import { Exercise, User, Food } from "./types";
+import { Exercise, User, Food, FoodFactsApiFood } from "./types";
 import { Request, Response } from "express";
 
 // API
@@ -56,7 +56,7 @@ export interface IExerciseData {
 }
 
 export interface IFoodData {
-  searchFood(query: string, skip: number, limit: number): Promise<Array<Food>>;
+  searchFood(query: string, skip: number, limit: number): Promise<Array<FoodFactsApiFood>>;
 }
 
 export interface IAuthData {
