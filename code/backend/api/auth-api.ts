@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import passport from 'passport';
 import passport_http_bearer from 'passport-http-bearer';
-import { apiErrorHandler } from "./api-utils";
-import { AuthInfoUser, UserResponse } from "./model.ts";
 import { User } from "../domain/types.ts";
 import { IAuthApi, IAuthData, IAuthServices } from "../domain/interfaces.ts";
+import { apiErrorHandler } from "../utils/functions/api.ts";
+import { AuthInfoUser, UserResponse } from "../domain/api.ts";
 
 const BearerStrategy = passport_http_bearer.Strategy
 

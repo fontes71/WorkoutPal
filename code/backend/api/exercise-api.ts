@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Exercise } from "../domain/types";
-import { apiErrorHandler } from "./api-utils";
 import { IExerciseApi, IExerciseData, IExerciseServices } from "../domain/interfaces";
+import { apiErrorHandler } from "../utils/functions/api";
 
 export class ExerciseApi implements IExerciseApi {
   private service: IExerciseServices;

@@ -1,12 +1,6 @@
-import { ExerciseModel, mongodbHandler } from "./mongoose";
-import { Exercise, ExerciseDB } from "../../domain/types";
-import {
-  convertExerciseDBToExercise,
-  fetchData,
-  rewriteFileWithObject,
-} from "../../utils/functions";
-import { exercisedb_url, exercisedb_options } from "../../utils/constants";
-import { IExerciseData, IFoodData } from "../../domain/interfaces";
+
+import { IFoodData } from "../../domain/interfaces";
+import { mongodbHandler } from "../../utils/functions/data";
 
 export class FoodData implements IFoodData {
   searchFood(query: string, skip: number, limit: number) {

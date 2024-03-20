@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { Exercise, Food } from "../domain/types";
-import { apiErrorHandler } from "./api-utils";
 import { IFoodApi, IFoodData, IFoodServices } from "../domain/interfaces";
 import { InvalidParamsError } from "../errors/app_errors";
+import { apiErrorHandler } from "../utils/functions/api";
 
 export class FoodApi implements IFoodApi {
   private service: IFoodServices;

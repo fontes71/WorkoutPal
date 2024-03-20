@@ -1,6 +1,7 @@
-import { UserModel, mongodbHandler } from "./mongoose";
 import { User } from "../../domain/types";
 import { IAuthData } from "../../domain/interfaces";
+import { mongodbHandler } from "../../utils/functions/data";
+import { UserModel } from "./mongoose";
 
 export class AuthData implements IAuthData {
   createUser(username: string, password: string, email: string, token: string) {

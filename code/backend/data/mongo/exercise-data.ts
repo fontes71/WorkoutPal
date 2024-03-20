@@ -1,12 +1,9 @@
-import { ExerciseModel, mongodbHandler } from "./mongoose";
-import { Exercise, ExerciseDB } from "../../domain/types";
-import {
-  convertExerciseDBToExercise,
-  fetchData,
-  rewriteFileWithObject,
-} from "../../utils/functions";
+
 import { exercisedb_url, exercisedb_options } from "../../utils/constants";
 import { IExerciseData } from "../../domain/interfaces";
+import { convertExerciseDBToExercise, fetchData, mongodbHandler, rewriteFileWithObject } from "../../utils/functions/data";
+import { ExerciseModel } from "./mongoose";
+import { Exercise, ExerciseDB } from "../../domain/types";
 
 export class ExerciseData implements IExerciseData {
   getExerciseById(id: string) {

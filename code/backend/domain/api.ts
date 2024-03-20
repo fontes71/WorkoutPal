@@ -1,12 +1,18 @@
-import { Response } from "express";
-import { HttpError, mapAppErrorToHttpError } from "../errors/http_errors";
+export interface UserResponse {
+    username: string, 
+    email: string,
+    token: string,
+    workout_plans: Array<Object>,
+    days: Array<Object>
+}
 
-export async function apiErrorHandler(res: Response, action: () => Promise<void>) {
-    try {
-        await action() 
-    } catch(error: any) {
-        console.log("Error -> ", error)
-        const httpError: HttpError = mapAppErrorToHttpError(error)
-        res.status(httpError.code).json({error_message: httpError.message})
-    }
+export interface AuthInfo {
+    scope: string,
+    user: AuthInfoUser
+}
+
+export interface AuthInfoUser {
+    username: string, 
+    email: string,
+    token: string
 }
