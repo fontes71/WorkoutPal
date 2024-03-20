@@ -14,8 +14,11 @@ export default function SearchExerciseScreen() {
      
     useEffect(() => {
         const fetchExercise = async () => {
-            const response = await fetch(`http://192.168.0.129:8080/api/exercises/name/${exerciseName}`);
+            console.log("HERE");
+            const response = await fetch(`http://192.168.1.96:8080/api/exercises/name/${exerciseName}`);
             const exercise = await response.json();
+
+            console.log("input -> ", exercise);
 
             if (exercise.error_message !== undefined) {
                 return;
@@ -28,7 +31,7 @@ export default function SearchExerciseScreen() {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            console.log("update -> ", inputValue);
+            //console.log("update -> ", inputValue);
             setExerciseName(inputValue);
         }, 300);
 
@@ -36,7 +39,7 @@ export default function SearchExerciseScreen() {
     }, [inputValue]);
 
     const updateExerciseName = (value: string) => {
-        console.log("input -> ", value);
+       
         setInputValue(value);
     }
 

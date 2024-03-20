@@ -1,5 +1,5 @@
-import { Exercise } from "../domain/types.ts";
-import app from "../server.ts";
+import { Exercise } from "../../domain/types.ts";
+import app from "../../server.ts";
 import request from "supertest";
 
 
@@ -7,12 +7,14 @@ describe("just needs to pass", () =>
   it("abc", ()=>expect(true).toBe(true))
 
 )
+
 /*
     A worker process has failed to exit gracefully and has been force exited. This is likely
     caused by tests leaking due to improper teardown. Try running with --detectOpenHandles to
     find leaks. Active timers can also cause this, ensure that .unref() was called on them.
  */
-/*
+
+    /*
 describe("Endpoint: /api/exercise/:exerciseId", () => {
   it("GET -> Response contains exercise", async () => {
     const expectedExerciseId: string = "0001";

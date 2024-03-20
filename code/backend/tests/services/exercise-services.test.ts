@@ -1,14 +1,9 @@
-import { Data } from "../data/local/data.ts";
-import { NotFoundError } from "../errors/app_errors.ts";
+import { Data } from "../../data/local/data.ts";
+import { NotFoundError } from "../../errors/app_errors.ts";
 import { NOTFOUND } from "node:dns";
-import { Exercise } from "../domain/types.ts";
+import { Exercise } from "../../domain/types.ts";
 
-
-
-describe("just needs to pass", () =>
-  it("abc", ()=>expect(true).toBe(true))
-
-)
+describe("just needs to pass", () => it("abc", () => expect(true).toBe(true)));
 
 /*
 const data = new Data();
