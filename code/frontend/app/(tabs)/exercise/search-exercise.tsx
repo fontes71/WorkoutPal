@@ -6,14 +6,19 @@ import { Link, Stack } from "expo-router";
 import { SearchBar } from '@rneui/themed';
 import { useState, useEffect } from "react";
 
+
 export default function SearchExerciseScreen() {
     const [exerciseName, setExerciseName] = useState("");
     const [exercises, setExercises] = useState([]);
+    const [inputValue, setInputValue] = useState('');
      
     useEffect(() => {
         const fetchExercise = async () => {
-            const response = await fetch(`http://192.168.0.129:8080/api/exercises/name/${exerciseName}`);
+            console.log("HERE");
+            const response = await fetch(`http://192.168.1.96:8080/api/exercises/name/${exerciseName}`);
             const exercise = await response.json();
+
+            console.log("input -> ", exercise);
 
             if (exercise.error_message !== undefined) {
                 return;
@@ -24,8 +29,18 @@ export default function SearchExerciseScreen() {
         fetchExercise();
     }, [exerciseName]);
 
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            //console.log("update -> ", inputValue);
+            setExerciseName(inputValue);
+        }, 300);
+
+        return () => clearTimeout(timeout);
+    }, [inputValue]);
+
     const updateExerciseName = (value: string) => {
-        setExerciseName(value);
+       
+        setInputValue(value);
     }
 
     return (
@@ -34,7 +49,7 @@ export default function SearchExerciseScreen() {
             <SearchBar
                 placeholder="Type Here..."
                 onChangeText={updateExerciseName}
-                value={exerciseName}
+                value={inputValue}
             />
             {exercises[0] !== undefined ? exercises.map(({name}) => <Text>{name}</Text>) : <Text>No exercise found</Text>}
         </View>

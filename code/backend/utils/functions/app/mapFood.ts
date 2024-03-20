@@ -52,7 +52,7 @@ export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) => foodFactsApiFoo
 const stringIsInTheName = (name: string, string: string) =>
   name.toLowerCase().split(" ").includes(string.toLowerCase());
 
-const formatProperty = (name: string, string: string) =>
+const noValueIfRepeated = (name: string, string: string) =>
   stringIsInTheName(name, string) ? "" : string;
 
 export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
@@ -68,8 +68,8 @@ export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
     } = apiFood;
 
     const nameString = product_name || product_name_en;
-    const brandString = brand ? formatProperty(nameString, brand) : "";
-    const quantityString = quantity ? formatProperty(nameString, quantity) : "";
+    const brandString = brand ? noValueIfRepeated(nameString, brand) : "";
+    const quantityString = quantity ? noValueIfRepeated(nameString, quantity) : "";
 
     return {
       id: id,

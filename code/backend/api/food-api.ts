@@ -17,7 +17,7 @@ export class FoodApi implements IFoodApi {
     apiErrorHandler(res, async () => {
         const { query } = req.query
 
-        if (query == undefined || typeof query != "string")
+        if (!query || typeof query != "string")
             throw InvalidParamsError
 
       const food: Food[] = await this.service.searchFood(query, 0, 0);

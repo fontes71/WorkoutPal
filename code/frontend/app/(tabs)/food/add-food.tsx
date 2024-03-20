@@ -56,7 +56,7 @@ export default function AddFoodScreen() {
   const handleEnter = () => {
     const fetchFood = async () => {
       const response = await fetch(
-        `http://192.168.0.129:8080/api/food/search?query=${query}`
+        `http://192.168.1.96:8080/api/food/search?query=${query}`
       );
       const food: Food[] = await response.json();
 
