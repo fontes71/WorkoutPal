@@ -63,7 +63,7 @@ export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
       product_name,
       product_name_en,
       id,
-      image_front_thumb_url,
+      image_front_url,
       nutriments,
     } = apiFood;
 
@@ -76,7 +76,7 @@ export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
       name: nameString,
       brand: brandString,
       quantity: quantityString,
-      imageUrl: image_front_thumb_url,
+      imageUrl: image_front_url,
       calories: nutriments["energy-kcal"],
     };
   });

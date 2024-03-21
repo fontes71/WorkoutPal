@@ -14,9 +14,9 @@ const capitalizeWords = (str: string) =>
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
-const BottomText = ({ str }: { str: string }) => 
-   <Text style={styles.bottomText}>{str}</Text>
-
+const BottomText = ({ str }: { str: string }) => (
+  <Text style={styles.bottomText}>{str}</Text>
+);
 
 const FoodResult: React.FC<Food> = ({
   name,
@@ -27,14 +27,18 @@ const FoodResult: React.FC<Food> = ({
 }) => {
   const nameString = name || brand;
   const brandString = name && brand ? brand : `-`;
-  const caloriesString = `${calories || '-'} cal`;
-  const quantityString = quantity || '-';
+  const caloriesString = `${calories || "-"} cal`;
+  const quantityString = quantity || "-";
 
   return (
     <>
       {nameString && (
         <View style={styles.foodResultContainer}>
-          {imageUrl && <Image style={styles.foodResultImg} source={imageUrl} />}
+          <View style={styles.imageContainer}>
+            {imageUrl && (
+              <Image style={styles.foodResultImg} source={imageUrl} contentFit="cover" />
+            )}
+          </View>
           <View style={styles.foodResultTextContainer}>
             <Text style={styles.topText}>{capitalizeWords(nameString)}</Text>
             <View style={styles.bottomTextContainer}>
@@ -93,10 +97,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderBottomWidth: 1,
     borderBottomColor: "#000",
+    padding: 10,
+  },
+  imageContainer: {
+    width: 100,
+    height: 100,
   },
   foodResultImg: {
-    width: 90,
-    height: 90,
+    flex: 1
   },
   foodResultTextContainer: {
     flex: 1,
@@ -108,7 +116,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   topText: {
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   bottomText: {
     marginHorizontal: 16,

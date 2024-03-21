@@ -10,6 +10,7 @@ import { AuthServices } from "./services/auth-services.ts";
 import { FoodApi } from "./api/food-api.ts";
 import { FoodServices } from "./services/food-services.ts";
 import { FoodData } from "./data/mongo/food-data.ts";
+import cors from 'cors';
 
 // EXERCISE
 const exerciseData = new ExerciseData();
@@ -30,6 +31,9 @@ const authApi = new AuthApi(authServices, authData);
 const port = 8080;
 
 const app = express();
+
+//provisorio (?)
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({extended : false}))

@@ -35,7 +35,7 @@ export interface FoodFactsApiFood {
   product_name_en: string;
   brands_tags: string[];
   quantity: string;
-  image_front_thumb_url: string;
+  image_front_url: string;
   nutriments: any
 }
 
