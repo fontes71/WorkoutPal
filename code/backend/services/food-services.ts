@@ -26,7 +26,7 @@ export class FoodServices implements IFoodServices {
 
     if (!foodFactsApiFood.length) throw NotFoundError;
 
-    const food: Food[] = mapFood(foodFactsApiFood);
+    const food: Food[] = mapFood(foodFactsApiFood)
 
     
     return food;

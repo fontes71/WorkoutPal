@@ -8,14 +8,19 @@ import { SearchBar } from "@rneui/themed";
 import { useState, useEffect } from "react";
 import { Food } from "@/domain/types";
 
-const capitalizeWords = (str: string) =>
-  str
+const capitalizeWords = (str: string | null) => {
+  if (str === null) {
+    return null;
+  }
+
+  return str
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
+};
 
-const BottomText = ({ str }: { str: string }) => (
-  <Text style={styles.bottomText}>{str}</Text>
+const BottomText = ({ str }: { str: string | null }) => (
+  <>{str && <Text style={styles.bottomText}>{str}</Text>}</>
 );
 
 const FoodResult: React.FC<Food> = ({
@@ -26,9 +31,9 @@ const FoodResult: React.FC<Food> = ({
   quantity,
 }) => {
   const nameString = name || brand;
-  const brandString = name && brand ? brand : `-`;
-  const caloriesString = `${calories || "-"} cal`;
-  const quantityString = quantity || "-";
+  const brandString = name && brand ? brand : null;
+  const caloriesString = calories ? `${calories} cal ` : null;
+  const quantityString = quantity;
 
   return (
     <>
@@ -36,7 +41,11 @@ const FoodResult: React.FC<Food> = ({
         <View style={styles.foodResultContainer}>
           <View style={styles.imageContainer}>
             {imageUrl && (
-              <Image style={styles.foodResultImg} source={imageUrl} contentFit="cover" />
+              <Image
+                style={styles.foodResultImg}
+                source={imageUrl}
+                contentFit="cover"
+              />
             )}
           </View>
           <View style={styles.foodResultTextContainer}>
@@ -100,11 +109,11 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   imageContainer: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
   },
   foodResultImg: {
-    flex: 1
+    flex: 1,
   },
   foodResultTextContainer: {
     flex: 1,

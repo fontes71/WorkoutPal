@@ -1,4 +1,4 @@
-import { FoodFactsApiFood } from "../../../domain/types";
+import { Food, FoodFactsApiFood } from "../../../domain/types";
 
 /*
 const removeStringIfItsInTheName = (name: string, string: string) =>
@@ -68,8 +68,8 @@ export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
     } = apiFood;
 
     const nameString = product_name || product_name_en;
-    const brandString = brand ? noValueIfRepeated(nameString, brand) : "";
-    const quantityString = quantity ? noValueIfRepeated(nameString, quantity) : "";
+    const brandString = nameString && brand ? noValueIfRepeated(nameString, brand) : brand;
+    const quantityString = nameString && quantity ? noValueIfRepeated(nameString, quantity) : quantity;
 
     return {
       id: id,
@@ -79,4 +79,4 @@ export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
       imageUrl: image_front_url,
       calories: nutriments["energy-kcal"],
     };
-  });
+  })
