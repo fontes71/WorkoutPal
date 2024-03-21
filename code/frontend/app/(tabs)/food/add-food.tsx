@@ -88,6 +88,7 @@ export default function AddFoodScreen() {
       <SearchBar
         placeholder="Type Here..."
         onSubmitEditing={handleEnter}
+        returnKeyType="search"
         onChangeText={updateQuery}
         value={query}
       />
