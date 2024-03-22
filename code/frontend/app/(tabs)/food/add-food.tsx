@@ -50,9 +50,47 @@ const FoodResult: React.FC<Food> = ({
           </View>
           <View style={styles.foodResultTextContainer}>
             <Text style={styles.topText}>{capitalizeWords(nameString)}</Text>
+            <BottomText str={capitalizeWords(brandString)} />
+            <BottomText str={caloriesString} />
+            <BottomText str={quantityString} />
+          </View>
+        </View>
+      )}
+    </>
+  );
+};
+
+/* 
+const FoodResult: React.FC<Food> = ({
+  name,
+  imageUrl,
+  brand,
+  calories,
+  quantity,
+}) => {
+  const nameString = name || brand;
+  const brandString = name && brand ? brand : null;
+  const caloriesString = calories ? `${calories} cal ` : null;
+  const quantityString = quantity;
+
+  return (
+    <>
+      {nameString && (
+        <View style={styles.foodResultContainer}>
+          <View style={styles.imageContainer}>
+            {imageUrl && (
+              <Image
+                style={styles.foodResultImg}
+                source={imageUrl}
+                contentFit="cover"
+              />
+            )}
+          </View>
+          <View style={styles.foodResultTextContainer}>
+            <Text style={styles.topText}>{"aaaaaaaaaa aaaaaaaaaaaa aaaaaaaaaaa a aa aaaaa aa aaaaaaaaa"}</Text>
             <View style={styles.bottomTextContainer}>
-              <BottomText str={capitalizeWords(brandString)} />
-              <BottomText str={caloriesString} />
+              <BottomText str={"bbbbb bbbbbbbbb bbbbbb bbbbbbb bbbb"} />
+              <BottomText str={"cccc ccc ccccccc cccccc"} />
               <BottomText str={quantityString} />
             </View>
           </View>
@@ -60,7 +98,7 @@ const FoodResult: React.FC<Food> = ({
       )}
     </>
   );
-};
+}; */
 
 export default function AddFoodScreen() {
   const [query, setQuery] = useState("");
@@ -103,15 +141,15 @@ export default function AddFoodScreen() {
 
 const styles = StyleSheet.create({
   foodResultContainer: {
-    flex: 1,
     flexDirection: "row",
     borderBottomWidth: 1,
     borderBottomColor: "#000",
     padding: 10,
   },
   imageContainer: {
-    width: 80,
-    height: 80,
+    width: 90,
+    height: 90,
+    marginRight: 10,
   },
   foodResultImg: {
     flex: 1,
@@ -119,7 +157,6 @@ const styles = StyleSheet.create({
   foodResultTextContainer: {
     flex: 1,
     alignItems: "center",
-    height: 90,
     justifyContent: "space-evenly",
   },
   bottomTextContainer: {
@@ -127,8 +164,11 @@ const styles = StyleSheet.create({
   },
   topText: {
     fontWeight: "bold",
+    paddingBottom: 5,
+    fontSize: 18
   },
   bottomText: {
-    marginHorizontal: 16,
+    marginRight: 10,
+    fontSize: 14
   },
 });
