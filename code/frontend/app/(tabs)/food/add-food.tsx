@@ -23,6 +23,8 @@ const BottomText = ({ str }: { str: string | null }) => (
   <>{str && <Text style={styles.bottomText}>{str}</Text>}</>
 );
 
+const addCommaIfNeeded = (noComma: boolean, str: string) => noComma ? str : `${str}, `
+
 const FoodResult: React.FC<Food> = ({
   name,
   imageUrl,
@@ -31,10 +33,11 @@ const FoodResult: React.FC<Food> = ({
   quantity,
 }) => {
   const nameString = name || brand;
-  const brandString = name && brand ? brand : null;
-  const caloriesString = calories ? `${calories} cal ` : null;
-  const quantityString = quantity;
-
+  const brandString = name && brand ? brand : ``;
+  const caloriesString = calories ? `${calories} cal ` : ``;
+  
+  const brandStringWithComma = addCommaIfNeeded(!(brandString && (caloriesString || quantity)), brandString)
+  const calorieStringWithComma = addCommaIfNeeded(!(caloriesString && quantity), caloriesString)
   return (
     <>
       {nameString && (
@@ -50,9 +53,7 @@ const FoodResult: React.FC<Food> = ({
           </View>
           <View style={styles.foodResultTextContainer}>
             <Text style={styles.topText}>{capitalizeWords(nameString)}</Text>
-            <BottomText str={capitalizeWords(brandString)} />
-            <BottomText str={caloriesString} />
-            <BottomText str={quantityString} />
+            <BottomText str={capitalizeWords(brandStringWithComma) + calorieStringWithComma + quantity} />
           </View>
         </View>
       )}
