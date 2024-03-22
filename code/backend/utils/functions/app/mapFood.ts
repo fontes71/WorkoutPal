@@ -58,7 +58,7 @@ const noValueIfRepeated = (name: string, string: string) =>
 export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
   foodFactsApiFood.map((apiFood) => {
     const {
-      brands_tags: [brand],
+      brands_tags,
       quantity,
       product_name,
       product_name_en,
@@ -66,6 +66,8 @@ export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
       image_front_url,
       nutriments,
     } = apiFood;
+
+    const brand = brands_tags ? brands_tags[0] : "";
 
     const nameString = product_name || product_name_en;
     const brandString = nameString && brand ? noValueIfRepeated(nameString, brand) : brand;
@@ -79,4 +81,4 @@ export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
       imageUrl: image_front_url,
       calories: nutriments["energy-kcal"],
     };
-  })
+  });
