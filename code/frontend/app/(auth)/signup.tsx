@@ -1,12 +1,34 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, StatusBar } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 
 export default function LoginScreen() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const router = useRouter()
+
+    const MY_IP = process.env.EXPO_PUBLIC_MY_IP
+
+    const signupAction = async () => {
+        const response = await fetch(
+            `http://${MY_IP}:8080/api/signup`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "username": name,
+                    "email": email,
+                    "password": password 
+                }),
+            }
+        );
+
+        if (response.status == 201) router.push("/(tabs)/exercise")
+    }
 
     return (
         <View style={styles.main_container}>
@@ -40,7 +62,7 @@ export default function LoginScreen() {
                         secureTextEntry
                     />
                 </View>
-                <TouchableOpacity style={styles.button} onPress={() => {}}>
+                <TouchableOpacity style={styles.button} onPress={signupAction}>
                     <Text style={styles.buttonText}>Sign Up</Text>
                 </TouchableOpacity>
                 <Text style={styles.signupText}>

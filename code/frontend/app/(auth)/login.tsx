@@ -1,11 +1,32 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, StatusBar } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 
 export default function LoginScreen() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    //const [loginStatus, setLoginStatus] = useState(false)
+    const router = useRouter()
+
+    const MY_IP = process.env.EXPO_PUBLIC_MY_IP
+
+    const loginAction = async () => {
+        const response = await fetch(
+            `http://${MY_IP}:8080/api/login`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "email": email,
+                    "password": password 
+                }),
+            }
+        );
+
+        if (response.ok) router.push("/(tabs)/exercise")
+    }
 
     return (
         <View style={styles.main_container}>
@@ -17,25 +38,25 @@ export default function LoginScreen() {
                 <Text style={[styles.text, styles.header_text]}>Log In</Text>
                 <Text style={[styles.text, styles.small_text]}>Sign In and start getting the most out of our app</Text>
                 <View style={styles.inputs_container}>
-                   <TextInput
-                    style={styles.input}
-                    onChangeText={setEmail}
-                    value={email}
-                    placeholder="Email"
-                    keyboardType="email-address"
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={setEmail}
+                        value={email}
+                        placeholder="Email"
+                        keyboardType="email-address"
                     /> 
                     <TextInput
-                    style={styles.input}
-                    onChangeText={setPassword}
-                    value={password}
-                    placeholder="Password"
-                    secureTextEntry
+                        style={styles.input}
+                        onChangeText={setPassword}
+                        value={password}
+                        placeholder="Password"
+                        secureTextEntry
                     />
                     <TouchableOpacity onPress={() => {}}>
                         <Text style={styles.forgotPassword}>Forgot Password</Text>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={styles.button} onPress={() => {}}>
+                <TouchableOpacity style={styles.button} onPress={loginAction}>
                     <Text style={styles.buttonText}>Log In</Text>
                 </TouchableOpacity>
                 <Text style={styles.signupText}>
