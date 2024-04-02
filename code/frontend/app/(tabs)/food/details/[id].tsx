@@ -3,13 +3,15 @@ import { StyleSheet } from "react-native";
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import { Link, Stack } from "expo-router";
+import { useLocalSearchParams } from 'expo-router';
 
-export default function FoodScreen() {
+export default function FoodDetailsScreen() {
+  const { id } = useLocalSearchParams();
   return (
     <View style={styles.container}>
-       <Stack.Screen options={{ title: "Food" }} />
+       <Stack.Screen options={{ title: "Food Details" }} />
       <Link style={styles.link} href={"/food/search-food"}>
-        Add Food +
+      {id}
       </Link>
     </View>
   );
