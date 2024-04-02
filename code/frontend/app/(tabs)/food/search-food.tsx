@@ -8,6 +8,7 @@ import { SearchBar } from "@rneui/themed";
 import { useState, useEffect } from "react";
 import { Food } from "@/domain/types";
 import { localhost } from "@/constants";
+import { Linking, TouchableOpacity } from "react-native";
 
 const capitalizeWords = (str: string | null) => {
   if (str === null) {
@@ -24,9 +25,11 @@ const BottomText = ({ str }: { str: string | null }) => (
   <>{str && <Text style={styles.bottomText}>{str}</Text>}</>
 );
 
-const addCommaIfNeeded = (noComma: boolean, str: string) => noComma ? str : `${str}, `
+const addCommaIfNeeded = (noComma: boolean, str: string) =>
+  noComma ? str : `${str}, `;
 
 const FoodResult: React.FC<Food> = ({
+  id,
   name,
   imageUrl,
   brand,
@@ -36,27 +39,41 @@ const FoodResult: React.FC<Food> = ({
   const nameString = name || brand;
   const brandString = name && brand ? brand : ``;
   const caloriesString = calories ? `${calories} cal ` : ``;
-  
-  const brandStringWithComma = addCommaIfNeeded(!(brandString && (caloriesString || quantity)), brandString)
-  const calorieStringWithComma = addCommaIfNeeded(!(caloriesString && quantity), caloriesString)
+
+  const brandStringWithComma = addCommaIfNeeded(
+    !(brandString && (caloriesString || quantity)),
+    brandString
+  );
+  const calorieStringWithComma = addCommaIfNeeded(
+    !(caloriesString && quantity),
+    caloriesString
+  );
   return (
     <>
       {nameString && (
-        <View style={styles.foodResultContainer}>
-          <View style={styles.imageContainer}>
-            {imageUrl && (
-              <Image
-                style={styles.foodResultImg}
-                source={imageUrl}
-                contentFit="cover"
+        <Link href={`/food/details/${id}`}>
+          <View style={styles.foodResultContainer}>
+            <View style={styles.imageContainer}>
+              {imageUrl && (
+                <Image
+                  style={styles.foodResultImg}
+                  source={imageUrl}
+                  contentFit="cover"
+                />
+              )}
+            </View>
+            <View style={styles.foodResultTextContainer}>
+              <Text style={styles.topText}>{capitalizeWords(nameString)}</Text>
+              <BottomText
+                str={
+                  capitalizeWords(brandStringWithComma) +
+                  calorieStringWithComma +
+                  quantity
+                }
               />
-            )}
+            </View>
           </View>
-          <View style={styles.foodResultTextContainer}>
-            <Text style={styles.topText}>{capitalizeWords(nameString)}</Text>
-            <BottomText str={capitalizeWords(brandStringWithComma) + calorieStringWithComma + quantity} />
-          </View>
-        </View>
+        </Link>
       )}
     </>
   );
@@ -167,10 +184,10 @@ const styles = StyleSheet.create({
   topText: {
     fontWeight: "bold",
     paddingBottom: 5,
-    fontSize: 18
+    fontSize: 18,
   },
   bottomText: {
     marginRight: 10,
-    fontSize: 14
+    fontSize: 14,
   },
 });
