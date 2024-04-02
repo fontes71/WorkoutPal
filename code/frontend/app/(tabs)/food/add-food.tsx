@@ -7,6 +7,7 @@ import { Link, Stack } from "expo-router";
 import { SearchBar } from "@rneui/themed";
 import { useState, useEffect } from "react";
 import { Food } from "@/domain/types";
+import { localhost } from "@/constants";
 
 const capitalizeWords = (str: string | null) => {
   if (str === null) {
@@ -108,7 +109,7 @@ export default function AddFoodScreen() {
   const handleEnter = () => {
     const fetchFood = async () => {
       const response = await fetch(
-        `http://192.168.0.129:8080/api/food/search?query=${query}`
+        `${localhost}8080/api/food/search?query=${query}`
       );
       const food: Food[] = await response.json();
 

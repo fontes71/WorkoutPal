@@ -9,6 +9,7 @@ import { Exercise } from "@/domain/types";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ExerciseDetailsScreen from "./exercise-details";
+import { localhost } from "@/constants";
 
 const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={styles.bottomText}>{str}</Text>}</>
@@ -44,7 +45,7 @@ export default function SearchExerciseScreen() {
      
     const handleEnter = () => {
         const fetchExercise = async () => {
-            const response = await fetch(`http://192.168.0.129:8080/api/exercises/name/${exerciseName}`);
+            const response = await fetch(`${localhost}8080/api/exercises/name/${exerciseName}`);
 
             if (response.status !== 200) {
                 return;
