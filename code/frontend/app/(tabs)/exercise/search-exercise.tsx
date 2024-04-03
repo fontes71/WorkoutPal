@@ -1,14 +1,11 @@
-import { Image, FlatList, StyleSheet, TouchableOpacity  } from "react-native";
+import { Image, FlatList, StyleSheet, TouchableOpacity, Pressable  } from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
-import { Link, Stack } from "expo-router";
+import { Link, Stack, router } from "expo-router";
 import { SearchBar } from '@rneui/themed';
 import { useState, useEffect } from "react";
 import { Exercise } from "@/domain/types";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ExerciseDetailsScreen from "./exercise-details";
 import { localhost } from "@/constants";
 
 const BottomText = ({ str }: { str: string | null }) => (
@@ -35,13 +32,9 @@ const ExerciseResult: React.FC<Exercise> = ({ name, gifUrl, equipment }) => {
     );
 }
 
-const NavStack = createNativeStackNavigator();
-
 export default function SearchExerciseScreen() {
     const [exerciseName, setExerciseName] = useState("");
-    const [exercises, setExercises] = useState([] as Exercise[]);
-    const [exercisePressed, setExercisePressed] = useState(false);
-    const [exerciseDetails, setExerciseDetails] = useState({} as Exercise);
+    const [exercises, setExercises] = useState<Exercise[]>([]);
      
     const handleEnter = () => {
         const fetchExercise = async () => {
@@ -63,8 +56,10 @@ export default function SearchExerciseScreen() {
     }
 
     const handleExercisePress = async (exercise: Exercise) => {
-        setExerciseDetails(exercise);
-        setExercisePressed(true);
+        router.push({
+            pathname: "/exercise/details/[exerciseJSON]",
+            params: { exerciseJSON: JSON.stringify(exercise) }
+        });
     }
 
     return (
@@ -77,26 +72,15 @@ export default function SearchExerciseScreen() {
                 onChangeText={updateExerciseName}
                 value={exerciseName}
             />
-            {exercises[0] !== undefined && !exercisePressed ? 
-                <FlatList
+            <FlatList
                     data={exercises}
                     renderItem={({ item }) => 
-                        <TouchableOpacity onPress={() => handleExercisePress(item)}>
+                        <Pressable onPress={() => {handleExercisePress(item)}}>
                             <ExerciseResult {...item} />
-                        </TouchableOpacity>
+                        </Pressable>
                     }
                     keyExtractor={(item: Exercise) => item._id}
-                /> : exercises[0] === undefined && exercisePressed ?
-                <Text> No exercise found </Text> : null
-            }
-            {exercisePressed && 
-                <View style={styles.detailsContainer}>
-                    <ExerciseDetailsScreen {...exerciseDetails}/>
-                    <TouchableOpacity onPress={() => setExercisePressed(false)}>
-                        <Text> Back </Text>
-                    </TouchableOpacity>
-                </View>
-            }
+                />
         </View>
     );
 }
