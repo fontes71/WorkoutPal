@@ -64,7 +64,7 @@ export default function SearchExerciseScreen() {
 
     return (
         <View >
-            <Stack.Screen options={{ title: "Searching exercise" }} />
+            <Stack.Screen options={{ title: "Search exercise" }} />
             <SearchBar
                 placeholder="Type Here..."
                 onSubmitEditing={handleEnter}

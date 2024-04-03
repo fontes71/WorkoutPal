@@ -10,27 +10,16 @@ const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={styles.bottomText}>{str}</Text>}</>
 );
 
-/*const ExerciseDetailsScreen = () => {
-    const { exercise } = useLocalSearchParams<{ exercise: string }>();
-    const exerciseOBJ = JSON.parse(exercise) as Exercise;
-
-    return (
-        <View>
-            <Stack.Screen options={{ title: `${exerciseOBJ.name} Details` }}/>
-            <Text>Exercise Details</Text>
-        </View>
-    )
-}*/
-
 const ExerciseDetailsScreen = () => {
     const { exerciseJSON } = useLocalSearchParams<{ exerciseJSON: string }>();
     const exercise = JSON.parse(exerciseJSON) as Exercise;
 
     return (
         <View>
-            <Stack.Screen options={{ title: `${exercise.name}` }}/>
+            <Stack.Screen options={{ title: "Details" }}/>
             <View style={styles.exerciseResultContainer}>
                 <View style={styles.exerciseResultTextContainer}>
+                    <Text style={styles.topText}>{exercise.name}</Text>
                     <View style={styles.imageContainer}>
                     {exercise.gifUrl && (
                         <Image
