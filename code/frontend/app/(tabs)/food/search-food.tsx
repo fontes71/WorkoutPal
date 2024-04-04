@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { Food } from "@/domain/types";
 import { localhost } from "@/constants";
 import { Linking, TouchableOpacity } from "react-native";
+import FoodCover from "@/app/utils/components/FoodCover";
 
 const capitalizeWords = (str: string | null) => {
   if (str === null) {
@@ -28,8 +29,30 @@ const BottomText = ({ str }: { str: string | null }) => (
 const addCommaIfNeeded = (noComma: boolean, str: string) =>
   noComma ? str : `${str}, `;
 
+
+  
+
+interface FoodResultInfoProps {
+  nameString: string;
+  brandString: string;
+  calorieString: string;
+  quantity: string;
+}
+
+const FoodResultInfo: React.FC<FoodResultInfoProps> = ({ nameString, brandString, calorieString, quantity }) => (
+  <View style={styles.foodResultTextContainer}>
+    <Text style={styles.topText}>{capitalizeWords(nameString)}</Text>
+    <BottomText
+      str={
+        capitalizeWords(brandString) +
+        calorieString +
+        quantity
+      }
+    />
+  </View>
+);
+
 const FoodResult: React.FC<Food> = ({
-  id,
   name,
   imageUrl,
   brand,
@@ -37,14 +60,14 @@ const FoodResult: React.FC<Food> = ({
   quantity,
 }) => {
   const nameString = name || brand;
-  const brandString = name && brand ? brand : ``;
-  const caloriesString = calories ? `${calories} cal ` : ``;
+  let brandString = name && brand ? brand : ``;
+  let caloriesString = calories ? `${calories} cal ` : ``;
 
-  const brandStringWithComma = addCommaIfNeeded(
+  brandString = addCommaIfNeeded(
     !(brandString && (caloriesString || quantity)),
     brandString
   );
-  const calorieStringWithComma = addCommaIfNeeded(
+  caloriesString = addCommaIfNeeded(
     !(caloriesString && quantity),
     caloriesString
   );
@@ -52,25 +75,13 @@ const FoodResult: React.FC<Food> = ({
     <>
       {nameString && (
         <View style={styles.foodResultContainer}>
-          <View style={styles.imageContainer}>
-            {imageUrl && (
-              <Image
-                style={styles.foodResultImg}
-                source={imageUrl}
-                contentFit="cover"
-              />
-            )}
-          </View>
-          <View style={styles.foodResultTextContainer}>
-            <Text style={styles.topText}>{capitalizeWords(nameString)}</Text>
-            <BottomText
-              str={
-                capitalizeWords(brandStringWithComma) +
-                calorieStringWithComma +
-                quantity
-              }
-            />
-          </View>
+          <FoodCover imageUrl={imageUrl} />
+          <FoodResultInfo
+            nameString={nameString}
+            brandString={brandString}
+            calorieString={caloriesString}
+            quantity={quantity}
+          />
         </View>
       )}
     </>
@@ -79,10 +90,10 @@ const FoodResult: React.FC<Food> = ({
 
 export default function AddFoodScreen() {
   const [query, setQuery] = useState("");
-  const [food, setFood] = useState<Food[]>([]);
+  const [foodResults, setFood] = useState<Food[]>([]);
 
   const handleEnter = () => {
-    const fetchFood = async () => {
+    const fetchFoodResults = async () => {
       const response = await fetch(
         `${localhost}8080/api/food/search?query=${query}`
       );
@@ -90,7 +101,7 @@ export default function AddFoodScreen() {
 
       setFood(food);
     };
-    if (query.length > 1) fetchFood();
+    if (query.length > 1) fetchFoodResults();
   };
 
   const updateQuery = (value: string) => {
@@ -114,14 +125,14 @@ export default function AddFoodScreen() {
         value={query}
       />
       <FlatList
-        data={food}
+        data={foodResults}
         renderItem={({ item }) => (
           <Pressable
             onPress={() => {
               handleFoodPress(item);
             }}
           >
-            <FoodResult {...item} />
+            <FoodResult key={item.id} {...item} />
           </Pressable>
         )}
         keyExtractor={(item: Food) => item.id}
@@ -136,14 +147,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#000",
     padding: 10,
-  },
-  imageContainer: {
-    width: 90,
-    height: 90,
-    marginRight: 10,
-  },
-  foodResultImg: {
-    flex: 1,
   },
   foodResultTextContainer: {
     flex: 1,
