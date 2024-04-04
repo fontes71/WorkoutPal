@@ -35,15 +35,23 @@ export interface FoodFactsApiFood {
   product_name_en: string;
   brands_tags: string[];
   quantity: string;
+  product_quantity: string,
+  product_quantity_unit: string;
   image_front_url: string;
-  nutriments: any
+  nutriments: any;
 }
 
+// ter quantity e quantity grams é provisório
 export interface Food {
   id: string;
   name: string | null;
   brand: string;
   quantity: string;
+  quantity_grams: string,
+  quantity_unit: string;
   imageUrl: string;
   calories: number;
+  protein: number;
+  fat: number;
+  carbs: number;
 }

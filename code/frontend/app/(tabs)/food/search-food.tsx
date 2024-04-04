@@ -1,9 +1,9 @@
-import { FlatList, ScrollView, StyleSheet } from "react-native";
+import { FlatList, Pressable, ScrollView, StyleSheet } from "react-native";
 import { Image } from "expo-image";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
-import { Link, Stack } from "expo-router";
+import { Link, Stack, router } from "expo-router";
 import { SearchBar } from "@rneui/themed";
 import { useState, useEffect } from "react";
 import { Food } from "@/domain/types";
@@ -51,50 +51,6 @@ const FoodResult: React.FC<Food> = ({
   return (
     <>
       {nameString && (
-        <Link href={`/food/details/${id}`}>
-          <View style={styles.foodResultContainer}>
-            <View style={styles.imageContainer}>
-              {imageUrl && (
-                <Image
-                  style={styles.foodResultImg}
-                  source={imageUrl}
-                  contentFit="cover"
-                />
-              )}
-            </View>
-            <View style={styles.foodResultTextContainer}>
-              <Text style={styles.topText}>{capitalizeWords(nameString)}</Text>
-              <BottomText
-                str={
-                  capitalizeWords(brandStringWithComma) +
-                  calorieStringWithComma +
-                  quantity
-                }
-              />
-            </View>
-          </View>
-        </Link>
-      )}
-    </>
-  );
-};
-
-/* 
-const FoodResult: React.FC<Food> = ({
-  name,
-  imageUrl,
-  brand,
-  calories,
-  quantity,
-}) => {
-  const nameString = name || brand;
-  const brandString = name && brand ? brand : null;
-  const caloriesString = calories ? `${calories} cal ` : null;
-  const quantityString = quantity;
-
-  return (
-    <>
-      {nameString && (
         <View style={styles.foodResultContainer}>
           <View style={styles.imageContainer}>
             {imageUrl && (
@@ -106,18 +62,20 @@ const FoodResult: React.FC<Food> = ({
             )}
           </View>
           <View style={styles.foodResultTextContainer}>
-            <Text style={styles.topText}>{"aaaaaaaaaa aaaaaaaaaaaa aaaaaaaaaaa a aa aaaaa aa aaaaaaaaa"}</Text>
-            <View style={styles.bottomTextContainer}>
-              <BottomText str={"bbbbb bbbbbbbbb bbbbbb bbbbbbb bbbb"} />
-              <BottomText str={"cccc ccc ccccccc cccccc"} />
-              <BottomText str={quantityString} />
-            </View>
+            <Text style={styles.topText}>{capitalizeWords(nameString)}</Text>
+            <BottomText
+              str={
+                capitalizeWords(brandStringWithComma) +
+                calorieStringWithComma +
+                quantity
+              }
+            />
           </View>
         </View>
       )}
     </>
   );
-}; */
+};
 
 export default function AddFoodScreen() {
   const [query, setQuery] = useState("");
@@ -139,6 +97,12 @@ export default function AddFoodScreen() {
     setQuery(value);
   };
 
+  const handleFoodPress = async (food: Food) => {
+    router.push({
+      pathname: `/food/details/${food.id}`,
+    });
+  };
+
   return (
     <View>
       <Stack.Screen options={{ title: "Adding food" }} />
@@ -151,7 +115,15 @@ export default function AddFoodScreen() {
       />
       <FlatList
         data={food}
-        renderItem={({ item }) => <FoodResult {...item} />}
+        renderItem={({ item }) => (
+          <Pressable
+            onPress={() => {
+              handleFoodPress(item);
+            }}
+          >
+            <FoodResult {...item} />
+          </Pressable>
+        )}
         keyExtractor={(item: Food) => item.id}
       />
     </View>

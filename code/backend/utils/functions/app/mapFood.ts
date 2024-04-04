@@ -1,54 +1,5 @@
 import { Food, FoodFactsApiFood } from "../../../domain/types";
 
-/*
-const removeStringIfItsInTheName = (name: string, string: string) =>
-  name.toLowerCase().split(" ").includes(string.toLowerCase()) ? "" : string
-
-const addHyphenOrNot = (condition: boolean, string: string) => condition ? ` - ${string}` : ``
-
-const stringNotEmpty = (string: string) => string != ""
-
-const getFoodName = (
-  product_name: string,
-  product_name_en: string,
-  brands_tags: string[],
-  quantity: string
-) => {
-    const nameString = product_name || product_name_en;
-    let brandString = "";
-    let quantityString = "";
-
-    const brand = brands_tags[0]
-    if (brand) {
-        brandString = removeStringIfItsInTheName(nameString, brand)
-        brandString = addHyphenOrNot(stringNotEmpty(nameString) && stringNotEmpty(brandString), brandString)
-    }
-
-    if (!nameString && !brandString)
-        return null
-
-    
-    if (quantity) {
-        quantityString = removeStringIfItsInTheName(nameString, quantity)
-        quantityString = addHyphenOrNot(stringNotEmpty(quantityString), quantityString)
-    }
-
-  return capitalizeWords(nameString + brandString + quantityString) 
-};
-
-export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) => foodFactsApiFood.map((apiFood) => ({
-    id: apiFood.id,
-    name: getFoodName(
-      apiFood.product_name,
-      apiFood.product_name_en,
-      apiFood.brands_tags,
-      apiFood.quantity
-    ),
-    nutriscore: apiFood.nutriscore_data
-  })).filter((food) => food.name != null);
-
-  */
-
 const stringIsInTheName = (name: string, string: string) =>
   name.toLowerCase().split(" ").includes(string.toLowerCase());
 
@@ -60,6 +11,8 @@ export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
     const {
       brands_tags,
       quantity,
+      product_quantity,
+      product_quantity_unit,
       product_name,
       product_name_en,
       id,
@@ -70,15 +23,28 @@ export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
     const brand = brands_tags ? brands_tags[0] : "";
 
     const nameString = product_name || product_name_en;
-    const brandString = nameString && brand ? noValueIfRepeated(nameString, brand) : brand;
-    const quantityString = nameString && quantity ? noValueIfRepeated(nameString, quantity) : quantity;
+    const brandString =
+      nameString && brand ? noValueIfRepeated(nameString, brand) : brand;
+    const quantityString =
+      nameString && quantity
+        ? noValueIfRepeated(nameString, quantity)
+        : quantity;
+
+        
+    console.log("In mapfoodd")
+      
 
     return {
       id: id,
       name: nameString,
       brand: brandString,
       quantity: quantityString,
+      quantity_grams: product_quantity,
+      quantity_unit: product_quantity_unit,
       imageUrl: image_front_url,
       calories: nutriments["energy-kcal"],
+      protein: nutriments["proteins_100g"],
+      fat: nutriments["fat_100g"],
+      carbs: nutriments["carbohydrates_100g"],
     };
   });
