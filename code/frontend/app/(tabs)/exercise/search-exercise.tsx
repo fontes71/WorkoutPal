@@ -57,7 +57,7 @@ export default function SearchExerciseScreen() {
 
     const handleExercisePress = async (exercise: Exercise) => {
         router.push({
-            pathname: "/exercise/details/[exerciseJSON]",
+            pathname: `/exercise/details/${exercise._id}`,
             params: { exerciseJSON: JSON.stringify(exercise) }
         });
     }
