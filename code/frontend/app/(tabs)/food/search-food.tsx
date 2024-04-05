@@ -108,10 +108,13 @@ export default function AddFoodScreen() {
     setQuery(value);
   };
 
-  const handleFoodPress = async (food: Food) => {
+
+
+    const handleFoodPress = async (food: Food) => {
     router.push({
       pathname: `/food/details/${food.id}`,
-    });
+      params: { foodJSON: JSON.stringify(food) }
+  });
   };
 
   return (
@@ -135,7 +138,6 @@ export default function AddFoodScreen() {
             <FoodResult key={item.id} {...item} />
           </Pressable>
         )}
-        keyExtractor={(item: Food) => item.id}
       />
     </View>
   );

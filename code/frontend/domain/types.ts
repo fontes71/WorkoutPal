@@ -3,8 +3,13 @@ export interface Food {
     name: string | null;
     brand: string;
     quantity: string;
+    quantity_grams: string,
+    quantity_unit: string;
     imageUrl: string;
     calories: number;
+    protein: number;
+    fat: number;
+    carbs: number;
 }
 
 export interface Exercise {

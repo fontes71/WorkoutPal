@@ -5,6 +5,7 @@ import { Text, View } from "@/components/Themed";
 import { Link, Stack } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import FoodCover from "@/app/utils/components/FoodCover";
+import { Food } from "@/domain/types";
 
 const foodItem = {
   id: "3017620422003",
@@ -22,18 +23,19 @@ const foodItem = {
 };
 
 export default function FoodDetailsScreen() {
-  //const { id } = useLocalSearchParams();
+  const { foodJSON } = useLocalSearchParams<{ foodJSON: string }>();
+  const food = JSON.parse(foodJSON) as Food;
 
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: "Add Food" }} />
-      <Text style={styles.title}> {foodItem.name}</Text>
+      <Text style={styles.title}> {food.name}</Text>
       <View style={styles.overview}>
-        <FoodCover imageUrl={foodItem.imageUrl} />
-        <Text> {foodItem.calories} cal </Text>
-        <Text> {foodItem.carbs} g </Text>
-        <Text> {foodItem.fat} g </Text>
-        <Text> {foodItem.protein} g </Text>
+        <FoodCover imageUrl={food.imageUrl} />
+        <Text> {food.calories} cal </Text>
+        <Text> {food.carbs} g </Text>
+        <Text> {food.fat} g </Text>
+        <Text> {food.protein} g </Text>
       </View>
     </View>
   );
