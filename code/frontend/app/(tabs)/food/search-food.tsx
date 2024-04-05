@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   foodResultContainer: {
     flexDirection: "row",
     borderBottomWidth: 1,
-    borderBottomColor: "#000",
+    borderBottomColor: "#dadada",
     padding: 10,
   },
   foodResultTextContainer: {
@@ -164,7 +164,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   bottomText: {
-    marginRight: 10,
     fontSize: 14,
   },
 });
