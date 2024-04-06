@@ -25,22 +25,19 @@ export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
     const nameString = product_name || product_name_en;
     const brandString =
       nameString && brand ? noValueIfRepeated(nameString, brand) : brand;
-    const quantityString =
+    const quantityToPresent =
       nameString && quantity
         ? noValueIfRepeated(nameString, quantity)
         : quantity;
-
-        
-    console.log("In mapfoodd")
-      
+    const quantiyUnit = product_quantity_unit ? product_quantity_unit : 'g'
 
     return {
       id: id,
       name: nameString,
       brand: brandString,
-      quantity: quantityString,
-      quantity_grams: product_quantity,
-      quantity_unit: product_quantity_unit,
+      quantityToPresent: quantityToPresent,
+      quantity: product_quantity,
+      quantityUnit: quantiyUnit,
       imageUrl: image_front_url,
       calories: nutriments["energy-kcal"],
       protein: nutriments["proteins_100g"],

@@ -7,11 +7,27 @@ import { useLocalSearchParams } from "expo-router";
 import FoodCover from "@/app/utils/components/FoodCover";
 import { Food } from "@/domain/types";
 
-interface MacronutrientProps {
-  value: number
+const displayValue = (value: string | number) => value ? value : '-'
+
+interface QuantityProps {
+  quantity: string;
+  quantityUnit: string;
 }
 
-const Macronutrient: React.FC<MacronutrientProps> = ({ value }) => <Text style={styles.macronutrient}> {value}g </Text>
+const Quantity: React.FC<QuantityProps> = ({ quantity, quantityUnit }) => (
+  <View style={styles.quantityContainer}>
+    <Text>{displayValue(quantity)}</Text>
+    <Text>{quantityUnit}</Text>
+  </View>
+);
+
+interface MacronutrientProps {
+  value: number;
+}
+
+const Macronutrient: React.FC<MacronutrientProps> = ({ value }) => (
+  <Text style={styles.macronutrient}> {displayValue(value)}g </Text>
+);
 
 interface OverviewTextProps {
   calories: number;
@@ -53,6 +69,7 @@ export default function FoodDetailsScreen() {
           protein={food.protein}
         />
       </View>
+      <Quantity quantity={food.quantity} quantityUnit={food.quantityUnit} />
     </View>
   );
 }
@@ -62,7 +79,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 30,
+    fontSize: 20,
     fontWeight: "bold",
     paddingTop: 30,
     paddingBottom: 30,
@@ -73,22 +90,29 @@ const styles = StyleSheet.create({
     padding: 20,
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: '#dadada'
+    borderColor: "#dadada",
   },
   overviewText: {
-    flex:1,
-    alignItems: 'center',
+    flex: 1,
+    alignItems: "center",
     justifyContent: "space-evenly",
-    height: 90
+    height: 90,
   },
   macronutrientsContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   calories: {
-    fontSize: 19
+    fontSize: 16,
   },
   macronutrient: {
-    fontSize: 16
-
+    fontSize: 14,
+  },
+  quantityContainer: {
+    height: 90,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomWidth: 1,
+    borderColor: "#dadada",
+    flexDirection: 'row'
   }
 });

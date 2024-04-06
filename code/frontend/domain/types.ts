@@ -2,9 +2,9 @@ export interface Food {
     id: string;
     name: string | null;
     brand: string;
-    quantity: string;
-    quantity_grams: string,
-    quantity_unit: string;
+    quantityToPresent: string;
+    quantity: string,
+    quantityUnit: string;
     imageUrl: string;
     calories: number;
     protein: number;
