@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, StatusBar } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, StatusBar, Keyboard } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Link, useRouter } from "expo-router";
+import { localhost } from '@/constants';
+import useKeyboardVisibility from '@/assets/hooks/useKeyboardVisibility';
 
 export default function LoginScreen() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     //const [loginStatus, setLoginStatus] = useState(false)
     const router = useRouter()
-
-    const MY_IP = process.env.EXPO_PUBLIC_MY_IP
+    const isKeyboardVisible = useKeyboardVisibility();
 
     const loginAction = async () => {
         const response = await fetch(
-            `http://${MY_IP}:8080/api/login`, {
+            `${localhost}8080/api/login`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -31,9 +32,9 @@ export default function LoginScreen() {
     return (
         <View style={styles.main_container}>
             <StatusBar barStyle="dark-content" />
-            <View style={styles.logo_container}>
+            {!isKeyboardVisible ? <View style={styles.logo_container}>
                 <Image source={require("../../assets/images/workoutpal-full-logo.png")} style={styles.logo_image} />
-            </View>
+            </View> : <View/>}
             <View style={styles.login_container}>
                 <Text style={[styles.text, styles.header_text]}>Log In</Text>
                 <Text style={[styles.text, styles.small_text]}>Sign In and start getting the most out of our app</Text>

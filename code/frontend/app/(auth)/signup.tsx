@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, StatusBar } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Link, useRouter } from "expo-router";
+import { localhost } from '@/constants';
+import useKeyboardVisibility from '@/assets/hooks/useKeyboardVisibility';
 
 export default function LoginScreen() {
     const [name, setName] = useState('');
@@ -9,12 +11,11 @@ export default function LoginScreen() {
     const [password, setPassword] = useState('');
 
     const router = useRouter()
-
-    const MY_IP = process.env.EXPO_PUBLIC_MY_IP
+    const isKeyboardVisible = useKeyboardVisibility()
 
     const signupAction = async () => {
         const response = await fetch(
-            `http://${MY_IP}:8080/api/signup`, {
+            `${localhost}8080/api/signup`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -33,9 +34,9 @@ export default function LoginScreen() {
     return (
         <View style={styles.main_container}>
             <StatusBar barStyle="dark-content" />
-            <View style={styles.logo_container}>
+            {!isKeyboardVisible ? <View style={styles.logo_container}>
                 <Image source={require("../../assets/images/workoutpal-full-logo.png")} style={styles.logo_image} />
-            </View>
+            </View> : <View/>}
             <View style={styles.login_container}>
                 <Text style={[styles.text, styles.header_text]}>Sign Up</Text>
                 <Text style={[styles.text, styles.small_text]}>Fill the details and create your account now</Text>

@@ -1,0 +1,10 @@
+keyboard visibility -> 
+    - https://stackoverflow.com/questions/51606099/how-to-detect-when-keyboard-is-opened-or-closed-in-react-native
+    - https://reactnative.dev/docs/keyboard#isvisible
+
+     stackoverflow's used because the Keyboard.isVisible does not react to state changes, it only returns the last state found at the rendering moment
+
+Navigation between screen with parameters ->
+    - https://reactnavigation.org/docs/params/#what-should-be-in-params
+
+    navigation.navigate used passing the parameters directly, because the only set-downs are web app related (url) not mobile app related, so there is no reason to use local storage to hide sensitive information
