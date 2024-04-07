@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity, Image } from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
@@ -6,8 +6,10 @@ import { Link, Stack } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import FoodCover from "@/app/utils/components/FoodCover";
 import { Food } from "@/domain/types";
+import { useState } from "react";
 
-const displayValue = (value: string | number) => value ? value : '-'
+const displayMacro = (value: number) => value ? `${value}g` : '-'
+const display = (value: string) => value ? `${value}` : '-'
 
 interface QuantityProps {
   quantity: string;
@@ -16,8 +18,8 @@ interface QuantityProps {
 
 const Quantity: React.FC<QuantityProps> = ({ quantity, quantityUnit }) => (
   <View style={styles.quantityContainer}>
-    <Text>{displayValue(quantity)}</Text>
-    <Text>{quantityUnit}</Text>
+    <Text style={styles.text_small}>{display(quantity)}</Text>
+    <Text style={styles.text_small}>{display(quantityUnit)}</Text>
   </View>
 );
 
@@ -26,7 +28,7 @@ interface MacronutrientProps {
 }
 
 const Macronutrient: React.FC<MacronutrientProps> = ({ value }) => (
-  <Text style={styles.macronutrient}> {displayValue(value)}g </Text>
+  <Text style={styles.text_small}> {displayMacro(value)} </Text>
 );
 
 interface OverviewTextProps {
@@ -43,7 +45,7 @@ const OverviewText: React.FC<OverviewTextProps> = ({
   protein,
 }) => (
   <View style={styles.overviewText}>
-    <Text style={styles.calories}> {calories} cal </Text>
+    <Text style={styles.text_medium}> {calories} cal </Text>
     <View style={styles.macronutrientsContainer}>
       <Macronutrient value={carbs} />
       <Macronutrient value={fat} />
@@ -51,6 +53,21 @@ const OverviewText: React.FC<OverviewTextProps> = ({
     </View>
   </View>
 );
+
+const More = () => {
+  const [buttonClicked, setButtonClicked] = useState(false)
+
+  return (
+  <View style={styles.moreContainer}>
+      <TouchableOpacity onPress={() => setButtonClicked(!buttonClicked)} style={styles.moreButton}>
+      <Text style={styles.text_small}>
+        More
+      </Text>
+      <Image source={require("@/assets/images/down-arrow.png")} style={styles.arrowIcon} />
+      </TouchableOpacity>
+  </View>
+  )
+}
 
 export default function FoodDetailsScreen() {
   const { foodJSON } = useLocalSearchParams<{ foodJSON: string }>();
@@ -70,6 +87,7 @@ export default function FoodDetailsScreen() {
         />
       </View>
       <Quantity quantity={food.quantity} quantityUnit={food.quantityUnit} />
+      <More />
     </View>
   );
 }
@@ -79,7 +97,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     paddingTop: 30,
     paddingBottom: 30,
@@ -101,11 +119,11 @@ const styles = StyleSheet.create({
   macronutrientsContainer: {
     flexDirection: "row",
   },
-  calories: {
-    fontSize: 16,
+  text_medium: {
+    fontSize: 18,
   },
-  macronutrient: {
-    fontSize: 14,
+  text_small: {
+    fontSize: 16,
   },
   quantityContainer: {
     height: 90,
@@ -114,5 +132,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#dadada",
     flexDirection: 'row'
+  },
+  moreContainer: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  moreButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  arrowIcon: {
+    marginTop: 3
   }
 });
