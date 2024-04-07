@@ -9,11 +9,14 @@ export default function LoginScreen() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [signupPressed, setSignupPressed] = useState(false)
+    const [response, setResponse] = useState<Response | undefined>(undefined)
 
     const router = useRouter()
     const isKeyboardVisible = useKeyboardVisibility()
 
     const signupAction = async () => {
+        setSignupPressed(true)
         const response = await fetch(
             `${localhost}8080/api/signup`, {
                 method: 'POST',
@@ -28,15 +31,16 @@ export default function LoginScreen() {
             }
         );
 
+        setResponse(response)
         if (response.status == 201) router.push("/(tabs)/exercise")
     }
 
     return (
         <View style={styles.main_container}>
             <StatusBar barStyle="dark-content" />
-            {!isKeyboardVisible ? <View style={styles.logo_container}>
+            {!isKeyboardVisible && <View style={styles.logo_container}>
                 <Image source={require("../../assets/images/workoutpal-full-logo.png")} style={styles.logo_image} />
-            </View> : <View/>}
+            </View>}
             <View style={styles.login_container}>
                 <Text style={[styles.text, styles.header_text]}>Sign Up</Text>
                 <Text style={[styles.text, styles.small_text]}>Fill the details and create your account now</Text>
@@ -46,7 +50,6 @@ export default function LoginScreen() {
                         onChangeText={setName}
                         value={name}
                         placeholder="Name"
-                        secureTextEntry
                     />
                     <TextInput
                         style={styles.input}
@@ -54,6 +57,7 @@ export default function LoginScreen() {
                         value={email}
                         placeholder="Email"
                         keyboardType="email-address"
+                        autoCapitalize="none"
                     />  
                     <TextInput
                         style={styles.input}
@@ -61,10 +65,11 @@ export default function LoginScreen() {
                         value={password}
                         placeholder="Password"
                         secureTextEntry
+                        autoCapitalize="none"
                     />
                 </View>
                 <TouchableOpacity style={styles.button} onPress={signupAction}>
-                    <Text style={styles.buttonText}>Sign Up</Text>
+                    {(!signupPressed) ? <Text style={styles.buttonText}>Sign Up</Text> : <Text style={styles.buttonText}>Loading...</Text>}
                 </TouchableOpacity>
                 <Text style={styles.signupText}>
                     Already have an account?  <Link style={styles.signupLink} href={"/(auth)/login"}>Log In</Link>
