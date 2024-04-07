@@ -8,8 +8,8 @@ import FoodCover from "@/app/utils/components/FoodCover";
 import { Food } from "@/domain/types";
 import { useState } from "react";
 
-const displayMacro = (value: number) => value ? `${value}g` : '-'
-const display = (value: string) => value ? `${value}` : '-'
+const displayMacro = (value: number) => (value ? `${value}g` : "-");
+const display = (value: string) => (value ? `${value}` : "-");
 
 interface QuantityProps {
   quantity: string;
@@ -19,7 +19,7 @@ interface QuantityProps {
 const Quantity: React.FC<QuantityProps> = ({ quantity, quantityUnit }) => (
   <View style={styles.quantityContainer}>
     <Text style={styles.text_small}>{display(quantity)}</Text>
-    <Text style={styles.text_small}>{display(quantityUnit)}</Text>
+    {quantity && <Text style={styles.text_small}>{quantityUnit}</Text>}
   </View>
 );
 
@@ -55,19 +55,38 @@ const OverviewText: React.FC<OverviewTextProps> = ({
 );
 
 const More = () => {
-  const [buttonClicked, setButtonClicked] = useState(false)
+  const [buttonClicked, setButtonClicked] = useState(false);
 
   return (
-  <View style={styles.moreContainer}>
-      <TouchableOpacity onPress={() => setButtonClicked(!buttonClicked)} style={styles.moreButton}>
-      <Text style={styles.text_small}>
-        More
-      </Text>
-      <Image source={require("@/assets/images/down-arrow.png")} style={styles.arrowIcon} />
+    <View style={styles.moreContainer}>
+      <TouchableOpacity
+        onPress={() => setButtonClicked(!buttonClicked)}
+        style={styles.moreButton}
+      >
+        <Text style={styles.text_small}>More</Text>
+        <Image
+          source={require("@/assets/images/down-arrow.png")}
+          style={styles.arrowIcon}
+        />
       </TouchableOpacity>
-  </View>
-  )
-}
+    </View>
+  );
+};
+
+const TopSection = () => (
+  <Stack.Screen
+    options={{
+      headerTitle: (props) => <Text style={{ fontSize: 18 }}>Add Food</Text>,
+      headerRight: (props) => (
+        <Image
+          source={require("@/assets/images/save.png")}
+          style={{ marginRight: 0 }}
+        />
+      ),
+      headerTitleAlign: "left",
+    }}
+  />
+);
 
 export default function FoodDetailsScreen() {
   const { foodJSON } = useLocalSearchParams<{ foodJSON: string }>();
@@ -75,7 +94,7 @@ export default function FoodDetailsScreen() {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: "Add Food" }} />
+      <TopSection />
       <Text style={styles.title}> {food.name}</Text>
       <View style={styles.overview}>
         <FoodCover imageUrl={food.imageUrl} />
@@ -127,22 +146,22 @@ const styles = StyleSheet.create({
   },
   quantityContainer: {
     height: 90,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderBottomWidth: 1,
     borderColor: "#dadada",
-    flexDirection: 'row'
+    flexDirection: "row",
   },
   moreContainer: {
     marginTop: 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
   },
   moreButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   arrowIcon: {
-    marginTop: 3
-  }
+    marginTop: 3,
+  },
 });
