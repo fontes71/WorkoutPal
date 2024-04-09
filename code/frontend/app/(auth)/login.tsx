@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, StatusBar } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, StatusBar } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Link, useRouter } from "expo-router";
 import { localhost } from '@/constants';
