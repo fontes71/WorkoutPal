@@ -11,6 +11,7 @@ export default function LoginScreen() {
     const [password, setPassword] = useState('')
     const [fetching, setFetching] = useState(false)
     const [response, setResponse] = useState<Response | undefined>(undefined)
+    const [showPassword, setShowPassword] = useState(false)
 
     const router = useRouter()
     const isKeyboardVisible = useKeyboardVisibility();
@@ -63,9 +64,15 @@ export default function LoginScreen() {
                         onChangeText={setPassword}
                         value={password}
                         placeholder="Password"
-                        secureTextEntry
+                        secureTextEntry={!showPassword}
                         autoCapitalize="none"
-                    />
+                    /> 
+                    <View style={{width: "100%"}}>
+                        <TouchableOpacity style={styles.show_password_button} onPress={() => setShowPassword(prevShowPassword => !prevShowPassword)}>
+                            {showPassword ? <FontAwesome style={styles.show_password_icon} name="eye" size={15}/> : <FontAwesome style={styles.show_password_icon} name="eye-slash" size={15}/>}
+                        </TouchableOpacity>
+                    </View>
+                    
                     <TouchableOpacity onPress={() => {}}>
                         <Text style={styles.forgotPassword}>Forgot Password</Text>
                     </TouchableOpacity>

@@ -10,6 +10,7 @@ export default function LoginScreen() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
     const [fetching, setFetching] = useState(false)
     const [response, setResponse] = useState<Response | undefined>(undefined)
 
@@ -71,10 +72,17 @@ export default function LoginScreen() {
                         onChangeText={setPassword}
                         value={password}
                         placeholder="Password"
-                        secureTextEntry
+                        secureTextEntry={!showPassword}
                         autoCapitalize="none"
                     />
                 </View>
+
+                <View style={{width: "100%"}}>
+                    <TouchableOpacity style={styles.show_password_button_signup} onPress={() => setShowPassword(prevShowPassword => !prevShowPassword)}>
+                        {showPassword ? <FontAwesome style={styles.show_password_icon} name="eye" size={15}/> : <FontAwesome style={styles.show_password_icon} name="eye-slash" size={15}/>}
+                    </TouchableOpacity>
+                </View>
+
                 <TouchableOpacity style={styles.button} onPress={signupAction}>
                     {(!fetching) ? <Text style={styles.buttonText}>Sign Up</Text> : <Text style={styles.buttonText}>Loading...</Text>}
                 </TouchableOpacity>

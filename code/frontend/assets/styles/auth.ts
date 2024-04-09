@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 
+// hardcoded dimentions
 const auth_styles = StyleSheet.create({
     main_container: {
         marginTop: 0
@@ -10,6 +11,21 @@ const auth_styles = StyleSheet.create({
     },
     back_button: {
         width: "10%",
+    },
+    show_password_button: {
+        alignSelf: "flex-end",
+        width: "20%",
+        marginTop: -43, 
+        paddingRight: 20
+    },
+    show_password_button_signup: {
+        alignSelf: "flex-end",
+        width: "20%",
+        marginTop: -79, 
+        paddingRight: 20
+    },
+    show_password_icon: {
+        alignSelf: "flex-end"
     },
     horizontal_line: { 
         borderBottomColor: 'black', 
