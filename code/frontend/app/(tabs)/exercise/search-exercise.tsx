@@ -7,25 +7,26 @@ import { SearchBar } from '@rneui/themed';
 import { useState, useEffect } from "react";
 import { Exercise } from "@/domain/types";
 import { localhost } from "@/constants";
+import exercises_styles from "@/assets/styles/exercises"
 
 const BottomText = ({ str }: { str: string | null }) => (
-    <>{str && <Text style={styles.bottomText}>{str}</Text>}</>
+    <>{str && <Text style={exercises_styles.bottomText}>{str}</Text>}</>
 );
   
 
 const ExerciseResult: React.FC<Exercise> = ({ name, gifUrl, equipment }) => {
     return (
-        <View style={styles.exerciseResultContainer}>
-          <View style={styles.imageContainer}>
+        <View style={exercises_styles.exerciseResultContainer}>
+          <View style={exercises_styles.imageContainer}>
             {gifUrl && (
               <Image
-                style={styles.exerciseGifResult}
+                style={exercises_styles.exerciseGifResult}
                 source={{uri: gifUrl}}
               />
             )}
           </View>
-          <View style={styles.exerciseResultTextContainer}>
-            <Text style={styles.topText}>{name}</Text>
+          <View style={exercises_styles.exerciseResultTextContainer}>
+            <Text style={exercises_styles.topText}>{name}</Text>
             <BottomText str={'Equipment: ' + equipment} />
           </View>
         </View>
@@ -84,41 +85,3 @@ export default function SearchExerciseScreen() {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    exerciseResultContainer: {
-        flexDirection: "row",
-        borderBottomWidth: 1,
-        borderBottomColor: "#000",
-        padding: 10,
-    },
-    imageContainer: {
-        width: 90,
-        height: 90,
-        marginRight: 10,
-    },
-    exerciseGifResult: {
-        flex: 1
-    },
-    exerciseResultTextContainer: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "space-evenly",
-    },
-    bottomTextContainer: {
-        flexDirection: "row",
-    },
-    topText: {
-        fontWeight: "bold",
-        paddingBottom: 5,
-        fontSize: 18
-    },
-    bottomText: {
-        marginRight: 10,
-        fontSize: 14
-    },
-    detailsContainer: {
-        alignItems: "center",
-        justifyContent: "space-evenly",
-    },
-});
