@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, StatusBar } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, StatusBar } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Link, useRouter } from "expo-router";
+import PasswordInput from '@/components/PasswordInput';
 import { localhost } from '@/constants';
 import useKeyboardVisibility from '@/assets/hooks/useKeyboardVisibility';
 import auth_styles from '@/assets/styles/auth';
@@ -10,7 +11,6 @@ export default function LoginScreen() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [showPassword, setShowPassword] = useState(false)
     const [fetching, setFetching] = useState(false)
     const [response, setResponse] = useState<Response | undefined>(undefined)
 
@@ -39,13 +39,13 @@ export default function LoginScreen() {
 
     return (
         <View style={styles.main_container}>
+            <StatusBar barStyle="dark-content" />
             <View style={styles.horizontal_line} />
             <View style = { styles.top_bar_container }>
                 <TouchableOpacity style={styles.back_button} onPress={router.back}>
                 <FontAwesome style={styles.back_icon} name="angle-left"/> 
                 </TouchableOpacity>
             </View>
-            <StatusBar barStyle="dark-content" />
             {!isKeyboardVisible && <View style={styles.logo_container}>
                 <Image source={require("../../assets/images/workoutpal-full-logo.png")} style={styles.logo_image_signup} />
             </View>}
@@ -67,20 +67,7 @@ export default function LoginScreen() {
                         keyboardType="email-address"
                         autoCapitalize="none"
                     />  
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={setPassword}
-                        value={password}
-                        placeholder="Password"
-                        secureTextEntry={!showPassword}
-                        autoCapitalize="none"
-                    />
-                </View>
-
-                <View style={{width: "100%"}}>
-                    <TouchableOpacity style={styles.show_password_button_signup} onPress={() => setShowPassword(prevShowPassword => !prevShowPassword)}>
-                        {showPassword ? <FontAwesome style={styles.show_password_icon} name="eye" size={15}/> : <FontAwesome style={styles.show_password_icon} name="eye-slash" size={15}/>}
-                    </TouchableOpacity>
+                    <PasswordInput password={password} setPassword={setPassword}></PasswordInput>
                 </View>
 
                 <TouchableOpacity style={styles.button} onPress={signupAction}>

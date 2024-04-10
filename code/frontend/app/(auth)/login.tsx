@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StatusBar } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Link, useRouter } from "expo-router";
+import PasswordInput from '@/components/PasswordInput';
 import { localhost } from '@/constants';
 import useKeyboardVisibility from '@/assets/hooks/useKeyboardVisibility';
 import auth_styles from '@/assets/styles/auth';
@@ -11,7 +12,6 @@ export default function LoginScreen() {
     const [password, setPassword] = useState('')
     const [fetching, setFetching] = useState(false)
     const [response, setResponse] = useState<Response | undefined>(undefined)
-    const [showPassword, setShowPassword] = useState(false)
 
     const router = useRouter()
     const isKeyboardVisible = useKeyboardVisibility();
@@ -59,19 +59,7 @@ export default function LoginScreen() {
                         keyboardType="email-address"
                         autoCapitalize="none"
                     /> 
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={setPassword}
-                        value={password}
-                        placeholder="Password"
-                        secureTextEntry={!showPassword}
-                        autoCapitalize="none"
-                    /> 
-                    <View style={{width: "100%"}}>
-                        <TouchableOpacity style={styles.show_password_button} onPress={() => setShowPassword(prevShowPassword => !prevShowPassword)}>
-                            {showPassword ? <FontAwesome style={styles.show_password_icon} name="eye" size={15}/> : <FontAwesome style={styles.show_password_icon} name="eye-slash" size={15}/>}
-                        </TouchableOpacity>
-                    </View>
+                    <PasswordInput password={password} setPassword={setPassword}></PasswordInput>
                     
                     <TouchableOpacity onPress={() => {}}>
                         <Text style={styles.forgotPassword}>Forgot Password</Text>
