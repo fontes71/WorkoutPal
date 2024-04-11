@@ -33,19 +33,21 @@ const styles = StyleSheet.create({
     input_container: {
         backgroundColor: 'white',
         flexDirection: 'row',
-        borderRadius: 10
+        borderRadius: 10,
+        marginBottom: 10,
+        borderWidth: 1,
+        borderColor: 'gray',
+        paddingHorizontal: 20,
     },
     input: {
-        width: '83%',
-        height: 43,
-        paddingHorizontal: 20
+        width: '93%',
+        height: 41,
     },
     show_password_button: {
         height: '100%',
         flexDirection: 'row'
     },
     show_password_icon: {
-        alignSelf: 'center',
-        paddingHorizontal: 20
+        alignSelf: 'center'
     },
 })
