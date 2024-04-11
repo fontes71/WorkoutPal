@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StatusBar } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Link, useRouter } from "expo-router";
-import PasswordInput from '@/components/PasswordInput';
+import PasswordInput from '@/app/utils/components/PasswordInput';
 import { localhost } from '@/constants';
 import useKeyboardVisibility from '@/assets/hooks/useKeyboardVisibility';
 import auth_styles from '@/assets/styles/auth';
