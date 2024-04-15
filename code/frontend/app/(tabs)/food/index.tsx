@@ -1,30 +1,16 @@
 import { StyleSheet } from "react-native";
 
-import EditScreenInfo from "@/components/EditScreenInfo";
+import { food_styles } from "@/assets/styles/food";
 import { Text, View } from "@/components/Themed";
 import { Link, Stack } from "expo-router";
 
 export default function FoodScreen() {
   return (
-    <View style={styles.container}>
+    <View style={food_styles.container}>
        <Stack.Screen options={{ title: "Food" }} />
-      <Link style={styles.link} href={"/food/search-food"}>
+      <Link style={food_styles.link} href={"/food/search-food"}>
         Add Food +
       </Link>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  link: {
-    marginTop: 20,
-  },
-});

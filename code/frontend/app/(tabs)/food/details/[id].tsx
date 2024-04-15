@@ -1,4 +1,5 @@
-import { StyleSheet, TouchableOpacity, Image } from "react-native";
+import {  TouchableOpacity, Image } from "react-native";
+import { food_details_styles } from "@/assets/styles/food";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
@@ -17,9 +18,9 @@ interface QuantityProps {
 }
 
 const Quantity: React.FC<QuantityProps> = ({ quantity, quantityUnit }) => (
-  <View style={styles.quantityContainer}>
-    <Text style={styles.text_small}>{display(quantity)}</Text>
-    {quantity && <Text style={styles.text_small}>{quantityUnit}</Text>}
+  <View style={food_details_styles.quantityContainer}>
+    <Text style={food_details_styles.text_small}>{display(quantity)}</Text>
+    {quantity && <Text style={food_details_styles.text_small}>{quantityUnit}</Text>}
   </View>
 );
 
@@ -28,7 +29,7 @@ interface MacronutrientProps {
 }
 
 const Macronutrient: React.FC<MacronutrientProps> = ({ value }) => (
-  <Text style={styles.text_small}> {displayMacro(value)} </Text>
+  <Text style={food_details_styles.text_small}> {displayMacro(value)} </Text>
 );
 
 interface OverviewTextProps {
@@ -44,9 +45,9 @@ const OverviewText: React.FC<OverviewTextProps> = ({
   fat,
   protein,
 }) => (
-  <View style={styles.overviewText}>
-    <Text style={styles.text_medium}> {calories} cal </Text>
-    <View style={styles.macronutrientsContainer}>
+  <View style={food_details_styles.overviewText}>
+    <Text style={food_details_styles.text_medium}> {calories} cal </Text>
+    <View style={food_details_styles.macronutrientsContainer}>
       <Macronutrient value={carbs} />
       <Macronutrient value={fat} />
       <Macronutrient value={protein} />
@@ -58,15 +59,15 @@ const More = () => {
   const [buttonClicked, setButtonClicked] = useState(false);
 
   return (
-    <View style={styles.moreContainer}>
+    <View style={food_details_styles.moreContainer}>
       <TouchableOpacity
         onPress={() => setButtonClicked(!buttonClicked)}
-        style={styles.moreButton}
+        style={food_details_styles.moreButton}
       >
-        <Text style={styles.text_small}>More</Text>
+        <Text style={food_details_styles.text_small}>More</Text>
         <Image
           source={require("@/assets/images/down-arrow.png")}
-          style={styles.arrowIcon}
+          style={food_details_styles.arrowIcon}
         />
       </TouchableOpacity>
     </View>
@@ -93,10 +94,10 @@ export default function FoodDetailsScreen() {
   const food = JSON.parse(foodJSON) as Food;
 
   return (
-    <View style={styles.container}>
+    <View style={food_details_styles.container}>
       <TopSection />
-      <Text style={styles.title}> {food.name}</Text>
-      <View style={styles.overview}>
+      <Text style={food_details_styles.title}> {food.name}</Text>
+      <View style={food_details_styles.overview}>
         <FoodCover imageUrl={food.imageUrl} />
         <OverviewText
           calories={food.calories}
@@ -111,57 +112,3 @@ export default function FoodDetailsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: "bold",
-    paddingTop: 30,
-    paddingBottom: 30,
-    textAlign: "center",
-  },
-  overview: {
-    flexDirection: "row",
-    padding: 20,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: "#dadada",
-  },
-  overviewText: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    height: 90,
-  },
-  macronutrientsContainer: {
-    flexDirection: "row",
-  },
-  text_medium: {
-    fontSize: 18,
-  },
-  text_small: {
-    fontSize: 16,
-  },
-  quantityContainer: {
-    height: 90,
-    alignItems: "center",
-    justifyContent: "center",
-    borderBottomWidth: 1,
-    borderColor: "#dadada",
-    flexDirection: "row",
-  },
-  moreContainer: {
-    marginTop: 10,
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  moreButton: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  arrowIcon: {
-    marginTop: 3,
-  },
-});

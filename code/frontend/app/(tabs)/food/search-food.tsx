@@ -1,6 +1,6 @@
-import { FlatList, Pressable, ScrollView, StyleSheet } from "react-native";
+import { FlatList, Pressable } from "react-native";
 import { Image } from "expo-image";
-
+import { food_search_styles } from "@/assets/styles/food";
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import { Link, Stack, router } from "expo-router";
@@ -23,7 +23,7 @@ const capitalizeWords = (str: string | null) => {
 };
 
 const BottomText = ({ str }: { str: string | null }) => (
-  <>{str && <Text style={styles.bottomText}>{str}</Text>}</>
+  <>{str && <Text style={food_search_styles.bottomText}>{str}</Text>}</>
 );
 
 const addCommaIfNeeded = (noComma: boolean, str: string) =>
@@ -40,8 +40,8 @@ interface FoodResultInfoProps {
 }
 
 const FoodResultInfo: React.FC<FoodResultInfoProps> = ({ nameString, brandString, calorieString, quantity }) => (
-  <View style={styles.foodResultTextContainer}>
-    <Text style={styles.topText}>{capitalizeWords(nameString)}</Text>
+  <View style={food_search_styles.foodResultTextContainer}>
+    <Text style={food_search_styles.topText}>{capitalizeWords(nameString)}</Text>
     <BottomText
       str={
         capitalizeWords(brandString) +
@@ -74,7 +74,7 @@ const FoodResult: React.FC<Food> = ({
   return (
     <>
       {nameString && (
-        <View style={styles.foodResultContainer}>
+        <View style={food_search_styles.foodResultContainer}>
           <FoodCover imageUrl={imageUrl} />
           <FoodResultInfo
             nameString={nameString}
@@ -143,27 +143,4 @@ export default function AddFoodScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  foodResultContainer: {
-    flexDirection: "row",
-    borderBottomWidth: 1,
-    borderBottomColor: "#dadada",
-    padding: 10,
-  },
-  foodResultTextContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-  },
-  bottomTextContainer: {
-    flexDirection: "row",
-  },
-  topText: {
-    fontWeight: "bold",
-    paddingBottom: 5,
-    fontSize: 16,
-  },
-  bottomText: {
-    fontSize: 14,
-  },
-});
+
