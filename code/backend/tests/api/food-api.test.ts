@@ -12,7 +12,6 @@ describe("Endpoint: /api/food/search", () => {
       .expect(200);
 
     const receivedBody = res.body as Food[];
-
     expect(receivedBody).toStrictEqual(food_results);
   });
 
