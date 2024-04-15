@@ -61,6 +61,17 @@ interface MoreButtonProps {
   setButtonClicked: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+interface InfoTextProps {
+  label: string;
+  value: any;
+}
+
+const InfoText: React.FC<InfoTextProps> = ({ label, value }) => (
+  <Text>
+    {label}: {value}
+  </Text>
+);
+
 interface MoreProps {
   fiber: string | null;
   saturatedFats: string | null;
@@ -78,16 +89,15 @@ const MoreInfo: React.FC<MoreProps> = ({
   sugars,
   nutriscoreGrade,
 }) => (
-<View>
-  <Text>Fiber: {fiber}</Text>
-  <Text>SaturatedFats: {saturatedFats}</Text>
-  <Text>Salt: {salt}</Text>
-  <Text>Sodiun: {sodium}</Text>
-  <Text>Sugars: {sugars}</Text>
-  <Text>NutriscoreGrade: {nutriscoreGrade}</Text>
-</View>)
-;
-
+  <View style={food_details_styles.moreInfoContainer}>
+    <InfoText label="Fiber" value={fiber} />
+    <InfoText label="Saturated Fats" value={saturatedFats} />
+    <InfoText label="Salt" value={salt} />
+    <InfoText label="Sodium" value={sodium} />
+    <InfoText label="Sugars" value={sugars} />
+    <InfoText label="Nutriscore Grade" value={nutriscoreGrade} />
+  </View>
+);
 const MoreButton: React.FC<MoreButtonProps> = ({
   buttonClicked,
   setButtonClicked,
@@ -122,7 +132,16 @@ const More: React.FC<MoreProps> = ({
         buttonClicked={buttonClicked}
         setButtonClicked={setButtonClicked}
       />
-      {buttonClicked && <MoreInfo fiber={fiber} saturatedFats={saturatedFats} salt={salt} sodium={sodium} sugars={sugars}  nutriscoreGrade={nutriscoreGrade} />}
+      {buttonClicked && (
+        <MoreInfo
+          fiber={fiber}
+          saturatedFats={saturatedFats}
+          salt={salt}
+          sodium={sodium}
+          sugars={sugars}
+          nutriscoreGrade={nutriscoreGrade}
+        />
+      )}
     </View>
   );
 };
@@ -130,7 +149,7 @@ const More: React.FC<MoreProps> = ({
 const TopSection = () => (
   <Stack.Screen
     options={{
-      headerTitle: (props) => <Text style={{ fontSize: 18 }}>Add Food</Text>,
+      headerTitle: "Add Food",
       headerRight: (props) => (
         <Image
           source={require("@/assets/images/save.png")}

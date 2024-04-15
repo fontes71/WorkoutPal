@@ -115,7 +115,7 @@ export default function AddFoodScreen() {
 
   return (
     <View>
-      <Stack.Screen options={{ title: "Adding food" }} />
+      <Stack.Screen options={{ title: "Search food" }} />
       <SearchBar
         placeholder="Type Here..."
         onSubmitEditing={handleEnter}

@@ -84,13 +84,16 @@ export const food_details_styles = StyleSheet.create({
   moreContainer: {
     marginTop: 10,
     justifyContent: "center",
+    alignItems: "center"
   },
   moreButton: {
     flexDirection: "row",
-    alignSelf: 'center',
     alignItems: "center",
   },
   arrowIcon: {
     marginTop: 3,
   },
+  moreInfoContainer: {
+    marginTop: 20
+  }
 });
