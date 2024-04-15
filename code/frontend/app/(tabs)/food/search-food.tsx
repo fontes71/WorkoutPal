@@ -30,8 +30,6 @@ const addCommaIfNeeded = (noComma: boolean, str: string) =>
   noComma ? str : `${str}, `;
 
 
-  
-
 interface FoodResultInfoProps {
   nameString: string;
   brandString: string;

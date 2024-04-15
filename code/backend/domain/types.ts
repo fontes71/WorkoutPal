@@ -39,6 +39,7 @@ export interface FoodFactsApiFood {
   product_quantity_unit: string;
   image_front_url: string;
   nutriments: any;
+  nutriscore_grade: string;
 }
 
 // ter quantity e quantity grams é provisório
@@ -51,7 +52,13 @@ export interface Food {
   quantityUnit: string;
   imageUrl: string;
   calories: number;
-  protein: number;
-  fat: number;
-  carbs: number;
+  protein: string | null;
+  fat: string | null;
+  carbs: string | null;
+  fiber: string | null;
+  saturatedFat: string | null;
+  salt: string | null;
+  sodium: string | null;
+  sugars: string | null;
+  nutriscoreGrade: string | null;
 }

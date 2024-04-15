@@ -6,6 +6,18 @@ const stringIsInTheName = (name: string, string: string) =>
 const noValueIfRepeated = (name: string, string: string) =>
   stringIsInTheName(name, string) ? "" : string;
 
+
+
+const getNutrimentAndUnit = (nutriments: any, nutrimentName: string) => {
+  const nutriment = nutriments[`${nutrimentName}_100g`]
+  if (!nutriment)
+    return null
+
+  const nutrimentUnit = nutriments[`${nutrimentName}_unit`]
+
+  return `${nutriment}${nutrimentUnit}`
+}
+
 export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
   foodFactsApiFood.map((apiFood) => {
     const {
@@ -18,6 +30,7 @@ export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
       id,
       image_front_url,
       nutriments,
+      nutriscore_grade
     } = apiFood;
 
     const brand = brands_tags ? brands_tags[0] : "";
@@ -40,8 +53,14 @@ export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
       quantityUnit: quantiyUnit,
       imageUrl: image_front_url,
       calories: nutriments["energy-kcal"],
-      protein: nutriments["proteins_100g"],
-      fat: nutriments["fat_100g"],
-      carbs: nutriments["carbohydrates_100g"],
+      protein: getNutrimentAndUnit(nutriments, "proteins"),
+      fat: getNutrimentAndUnit(nutriments, "fat"),
+      carbs: getNutrimentAndUnit(nutriments, "carbohydrates"),
+      fiber: getNutrimentAndUnit(nutriments, "fiber"),
+      saturatedFat: getNutrimentAndUnit(nutriments, "saturated-fat"),
+      salt: getNutrimentAndUnit(nutriments, "salt"),
+      sodium: getNutrimentAndUnit(nutriments, "sodium"),
+      sugars: getNutrimentAndUnit(nutriments, "sugars"),
+      nutriscoreGrade: nutriscore_grade
     };
   });

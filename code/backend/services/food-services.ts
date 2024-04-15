@@ -24,12 +24,10 @@ export class FoodServices implements IFoodServices {
       limit
     );
 
-
     if (!foodFactsApiFood.length) throw NotFoundError;
 
     const food: Food[] = mapFood(foodFactsApiFood)
 
-    
     return food;
   };
 }

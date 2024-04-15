@@ -2,7 +2,7 @@
 import { IFoodData } from "../../domain/interfaces";
 import { mongodbHandler } from "../../utils/functions/data";
 
-const fields = "id,product_name,product_name_en,image_front_url,quantity,product_quantity,product_quantity_unit,brands_tags"
+const fields = "id,product_name,product_name_en,image_front_url,quantity,product_quantity,product_quantity_unit,brands_tags,nutriscore_grade"
 
 export class FoodData implements IFoodData {
   searchFood(query: string, skip: number, limit: number) {
