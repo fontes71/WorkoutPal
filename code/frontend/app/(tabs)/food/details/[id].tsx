@@ -1,4 +1,4 @@
-import {  TouchableOpacity, Image } from "react-native";
+import { TouchableOpacity, Image } from "react-native";
 import { food_details_styles } from "@/assets/styles/food";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
@@ -9,7 +9,6 @@ import FoodCover from "@/app/utils/components/FoodCover";
 import { Food } from "@/domain/types";
 import { useState } from "react";
 
-const displayMacro = (value: number) => (value ? `${value}g` : "-");
 const display = (value: string) => (value ? `${value}` : "-");
 
 interface QuantityProps {
@@ -20,23 +19,25 @@ interface QuantityProps {
 const Quantity: React.FC<QuantityProps> = ({ quantity, quantityUnit }) => (
   <View style={food_details_styles.quantityContainer}>
     <Text style={food_details_styles.text_small}>{display(quantity)}</Text>
-    {quantity && <Text style={food_details_styles.text_small}>{quantityUnit}</Text>}
+    {quantity && (
+      <Text style={food_details_styles.text_small}>{quantityUnit}</Text>
+    )}
   </View>
 );
 
 interface MacronutrientProps {
-  value: number;
+  value: string | null;
 }
 
 const Macronutrient: React.FC<MacronutrientProps> = ({ value }) => (
-  <Text style={food_details_styles.text_small}> {displayMacro(value)} </Text>
+  <Text style={food_details_styles.text_small}> {value} </Text>
 );
 
 interface OverviewTextProps {
   calories: number;
-  carbs: number;
-  fat: number;
-  protein: number;
+  carbs: string | null;
+  fat: string | null;
+  protein: string | null;
 }
 
 const OverviewText: React.FC<OverviewTextProps> = ({
@@ -55,21 +56,73 @@ const OverviewText: React.FC<OverviewTextProps> = ({
   </View>
 );
 
-const More = () => {
+interface MoreButtonProps {
+  buttonClicked: boolean;
+  setButtonClicked: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface MoreProps {
+  fiber: string | null;
+  saturatedFats: string | null;
+  salt: string | null;
+  sodium: string | null;
+  sugars: string | null;
+  nutriscoreGrade: string | null;
+}
+
+const MoreInfo: React.FC<MoreProps> = ({
+  fiber,
+  saturatedFats,
+  salt,
+  sodium,
+  sugars,
+  nutriscoreGrade,
+}) => (
+<View>
+  <Text>Fiber: {fiber}</Text>
+  <Text>SaturatedFats: {saturatedFats}</Text>
+  <Text>Salt: {salt}</Text>
+  <Text>Sodiun: {sodium}</Text>
+  <Text>Sugars: {sugars}</Text>
+  <Text>NutriscoreGrade: {nutriscoreGrade}</Text>
+</View>)
+;
+
+const MoreButton: React.FC<MoreButtonProps> = ({
+  buttonClicked,
+  setButtonClicked,
+}) => (
+  <TouchableOpacity
+    onPress={() => setButtonClicked(!buttonClicked)}
+    style={food_details_styles.moreButton}
+  >
+    <Text style={food_details_styles.text_small}>
+      {buttonClicked ? "Less" : "More"}
+    </Text>
+    <Image
+      source={require("@/assets/images/down-arrow.png")}
+      style={food_details_styles.arrowIcon}
+    />
+  </TouchableOpacity>
+);
+
+const More: React.FC<MoreProps> = ({
+  fiber,
+  saturatedFats,
+  salt,
+  sodium,
+  sugars,
+  nutriscoreGrade,
+}) => {
   const [buttonClicked, setButtonClicked] = useState(false);
 
   return (
     <View style={food_details_styles.moreContainer}>
-      <TouchableOpacity
-        onPress={() => setButtonClicked(!buttonClicked)}
-        style={food_details_styles.moreButton}
-      >
-        <Text style={food_details_styles.text_small}>More</Text>
-        <Image
-          source={require("@/assets/images/down-arrow.png")}
-          style={food_details_styles.arrowIcon}
-        />
-      </TouchableOpacity>
+      <MoreButton
+        buttonClicked={buttonClicked}
+        setButtonClicked={setButtonClicked}
+      />
+      {buttonClicked && <MoreInfo fiber={fiber} saturatedFats={saturatedFats} salt={salt} sodium={sodium} sugars={sugars}  nutriscoreGrade={nutriscoreGrade} />}
     </View>
   );
 };
@@ -107,8 +160,14 @@ export default function FoodDetailsScreen() {
         />
       </View>
       <Quantity quantity={food.quantity} quantityUnit={food.quantityUnit} />
-      <More />
+      <More
+        fiber={food.fiber}
+        saturatedFats={food.saturatedFat}
+        salt={food.salt}
+        sodium={food.sodium}
+        sugars={food.sugars}
+        nutriscoreGrade={food.nutriscoreGrade}
+      />
     </View>
   );
 }
-

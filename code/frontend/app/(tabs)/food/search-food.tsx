@@ -106,8 +106,6 @@ export default function AddFoodScreen() {
     setQuery(value);
   };
 
-
-
     const handleFoodPress = async (food: Food) => {
     router.push({
       pathname: `/food/details/${food.id}`,

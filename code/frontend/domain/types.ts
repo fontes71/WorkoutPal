@@ -7,9 +7,15 @@ export interface Food {
     quantityUnit: string;
     imageUrl: string;
     calories: number;
-    protein: number;
-    fat: number;
-    carbs: number;
+    protein: string | null;
+    fat: string | null;
+    carbs: string | null;
+    fiber: string | null;
+    saturatedFat: string | null;
+    salt: string | null;
+    sodium: string | null;
+    sugars: string | null;
+    nutriscoreGrade: string | null;
 }
 
 export interface Exercise {
