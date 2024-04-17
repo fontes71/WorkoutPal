@@ -1,8 +1,4 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-
-
-
 
 export const userSchema = new mongoose.Schema(
   {
@@ -14,9 +10,9 @@ export const userSchema = new mongoose.Schema(
     days: [Object]
   },
   { versionKey: false }
-);
+)
 
-export const UserModel = mongoose.model("users", userSchema);
+export const UserModel = mongoose.model("users", userSchema)
 
 export const exerciseSchema = new mongoose.Schema(
   {
@@ -30,6 +26,6 @@ export const exerciseSchema = new mongoose.Schema(
     instructions: [String],
   },
   { versionKey: false }
-);
+)
 
-export const ExerciseModel = mongoose.model("exercises", exerciseSchema);
+export const ExerciseModel = mongoose.model("exercises", exerciseSchema)

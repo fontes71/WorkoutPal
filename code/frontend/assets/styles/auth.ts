@@ -69,8 +69,18 @@ const auth_styles = StyleSheet.create({
         marginTop: 12,
         fontSize: 10,
     },
+    error_message_container: {
+        paddingTop: 10,
+        paddingBottom: 20
+    },
+    error_message: {
+        width: '100%',
+        textAlign: 'center', 
+        color: 'red', 
+        fontSize: 12
+    },
     inputs_container: {
-        paddingVertical: 35
+        paddingBottom: 35
     },
     input: {
         backgroundColor: 'white',

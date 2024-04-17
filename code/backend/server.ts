@@ -13,19 +13,19 @@ import { FoodData } from "./data/mongo/food-data.ts";
 import cors from 'cors';
 
 // EXERCISE
-const exerciseData = new ExerciseData();
-const exerciseServices = new ExerciseServices(exerciseData);
-const exerciseApi = new ExerciseApi(exerciseServices, exerciseData);
+const exerciseData = new ExerciseData()
+const exerciseServices = new ExerciseServices(exerciseData)
+const exerciseApi = new ExerciseApi(exerciseServices, exerciseData)
 
 // FOOD
-const foodData = new FoodData();
-const foodServices = new FoodServices(foodData);
-const foodApi = new FoodApi(foodServices, foodData);
+const foodData = new FoodData()
+const foodServices = new FoodServices(foodData)
+const foodApi = new FoodApi(foodServices, foodData)
 
 // AUTH
 const authData = new AuthData()
 const authServices = new AuthServices(authData)
-const authApi = new AuthApi(authServices, authData);
+const authApi = new AuthApi(authServices, authData)
 
 
 const port = 8080;
@@ -39,9 +39,9 @@ app.use(express.json());
 app.use(express.urlencoded({extended : false}))
 app.use(passport.initialize());
 
-// Auth 
-app.post("/api/signup", authApi.signup);
-app.post("/api/login", authApi.login);
+// Auth
+app.post("/api/signup", authApi.signup)
+app.post("/api/login", authApi.login)
 
 // Exercise
 app.get("/api/exercise/:exerciseId", exerciseApi.getExerciseById);
