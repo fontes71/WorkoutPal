@@ -1,6 +1,22 @@
 import { StyleSheet } from "react-native";
 
-const exercises_styles = StyleSheet.create({
+export const exercise_styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: "center",
+    },
+    title: {
+      fontSize: 20,
+      fontWeight: "bold",
+    },
+    link: {
+      marginTop: 20,
+      fontSize: 35,
+      color: '#2e78b7'
+    },
+  });
+
+export const search_exercises_styles = StyleSheet.create({
     exerciseResultContainer: {
         flexDirection: "row",
         padding: 10,
@@ -36,4 +52,4 @@ const exercises_styles = StyleSheet.create({
     },
 });
 
-export default exercises_styles;
+export default search_exercises_styles;

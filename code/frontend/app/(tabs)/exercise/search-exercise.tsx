@@ -7,26 +7,26 @@ import { SearchBar } from '@rneui/themed';
 import { useState, useEffect } from "react";
 import { Exercise } from "@/domain/types";
 import { localhost } from "@/constants";
-import exercises_styles from "@/assets/styles/exercises"
+import search_exercises_styles from "@/assets/styles/exercises";
 
 const BottomText = ({ str }: { str: string | null }) => (
-    <>{str && <Text style={exercises_styles.bottomText}>{str}</Text>}</>
+    <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
 );
   
 
 const ExerciseResult: React.FC<Exercise> = ({ name, gifUrl, equipment }) => {
     return (
-        <View style={exercises_styles.exerciseResultContainer}>
-          <View style={exercises_styles.imageContainer}>
+        <View style={search_exercises_styles.exerciseResultContainer}>
+          <View style={search_exercises_styles.imageContainer}>
             {gifUrl && (
               <Image
-                style={exercises_styles.exerciseGifResult}
+                style={search_exercises_styles.exerciseGifResult}
                 source={{uri: gifUrl}}
               />
             )}
           </View>
-          <View style={exercises_styles.exerciseResultTextContainer}>
-            <Text style={exercises_styles.topText}>{name}</Text>
+          <View style={search_exercises_styles.exerciseResultTextContainer}>
+            <Text style={search_exercises_styles.topText}>{name}</Text>
             <BottomText str={'Equipment: ' + equipment} />
           </View>
         </View>
