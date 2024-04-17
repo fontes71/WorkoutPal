@@ -8,3 +8,9 @@ Navigation between screen with parameters ->
     - https://reactnavigation.org/docs/params/#what-should-be-in-params
 
     navigation.navigate used passing the parameters directly, because the only set-downs are web app related (url) not mobile app related, so there is no reason to use local storage to hide sensitive information
+
+
+Delay between successfull signup and login on the SignupScreen ->
+    - https://planetscale.com/learn/articles/what-is-database-latency
+
+    Due to database latency there is no guarantee that after the signup endpoint is called and the new user is created in the database, the login endpoint will actually find it in the database imediately after

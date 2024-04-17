@@ -114,16 +114,16 @@ function SingupButton({setResponseError, name, email, password}: ButtonInfo) {
     const signupAction = async () => {
         setFetching(true)
         const response = await signup(name, email, password)
-        setFetching(false)
 
         if (response.ok) {
+            await new Promise(resolve => setTimeout(resolve, 1000))
             await login(email, password)
-            console.log(await getLocalUser())
             router.push("/(tabs)/exercise") 
         } else {
             const body: ResponseError = await response.json()
             setResponseError(body)
         }
+        setFetching(false)
     }
 
     return (

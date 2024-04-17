@@ -5,7 +5,7 @@ import { Link, useRouter } from "expo-router";
 import PasswordInput from '@/app/utils/components/PasswordInput';
 import useKeyboardVisibility from '@/assets/hooks/useKeyboardVisibility';
 import auth_styles from '@/assets/styles/auth';
-import { getLocalUser, login, ResponseError } from '@/domain/auth';
+import { login, ResponseError } from '@/domain/auth';
 
 type ErrorInfo = {
     readonly responseError: ResponseError | undefined
@@ -106,7 +106,6 @@ function LoginButton({setResponseError, email, password}: ButtonInfo) {
         setFetching(false)
 
         if (response.ok) {
-            console.log(await getLocalUser())
             router.push("/(tabs)/exercise") 
         } else {
             const body: ResponseError = await response.json()
