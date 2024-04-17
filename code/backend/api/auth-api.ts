@@ -39,8 +39,8 @@ export class AuthApi implements IAuthApi {
   }
 
   userToUserResponse(user: User): UserResponse {
-    const {username, email, token, workout_plans, days}: User = user
-    const userResponse: UserResponse = {username, email, token, workout_plans, days}
+    const {username, email, token}: User = user
+    const userResponse: UserResponse = {username, email, token}
     return userResponse
   }
 

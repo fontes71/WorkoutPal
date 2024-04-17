@@ -3,10 +3,9 @@ import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Link, useRouter } from "expo-router";
 import PasswordInput from '@/app/utils/components/PasswordInput';
-import { localhost } from '@/constants';
 import useKeyboardVisibility from '@/assets/hooks/useKeyboardVisibility';
 import auth_styles from '@/assets/styles/auth';
-import { ResponseError } from '@/domain/types';
+import { getLocalUser, login, ResponseError } from '@/domain/auth';
 
 type ErrorInfo = {
     readonly responseError: ResponseError | undefined
@@ -49,7 +48,7 @@ function LogoContainer() {
 function LoginContainer() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [responseError, setResponseError] = useState<ResponseError | undefined>(undefined)
+    const [responseError, setResponseError] = useState<ResponseError | undefined>()
 
     return (
         <View style={styles.login_container}>
@@ -103,22 +102,13 @@ function LoginButton({setResponseError, email, password}: ButtonInfo) {
 
     const loginAction = async () => {
         setFetching(true)
-        const response = await fetch(
-            `${localhost}8080/api/login`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    "email": email,
-                    "password": password
-                }),
-            }
-        )
-
+        const response = await login(email, password)
         setFetching(false)
-        if (response.ok) router.push("/(tabs)/exercise") 
-        else {
+
+        if (response.ok) {
+            console.log(await getLocalUser())
+            router.push("/(tabs)/exercise") 
+        } else {
             const body: ResponseError = await response.json()
             setResponseError(body)
         }
