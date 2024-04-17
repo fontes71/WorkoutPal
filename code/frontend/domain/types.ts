@@ -28,8 +28,4 @@ export interface Exercise {
     secondaryMuscles: Array<string>;
     instructions: Array<string>;
 }
-
-export interface ResponseError {
-    error_message: string
-}
   

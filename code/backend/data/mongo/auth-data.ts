@@ -14,20 +14,20 @@ export class AuthData implements IAuthData {
         workout_plans: [],
         days: [],
       };
-      await UserModel.insertMany(user);
+      await UserModel.create(user);
     });
   }
 
   getUserByToken(token: string) {
     return mongodbHandler(async () => {
-      const user = UserModel.findOne({ token });
+      const user = await UserModel.findOne({ token });
       return user;
     });
   }
 
   getUserByMail(email: string) {
     return mongodbHandler(async () => {
-      const user = UserModel.findOne({ email: email });
+      const user = await UserModel.findOne({ email: email });
       return user;
     });
   }
