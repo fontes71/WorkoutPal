@@ -33,6 +33,15 @@ const ExerciseResult: React.FC<Exercise> = ({ name, gifUrl, equipment }) => {
     );
 }
 
+const removeParenthesesFromExerciseName = (exercises: Exercise[]) => {
+    for (let i = 0; i < exercises.length; i++) {
+        if (exercises[i].name.endsWith(")")) {
+            exercises[i].name = exercises[i].name.slice(0, exercises[i].name.lastIndexOf("("));
+        }
+    }
+    return exercises;
+}
+
 export default function SearchExerciseScreen() {
     const [exerciseName, setExerciseName] = useState("");
     const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -45,8 +54,9 @@ export default function SearchExerciseScreen() {
                 return;
             }
 
-            const exercise: Exercise[] = await response.json();
-            setExercises(exercise);
+            const exercises: Exercise[] = await response.json();
+            const modifiedExercises: Exercise[] = removeParenthesesFromExerciseName(exercises);
+            setExercises(modifiedExercises);
         }
 
         if (exerciseName.length > 1) fetchExercise();

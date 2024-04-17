@@ -3,8 +3,6 @@ import { StyleSheet } from "react-native";
 const exercises_styles = StyleSheet.create({
     exerciseResultContainer: {
         flexDirection: "row",
-        borderBottomWidth: 1,
-        borderBottomColor: "#000",
         padding: 10,
     },
     imageContainer: {

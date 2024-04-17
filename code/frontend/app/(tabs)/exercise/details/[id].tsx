@@ -3,9 +3,11 @@ import { Image, StyleSheet } from "react-native";
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import { Exercise } from "@/domain/types";
-import { useLocalSearchParams } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import { Stack } from "expo-router";
 import exercises_styles from "@/assets/styles/exercises";
+import { Button } from "@rneui/base";
+import { router } from "expo-router";
 
 const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={exercises_styles.bottomText}>{str}</Text>}</>
@@ -38,6 +40,7 @@ const ExerciseDetailsScreen = () => {
                     {exercise.instructions.map((instruction, index) => (
                         <Text key={index} style={exercises_styles.bottomText}>{instruction}</Text>
                     ))}
+                    <Button onPress={() => {router.push("/(tabs)/exercise/trainingPlanModal")}}>Add To Training Plan</Button>
                 </View>
             </View>
         </View>
