@@ -1,17 +1,13 @@
-import { Data } from "../../data/local/data.ts";
+import { LocalExerciseData } from "../../data/local/exercise-data.ts";
 import { NotFoundError } from "../../errors/app_errors.ts";
 import { NOTFOUND } from "node:dns";
 import { Exercise } from "../../domain/types.ts";
+import { ExerciseServices } from "../../services/exercise-services.ts";
+import { ExerciseApi } from "../../api/exercise-api.ts";
 
-describe("just needs to pass", () => it("abc", () => expect(true).toBe(true)));
-
-/*
-const data = new Data();
-const service = new Services(data);
-const api = new Api(service);
-
-
-
+const data = new LocalExerciseData();
+const service = new ExerciseServices(data);
+const api = new ExerciseApi(service, data);
 
 describe("GetExerciseById function tests", () => {
   test("getExerciseById returns the exercise successfully", () => {
@@ -31,7 +27,7 @@ describe("GetExerciseById function tests", () => {
 describe("SearchExercisesByName function tests", () => {
   test("searchExercisesByName returns the exercises successfully", () => {
     const name = "sit";
-    const expectedId = "0992";
+    const expectedId = "0001";
     service
       .searchExercisesByName(name, 0, 10)
       .then((exercises: Exercise[]) => expect(exercises[0]._id).toBe(expectedId));
@@ -182,5 +178,3 @@ describe("SearchExercisesBySecondaryMuscle function tests", () => {
       .then((exercises: Exercise[]) => expect(exercises[0]._id).toBe(expectedId));
   });
 });
-
-*/

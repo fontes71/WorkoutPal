@@ -58,9 +58,9 @@ export interface IExerciseData {
   searchExercisesByEquipment(equipment: string,skip: number,limit: number): Promise<Exercise[]>;
   searchExercisesByTarget(target: string,skip: number,limit: number): Promise<Exercise[]>;
   searchExercisesBySecondaryMuscle(secondaryMuscle: string,skip: number,limit: number): Promise<Exercise[]>;
-  getUserWorkoutPlans(token: string): Promise<WorkoutPlan[]>;
-  createWorkoutPlan(token: string, workoutPlanName: string, description: string): Promise<WorkoutPlan>;
-  addExerciseToWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan>;
+  getUserWorkoutPlans(token: string): Promise<WorkoutPlan[] | null>;
+  createWorkoutPlan(token: string, workoutPlanName: string, description: string): Promise<WorkoutPlan | null>;
+  addExerciseToWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan | null>;
   cloneExerciseDB(): Promise<void>;
 }
 

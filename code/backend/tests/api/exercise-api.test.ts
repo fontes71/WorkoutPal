@@ -2,19 +2,11 @@ import { Exercise } from "../../domain/types.ts";
 import app from "../../server.ts";
 import request from "supertest";
 
-
-describe("just needs to pass", () =>
-  it("abc", ()=>expect(true).toBe(true))
-
-)
-
 /*
     A worker process has failed to exit gracefully and has been force exited. This is likely
     caused by tests leaking due to improper teardown. Try running with --detectOpenHandles to
     find leaks. Active timers can also cause this, ensure that .unref() was called on them.
  */
-
-    /*
 describe("Endpoint: /api/exercise/:exerciseId", () => {
   it("GET -> Response contains exercise", async () => {
     const expectedExerciseId: string = "0001";
@@ -39,7 +31,7 @@ describe("Endpoint: /api/exercise/:exerciseId", () => {
 
 describe("Endpoint: /api/exercises/name/:exerciseName", () => {
   it("GET -> Response contains exercises", async () => {
-    const expectedExerciseId: string = "2799";
+    const expectedExerciseId: string = "0981";
 
     const res = await request(app)
       .get("/api/exercises/name/sit?limit=2&skip=2")
@@ -61,7 +53,7 @@ describe("Endpoint: /api/exercises/name/:exerciseName", () => {
 
 describe("Endpoint: /api/exercises/bodypart/:exerciseBodyPart", () => {
   it("GET -> Response contains exercises", async () => {
-    const expectedExerciseId: string = "2333";
+    const expectedExerciseId: string = "0001";
 
     const res = await request(app)
       .get("/api/exercises/bodyPart/waist?limit=2&skip=2")
@@ -83,7 +75,7 @@ describe("Endpoint: /api/exercises/bodypart/:exerciseBodyPart", () => {
 
 describe("Endpoint: /api/exercises/equipment/:exerciseEquipment", () => {
   it("GET -> Response contains exercises", async () => {
-    const expectedExerciseId: string = "0006";
+    const expectedExerciseId: string = "1405";
 
     const res = await request(app)
       .get("/api/exercises/equipment/body weight?limit=2&skip=2")
@@ -105,7 +97,7 @@ describe("Endpoint: /api/exercises/equipment/:exerciseEquipment", () => {
 
 describe("Endpoint: /api/exercises/target/:exerciseTarget", () => {
   it("GET -> Response contains exercises", async () => {
-    const expectedExerciseId: string = "2333";
+    const expectedExerciseId: string = "0001";
 
     const res = await request(app)
       .get("/api/exercises/target/abs?limit=2&skip=2")
@@ -127,7 +119,7 @@ describe("Endpoint: /api/exercises/target/:exerciseTarget", () => {
 
 describe("Endpoint: /api/exercises/secondaryMuscle/:exerciseSecondaryMuscle", () => {
   it("GET -> Response contains exercises", async () => {
-    const expectedExerciseId: string = "1314";
+    const expectedExerciseId: string = "0020";
 
     const res = await request(app)
       .get("/api/exercises/secondaryMuscle/glutes?limit=2&skip=2")

@@ -1,28 +1,9 @@
 
-import { Exercise, User } from "../../domain/types";
-import { IData } from "../../domain/interfaces";
+import { Exercise, User, WorkoutPlan } from "../../domain/types";
+import { IExerciseData } from "../../domain/interfaces";
+import { getLocalData } from "../../utils/functions/data";
 
-
-
-
-export class Data implements IData {
-  
-  getUserByToken?(token: string) {
-    throw new Error("Method not implemented.");
-  }
-  
-  getUserByMail?(email: string): Promise<User | null> {
-    throw new Error("Method not implemented.");
-  }
-
-  cloneExerciseDB(): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
-
-  async createUser(username: string, password: string, mail: string, token: string) {
-    throw new Error("Method not implemented.");
-  }
-
+export class LocalExerciseData implements IExerciseData {
   async getExerciseById(id: string) {
     const exercises = (await getLocalData(
       "data/local/files/exercises.json"
@@ -90,5 +71,64 @@ export class Data implements IData {
     );
 
     return filteredExercises.slice(skip, skip + limit);
+  }
+
+  async getUserWorkoutPlans(token: string): Promise<WorkoutPlan[] | null> {
+    const users = (await getLocalData(
+      "data/local/files/users.json"
+    )) as User[];
+
+    const user = users.find((user) => user.token === token) || null;
+    return user !== null ? user.workout_plans : null;
+  }
+
+  async createWorkoutPlan(token: string, workoutPlanName: string, description: string): Promise<WorkoutPlan | null> {
+    const users = (await getLocalData(
+      "data/local/files/users.json"
+    )) as User[];
+
+    const user = users.find((user) => user.token === token);
+    if (user === undefined) {
+      return null;
+    }
+
+    if (user.workout_plans.some((workoutPlan) => workoutPlan.name === workoutPlanName)) {
+      throw null;
+    }
+
+    const newWorkoutPlan = {
+      name: workoutPlanName,
+      description,
+      exercises: []
+    };
+
+    user.workout_plans.push(newWorkoutPlan);
+
+    return newWorkoutPlan;
+  }
+
+  async addExerciseToWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan | null> {
+    const users = (await getLocalData(
+      "data/local/files/users.json"
+    )) as User[];
+
+    const user = users.find((user) => user.token === token);
+    if (user === undefined) {
+      return null;
+    }
+
+    let workoutPlanResult = null;
+    user.workout_plans.forEach((workoutPlan) => {
+      if (workoutPlan.name === workoutPlanName && !workoutPlan.exercises.includes(exerciseId)) {
+        workoutPlan.exercises.push(exerciseId);
+        workoutPlanResult = workoutPlan;
+      }
+    });
+
+    return workoutPlanResult;
+  }
+
+  cloneExerciseDB(): Promise<void> {
+    throw new Error("Method not implemented.");
   }
 }
