@@ -1,5 +1,5 @@
 import { AuthInfoUser, UserResponse } from "./api";
-import { Exercise, User, Food, FoodFactsApiFood } from "./types";
+import { Exercise, User, Food, FoodFactsApiFood, WorkoutPlan } from "./types";
 import { Request, Response } from "express";
 
 // API
@@ -10,6 +10,9 @@ export interface IExerciseApi {
   searchExercisesByEquipment(req: Request, res: Response): void;
   searchExercisesByTarget(req: Request, res: Response): void;
   searchExercisesBySecondaryMuscle(req: Request, res: Response): void;
+  getUserWorkoutPlans(req: Request, res: Response): void;
+  createWorkoutPlan(req: Request, res: Response): void;
+  addExerciseToWorkoutPlan(req: Request, res: Response): void;
   cloneExerciseDB(req: Request, res: Response): void;
 }
 
@@ -32,6 +35,9 @@ export interface IExerciseServices {
   searchExercisesByEquipment(equipment: string, skip: number, limit: number): Promise<Array<Exercise>>;
   searchExercisesByTarget(target: string, skip: number, limit: number): Promise<Array<Exercise>>;
   searchExercisesBySecondaryMuscle(secondaryMuscle: string, skip: number, limit: number): Promise<Array<Exercise>>;
+  getUserWorkoutPlans(token: string): Promise<Array<WorkoutPlan>>;
+  createWorkoutPlan(token: string, workoutPlanName: string, description: string): Promise<WorkoutPlan>;
+  addExerciseToWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan>;
   cloneExerciseDBScheduler(): void;
 }
 
@@ -52,6 +58,9 @@ export interface IExerciseData {
   searchExercisesByEquipment(equipment: string,skip: number,limit: number): Promise<Exercise[]>;
   searchExercisesByTarget(target: string,skip: number,limit: number): Promise<Exercise[]>;
   searchExercisesBySecondaryMuscle(secondaryMuscle: string,skip: number,limit: number): Promise<Exercise[]>;
+  getUserWorkoutPlans(token: string): Promise<Array<WorkoutPlan>>;
+  createWorkoutPlan(token: string, workoutPlanName: string, description: string): Promise<WorkoutPlan>;
+  addExerciseToWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan>;
   cloneExerciseDB(): Promise<void>;
 }
 

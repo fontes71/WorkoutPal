@@ -86,6 +86,33 @@ export class ExerciseApi implements IExerciseApi {
     });
   }
 
+  getUserWorkoutPlans = (req: Request, res: Response) => {
+    apiErrorHandler(res, async () => {
+      const token = (req.headers.authorization as string).replace("Bearer ", "");
+      const workoutPlans = await this.service.getUserWorkoutPlans(token);
+      res.json(workoutPlans);
+    });
+  }
+
+  createWorkoutPlan = (req: Request, res: Response) => {
+    apiErrorHandler(res, async () => {
+      const token = (req.headers.authorization as string).replace("Bearer ", "");
+      const { workoutPlanName, description } = req.body;
+      const workoutPlan = await this.service.createWorkoutPlan(token, workoutPlanName, description);
+      res.json(workoutPlan);
+    });
+  }
+
+  addExerciseToWorkoutPlan = (req: Request, res: Response) => {
+    apiErrorHandler(res, async () => {
+      const token = (req.headers.authorization as string).replace("Bearer ", "");
+      const workoutPlanName = req.params.workoutPlanName;
+      const { exerciseId } = req.body;
+      const workoutPlan = await this.service.addExerciseToWorkoutPlan(token, workoutPlanName, exerciseId);
+      res.json(workoutPlan);
+    });
+  }
+
   cloneExerciseDB = (req: Request, res: Response) => {
     apiErrorHandler(res, async () => {
       this.data.cloneExerciseDB();

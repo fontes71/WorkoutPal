@@ -1,9 +1,8 @@
-
 import { exercisedb_url, exercisedb_options } from "../../utils/constants";
 import { IExerciseData } from "../../domain/interfaces";
 import { convertExerciseDBToExercise, fetchData, mongodbHandler, rewriteFileWithObject } from "../../utils/functions/data";
-import { ExerciseModel } from "./mongoose";
-import { Exercise, ExerciseDB } from "../../domain/types";
+import { ExerciseModel, UserModel } from "./mongoose";
+import { Exercise, ExerciseDB, User } from "../../domain/types";
 
 export class ExerciseData implements IExerciseData {
   getExerciseById(id: string) {
@@ -49,6 +48,47 @@ export class ExerciseData implements IExerciseData {
     return mongodbHandler(async () => {
       const exercises = ExerciseModel.find({'secondaryMuscles': {'$regex': `${secondaryMuscle.toLowerCase()}`}}).skip(skip).limit(limit);
       return exercises;
+    });
+  }
+
+  getUserWorkoutPlans(token: string) {
+    return mongodbHandler(async () => {
+      const user: User | null = await UserModel.findOne({ token });
+      return user !== null ? user.workout_plans : null;
+    });
+  }
+
+  createWorkoutPlan(token: string, workoutPlanName: string, description: string) {
+    return mongodbHandler(async () => {
+      const user: User | null = await UserModel.findOne({ token });
+      const newWorkoutPlan = { name: workoutPlanName, description, exercises: [] };
+
+      if (user === null) { return null }
+      if (user.workout_plans.some((workoutPlan) => workoutPlan.name === workoutPlanName)) { 
+        return null
+      }
+
+      user.workout_plans.push(newWorkoutPlan);
+      await UserModel.updateOne({ token }, user);
+      return newWorkoutPlan;
+    });
+  }
+
+  addExerciseToWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string) {
+    return mongodbHandler(async () => {
+      const user: User | null = await UserModel.findOne({ token });
+      let workoutPlanResult = null;
+      if (user === null) {
+        return null;
+      }
+      user.workout_plans.forEach((workoutPlan) => {
+        if (workoutPlan.name === workoutPlanName && !workoutPlan.exercises.includes(exerciseId)) {
+          workoutPlan.exercises.push(exerciseId);
+          workoutPlanResult = workoutPlan;
+        }
+      });
+      await UserModel.updateOne({ token }, user);
+      return workoutPlanResult;
     });
   }
 

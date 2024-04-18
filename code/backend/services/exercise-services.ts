@@ -1,5 +1,5 @@
 import { Exercise } from "../domain/types";
-import { NotFoundError } from "../errors/app_errors";
+import { NotFoundError, AlreadyExistsError } from "../errors/app_errors";
 import cron from "node-cron";
 import { IExerciseData, IExerciseServices } from "../domain/interfaces";
 
@@ -78,7 +78,23 @@ export class ExerciseServices implements IExerciseServices {
     return exercises;
   };
 
-  
+  getUserWorkoutPlans = async (token: string) => {
+    const workoutPlans = await this.data.getUserWorkoutPlans(token);
+    if (workoutPlans == null) throw NotFoundError;
+    return workoutPlans;
+  }
+
+  createWorkoutPlan = async (token: string, workoutPlanName: string, description: string) => {
+    const workoutPlan = await this.data.createWorkoutPlan(token, workoutPlanName, description);
+    if (workoutPlan == null) throw AlreadyExistsError;
+    return workoutPlan;
+  }
+
+  addExerciseToWorkoutPlan = async (token: string, workoutPlanName: string, exerciseId: string) => {
+    const result = await this.data.addExerciseToWorkoutPlan(token, workoutPlanName, exerciseId);
+    if (result == null) throw NotFoundError;
+    return result;
+  }
 
   cloneExerciseDBScheduler() {
     cron.schedule("0 0 0 * * *", () => {

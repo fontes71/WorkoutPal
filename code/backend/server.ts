@@ -50,6 +50,9 @@ app.get("/api/exercises/bodyPart/:exerciseBodyPart", exerciseApi.searchExercises
 app.get("/api/exercises/equipment/:exerciseEquipment", exerciseApi.searchExercisesByEquipment);
 app.get("/api/exercises/target/:exerciseTarget", exerciseApi.searchExercisesByTarget);
 app.get("/api/exercises/secondaryMuscle/:exerciseSecondaryMuscle", exerciseApi.searchExercisesBySecondaryMuscle);
+app.get("/api/exercises/workoutPlans", exerciseApi.getUserWorkoutPlans);
+app.post("/api/exercises/workoutPlans", exerciseApi.createWorkoutPlan);
+app.post("/api/exercises/workoutPlans/:workoutPlanName", exerciseApi.addExerciseToWorkoutPlan);
 app.get("/api/cloneDatabase", exerciseApi.cloneExerciseDB);
 
 // Food

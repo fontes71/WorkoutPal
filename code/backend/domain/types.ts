@@ -20,12 +20,18 @@ export interface ExerciseDB {
   instructions: Array<string>;
 }
 
+export interface WorkoutPlan {
+  name: string;
+  description: string;
+  exercises: Array<string>;
+}
+
 export interface User {
   username: string;
   email: string;
   password: string;
   token: string;
-  workout_plans: Array<Object>;
+  workout_plans: Array<WorkoutPlan>;
   days: Array<Object>;
 }
 
