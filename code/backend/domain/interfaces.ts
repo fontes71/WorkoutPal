@@ -58,7 +58,7 @@ export interface IExerciseData {
   searchExercisesByEquipment(equipment: string,skip: number,limit: number): Promise<Exercise[]>;
   searchExercisesByTarget(target: string,skip: number,limit: number): Promise<Exercise[]>;
   searchExercisesBySecondaryMuscle(secondaryMuscle: string,skip: number,limit: number): Promise<Exercise[]>;
-  getUserWorkoutPlans(token: string): Promise<Array<WorkoutPlan>>;
+  getUserWorkoutPlans(token: string): Promise<WorkoutPlan[]>;
   createWorkoutPlan(token: string, workoutPlanName: string, description: string): Promise<WorkoutPlan>;
   addExerciseToWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan>;
   cloneExerciseDB(): Promise<void>;
