@@ -1,0 +1,2 @@
+- Database consistency -> mongodb
+- One connection for many operations if the enpoint requires it

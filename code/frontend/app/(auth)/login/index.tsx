@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
-import { Link, useRouter } from "expo-router";
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { useRouter } from "expo-router";
 import PasswordInput from '@/app/utils/components/PasswordInput';
-import useKeyboardVisibility from '@/assets/hooks/useKeyboardVisibility';
-import auth_styles from '@/assets/styles/auth';
+import styles from '@/assets/styles/auth';
 import { login, ResponseError } from '@/domain/auth';
+import LogoContainer from '@/app/utils/components/auth/LogoContainer';
+import ErrorContainer from '@/app/utils/components/auth/ErrorContainer';
+import ConnectWithGoogleContainer from '@/app/utils/components/auth/ConnectWithGoogleContainer';
 
 type ErrorInfo = {
     readonly responseError: ResponseError | undefined
@@ -27,20 +28,8 @@ type ButtonInfo = {
 function LoginScreen() {
     return (
         <View style={styles.main_container}>
-            <LogoContainer />
+            <LogoContainer imageStyle={styles.logo_image_login}/>
             <LoginContainer />
-        </View>
-    )
-}
-
-function LogoContainer() {
-    const isKeyboardVisible = useKeyboardVisibility()
-
-    return (
-        <View>
-            {!isKeyboardVisible && <View style={styles.logo_container}>
-                <Image source={require("@images/workoutpal-full-logo.png")} style={styles.logo_image_login} />
-            </View>}
         </View>
     )
 }
@@ -68,14 +57,6 @@ function LoginHeader() {
         <View>
             <Text style={[styles.text, styles.header_text]}>Log In</Text>
             <Text style={[styles.text, styles.small_text]}>Sign In and start getting the most out of our app</Text>
-        </View>
-    )
-}
-
-function ErrorContainer({responseError}: ErrorInfo) {
-    return (
-        <View style={styles.error_message_container}>
-            {responseError && <Text style={styles.error_message}>{responseError.error_message}</Text>}
         </View>
     )
 }
@@ -120,18 +101,4 @@ function LoginButton({setResponseError, email, password}: ButtonInfo) {
     )
 }
 
-function ConnectWithGoogleContainer() {
-    return (
-        <View>
-            <Text style={styles.signupText}>
-                Already have an account? <Link style={styles.signupLink} href={"/(auth)/signup"}>Sign Up</Link>
-            </Text>
-            <Text style={[styles.small_text, styles.other_links_text]}>Or connect with</Text>
-            <FontAwesome style={styles.icon} name="google" size={15}/>  
-        </View>
-    )
-}
-
 export default LoginScreen
-
-const styles = auth_styles

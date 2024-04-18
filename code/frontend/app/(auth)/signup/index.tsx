@@ -1,50 +1,34 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
-import { Link, useRouter } from "expo-router";
+import React, { useState, Dispatch, SetStateAction } from 'react';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { useRouter } from "expo-router";
 import PasswordInput from '@/app/utils/components/PasswordInput';
-import useKeyboardVisibility from '@/assets/hooks/useKeyboardVisibility';
 import auth_styles from '@/assets/styles/auth';
-import { ResponseError, getLocalUser, login, signup } from '@/domain/auth';
-
-type ErrorInfo = {
-    readonly responseError: ResponseError | undefined
-}
+import { ResponseError, login, signup } from '@/domain/auth';
+import LogoContainer from '@/app/utils/components/auth/LogoContainer';
+import ErrorContainer from '@/app/utils/components/auth/ErrorContainer';
+import ConnectWithGoogleContainer from '@/app/utils/components/auth/ConnectWithGoogleContainer';
 
 type InputInfo = {
     readonly name: string,
-    readonly setName: React.Dispatch<React.SetStateAction<string>>,
+    readonly setName: Dispatch<SetStateAction<string>>,
     readonly email: string,
-    readonly setEmail: React.Dispatch<React.SetStateAction<string>>,
+    readonly setEmail: Dispatch<SetStateAction<string>>,
     readonly password: string,
-    readonly setPassword: React.Dispatch<React.SetStateAction<string>>
+    readonly setPassword: Dispatch<SetStateAction<string>>
 }
 
 type ButtonInfo = {
-    readonly setResponseError: React.Dispatch<React.SetStateAction<ResponseError | undefined>>
+    readonly setResponseError: Dispatch<SetStateAction<ResponseError | undefined>>
     readonly name: string,
     readonly email: string,
     readonly password: string
 }
 
 function SignupScreen() {
-
     return (
         <View style={styles.main_container}>
-            <LogoContainer />
+            <LogoContainer imageStyle={styles.logo_image_signup}/>
             <SignupContainer />
-        </View>
-    )
-}
-
-function LogoContainer() {
-    const isKeyboardVisible = useKeyboardVisibility()
-
-    return (
-        <View>
-            {!isKeyboardVisible && <View style={styles.logo_container}>
-                <Image source={require("@images/workoutpal-full-logo.png")} style={styles.logo_image_signup} />
-            </View>}
         </View>
     )
 }
@@ -73,14 +57,6 @@ function SignupHeader() {
         <View>
             <Text style={[styles.text, styles.header_text]}>Sign Up</Text>
             <Text style={[styles.text, styles.small_text]}>Fill the details and create your account now</Text>
-        </View>
-    )
-}
-
-function ErrorContainer({responseError}: ErrorInfo) {
-    return (
-        <View style={styles.error_message_container}>
-            {responseError && <Text style={styles.error_message}>{responseError.error_message}</Text>}
         </View>
     )
 }
@@ -130,18 +106,6 @@ function SingupButton({setResponseError, name, email, password}: ButtonInfo) {
         <TouchableOpacity style={styles.button} onPress={signupAction}>
             {(!fetching) ? <Text style={styles.buttonText}>Sign Up</Text> : <Text style={styles.buttonText}>Loading...</Text>}
         </TouchableOpacity>
-    )
-}
-
-function ConnectWithGoogleContainer() {
-    return (
-        <View>
-            <Text style={styles.signupText}>
-                Already have an account? <Link style={styles.signupLink} href={"/(auth)/login"}>Log In</Link>
-            </Text>
-            <Text style={[styles.small_text, styles.other_links_text]}>Or connect with</Text>
-            <FontAwesome style={styles.icon} name="google" size={15}/>  
-        </View>
     )
 }
 
