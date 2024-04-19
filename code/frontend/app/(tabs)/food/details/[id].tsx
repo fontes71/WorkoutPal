@@ -146,28 +146,44 @@ const More: React.FC<MoreProps> = ({
   );
 };
 
-const TopSection = () => (
+interface TopSectionProps {
+  foodId: string
+}
+
+const TopSection: React.FC<TopSectionProps> = () => {
+  
+  const onSaveHook = () => {
+    
+  }
+
+
+  return(
   <Stack.Screen
     options={{
       headerTitle: "Add Food",
       headerRight: (props) => (
+        <TouchableOpacity >
         <Image
           source={require("@/assets/images/save.png")}
           style={{ marginRight: 0 }}
         />
+        </TouchableOpacity>
       ),
       headerTitleAlign: "left",
     }}
   />
 );
+}
 
 export default function FoodDetailsScreen() {
   const { foodJSON } = useLocalSearchParams<{ foodJSON: string }>();
   const food = JSON.parse(foodJSON) as Food;
 
+  console.log(food)
+
   return (
     <View style={food_details_styles.container}>
-      <TopSection />
+      <TopSection foodId={food.id}/>
       <Text style={food_details_styles.title}> {food.name}</Text>
       <View style={food_details_styles.overview}>
         <FoodCover imageUrl={food.imageUrl} />

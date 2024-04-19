@@ -12,20 +12,19 @@ import { FoodServices } from "./services/food-services.ts";
 import { FoodData } from "./data/mongo/food-data.ts";
 import cors from 'cors';
 
+// AUTH
+const authData = new AuthData()
+const authServices = new AuthServices(authData)
+const authApi = new AuthApi(authServices, authData);
+
 // EXERCISE
 const exerciseData = new ExerciseData()
 const exerciseServices = new ExerciseServices(exerciseData)
 const exerciseApi = new ExerciseApi(exerciseServices, exerciseData)
 
-// FOOD
-const foodData = new FoodData()
-const foodServices = new FoodServices(foodData)
-const foodApi = new FoodApi(foodServices, foodData)
-
-// AUTH
-const authData = new AuthData()
-const authServices = new AuthServices(authData)
-const authApi = new AuthApi(authServices, authData)
+const foodData = new FoodData();
+const foodServices = new FoodServices(foodData, authData);
+const foodApi = new FoodApi(foodServices, foodData);
 
 
 const port = 8080;
@@ -57,6 +56,7 @@ app.get("/api/cloneDatabase", exerciseApi.cloneExerciseDB);
 
 // Food
 app.get("/api/food/search", foodApi.searchFood);
+app.post("/api/food/consume", foodApi.consumeFood);
 
 app.listen(8080, () => {
   console.log(`Listening...\nhttp://localhost:` + port);

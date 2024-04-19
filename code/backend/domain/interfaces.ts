@@ -18,6 +18,7 @@ export interface IExerciseApi {
 
 export interface IFoodApi {
   searchFood(req: Request, res: Response): void;
+  consumeFood(req: Request, res: Response): void;
 }
 
 export interface IAuthApi {
@@ -43,6 +44,7 @@ export interface IExerciseServices {
 
 export interface IFoodServices {
   searchFood(query: string, skip: number, limit: number): Promise<Array<Food>>;
+  consumeFood(token: string, id: string,name: string | null, calories: number | null, protein: string | null, fat: string | null, carbs: string | null, fiber: string | null): any
 }
 
 export interface IAuthServices {
@@ -66,6 +68,8 @@ export interface IExerciseData {
 
 export interface IFoodData {
   searchFood(query: string, skip: number, limit: number): Promise<Array<FoodFactsApiFood>>;
+  insertConsumedFood(day: Day, consumedFood: ConsumedFood): Promise<void>
+  insertDayAndConsumedFood(user: any, date: string, consumedFood: ConsumedFood): Promise<void>
 }
 
 export interface IAuthData {

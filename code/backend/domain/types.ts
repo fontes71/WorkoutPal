@@ -32,7 +32,7 @@ export interface User {
   password: string;
   token: string;
   workout_plans: Array<WorkoutPlan>;
-  days: Array<Object>;
+  days: Array<Day>;
 }
 
 export interface FoodFactsApiFood {
@@ -67,4 +67,19 @@ export interface Food {
   sodium: string | null;
   sugars: string | null;
   nutriscoreGrade: string | null;
+}
+
+export interface Day {
+  date: string,
+  consumedFoodList: ConsumedFood[]
+}
+
+export interface ConsumedFood {
+  id: string,
+  name: string | null;
+  calories: number | null;
+  protein: string | null;
+  fat: string | null;
+  carbs: string | null;
+  fiber: string | null;
 }
