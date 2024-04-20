@@ -1,5 +1,5 @@
 import { AuthInfoUser, UserResponse } from "./api";
-import { Exercise, User, Food, FoodFactsApiFood, WorkoutPlan } from "./types";
+import { Exercise, User, Food, FoodFactsApiFood, WorkoutPlan, ConsumedFood, Day } from "./types";
 import { Request, Response } from "express";
 
 // API
@@ -68,14 +68,17 @@ export interface IExerciseData {
 
 export interface IFoodData {
   searchFood(query: string, skip: number, limit: number): Promise<Array<FoodFactsApiFood>>;
-  insertConsumedFood(day: Day, consumedFood: ConsumedFood): Promise<void>
-  insertDayAndConsumedFood(user: any, date: string, consumedFood: ConsumedFood): Promise<void>
 }
 
 export interface IAuthData {
   createUser(username: string, password: string, email: string, token: string): Promise<void>;
   getUserByToken(token: string): Promise<User | null>;
   getUserByMail(email: string): Promise<User | null>;
+}
+
+export interface IUserData {
+  getUserByToken(token: string): Promise<User | null>;
+  updateUser(token: string, user: User): Promise<User | null>
 }
 
 

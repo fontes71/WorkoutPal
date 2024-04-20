@@ -9,22 +9,7 @@ export const userSchema = new mongoose.Schema(
     password: String, 
     token: String,
     workout_plans: [Object],
-    days: [
-      {
-        date: String,
-        consumedFood: [
-          {
-            id: String,
-            name: String,
-            calories: Number,
-            protein: String,
-            fat: String,
-            carbs: String,
-            fiber: String,
-          }
-        ]
-      }
-    ]
+    days: [Object]
   },
   { versionKey: false }
 )

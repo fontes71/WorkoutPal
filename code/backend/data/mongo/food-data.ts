@@ -1,5 +1,5 @@
 import { IFoodData } from "../../domain/interfaces";
-import { ConsumedFood, Day } from "../../domain/types";
+import { ConsumedFood, Day, User } from "../../domain/types";
 import getDate from "../../utils/functions/app/getDate";
 import { mongodbHandler } from "../../utils/functions/data";
 import { UserModel } from "./mongoose";
@@ -17,21 +17,4 @@ export class FoodData implements IFoodData {
       return products;
     });
   }
-
-  insertConsumedFood(day: Day, consumedFood: ConsumedFood) {
-    return mongodbHandler(async () => {
-    day.consumedFoodList.push(consumedFood);
-    })
-  }
-
-  insertDayAndConsumedFood(user: any, date: string, consumedFood: ConsumedFood) {
-    return mongodbHandler(async () => {
-      console.log("INSERTING")
-     user.days.push({ date: date, consumedFood: [consumedFood] });
-     console.log("AFTER INSERT")
-     user.save();
-     console.log("AFTER SAVE")
-    })
-  }
-
 }

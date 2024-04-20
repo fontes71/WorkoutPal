@@ -11,11 +11,15 @@ import { FoodApi } from "./api/food-api.ts";
 import { FoodServices } from "./services/food-services.ts";
 import { FoodData } from "./data/mongo/food-data.ts";
 import cors from 'cors';
+import { UserData } from "./data/mongo/user-data.ts";
 
 // AUTH
 const authData = new AuthData()
 const authServices = new AuthServices(authData)
 const authApi = new AuthApi(authServices, authData);
+
+// USER
+const userData = new UserData()
 
 // EXERCISE
 const exerciseData = new ExerciseData()
@@ -23,7 +27,7 @@ const exerciseServices = new ExerciseServices(exerciseData)
 const exerciseApi = new ExerciseApi(exerciseServices, exerciseData)
 
 const foodData = new FoodData();
-const foodServices = new FoodServices(foodData, authData);
+const foodServices = new FoodServices(foodData, userData);
 const foodApi = new FoodApi(foodServices, foodData);
 
 

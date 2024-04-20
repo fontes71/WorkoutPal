@@ -19,10 +19,8 @@ export class AuthData implements IAuthData {
   }
 
   getUserByToken(token: string) {
-    return mongodbHandler(async () => {
-      const user = await UserModel.findOne({ token });
+      const user: Promise<User | null> =  UserModel.findOne({ token });
       return user;
-    });
   }
 
   getUserByMail(email: string) {

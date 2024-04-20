@@ -6,3 +6,4 @@ export class InvalidParamsError extends AppError {}
 export class InvalidCredentialsError extends AppError {}
 export class IncorrectPasswordError extends AppError {}
 export class NonExistentEmailError extends AppError {}
+export class Unauthorized extends AppError {}
