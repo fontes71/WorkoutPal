@@ -31,9 +31,24 @@ export class FoodApi implements IFoodApi {
 
       const { id,name, calories, protein,fat, carbs,fiber } = req.body
 
-      await this.service.consumeFood(token, id,name, calories, protein ,fat, carbs, fiber )
+      await this.service.consumeFood(token, id,name, calories, protein,fat, carbs, fiber )
       
       res.status(200).json({})
+    });
+  };
+
+  dailyConsumption = (req: Request, res: Response) => {
+    apiErrorHandler(res, async () => {
+      const token = "6b8c5f1d-4ce1-4982-83d3-720969912f12"
+
+      const { query } = req.query
+
+      if (!query || typeof query != "string")
+          throw InvalidParamsError
+
+      const food = await this.service.dailyConsumption(token, query)
+      
+      res.json(food)
     });
   };
 }
