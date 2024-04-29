@@ -10,6 +10,7 @@ import { Food } from "@/domain/types";
 import { localhost } from "@/constants";
 import { Linking, TouchableOpacity } from "react-native";
 import FoodCover from "@/app/utils/components/FoodCover";
+import { searchFood } from "@/services/food";
 
 const capitalizeWords = (str: string | null) => {
   if (str === null) {
@@ -92,10 +93,7 @@ export default function AddFoodScreen() {
 
   const handleEnter = () => {
     const fetchFoodResults = async () => {
-      const response = await fetch(
-        `${localhost}8080/api/food/search?query=${query}`
-      );
-      const food: Food[] = await response.json();
+      const food: Food[] = await searchFood(query);
 
       setFood(food);
     };

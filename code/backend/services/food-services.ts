@@ -29,8 +29,8 @@ export class FoodServices implements IFoodServices {
     this.userData = userData;
   }
 
-  searchFood = async (query: string, skip: number, limit: number) => {
-    const foodFactsApiFood: FoodFactsApiFood[] = await this.foodData.searchFood(
+  search = async (query: string, skip: number, limit: number) => {
+    const foodFactsApiFood: FoodFactsApiFood[] = await this.foodData.search(
       query,
       skip,
       limit
@@ -43,7 +43,7 @@ export class FoodServices implements IFoodServices {
     return food;
   };
 
-  consumeFood = async (
+  consume = async (
     token: string,
     id: string,
     name: string | null,
