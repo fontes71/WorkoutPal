@@ -61,8 +61,9 @@ app.post("/api/exercises/workoutPlans/:workoutPlanName", exerciseApi.addExercise
 app.get("/api/cloneDatabase", exerciseApi.cloneExerciseDB);
 
 // Food
-app.get("/api/food/search", foodApi.searchFood);
-app.post("/api/food/consume", foodApi.consumeFood);
+app.get("/api/food/search", foodApi.search);
+app.post("/api/food/consume", foodApi.consume);
+app.get("/api/food/dailyConsumption", foodApi.dailyConsumption);
 
 app.listen(8080, () => {
   console.log(`Listening...\nhttp://localhost:` + port);

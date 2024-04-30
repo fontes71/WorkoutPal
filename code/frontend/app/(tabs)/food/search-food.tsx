@@ -10,6 +10,8 @@ import { Food } from "@/domain/types";
 import { localhost } from "@/constants";
 import { Linking, TouchableOpacity } from "react-native";
 import FoodCover from "@/app/utils/components/FoodCover";
+import { searchFood } from "@/services/food";
+import foodItemRoute from "@/assets/functions/foodItemRoute";
 
 const capitalizeWords = (str: string | null) => {
   if (str === null) {
@@ -92,10 +94,7 @@ export default function AddFoodScreen() {
 
   const handleEnter = () => {
     const fetchFoodResults = async () => {
-      const response = await fetch(
-        `${localhost}8080/api/food/search?query=${query}`
-      );
-      const food: Food[] = await response.json();
+      const food: Food[] = await searchFood(query);
 
       setFood(food);
     };
@@ -107,10 +106,7 @@ export default function AddFoodScreen() {
   };
 
     const handleFoodPress = async (food: Food) => {
-    router.push({
-      pathname: `/food/details/${food.id}`,
-      params: { foodJSON: JSON.stringify(food) }
-  });
+    router.push(foodItemRoute(food));
   };
 
   return (

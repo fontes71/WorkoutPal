@@ -1,13 +1,15 @@
-import { TouchableOpacity, Image } from "react-native";
+import { TouchableOpacity, Image, Pressable } from "react-native";
 import { food_details_styles } from "@/assets/styles/food";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
-import { Link, Stack } from "expo-router";
+import { Link, Stack, router } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import FoodCover from "@/app/utils/components/FoodCover";
 import { Food } from "@/domain/types";
 import { useState } from "react";
+import { localhost } from "@/constants";
+import { consumeFood } from "@/services/food";
 
 const display = (value: string) => (value ? `${value}` : "-");
 
@@ -147,43 +149,41 @@ const More: React.FC<MoreProps> = ({
 };
 
 interface TopSectionProps {
-  foodId: string
+  food: Food;
 }
 
-const TopSection: React.FC<TopSectionProps> = () => {
-  
-  const onSaveHook = () => {
-    
-  }
+const TopSection: React.FC<TopSectionProps> = ({ food }) => {
+  const onSaveHook = async (food: Food) => {
+    await consumeFood(food);
 
+    router.push(`/food/`);
+  };
 
-  return(
-  <Stack.Screen
-    options={{
-      headerTitle: "Add Food",
-      headerRight: (props) => (
-        <TouchableOpacity >
-        <Image
-          source={require("@/assets/images/save.png")}
-          style={{ marginRight: 0 }}
-        />
-        </TouchableOpacity>
-      ),
-      headerTitleAlign: "left",
-    }}
-  />
-);
-}
+  return (
+    <Stack.Screen
+      options={{
+        headerTitle: "Add Food",
+        headerRight: () => (
+          <Pressable onPress={() => onSaveHook(food)}>
+            <Image
+              source={require("@/assets/images/save.png")}
+              style={{ marginRight: 0 }}
+            />
+          </Pressable>
+        ),
+        headerTitleAlign: "left",
+      }}
+    />
+  );
+};
 
 export default function FoodDetailsScreen() {
   const { foodJSON } = useLocalSearchParams<{ foodJSON: string }>();
   const food = JSON.parse(foodJSON) as Food;
 
-  console.log(food)
-
   return (
     <View style={food_details_styles.container}>
-      <TopSection foodId={food.id}/>
+      <TopSection food={food} />
       <Text style={food_details_styles.title}> {food.name}</Text>
       <View style={food_details_styles.overview}>
         <FoodCover imageUrl={food.imageUrl} />

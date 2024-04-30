@@ -13,27 +13,44 @@ export class FoodApi implements IFoodApi {
     this.data = data;
   }
 
-  searchFood = (req: Request, res: Response) => {
+  search = (req: Request, res: Response) => {
     apiErrorHandler(res, async () => {
         const { query } = req.query
 
         if (!query || typeof query != "string")
             throw InvalidParamsError
 
-      const food: Food[] = await this.service.searchFood(query, 0, 0);
+      const food: Food[] = await this.service.search(query, 0, 0);
       res.json(food);
     });
   };
 
-  consumeFood = (req: Request, res: Response) => {
+  consume = (req: Request, res: Response) => {
     apiErrorHandler(res, async () => {
-      const token = "711a048a-9537-40c9-859f-8cbbdf4f210b"
+      const token = "6b8c5f1d-4ce1-4982-83d3-720969912f12"
 
-      const { id,name, calories, protein,fat, carbs,fiber } = req.body
+      const { id,name, calories, protein, fat, carbs,fiber } = req.body
 
-      await this.service.consumeFood(token, id,name, calories, protein ,fat, carbs, fiber )
+      await this.service.consume(token, id,name, calories, protein,fat, carbs, fiber )
       
       res.status(200).json({})
+    });
+  };
+
+  dailyConsumption = (req: Request, res: Response) => {
+    apiErrorHandler(res, async () => {
+      const token = "6b8c5f1d-4ce1-4982-83d3-720969912f12"
+
+      console.log("DAY")
+
+      const { query } = req.query
+
+      if (!query || typeof query != "string")
+          throw InvalidParamsError
+
+      const food = await this.service.dailyConsumption(token, query)
+      
+      res.json(food)
     });
   };
 }
