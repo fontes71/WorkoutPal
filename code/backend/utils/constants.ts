@@ -16,3 +16,4 @@ export const exercisedb_options = {
 }
 
 export const WORKOUTPAL_MONGO_URI: string | undefined = process.env.WORKOUTPAL_MONGO_URI;
+export const TEST_MONGO_URI: string | undefined = process.env.TEST_MONGO_URI;

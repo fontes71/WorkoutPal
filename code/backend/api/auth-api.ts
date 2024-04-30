@@ -31,6 +31,13 @@ export class AuthApi implements IAuthApi {
     });
   }
 
+  signupAutoLogin = (req: Request, res: Response) => {
+    apiErrorHandler(res, async () => {
+      const token = await this.services.signupAutoLogin(req.body.username, req.body.password, req.body.email);
+      res.status(201).json({'authentication_token': token});
+    });
+  }
+
   login = (req: Request, res: Response) => {
     apiErrorHandler(res, async () => {
       const user: User = await this.services.login(req.body.email, req.body.password);

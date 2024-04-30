@@ -12,10 +12,11 @@ import { FoodServices } from "./services/food-services.ts";
 import { FoodData } from "./data/mongo/food-data.ts";
 import cors from 'cors';
 import { UserData } from "./data/mongo/user-data.ts";
+import { TEST_MONGO_URI, WORKOUTPAL_MONGO_URI } from "./utils/constants.ts";
 
 // AUTH
 const authData = new AuthData()
-const authServices = new AuthServices(authData)
+const authServices = new AuthServices(TEST_MONGO_URI, authData)
 const authApi = new AuthApi(authServices, authData);
 
 // USER
@@ -44,6 +45,7 @@ app.use(passport.initialize());
 
 // Auth
 app.post("/api/signup", authApi.signup)
+app.post("/api/signupAutoLogin", authApi.signupAutoLogin)
 app.post("/api/login", authApi.login)
 
 // Exercise

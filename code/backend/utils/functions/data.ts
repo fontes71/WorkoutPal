@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import { Exercise, ExerciseDB } from "../../domain/types";
 import { WORKOUTPAL_MONGO_URI } from "../constants";
+import { TEST_MONGO_URI } from "../constants";
 import mongoose from "mongoose";
 
 export const fetchData = async (url: string, options: any) => {
@@ -19,19 +20,38 @@ export function convertExerciseDBToExercise(exerciseDB: ExerciseDB): Exercise {
 
 
 export async function mongodbHandler(action: () => Promise<any>) {
-    try {
-      const uri = WORKOUTPAL_MONGO_URI
-      if (uri===undefined)
-        throw("Undefined Mongo Uri")
-      await mongoose.connect(uri);
-      return await action();
-    } finally {
-      await mongoose.connection.close();
-    }
+  try {
+    const uri = WORKOUTPAL_MONGO_URI
+    if (uri===undefined)
+      throw("Undefined Mongo Uri")
+    await mongoose.connect(uri);
+    return await action();
+  } finally {
+    await mongoose.connection.close();
   }
+}
 
-  export async function getLocalData(path: string) {
-    const data = await fs.readFile(path);
-    return JSON.parse(data.toString());
+export async function transactionHandler(connectionUri: string | undefined, action: () => Promise<any>) {
+  if (connectionUri===undefined)
+    throw("Undefined Mongo Uri")
+
+  await mongoose.connect(connectionUri);
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  
+  try {
+    const res = await action()
+    await session.commitTransaction();
+    return res
+  } catch (error) {
+    await session.abortTransaction(); 
   }
+  
+  session.endSession();
+}
+
+export async function getLocalData(path: string) {
+  const data = await fs.readFile(path);
+  return JSON.parse(data.toString());
+}
   

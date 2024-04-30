@@ -19,8 +19,8 @@ export class AuthData implements IAuthData {
   }
 
   getUserByToken(token: string) {
-      const user: Promise<User | null> =  UserModel.findOne({ token });
-      return user;
+    const user: Promise<User | null> =  UserModel.findOne({ token });
+    return user;
   }
 
   getUserByMail(email: string) {
@@ -28,5 +28,22 @@ export class AuthData implements IAuthData {
       const user = await UserModel.findOne({ email: email });
       return user;
     });
+  }
+
+  async createUser1(username: string, password: string, email: string, token: string) {
+    const user: User = {
+      username,
+      password,
+      email: email,
+      token,
+      workout_plans: [],
+      days: [],
+    };
+    UserModel.create(user);
+  }
+
+  getUserByMail1(email: string) {
+    const user: Promise<User | null> = UserModel.findOne({ email: email });
+    return user;
   }
 }

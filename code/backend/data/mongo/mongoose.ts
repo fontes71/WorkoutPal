@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-import dotenv from "dotenv";
-
 export const userSchema = new mongoose.Schema(
   {
     username: String, 
