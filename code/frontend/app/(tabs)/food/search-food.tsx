@@ -11,6 +11,7 @@ import { localhost } from "@/constants";
 import { Linking, TouchableOpacity } from "react-native";
 import FoodCover from "@/app/utils/components/FoodCover";
 import { searchFood } from "@/services/food";
+import foodItemRoute from "@/assets/functions/foodItemRoute";
 
 const capitalizeWords = (str: string | null) => {
   if (str === null) {
@@ -105,10 +106,7 @@ export default function AddFoodScreen() {
   };
 
     const handleFoodPress = async (food: Food) => {
-    router.push({
-      pathname: `/food/details/${food.id}`,
-      params: { foodJSON: JSON.stringify(food) }
-  });
+    router.push(foodItemRoute(food));
   };
 
   return (

@@ -27,7 +27,7 @@ export class FoodApi implements IFoodApi {
 
   consume = (req: Request, res: Response) => {
     apiErrorHandler(res, async () => {
-      const token = "711a048a-9537-40c9-859f-8cbbdf4f210b"
+      const token = "6b8c5f1d-4ce1-4982-83d3-720969912f12"
 
       const { id,name, calories, protein, fat, carbs,fiber } = req.body
 
@@ -40,6 +40,8 @@ export class FoodApi implements IFoodApi {
   dailyConsumption = (req: Request, res: Response) => {
     apiErrorHandler(res, async () => {
       const token = "6b8c5f1d-4ce1-4982-83d3-720969912f12"
+
+      console.log("DAY")
 
       const { query } = req.query
 
