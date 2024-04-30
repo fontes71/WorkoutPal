@@ -5,6 +5,9 @@ import { User } from "../domain/types.ts";
 import { IAuthApi, IAuthData, IAuthServices } from "../domain/interfaces.ts";
 import { apiErrorHandler } from "../utils/functions/api.ts";
 import { AuthInfoUser, UserResponse } from "../domain/api.ts";
+import { ParamsDictionary } from "express-serve-static-core";
+import { ParsedQs } from "qs";
+import { InvalidAuthorizationTokenError, NonExistentAuthorizationTokenError } from "../errors/app_errors.ts";
 
 const BearerStrategy = passport_http_bearer.Strategy
 
@@ -31,18 +34,30 @@ export class AuthApi implements IAuthApi {
     });
   }
 
-  signupAutoLogin = (req: Request, res: Response) => {
-    apiErrorHandler(res, async () => {
-      const token = await this.services.signupAutoLogin(req.body.username, req.body.password, req.body.email);
-      res.status(201).json({'authentication_token': token});
-    });
-  }
-
   login = (req: Request, res: Response) => {
     apiErrorHandler(res, async () => {
       const user: User = await this.services.login(req.body.email, req.body.password);
       res.status(200).json({status: "Login successful", user: this.userToUserResponse(user)});
     });
+  }
+
+  logout = (req: Request, res: Response) => {
+    apiErrorHandler(res, async () => { 
+      const token = this.getToken(req)
+      await this.services.logout(token)
+      res.status(200).json({status: "Logout successful"});
+    })
+  }
+
+  getToken(req: Request): string {
+    const authHeader = req.headers.authorization
+    if (!authHeader) throw NonExistentAuthorizationTokenError
+    else {
+      const tokenInfo = authHeader.split(' ')
+      const tokenType = tokenInfo[0]
+      if (tokenType != 'Bearer') throw InvalidAuthorizationTokenError
+      return tokenInfo[1]
+    }
   }
 
   userToUserResponse(user: User): UserResponse {

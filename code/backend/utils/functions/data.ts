@@ -1,7 +1,6 @@
 import fs from "node:fs/promises";
 import { Exercise, ExerciseDB } from "../../domain/types";
 import { WORKOUTPAL_MONGO_URI } from "../constants";
-import { TEST_MONGO_URI } from "../constants";
 import mongoose from "mongoose";
 
 export const fetchData = async (url: string, options: any) => {
@@ -41,13 +40,15 @@ export async function transactionHandler(connectionUri: string | undefined, acti
   
   try {
     const res = await action()
-    await session.commitTransaction();
+    await session.commitTransaction()
     return res
   } catch (error) {
-    await session.abortTransaction(); 
+    await session.abortTransaction() 
+    throw error
+  } finally {
+    await session.endSession();
+    await mongoose.connection.close();
   }
-  
-  session.endSession();
 }
 
 export async function getLocalData(path: string) {

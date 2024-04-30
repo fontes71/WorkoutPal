@@ -14,7 +14,10 @@ const errorsMap: Record<string, HttpError> = {
   'InvalidCredentialsError': { code: 400, status: 'BAD_REQUEST', message: 'Invalid Credentials' },
   'IncorrectPasswordError': { code: 400, status: 'BAD_REQUEST', message: 'Password is incorrect' },
   'NonExistentEmailError': { code: 404, status: 'NOT_FOUND', message: 'No user associated with the inserted email' },
-  'Unauthorized': { code: 401, status: 'UNAUTHORIZED', message: 'Acess denied' },
+  'ExistentEmailError': { code: 409, status: 'CONFLICT', message: 'There is already an account with the inserted email' },
+  'InvalidAuthorizationTokenError': { code: 400, status: 'BAD_REQUEST', message: 'Authorization token needs to be bearer' },
+  'NonExistentAuthorizationTokenError': { code: 404, status: 'NOT_FOUND', message: 'No authorization token provided' },
+  'Unauthorized': { code: 401, status: 'UNAUTHORIZED', message: 'Access denied' },
 }
 
 export function mapAppErrorToHttpError(error: Error): HttpError {

@@ -24,8 +24,8 @@ export interface IFoodApi {
 
 export interface IAuthApi {
   signup(req: Request, res: Response): void;
-  signupAutoLogin(req: Request, res: Response): void;
   login(req: Request, res: Response): void;
+  logout(req: Request, res: Response): void;
   userToUserResponse(user: User): UserResponse;
   userToAuthInfoUser(user: User): AuthInfoUser;
 }
@@ -53,7 +53,7 @@ export interface IFoodServices {
 export interface IAuthServices {
   signup(username: string, password: string, email: string): Promise<string>;
   login(email: string, password: string): Promise<User>;
-  signupAutoLogin(username: string, password: string, email: string): Promise<string>;
+  logout(token: string): Promise<void>;
 }
 
 // DATA
@@ -77,9 +77,9 @@ export interface IFoodData {
 export interface IAuthData {
   createUser(username: string, password: string, email: string, token: string): Promise<void>;
   getUserByToken(token: string): Promise<User | null>;
-  getUserByMail(email: string): Promise<User | null>;
-  createUser1(username: string, password: string, email: string, token: string): Promise<void>;
-  getUserByMail1(email: string): Promise<User | null>;
+  getUserAndUpdateToken(email: string, token: string): Promise<User | null>;
+  getUserByEmail(email: string): Promise<User | null>;
+  tryClearUserToken(token: string): Promise<User | null>;
 }
 
 export interface IUserData {
