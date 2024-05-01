@@ -8,6 +8,7 @@ import { localhost } from "@/constants";
 import getDate from "@/assets/functions/getDate";
 import { Food } from "@/domain/types";
 import foodItemRoute from "@/assets/functions/foodItemRoute";
+import { consumedFoodOfTheDay } from "@/services/food";
 
 type ConsumedFoodProps = {
   food: Food[] | null;
@@ -38,10 +39,7 @@ export default function FoodScreen() {
     const fetchConsumedFoodOfTheDay = async () => {
       const date = getDate();
 
-      const response = await fetch(
-        `${localhost}8080/api/food/dailyConsumption?query=${date}`
-      );
-      const food: Food[] = await response.json();
+      const food: Food[] | null = await consumedFoodOfTheDay(date)
 
       setFood(food);
     };
