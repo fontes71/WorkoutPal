@@ -45,6 +45,7 @@ const TrainingPlanDetailsScreen = () => {
     const { trainingPlanJSON } = useLocalSearchParams<{ trainingPlanJSON: string }>();
     const trainingPlan = JSON.parse(trainingPlanJSON) as TrainingPlan;
     const [exercises, setExercises] = useState<Exercise[]>([]);
+    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
         const fetchExercises = async () => {
@@ -78,6 +79,8 @@ const TrainingPlanDetailsScreen = () => {
                     console.error(`Error fetching exercise with ID ${exerciseId}:`, error);
                 }
             }
+
+            setLoaded(true);
         }
 
         fetchExercises();
@@ -87,7 +90,7 @@ const TrainingPlanDetailsScreen = () => {
         <View>
             <Stack.Screen options={{ title: "Details" }}/>
             <View style={search_exercises_styles.exerciseResultContainer}>
-                {exercises.length !== 0 ? 
+                {exercises.length !== 0 && loaded ? 
                     <View style={search_exercises_styles.exerciseResultTextContainer}>
                         <Text style={search_exercises_styles.topText}>{trainingPlan.name}</Text>
                         <Text style={search_exercises_styles.topText}/>
@@ -101,7 +104,10 @@ const TrainingPlanDetailsScreen = () => {
                             }
                             keyExtractor={(item: Exercise) => item._id}
                         />
-                    </View> : <Text>Loading...</Text>
+                    </View> : 
+                    <View style={search_exercises_styles.exerciseResultTextContainer}>
+                        <Text style={search_exercises_styles.topText}>Loading...</Text>
+                    </View>
                 }
             </View>
         </View>

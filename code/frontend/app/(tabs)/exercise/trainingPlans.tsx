@@ -82,7 +82,10 @@ export default function TrainingPlansScreen() {
                             </Pressable>
                         }
                         keyExtractor={(item: TrainingPlan) => item.name}
-                    /> : <Text>Loading your training plans...</Text>
+                    /> : 
+                    <View style={search_exercises_styles.exerciseResultTextContainer}>
+                        <Text style={search_exercises_styles.topText}>Loading your training plans...</Text>
+                    </View>
                 }
             </View>
         </View>
