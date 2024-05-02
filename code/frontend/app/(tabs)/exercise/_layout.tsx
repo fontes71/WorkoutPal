@@ -1,9 +1,8 @@
 import { Stack } from "expo-router";
 
 const Layout = () => {
-  return <Stack>
-    <Stack.Screen name="trainingPlanModal" options={{presentation: 'modal'}} />
-  </Stack>;
+  return <Stack />
+
 };
 
 export default Layout;

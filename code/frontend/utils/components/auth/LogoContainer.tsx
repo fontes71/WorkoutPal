@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Image, StyleProp } from 'react-native';
-import useKeyboardVisibility from '@/assets/hooks/useKeyboardVisibility';
+import useKeyboardVisibility from '@/utils/functions/useKeyboardVisibility';
 import { ImageStyle } from 'expo-image';
-import styles from '@/assets/styles/auth';
+import styles from '@/utils/styles/auth';
 
 type StyleInfo = {
     readonly imageStyle: StyleProp<ImageStyle>

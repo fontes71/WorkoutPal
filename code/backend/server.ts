@@ -13,6 +13,7 @@ import { FoodData } from "./data/mongo/food-data.ts";
 import cors from 'cors';
 import { UserData } from "./data/mongo/user-data.ts";
 import { WORKOUTPAL_MONGO_URI } from "./utils/constants.ts";
+import mongoose from "mongoose";
 
 // AUTH
 const authData = new AuthData()
@@ -64,6 +65,16 @@ app.get("/api/cloneDatabase", exerciseApi.cloneExerciseDB);
 app.get("/api/food/search", foodApi.search);
 app.post("/api/food/consume", foodApi.consume);
 app.get("/api/food/dailyConsumption", foodApi.dailyConsumption);
+
+function cleanup() {
+  mongoose.connection.close();
+}
+
+mongoose.connect("mongodb+srv://WorkoutPal:WorkoutPalPass@cluster0.yqtdrwy.mongodb.net/WorkoutPal?retryWrites=true&w=majority");
+
+process.on('SIGINT', cleanup);
+process.on('SIGTERM', cleanup);
+process.on('SIGHUP', cleanup);
 
 app.listen(8080, () => {
   console.log(`Listening...\nhttp://localhost:` + port);

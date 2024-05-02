@@ -1,11 +1,11 @@
 import { TouchableOpacity, Image, Pressable } from "react-native";
-import { food_details_styles } from "@/assets/styles/food";
+import { food_details_styles } from "@/utils/styles/food";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import { Link, Stack, router } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
-import FoodCover from "@/app/utils/components/FoodCover";
+import FoodCover from "@/utils/components/FoodCover";
 import { Food } from "@/domain/types";
 import { useState } from "react";
 import { localhost } from "@/constants";

@@ -5,17 +5,17 @@ import { mongodbHandler } from "../../utils/functions/data";
 import { UserModel } from "./mongoose";
 
 export class UserData implements IUserData {
-    getUserByToken(token: string) {
-        return mongodbHandler(async () => {
-            const user: Promise<User | null> =  UserModel.findOne({ token });
-            return user;
-        })
-    }
+  getUserByToken(token: string) {
+    const user: Promise<User | null> = UserModel.findOne({ token });
+    return user;
+  }
 
-    updateUser(token: string, user: User) {
-        return mongodbHandler(async () => {
-            const updatedUser: Promise<User | null> =  UserModel.findOneAndUpdate({token}, user, {new: true})
-            return updatedUser
-        })
-    }
+  updateUser(token: string, user: User) {
+    const updatedUser: Promise<User | null> = UserModel.findOneAndUpdate(
+      { token },
+      user,
+      { new: true }
+    );
+    return updatedUser;
+  }
 }

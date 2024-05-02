@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, StatusBar, StyleSheet } from 'react-native';
-import PasswordInput from '../../utils/components/PasswordInput';
+import PasswordInput from '@/utils/components/PasswordInput';
 
 export default function LoginScreen() {
     const [password, setPassword] = useState('')

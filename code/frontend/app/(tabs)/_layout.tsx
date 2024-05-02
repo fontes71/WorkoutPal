@@ -1,6 +1,6 @@
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link, Tabs, usePathname } from "expo-router";
+import { Link, Stack, Tabs, usePathname } from "expo-router";
 import { Pressable, StatusBar } from "react-native";
 
 import { Colors } from "@/constants";
@@ -23,15 +23,13 @@ function TabBarIcon(props: {
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
-
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <StatusBar barStyle="dark-content" />
+    <>
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
           tabBarStyle: {
-            display: usePathname() === '/food/search-food' ? 'none' : 'flex',
+            display: usePathname() === "/food/search-food" ? "none" : "flex",
           },
           // Disable the static render of the header on web
           // to prevent a hydration error in React Navigation v6.
@@ -39,16 +37,46 @@ export default function TabLayout() {
         }}
       >
         <Tabs.Screen
-          name="exercise"
+          name="index"
           options={{
             title: "Exercise",
             tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+            headerRight: () => (
+              <Link href="/modal" asChild>
+                <Pressable>
+                  {({ pressed }) => (
+                    <FontAwesome
+                      name="info-circle"
+                      size={25}
+                      color={Colors[colorScheme ?? "light"].text}
+                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+              </Link>
+            ),
+          }}
+        />
+        <Tabs.Screen
+          // Name of the route to hide.
+          name="exercise"
+          options={{
+            // This tab will no longer show up in the tab bar.
+            href: null,
+          }}
+        />
+        <Tabs.Screen
+          // Name of the route to hide.
+          name="(auth)"
+          options={{
+            // This tab will no longer show up in the tab bar.
+            href: null,
           }}
         />
         <Tabs.Screen
           name="food"
           options={{
-            title: "food",
+            title: "Food",
             tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
             headerRight: () => (
               <Link href="/modal" asChild>
@@ -67,6 +95,6 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-    </ThemeProvider>
+    </>
   );
 }

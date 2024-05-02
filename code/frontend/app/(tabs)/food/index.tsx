@@ -1,13 +1,13 @@
 import { FlatList, Pressable, StyleSheet } from "react-native";
 
-import { food_styles } from "@/assets/styles/food";
+import { food_styles } from "@/utils/styles/food";
 import { Text, View } from "@/components/Themed";
 import { Link, Stack, router } from "expo-router";
 import { useEffect, useState } from "react";
 import { localhost } from "@/constants";
-import getDate from "@/assets/functions/getDate";
+import getDate from "@/utils/functions/getDate";
 import { Food } from "@/domain/types";
-import foodItemRoute from "@/assets/functions/foodItemRoute";
+import foodItemRoute from "@/utils/functions/foodItemRoute";
 import { consumedFoodOfTheDay } from "@/services/food";
 
 type ConsumedFoodProps = {
