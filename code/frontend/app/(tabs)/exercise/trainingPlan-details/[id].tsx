@@ -41,6 +41,13 @@ const ExerciseResult: React.FC<Exercise> = ({ name, gifUrl, equipment }) => {
     );
 }
 
+const handleExercisePress = async (exercise: Exercise) => {
+    router.push({
+        pathname: `/exercise/exercise-details/${exercise._id}`,
+        params: { exerciseJSON: JSON.stringify(exercise) }
+    });
+}
+
 const TrainingPlanDetailsScreen = () => {
     const { trainingPlanJSON } = useLocalSearchParams<{ trainingPlanJSON: string }>();
     const trainingPlan = JSON.parse(trainingPlanJSON) as TrainingPlan;
@@ -50,7 +57,7 @@ const TrainingPlanDetailsScreen = () => {
     useEffect(() => {
         const fetchExercises = async () => {
             // Define the delay between requests (in milliseconds)
-            const delay = 300; // 3 thents delay
+            const delay = 100; // 3 thents delay
             
             for (let i = 0; i < trainingPlan.exercises.length; i++) {
                 const exerciseId = trainingPlan.exercises[i];
@@ -100,7 +107,9 @@ const TrainingPlanDetailsScreen = () => {
                         <FlatList
                             data={exercises}
                             renderItem={({ item }) => 
-                                <ExerciseResult {...item} />
+                                <Pressable onPress={() => {handleExercisePress(item)}}>
+                                    <ExerciseResult {...item} />
+                                </Pressable>
                             }
                             keyExtractor={(item: Exercise) => item._id}
                         />
