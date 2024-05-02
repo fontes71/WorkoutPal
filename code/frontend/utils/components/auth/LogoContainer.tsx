@@ -14,7 +14,7 @@ export default function LogoContainer({imageStyle}: StyleInfo) {
     return (
         <View>
             {!isKeyboardVisible && <View style={styles.logo_container}>
-                <Image source={require("@images/workoutpal-full-logo.png")} style={imageStyle} />
+                <Image source={require("@/utils/images/workoutpal-full-logo.png")} style={imageStyle} />
             </View>}
         </View>
     )

@@ -1,10 +1,4 @@
-import {
-  Image,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-  Pressable,
-} from "react-native";
+import { Image, FlatList, StyleSheet, TouchableOpacity, Pressable  } from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
@@ -18,6 +12,7 @@ import search_exercises_styles from "@/utils/styles/exercises";
 const BottomText = ({ str }: { str: string | null }) => (
   <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
 );
+  
 
 const ExerciseResult: React.FC<Exercise> = ({ name, gifUrl, equipment }) => {
   return (
@@ -77,12 +72,12 @@ export default function SearchExerciseScreen() {
     setExerciseName(value);
   };
 
-  const handleExercisePress = async (exercise: Exercise) => {
-    router.push({
-      pathname: `/exercise/details/${exercise._id}`,
-      params: { exerciseJSON: JSON.stringify(exercise) },
-    });
-  };
+    const handleExercisePress = async (exercise: Exercise) => {
+        router.push({
+            pathname: `/exercise/exercise-details/${exercise._id}`,
+            params: { exerciseJSON: JSON.stringify(exercise) }
+        });
+    }
 
   return (
     <View>

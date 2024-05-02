@@ -112,7 +112,7 @@ const MoreButton: React.FC<MoreButtonProps> = ({
       {buttonClicked ? "Less" : "More"}
     </Text>
     <Image
-      source={require("@/assets/images/down-arrow.png")}
+      source={require("@/utils/images/down-arrow.png")}
       style={food_details_styles.arrowIcon}
     />
   </TouchableOpacity>
@@ -166,7 +166,7 @@ const TopSection: React.FC<TopSectionProps> = ({ food }) => {
         headerRight: () => (
           <Pressable onPress={() => onSaveHook(food)}>
             <Image
-              source={require("@/assets/images/save.png")}
+              source={require("@/utils/images/save.png")}
               style={{ marginRight: 0 }}
             />
           </Pressable>
