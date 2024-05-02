@@ -28,4 +28,10 @@ export interface Exercise {
     secondaryMuscles: Array<string>;
     instructions: Array<string>;
 }
+
+export interface TrainingPlan {
+    name: string;
+    description: string;
+    exercises: Array<string>;
+}
   

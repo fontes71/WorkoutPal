@@ -10,7 +10,10 @@ export default function ExerciseScreen() {
     <View style={exercise_styles.container}>
       <Stack.Screen options={{ title: "Exercise" }} />
       <Link style={exercise_styles.link} href={"/exercise/search-exercise"}>
-        Search Exercise
+        Search Exercises
+      </Link>
+      <Link style={exercise_styles.link} href={"/exercise/trainingPlans"}>
+        Training Plans
       </Link>
     </View>
   );

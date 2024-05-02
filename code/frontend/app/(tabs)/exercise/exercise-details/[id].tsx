@@ -13,6 +13,13 @@ const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
 );
 
+const handleAddButtonPress = (exercise: Exercise) => {
+    router.push({
+        pathname: `/exercise/trainingPlanModal`,
+        params: { exerciseId: exercise._id }
+    });
+}
+
 const ExerciseDetailsScreen = () => {
     const { exerciseJSON } = useLocalSearchParams<{ exerciseJSON: string }>();
     const exercise = JSON.parse(exerciseJSON) as Exercise;
@@ -40,7 +47,7 @@ const ExerciseDetailsScreen = () => {
                     {exercise.instructions.map((instruction, index) => (
                         <Text key={index} style={search_exercises_styles.bottomText}>{instruction}</Text>
                     ))}
-                    <Button onPress={() => {router.push("/(tabs)/exercise/trainingPlanModal")}}>Add To Training Plan</Button>
+                    <Button onPress={() => handleAddButtonPress(exercise)}>Add To Training Plan</Button>
                 </View>
             </View>
         </View>

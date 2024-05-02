@@ -3,24 +3,16 @@ import { Image, FlatList, StyleSheet, TouchableOpacity, Pressable, Platform } fr
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
-import { Stack } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import trainingPlans_styles from '@/assets/styles/trainingPlans';
-
-interface TrainingPlan {
-  name: string;
-  description: string;
-  exercises: string[];
-}
+import { useEffect, useState } from 'react';
+import { getLocalUser } from '@/domain/auth';
+import { localhost } from '@/constants';
+import { TrainingPlan } from '@/domain/types';
 
 const BottomText = ({ str }: { str: string | null }) => (
   <>{str && <Text style={trainingPlans_styles.bottomText}>{str}</Text>}</>
 );
-
-const trainingPlans: TrainingPlan[] = [
-  {name: "Training Plan 1", description: "Description 1", exercises: ["Exercise 1", "Exercise 2", "Exercise 3"]},
-  {name: "Training Plan 2", description: "Description 2", exercises: ["Exercise 4", "Exercise 5", "Exercise 6"]},
-  {name: "Training Plan 3", description: "Description 2", exercises: ["Exercise 7", "Exercise 8", "Exercise 9"]},
-];
 
 const TrainingPlanResult: React.FC<any> = ({ name, description }) => {
   return (
@@ -34,8 +26,65 @@ const TrainingPlanResult: React.FC<any> = ({ name, description }) => {
 }
 
 export default function ModalScreen() {
+  const {exerciseId} = useLocalSearchParams<{ exerciseId: string }>();
+  const [trainingPlans, setTrainingPlans] = useState<TrainingPlan[]>([]);
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchTrainingPlans = async () => {
+        const user = await getLocalUser();
+
+        if (user === null) {
+            return;
+        }
+
+        if (user.token === undefined) {
+            return;
+        }
+
+        //setToken(user.token);
+        setToken("147f3bb2-0791-41c2-8805-8dc660d9a157");
+
+        const response = await fetch(`${localhost}8080/api/exercises/workoutPlans`, 
+            {
+                method: 'GET',
+                headers: {
+                  'Authorization': `Bearer 147f3bb2-0791-41c2-8805-8dc660d9a157`,
+                  'Content-Type': 'application/json',
+                },
+            }
+        );
+
+        if (response.status !== 200) {
+            return;
+        }
+
+        const trainingPlans: TrainingPlan[] = await response.json();
+        setTrainingPlans(trainingPlans);
+    }
+
+    fetchTrainingPlans();
+  }, []);
+
   const handleTrainingPlanPress = async (trainingPlan: TrainingPlan) => {
-    console.log(trainingPlan);
+    const response = await fetch(`${localhost}8080/api/exercises/workoutPlans/${trainingPlan.name}`,
+      {
+        method: 'POST',
+        headers: {
+          authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({exerciseId: exerciseId})
+      }
+    )
+
+    if (response.status !== 200) {
+      alert("Failed to add exercise to training plan");
+      return;
+    }
+
+    alert("Exercise Added");
+    return;
   }
 
   return (
