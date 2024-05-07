@@ -39,6 +39,10 @@ export const food_search_styles = StyleSheet.create({
   bottomText: {
     fontSize: 14,
   },
+  absoluteFillObject: {
+    width:400,
+    height:400
+  }
 });
 
 export const food_details_styles = StyleSheet.create({

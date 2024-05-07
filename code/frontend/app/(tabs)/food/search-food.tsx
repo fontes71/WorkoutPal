@@ -1,4 +1,4 @@
-import { FlatList, Pressable } from "react-native";
+import { Button, FlatList, Pressable } from "react-native";
 import { Image } from "expo-image";
 import { food_search_styles } from "@/utils/styles/food";
 import EditScreenInfo from "@/components/EditScreenInfo";
@@ -12,6 +12,8 @@ import { Linking, TouchableOpacity } from "react-native";
 import FoodCover from "@/utils/components/FoodCover";
 import { searchFood } from "@/services/food";
 import foodItemRoute from "@/utils/functions/foodItemRoute";
+import { CameraView, Camera } from "expo-camera/next";
+import { BarCodeScanningResult } from "expo-camera/build/Camera.types";
 
 const capitalizeWords = (str: string | null) => {
   if (str === null) {
@@ -31,7 +33,6 @@ const BottomText = ({ str }: { str: string | null }) => (
 const addCommaIfNeeded = (noComma: boolean, str: string) =>
   noComma ? str : `${str}, `;
 
-
 interface FoodResultInfoProps {
   nameString: string;
   brandString: string;
@@ -39,16 +40,17 @@ interface FoodResultInfoProps {
   quantity: string;
 }
 
-const FoodResultInfo: React.FC<FoodResultInfoProps> = ({ nameString, brandString, calorieString, quantity }) => (
+const FoodResultInfo: React.FC<FoodResultInfoProps> = ({
+  nameString,
+  brandString,
+  calorieString,
+  quantity,
+}) => (
   <View style={food_search_styles.foodResultTextContainer}>
-    <Text style={food_search_styles.topText}>{capitalizeWords(nameString)}</Text>
-    <BottomText
-      str={
-        capitalizeWords(brandString) +
-        calorieString +
-        quantity
-      }
-    />
+    <Text style={food_search_styles.topText}>
+      {capitalizeWords(nameString)}
+    </Text>
+    <BottomText str={capitalizeWords(brandString) + calorieString + quantity} />
   </View>
 );
 
@@ -91,6 +93,31 @@ const FoodResult: React.FC<Food> = ({
 export default function AddFoodScreen() {
   const [query, setQuery] = useState("");
   const [foodResults, setFood] = useState<Food[]>([]);
+  const [hasCameraPermission, setHasCameraPermission] = useState<
+    boolean | null
+  >(null);
+  const [scanning, setScanning] = useState(false);
+
+  useEffect(() => {
+    const getCameraPermissions = async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasCameraPermission(status === "granted");
+    };
+
+    getCameraPermissions();
+  }, []);
+
+  const handleBarCodeScanned = ({ type, data }: BarCodeScanningResult) => {
+    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    setScanning(false);
+  };
+
+  if (hasCameraPermission === null) {
+    return <Text>Requesting for camera permission</Text>;
+  }
+  if (hasCameraPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
 
   const handleEnter = () => {
     const fetchFoodResults = async () => {
@@ -105,13 +132,38 @@ export default function AddFoodScreen() {
     setQuery(value);
   };
 
-    const handleFoodPress = async (food: Food) => {
+  const handleFoodPress = async (food: Food) => {
     router.push(foodItemRoute(food));
   };
 
   return (
     <View>
       <Stack.Screen options={{ title: "Search food" }} />
+      {scanning && (
+        <CameraView
+          onBarcodeScanned={handleBarCodeScanned}
+          barcodeScannerSettings={{
+            barcodeTypes: [
+              "aztec",
+              "ean13",
+              "ean8",
+              "qr",
+              "pdf417",
+              "upc_e",
+              "datamatrix",
+              "code39",
+              "code93",
+              "itf14",
+              "codabar",
+              "code128",
+              "upc_a",
+            ],
+          }}
+          style={food_search_styles.absoluteFillObject}
+        />
+      )}
+      <Button title={"Scan Barcode"} onPress={() => setScanning(!scanning)} />
+
       <SearchBar
         placeholder="Type Here..."
         onSubmitEditing={handleEnter}
@@ -134,5 +186,3 @@ export default function AddFoodScreen() {
     </View>
   );
 }
-
-
