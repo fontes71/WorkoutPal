@@ -10,7 +10,7 @@ import { Food } from "@/domain/types";
 import { localhost } from "@/constants";
 import { Linking, TouchableOpacity } from "react-native";
 import FoodCover from "@/utils/components/FoodCover";
-import { searchFood } from "@/services/food";
+import { searchFoodByName, searchFoodByBarcode } from "@/services/food";
 import foodItemRoute from "@/utils/functions/foodItemRoute";
 import { CameraView, Camera } from "expo-camera/next";
 import { BarCodeScanningResult } from "expo-camera/build/Camera.types";
@@ -108,8 +108,12 @@ export default function AddFoodScreen() {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }: BarCodeScanningResult) => {
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    setScanning(false);
+    const fetchFoodResults = async () => {
+      setScanning(false);
+      const food: Food = await searchFoodByBarcode(data);
+      router.push(foodItemRoute(food));
+    };
+    fetchFoodResults();
   };
 
   if (hasCameraPermission === null) {
@@ -121,7 +125,7 @@ export default function AddFoodScreen() {
 
   const handleEnter = () => {
     const fetchFoodResults = async () => {
-      const food: Food[] = await searchFood(query);
+      const food: Food[] = await searchFoodByName(query);
 
       setFood(food);
     };

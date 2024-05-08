@@ -2,8 +2,14 @@ import postOptions from "@/utils/functions/postOptions";
 import { localhost } from "@/constants";
 import { Food } from "@/domain/types";
 
-export const searchFood = async (query: string) => {
-  const res = await fetch(`${localhost}8080/api/food/search?query=${query}`);
+export const searchFoodByName = async (query: string) => {
+  const res = await fetch(`${localhost}8080/api/food/search/name?query=${query}`);
+
+  return res.ok ? res.json() : null;
+};
+
+export const searchFoodByBarcode = async (barcode: string) => {
+  const res = await fetch(`${localhost}8080/api/food/search/barcode?barcode=${barcode}`);
 
   return res.ok ? res.json() : null;
 };
