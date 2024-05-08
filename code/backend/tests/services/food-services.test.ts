@@ -13,7 +13,7 @@ import {
   food_facts_egg_4,
 } from "../files/food.ts";
 import { NotFoundError } from "../../errors/app_errors.ts";
-import { mapFood } from "../../utils/functions/app/mapFood.ts";
+import { mapFood } from "../../utils/functions/app/apiFoodToFood.ts";
 import { Food } from "../../domain/types.ts";
 
 const data = new LocalFoodData();

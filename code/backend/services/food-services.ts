@@ -15,7 +15,7 @@ import {
   IFoodServices,
   IUserData,
 } from "../domain/interfaces";
-import { mapFood } from "../utils/functions/app/mapFood";
+import { apiFoodToFood } from "../utils/functions/app/apiFoodToFood";
 import getDate from "../utils/functions/app/getDate";
 import { mongodbHandler } from "../utils/functions/data";
 
@@ -29,16 +29,23 @@ export class FoodServices implements IFoodServices {
     this.userData = userData;
   }
 
-  search = async (query: string, skip: number, limit: number) => {
-    const foodFactsApiFood: FoodFactsApiFood[] = await this.foodData.search(
-      query,
-      skip,
-      limit
-    );
+  searchByName = async (query: string, skip: number, limit: number) => {
+    const apiFood: FoodFactsApiFood[] =
+      await this.foodData.searchByName(query, skip, limit);
 
-    if (!foodFactsApiFood.length) throw NotFoundError;
+    if (!apiFood.length) throw NotFoundError;
 
-    const food: Food[] = mapFood(foodFactsApiFood);
+    const food: Food[] = apiFood.map(apiFood => apiFoodToFood(apiFood))
+
+    return food;
+  };
+
+  searchByBarcode = async (barcode: number) => {
+    const apiFood: FoodFactsApiFood = await this.foodData.searchByBarcode(barcode);
+
+    if (!apiFood) throw NotFoundError;
+
+    const food: Food = apiFoodToFood(apiFood)
 
     return food;
   };
@@ -62,38 +69,36 @@ export class FoodServices implements IFoodServices {
       carbs: carbs,
       fiber: fiber,
     };
-      const user: User | null = await this.userData.getUserByToken(token);
+    const user: User | null = await this.userData.getUserByToken(token);
 
-      const date = getDate();
+    const date = getDate();
 
-      if (!user) throw Unauthorized;
+    if (!user) throw Unauthorized;
 
-      let dayIndex = user.days.findIndex((day) => day.date === date);
+    let dayIndex = user.days.findIndex((day) => day.date === date);
 
-      if (dayIndex==-1) {
-        user.days = [...user.days, { date: date, consumedFood: [consumedFood] }];
-      } else {
-        const day =  user.days[dayIndex]
-        user.days[dayIndex] = {
-          ...day,
-          consumedFood: [...day.consumedFood, consumedFood]
-        };
-      }
-      
-       this.userData.updateUser(token, user).catch((err) => console.log(err));
+    if (dayIndex == -1) {
+      user.days = [...user.days, { date: date, consumedFood: [consumedFood] }];
+    } else {
+      const day = user.days[dayIndex];
+      user.days[dayIndex] = {
+        ...day,
+        consumedFood: [...day.consumedFood, consumedFood],
+      };
+    }
 
+    this.userData.updateUser(token, user).catch((err) => console.log(err));
   };
 
   dailyConsumption = async (token: string, date: string) => {
     const user: User | null = await this.userData.getUserByToken(token);
 
     if (!user) throw Unauthorized;
-    
+
     const day = user.days.find((day) => day.date === date);
 
-    if (!day)
-      throw NotFoundError
+    if (!day) throw NotFoundError;
 
-    return day.consumedFood
-  }
+    return day.consumedFood;
+  };
 }

@@ -13,44 +13,62 @@ export class FoodApi implements IFoodApi {
     this.data = data;
   }
 
-  search = (req: Request, res: Response) => {
+  searchByName = (req: Request, res: Response) => {
     apiErrorHandler(res, async () => {
-        const { query } = req.query
+      const { query } = req.query;
 
-        if (!query || typeof query != "string")
-            throw InvalidParamsError
+      if (!query || typeof query != "string") throw InvalidParamsError;
 
-      const food: Food[] = await this.service.search(query, 0, 0);
+      const food: Food[] = await this.service.searchByName(query, 0, 0);
+      res.json(food);
+    });
+  };
+
+  searchByBarcode = (req: Request, res: Response) => {
+    apiErrorHandler(res, async () => {
+      const { barcode } = req.query;
+
+      if (!barcode || typeof barcode != "string") throw InvalidParamsError;
+
+      const food: Food = await this.service.searchByBarcode(parseInt(barcode));
       res.json(food);
     });
   };
 
   consume = (req: Request, res: Response) => {
     apiErrorHandler(res, async () => {
-      const token = "6b8c5f1d-4ce1-4982-83d3-720969912f12"
+      const token = "6b8c5f1d-4ce1-4982-83d3-720969912f12";
 
-      const { id,name, calories, protein, fat, carbs,fiber } = req.body
+      const { id, name, calories, protein, fat, carbs, fiber } = req.body;
 
-      await this.service.consume(token, id,name, calories, protein,fat, carbs, fiber )
-      
-      res.status(200).json({})
+      await this.service.consume(
+        token,
+        id,
+        name,
+        calories,
+        protein,
+        fat,
+        carbs,
+        fiber
+      );
+
+      res.status(200).json({});
     });
   };
 
   dailyConsumption = (req: Request, res: Response) => {
     apiErrorHandler(res, async () => {
-      const token = "6b8c5f1d-4ce1-4982-83d3-720969912f12"
+      const token = "6b8c5f1d-4ce1-4982-83d3-720969912f12";
 
-      console.log("DAY")
+      console.log("DAY");
 
-      const { query } = req.query
+      const { query } = req.query;
 
-      if (!query || typeof query != "string")
-          throw InvalidParamsError
+      if (!query || typeof query != "string") throw InvalidParamsError;
 
-      const food = await this.service.dailyConsumption(token, query)
-      
-      res.json(food)
+      const food = await this.service.dailyConsumption(token, query);
+
+      res.json(food);
     });
   };
 }

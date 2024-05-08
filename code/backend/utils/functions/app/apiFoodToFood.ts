@@ -18,8 +18,7 @@ const getNutrimentAndUnit = (nutriments: any, nutrimentName: string) => {
   return `${nutriment}${nutrimentUnit}`
 }
 
-export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
-  foodFactsApiFood.map((apiFood) => {
+export const apiFoodToFood = (apiFood: FoodFactsApiFood) => {
     const {
       brands_tags,
       quantity,
@@ -63,4 +62,4 @@ export const mapFood = (foodFactsApiFood: FoodFactsApiFood[]) =>
       sugars: getNutrimentAndUnit(nutriments, "sugars"),
       nutriscoreGrade: nutriscore_grade
     };
-  });
+  };

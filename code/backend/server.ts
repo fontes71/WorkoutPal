@@ -2,16 +2,16 @@ import express from "express";
 
 import { AuthApi } from "./api/auth-api.ts";
 import passport from 'passport';
-import { ExerciseData } from "./data/mongo/exercise-data.ts";
+import { ExerciseData } from "./data/external/exercise-data.ts";
 import { ExerciseServices } from "./services/exercise-services.ts";
 import { ExerciseApi } from "./api/exercise-api.ts";
-import { AuthData } from "./data/mongo/auth-data.ts";
+import { AuthData } from "./data/external/auth-data.ts";
 import { AuthServices } from "./services/auth-services.ts";
 import { FoodApi } from "./api/food-api.ts";
 import { FoodServices } from "./services/food-services.ts";
-import { FoodData } from "./data/mongo/food-data.ts";
+import { FoodData } from "./data/external/food-data.ts";
 import cors from 'cors';
-import { UserData } from "./data/mongo/user-data.ts";
+import { UserData } from "./data/external/user-data.ts";
 import { WORKOUTPAL_MONGO_URI } from "./utils/constants.ts";
 import mongoose from "mongoose";
 
@@ -62,7 +62,8 @@ app.post("/api/exercises/workoutPlans/:workoutPlanName", exerciseApi.addExercise
 app.get("/api/cloneDatabase", exerciseApi.cloneExerciseDB);
 
 // Food
-app.get("/api/food/search", foodApi.search);
+app.get("/api/food/search/name", foodApi.searchByName);
+app.get("/api/food/search/barcode", foodApi.searchByBarcode);
 app.post("/api/food/consume", foodApi.consume);
 app.get("/api/food/dailyConsumption", foodApi.dailyConsumption);
 

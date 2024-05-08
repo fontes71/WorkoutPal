@@ -10,7 +10,7 @@ export interface HttpError {
 const errorsMap: Record<string, HttpError> = {
   'NotFoundError': { code: 404, status: 'NOT_FOUND', message: 'The resource was not found' },
   'AlreadyExistsError': { code: 409, status: 'CONFLICT', message: 'The resource already exists' },
-  'InvalidParamsError': { code: 400, status: 'BAD_REQUEST', message: 'Missing parameters' },
+  'InvalidParamsError': { code: 400, status: 'BAD_REQUEST', message: 'Missing or invalid parameters' },
   'InvalidCredentialsError': { code: 400, status: 'BAD_REQUEST', message: 'Invalid Credentials' },
   'IncorrectPasswordError': { code: 400, status: 'BAD_REQUEST', message: 'Password is incorrect' },
   'NonExistentEmailError': { code: 404, status: 'NOT_FOUND', message: 'No user associated with the inserted email' },
