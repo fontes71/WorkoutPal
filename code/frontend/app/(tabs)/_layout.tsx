@@ -22,80 +22,69 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-
-
+  
   return (
-    <>
-      <Tabs
-        screenOptions={{
-          tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-          tabBarStyle: {
-            display: usePathname() === "/food/search-food" ? "none" : "flex",
-          },
-          // Disable the static render of the header on web
-          // to prevent a hydration error in React Navigation v6.
-          headerShown: false,
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarStyle: {
+          display: usePathname() === "/food/search-food" ? "none" : "flex",
+        },
+        // Disable the static render of the header on web
+        // to prevent a hydration error in React Navigation v6.
+        headerShown: false,
+      }}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Exercise",
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          headerRight: () => (
+            <Link href="/modal" asChild>
+              <Pressable>
+                {({ pressed }) => (
+                  <FontAwesome
+                    name="info-circle"
+                    size={25}
+                    color={Colors[colorScheme ?? "light"].text}
+                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                  />
+                )}
+              </Pressable>
+            </Link>
+          ),
         }}
-      >
-        <Tabs.Screen
-          name="index"
-          options={{
-            title: "Exercise",
-            tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-            headerRight: () => (
-              <Link href="/modal" asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <FontAwesome
-                      name="info-circle"
-                      size={25}
-                      color={Colors[colorScheme ?? "light"].text}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-            ),
-          }}
-        />
-        <Tabs.Screen
-          // Name of the route to hide.
-          name="exercise"
-          options={{
-            // This tab will no longer show up in the tab bar.
-            href: null,
-          }}
-        />
-        <Tabs.Screen
-          // Name of the route to hide.
-          name="(auth)"
-          options={{
-            // This tab will no longer show up in the tab bar.
-            href: null,
-          }}
-        />
-        <Tabs.Screen
-          name="food"
-          options={{
-            title: "Food",
-            tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-            headerRight: () => (
-              <Link href="/modal" asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <FontAwesome
-                      name="info-circle"
-                      size={25}
-                      color={Colors[colorScheme ?? "light"].text}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-            ),
-          }}
-        />
-      </Tabs>
-    </>
+      />
+      <Tabs.Screen
+        // Name of the route to hide.
+        name="exercise"
+        options={{
+          // This tab will no longer show up in the tab bar.
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="food"
+        options={{
+          title: "Food",
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          headerRight: () => (
+            <Link href="/modal" asChild>
+              <Pressable>
+                {({ pressed }) => (
+                  <FontAwesome
+                    name="info-circle"
+                    size={25}
+                    color={Colors[colorScheme ?? "light"].text}
+                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                  />
+                )}
+              </Pressable>
+            </Link>
+          ),
+        }}
+      />
+    </Tabs>
   );
 }

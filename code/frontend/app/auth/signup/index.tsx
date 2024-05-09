@@ -1,6 +1,6 @@
 import React, { useState, Dispatch, SetStateAction } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import PasswordInput from "@/utils/components/PasswordInput";
 import auth_styles from "@/utils/styles/auth";
 import { ResponseError, login, signup } from "@/domain/auth";

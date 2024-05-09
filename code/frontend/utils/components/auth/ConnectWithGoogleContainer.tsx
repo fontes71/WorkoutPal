@@ -9,7 +9,7 @@ export default function ConnectWithGoogleContainer() {
     <View>
       <Text style={styles.signupText}>
         Already have an account?{" "}
-        <Link style={styles.signupLink} href={"/(auth)/signup"}>
+        <Link style={styles.signupLink} href={"/auth/signup/"}>
           Sign Up
         </Link>
       </Text>

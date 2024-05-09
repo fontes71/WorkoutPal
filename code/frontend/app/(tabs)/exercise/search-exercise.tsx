@@ -2,7 +2,7 @@ import { Image, FlatList, StyleSheet, TouchableOpacity, Pressable  } from "react
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
-import { Link, Stack, router } from "expo-router";
+import { Stack, router } from "expo-router";
 import { SearchBar } from "@rneui/themed";
 import { useState, useEffect } from "react";
 import { Exercise } from "@/domain/types";
