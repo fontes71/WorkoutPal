@@ -1,5 +1,7 @@
 import { AuthServices } from '../../services/auth-services';
 import { AuthData } from '../../data/external/auth-data';
+import { mockUser, mockUUID } from './auth-utils';
+import { ExistentEmailError } from '../../errors/app_errors';
 
 jest.mock('mongoose', () => ({
   connect: jest.fn(),
@@ -12,10 +14,7 @@ jest.mock('mongoose', () => ({
   connection: {
     close: jest.fn(),
   },
-  Schema: function() {
-    return {
-    };
-  },
+  Schema: function() { return {} },
   model: jest.fn(),
 }));
 
@@ -25,7 +24,7 @@ jest.mock('bcrypt', () => ({
 }));
 
 jest.mock('uuid', () => ({
-  v4: jest.fn(() => '123456'),
+  v4: jest.fn(() => mockUUID),
 }));
 
 let authServices: AuthServices;
@@ -41,23 +40,28 @@ afterEach(() => {
 })
 
 describe('AuthServices', () => {
-
-  it('should signup a user', async () => {
-    const mockUser = {
-      username: 'testuser',
-      password: 'testpassword',
-      email: 'testemail@test.com',
-    }
-
+  it('signup successful', async () => {
     authData.getUserByEmail = jest.fn().mockResolvedValue(null)
-    authData.createUser = jest.fn().mockResolvedValue({})
+    authData.createUser = jest.fn().mockResolvedValue(Promise.resolve())
 
     const result = await authServices.signup(mockUser.username, mockUser.password, mockUser.email)
 
-    expect(result).toBe('123456')
+    expect(result).toBe(mockUUID)
     expect(authData.getUserByEmail).toHaveBeenCalledWith(mockUser.email)
-    expect(authData.createUser).toHaveBeenCalledWith(mockUser.username, 'hashedPassword', mockUser.email, '123456')
+    expect(authData.createUser).toHaveBeenCalledWith(mockUser.username, 'hashedPassword', mockUser.email, mockUUID)
   })
 
-  // Add more tests for login and logout
+  it('signup unseccessful due to existent email', async () => {
+    authData.getUserByEmail = jest.fn().mockResolvedValue(mockUser)
+    authData.createUser = jest.fn().mockResolvedValue(Promise.resolve())
+
+    try {
+      await authServices.signup(mockUser.username, mockUser.password, mockUser.email)
+    } catch(err) {
+      expect(err).toBe(ExistentEmailError)
+    }
+    
+    expect(authData.getUserByEmail).toHaveBeenCalledWith(mockUser.email)
+    expect(authData.createUser).not.toHaveBeenCalled()
+  })
 })

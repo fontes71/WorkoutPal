@@ -2,7 +2,6 @@ import express from "express";
 
 import { FoodApi } from "../../api/food-api.ts";
 import { FoodServices } from "../../services/food-services.ts";
-import { LocalFoodData } from "../../data/local/food-data.ts";
 /*import {
   food_results,
   food_facts_egg,

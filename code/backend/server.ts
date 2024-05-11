@@ -13,7 +13,7 @@ import { FoodData } from "./data/external/food-data.ts";
 import cors from 'cors';
 import { UserData } from "./data/external/user-data.ts";
 import mongoose from "mongoose";
-
+import { WORKOUTPAL_MONGO_URI } from "./utils/constants.ts";
 // AUTH
 const authData = new AuthData()
 const authServices = new AuthServices(authData)
@@ -30,7 +30,6 @@ const exerciseApi = new ExerciseApi(exerciseServices, exerciseData)
 const foodData = new FoodData();
 const foodServices = new FoodServices(foodData, userData);
 const foodApi = new FoodApi(foodServices, foodData);
-
 
 const port = 8080;
 
@@ -67,10 +66,18 @@ app.post("/api/food/consume", foodApi.consume);
 app.get("/api/food/dailyConsumption", foodApi.dailyConsumption);
 
 function cleanup() {
-  mongoose.connection.close();
+  mongoose.connection.close().then(() => {
+    console.log("MongoDB connection closed");
+    process.exit(0);
+  }).catch((error) => {
+    console.error("Error while closing MongoDB connection", error);
+    process.exit(1);
+  });
 }
 
-mongoose.connect("mongodb+srv://WorkoutPal:WorkoutPalPass@cluster0.yqtdrwy.mongodb.net/WorkoutPal?retryWrites=true&w=majority");
+if (WORKOUTPAL_MONGO_URI===undefined)
+  throw("Undefined Mongo Uri")
+mongoose.connect(WORKOUTPAL_MONGO_URI).then(res => console.log("Mongo Connected"));
 
 process.on('SIGINT', cleanup);
 process.on('SIGTERM', cleanup);

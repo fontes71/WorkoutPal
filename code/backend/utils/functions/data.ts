@@ -31,10 +31,6 @@ export async function mongodbHandler(action: () => Promise<any>) {
 }
 
 export async function transactionHandler(action: () => Promise<any>) {
-  if (WORKOUTPAL_MONGO_URI===undefined)
-    throw("Undefined Mongo Uri")
-
-  await mongoose.connect(WORKOUTPAL_MONGO_URI);
   const session = await mongoose.startSession();
   session.startTransaction();
   
@@ -47,7 +43,6 @@ export async function transactionHandler(action: () => Promise<any>) {
     throw error
   } finally {
     await session.endSession();
-    await mongoose.connection.close();
   }
 }
 
