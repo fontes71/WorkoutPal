@@ -22,6 +22,5 @@ export class FoodData implements IFoodData {
     );
     const { product } = await res.json();
     return product;
-
   }
 }

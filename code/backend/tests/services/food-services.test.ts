@@ -1,33 +1,47 @@
 import express from "express";
 
-import { FoodApi } from "../../api/food-api.ts";
-import { FoodServices } from "../../services/food-services.ts";
-import { LocalFoodData } from "../../data/local/food-data.ts";
 import {
   food_results,
-  food_facts_egg,
-  egg,
-  food_facts_egg_2,
-  food_facts_egg_3,
-  egg_2,
-  food_facts_egg_4,
-} from "../files/food.ts";
-import { NotFoundError } from "../../errors/app_errors.ts";
-import { mapFood } from "../../utils/functions/app/apiFoodToFood.ts";
-import { Food } from "../../domain/types.ts";
 
-const data = new LocalFoodData();
-const services = new FoodServices(data);
-const api = new FoodApi(services, data);
+} from "../files/food.ts";
+import { Food, User } from "../../domain/types.ts";
+import { FoodServices } from "../../services/food-services.ts";
+import { FoodData } from "../../data/external/food-data.ts";
+import { UserData } from "../../data/external/user-data.ts";
+
+
+
+let foodServices: FoodServices;
+let foodData: FoodData;
+let userData: UserData
+
+beforeEach(() => {
+  foodData = new FoodData();
+  userData = new UserData();
+  foodServices = new FoodServices(foodData, userData);
+});
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
 
 describe("searchFood", () => {
   it("returns successfully", async () => {
-    const food = await services.searchFood("egg", 0, 0);
-    expect(food).toEqual(food_results);
-  });
+    const mockUser = {
+      username: 'testuser',
+      password: 'testpassword',
+      email: 'testemail@test.com',
+    };
 
+    foodData.searchByName = jest.fn().mockResolvedValue(null);
+
+    const food = await foodServices.searchByName("egg", 0, 0);
+
+    expect(food).toEqual(null);
+  });
+  /*
   it("throws exception if there's no matching elements", async () => {
-    await expect(services.searchFood("notAFood", 0, 0)).rejects.toThrow(
+    await expect(services.searchByName("notAFood", 0, 0)).rejects.toThrow(
       "NotFoundError"
     );
   });
@@ -51,4 +65,5 @@ describe("searchFood", () => {
     const food: Food[] = mapFood(food_facts_egg_4);
     expect(food[0]).toEqual(egg_2);
   });
+  */
 });

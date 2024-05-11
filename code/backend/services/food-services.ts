@@ -17,7 +17,7 @@ import {
 } from "../domain/interfaces";
 import { apiFoodToFood } from "../utils/functions/app/apiFoodToFood";
 import getDate from "../utils/functions/app/getDate";
-import { mongodbHandler } from "../utils/functions/data";
+import { mongodbHandler, transactionHandler } from "../utils/functions/data";
 
 // try catch need on services cuz sometimes data throws error and the app stop inside services
 export class FoodServices implements IFoodServices {
@@ -30,22 +30,25 @@ export class FoodServices implements IFoodServices {
   }
 
   searchByName = async (query: string, skip: number, limit: number) => {
-    const apiFood: FoodFactsApiFood[] =
-      await this.foodData.searchByName(query, skip, limit);
+    return transactionHandler(this.connectionUri, async () => {
+    const apiFood: any[] = await this.foodData.searchByName(query, skip, limit);
 
     if (!apiFood.length) throw NotFoundError;
 
-    const food: Food[] = apiFood.map(apiFood => apiFoodToFood(apiFood))
+    const food: Food[] = apiFood.map((apiFood) => apiFoodToFood(apiFood));
 
     return food;
+    }
   };
 
   searchByBarcode = async (barcode: number) => {
-    const apiFood: FoodFactsApiFood = await this.foodData.searchByBarcode(barcode);
+    const apiFood: FoodFactsApiFood = await this.foodData.searchByBarcode(
+      barcode
+    );
 
     if (!apiFood) throw NotFoundError;
 
-    const food: Food = apiFoodToFood(apiFood)
+    const food: Food = apiFoodToFood(apiFood);
 
     return food;
   };
