@@ -11,16 +11,14 @@ import { IAuthData, IAuthServices } from "../domain/interfaces";
 import { transactionHandler } from "../utils/functions/data";
 
 export class AuthServices implements IAuthServices {
-  private connectionUri: string | undefined;
   private data: IAuthData;
 
-  constructor(connectionUri: string | undefined, data: IAuthData) {
-    this.connectionUri = connectionUri;
+  constructor(data: IAuthData) {
     this.data = data;
   }
 
   login = async (email: string, password: string) => {
-    return transactionHandler(this.connectionUri, async () => {
+    return transactionHandler(async () => {
       const token = uuidv4()
       if (!email || !password) throw InvalidParamsError
       const user = await this.data.getUserAndUpdateToken(email, token)
@@ -32,7 +30,7 @@ export class AuthServices implements IAuthServices {
   }
 
   signup = (username: string, password: string, email: string) => {
-    return transactionHandler(this.connectionUri, async () => {
+    return transactionHandler(async () => {
       if (!username || !password || !email) throw InvalidParamsError
       const user = await this.data.getUserByEmail(email)
       if (user) throw ExistentEmailError
@@ -44,7 +42,7 @@ export class AuthServices implements IAuthServices {
   }
 
   logout = (token: string) => {
-    return transactionHandler(this.connectionUri, async () => {
+    return transactionHandler(async () => {
       const user = await this.data.tryClearUserToken(token)
       if (!user) throw Unauthorized
     })
