@@ -98,30 +98,26 @@ export default function AddFoodScreen() {
   >(null);
   const [scanning, setScanning] = useState(false);
 
-  useEffect(() => {
+  const scanBarCode = () => {
     const getCameraPermissions = async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasCameraPermission(status === "granted");
     };
 
-    getCameraPermissions();
-  }, []);
-
-  const handleBarCodeScanned = ({ type, data }: BarCodeScanningResult) => {
-    const fetchFoodResults = async () => {
-      setScanning(false);
-      const food: Food = await searchFoodByBarcode(data);
-      router.push(foodItemRoute(food));
-    };
-    fetchFoodResults();
+    if (!hasCameraPermission) getCameraPermissions();
+    setScanning(!scanning);
   };
 
-  if (hasCameraPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
-  }
-  if (hasCameraPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
+  const handleBarCodeScanned = ({ type, data }: BarCodeScanningResult) => {
+    if (hasCameraPermission) {
+      const fetchFoodResults = async () => {
+        setScanning(false);
+        const food: Food = await searchFoodByBarcode(data);
+        router.push(foodItemRoute(food));
+      };
+      fetchFoodResults();
+    }
+  };
 
   const handleEnter = () => {
     const fetchFoodResults = async () => {
@@ -166,7 +162,7 @@ export default function AddFoodScreen() {
           style={food_search_styles.absoluteFillObject}
         />
       )}
-      <Button title={"Scan Barcode"} onPress={() => setScanning(!scanning)} />
+      <Button title={"Scan Barcode"} onPress={scanBarCode} />
 
       <SearchBar
         placeholder="Type Here..."
