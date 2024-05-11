@@ -4,13 +4,13 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import styles from "@/utils/styles/auth";
 
-export default function ConnectWithGoogleContainer() {
+export default function ConnectWithGoogleContainerLogin() {
   return (
     <View>
       <Text style={styles.signupText}>
         Already have an account?{" "}
-        <Link style={styles.signupLink} href={"/auth/signup/"}>
-          Sign Up
+        <Link style={styles.signupLink} href={"/auth/login/"}>
+          Log In
         </Link>
       </Text>
       <Text style={[styles.small_text, styles.other_links_text]}>

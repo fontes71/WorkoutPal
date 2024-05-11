@@ -6,7 +6,7 @@ import styles from "@/utils/styles/auth";
 import { login, ResponseError } from "@/domain/auth";
 import LogoContainer from "@/utils/components/auth/LogoContainer";
 import ErrorContainer from "@/utils/components/auth/ErrorContainer";
-import ConnectWithGoogleContainer from "@/utils/components/auth/ConnectWithGoogleContainer";
+import ConnectWithGoogleContainer from "@/utils/components/auth/ConnectWithGoogleContainerSignup";
 
 type ErrorInfo = {
   readonly responseError: ResponseError | undefined;

@@ -8,7 +8,6 @@ const Layout = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <Header />
       <Slot />
     </>
   );

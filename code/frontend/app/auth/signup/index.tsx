@@ -6,7 +6,7 @@ import auth_styles from "@/utils/styles/auth";
 import { ResponseError, login, signup } from "@/domain/auth";
 import LogoContainer from "@/utils/components/auth/LogoContainer";
 import ErrorContainer from "@/utils/components/auth/ErrorContainer";
-import ConnectWithGoogleContainer from "@/utils/components/auth/ConnectWithGoogleContainer";
+import ConnectWithGoogleContainer from "@/utils/components/auth/ConnectWithGoogleContainerLogin";
 
 type InputInfo = {
   readonly name: string;

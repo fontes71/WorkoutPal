@@ -42,6 +42,7 @@ const auth_styles = StyleSheet.create({
         marginBottom: 40
     },
     logo_image_login: {
+        marginTop: 30,
         width: 280,
         height: 234,
         alignSelf: 'center'
