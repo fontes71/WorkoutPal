@@ -30,7 +30,7 @@ export class FoodServices implements IFoodServices {
   }
 
   searchByName = async (query: string, skip: number, limit: number) => {
-    return transactionHandler(this.connectionUri, async () => {
+    return transactionHandler(async () => {
     const apiFood: any[] = await this.foodData.searchByName(query, skip, limit);
 
     if (!apiFood.length) throw NotFoundError;
@@ -38,10 +38,11 @@ export class FoodServices implements IFoodServices {
     const food: Food[] = apiFood.map((apiFood) => apiFoodToFood(apiFood));
 
     return food;
-    }
+    })
   };
 
   searchByBarcode = async (barcode: number) => {
+    return transactionHandler(async () => {
     const apiFood: FoodFactsApiFood = await this.foodData.searchByBarcode(
       barcode
     );
@@ -51,6 +52,7 @@ export class FoodServices implements IFoodServices {
     const food: Food = apiFoodToFood(apiFood);
 
     return food;
+  })
   };
 
   consume = async (
@@ -63,6 +65,7 @@ export class FoodServices implements IFoodServices {
     carbs: string | null,
     fiber: string | null
   ) => {
+    return transactionHandler(async () => {
     const consumedFood: ConsumedFood = {
       id: id,
       name: name,
@@ -91,9 +94,11 @@ export class FoodServices implements IFoodServices {
     }
 
     this.userData.updateUser(token, user).catch((err) => console.log(err));
+  })
   };
 
   dailyConsumption = async (token: string, date: string) => {
+    return transactionHandler(async () => {
     const user: User | null = await this.userData.getUserByToken(token);
 
     if (!user) throw Unauthorized;
@@ -103,5 +108,6 @@ export class FoodServices implements IFoodServices {
     if (!day) throw NotFoundError;
 
     return day.consumedFood;
+    })
   };
 }

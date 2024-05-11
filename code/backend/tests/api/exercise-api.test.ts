@@ -147,10 +147,10 @@ describe("Endpoint: /api/exercises/secondaryMuscle/:exerciseSecondaryMuscle", ()
       .get("/api/exercises/secondaryMuscle/-1")
       .expect("Content-Type", /json/)
       .expect(404);
-  });*/
+  });
 });
 
-/*
+
 describe("POST /users", () => {
 
   describe("when passed a username and password", () => {

@@ -1,19 +1,32 @@
 import express from "express";
 
-import {
-  food_results,
-
-} from "../files/food.ts";
 import { Food, User } from "../../domain/types.ts";
 import { FoodServices } from "../../services/food-services.ts";
 import { FoodData } from "../../data/external/food-data.ts";
 import { UserData } from "../../data/external/user-data.ts";
-
-
+import { data_return_search_by_name, services_return_search_by_name } from "../files/food.ts";
 
 let foodServices: FoodServices;
 let foodData: FoodData;
-let userData: UserData
+let userData: UserData;
+
+jest.mock('mongoose', () => ({
+  connect: jest.fn(),
+  startSession: jest.fn(() => ({
+    startTransaction: jest.fn(),
+    commitTransaction: jest.fn(),
+    abortTransaction: jest.fn(),
+    endSession: jest.fn(),
+  })),
+  connection: {
+    close: jest.fn(),
+  },
+  Schema: function() {
+    return {
+    };
+  },
+  model: jest.fn(),
+}));
 
 beforeEach(() => {
   foodData = new FoodData();
@@ -27,17 +40,11 @@ afterEach(() => {
 
 describe("searchFood", () => {
   it("returns successfully", async () => {
-    const mockUser = {a
-      username: 'testuser',
-      password: 'testpassword',
-      email: 'testemail@test.com',
-    };
-
-    foodData.searchByName = jest.fn().mockResolvedValue(null);
+    foodData.searchByName = jest.fn().mockResolvedValue(data_return_search_by_name);
 
     const food = await foodServices.searchByName("egg", 0, 0);
 
-    expect(food).toEqual(null);
+    expect(food).toEqual(services_return_search_by_name);
   });
   /*
   it("throws exception if there's no matching elements", async () => {

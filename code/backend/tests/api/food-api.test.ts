@@ -36,6 +36,6 @@ describe("Endpoint: /api/food/search", () => {
       .get("/api/food/search?query=")
       .expect("Content-Type", /json/)
       .expect(400);
-  });*/
+  });
 });
 */

@@ -184,6 +184,6 @@ describe("SearchExercisesBySecondaryMuscle function tests", () => {
     service
       .searchExercisesBySecondaryMuscle(secondaryMuscle, 2, 1)
       .then((exercises: Exercise[]) => expect(exercises[0]._id).toBe(expectedId));
-  });*/
+  });
 });
 */
