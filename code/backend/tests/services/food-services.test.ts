@@ -1,35 +1,54 @@
 import express from "express";
 
-import { FoodApi } from "../../api/food-api.ts";
+import { Food, User } from "../../domain/types.ts";
 import { FoodServices } from "../../services/food-services.ts";
-/*import {
-  food_results,
-  food_facts_egg,
-  egg,
-  food_facts_egg_2,
-  food_facts_egg_3,
-  egg_2,
-  food_facts_egg_4,
-} from "../files/food.ts";
-import { NotFoundError } from "../../errors/app_errors.ts";
-import { mapFood } from "../../utils/functions/app/apiFoodToFood.ts";
-import { Food } from "../../domain/types.ts";
+import { FoodData } from "../../data/external/food-data.ts";
+import { UserData } from "../../data/external/user-data.ts";
+import { data_return_search_by_name, services_return_search_by_name } from "../files/food.ts";
 
-const data = new LocalFoodData();
-const services = new FoodServices(data);
-const api = new FoodApi(services, data);*/
+let foodServices: FoodServices;
+let foodData: FoodData;
+let userData: UserData;
+
+jest.mock('mongoose', () => ({
+  connect: jest.fn(),
+  startSession: jest.fn(() => ({
+    startTransaction: jest.fn(),
+    commitTransaction: jest.fn(),
+    abortTransaction: jest.fn(),
+    endSession: jest.fn(),
+  })),
+  connection: {
+    close: jest.fn(),
+  },
+  Schema: function() {
+    return {
+    };
+  },
+  model: jest.fn(),
+}));
+
+beforeEach(() => {
+  foodData = new FoodData();
+  userData = new UserData();
+  foodServices = new FoodServices(foodData, userData);
+});
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
 
 describe("searchFood", () => {
-  it("test1", async () => {
-    expect(true).toStrictEqual(true)
-  })
-  /*it("returns successfully", async () => {
-    const food = await services.searchFood("egg", 0, 0);
-    expect(food).toEqual(food_results);
-  });
+  it("returns successfully", async () => {
+    foodData.searchByName = jest.fn().mockResolvedValue(data_return_search_by_name);
 
+    const food = await foodServices.searchByName("egg", 0, 0);
+
+    expect(food).toEqual(services_return_search_by_name);
+  });
+  /*
   it("throws exception if there's no matching elements", async () => {
-    await expect(services.searchFood("notAFood", 0, 0)).rejects.toThrow(
+    await expect(services.searchByName("notAFood", 0, 0)).rejects.toThrow(
       "NotFoundError"
     );
   });
@@ -52,5 +71,6 @@ describe("searchFood", () => {
   it("mapFood returns nothing as the value of the item's quantity property if the quantity is in the name", () => {
     const food: Food[] = mapFood(food_facts_egg_4);
     expect(food[0]).toEqual(egg_2);
-  });*/
+  });
+  */
 });

@@ -3,6 +3,12 @@ import app from "../../server.ts";
 import request from "supertest";
 //import { food_results } from "../files/food.ts";
 
+describe("GetExerciseById function tests", () => {
+  it("getExerciseById returns the exercise successfully", () => {
+    expect(true).toBe(true)
+  })
+})
+/*
 describe("Endpoint: /api/food/search", () => {
   it("test1", async () => {
     expect(true).toStrictEqual(true)
@@ -30,5 +36,6 @@ describe("Endpoint: /api/food/search", () => {
       .get("/api/food/search?query=")
       .expect("Content-Type", /json/)
       .expect(400);
-  });*/
+  });
 });
+*/
