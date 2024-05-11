@@ -12,12 +12,11 @@ import { FoodServices } from "./services/food-services.ts";
 import { FoodData } from "./data/external/food-data.ts";
 import cors from 'cors';
 import { UserData } from "./data/external/user-data.ts";
-import { WORKOUTPAL_MONGO_URI } from "./utils/constants.ts";
 import mongoose from "mongoose";
 
 // AUTH
 const authData = new AuthData()
-const authServices = new AuthServices(WORKOUTPAL_MONGO_URI, authData)
+const authServices = new AuthServices(authData)
 const authApi = new AuthApi(authServices, authData);
 
 // USER
