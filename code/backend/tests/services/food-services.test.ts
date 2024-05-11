@@ -27,7 +27,7 @@ afterEach(() => {
 
 describe("searchFood", () => {
   it("returns successfully", async () => {
-    const mockUser = {
+    const mockUser = {a
       username: 'testuser',
       password: 'testpassword',
       email: 'testemail@test.com',
