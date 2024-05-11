@@ -1,6 +1,11 @@
 import { exercisedb_url, exercisedb_options } from "../../utils/constants";
 import { IExerciseData } from "../../domain/interfaces";
-import { convertExerciseDBToExercise, fetchData, mongodbHandler, rewriteFileWithObject } from "../../utils/functions/data";
+import {
+  convertExerciseDBToExercise,
+  fetchData,
+  mongodbHandler,
+  rewriteFileWithObject,
+} from "../../utils/functions/data";
 import { ExerciseModel, UserModel } from "./mongoose";
 import { Exercise, ExerciseDB, User } from "../../domain/types";
 
@@ -14,28 +19,44 @@ export class ExerciseData implements IExerciseData {
 
   searchExercisesByName(name: string, skip: number, limit: number) {
     return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({'name': {'$regex': `${name.toLowerCase()}`}}).skip(skip).limit(limit);
+      const exercises = ExerciseModel.find({
+        name: { $regex: `${name.toLowerCase()}` },
+      })
+        .skip(skip)
+        .limit(limit);
       return exercises;
     });
   }
 
   searchExercisesByBodyPart(bodyPart: string, skip: number, limit: number) {
     return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({'bodyPart': {'$regex': `${bodyPart.toLowerCase()}`}}).skip(skip).limit(limit);
+      const exercises = ExerciseModel.find({
+        bodyPart: { $regex: `${bodyPart.toLowerCase()}` },
+      })
+        .skip(skip)
+        .limit(limit);
       return exercises;
     });
   }
 
   searchExercisesByEquipment(equipment: string, skip: number, limit: number) {
     return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({'equipment': {'$regex': `${equipment.toLowerCase()}`}}).skip(skip).limit(limit);
+      const exercises = ExerciseModel.find({
+        equipment: { $regex: `${equipment.toLowerCase()}` },
+      })
+        .skip(skip)
+        .limit(limit);
       return exercises;
     });
   }
 
   searchExercisesByTarget(target: string, skip: number, limit: number) {
     return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({'target': {'$regex': `${target.toLowerCase()}`}}).skip(skip).limit(limit);
+      const exercises = ExerciseModel.find({
+        target: { $regex: `${target.toLowerCase()}` },
+      })
+        .skip(skip)
+        .limit(limit);
       return exercises;
     });
   }
@@ -46,7 +67,11 @@ export class ExerciseData implements IExerciseData {
     limit: number
   ) {
     return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({'secondaryMuscles': {'$regex': `${secondaryMuscle.toLowerCase()}`}}).skip(skip).limit(limit);
+      const exercises = ExerciseModel.find({
+        secondaryMuscles: { $regex: `${secondaryMuscle.toLowerCase()}` },
+      })
+        .skip(skip)
+        .limit(limit);
       return exercises;
     });
   }
@@ -58,14 +83,28 @@ export class ExerciseData implements IExerciseData {
     });
   }
 
-  createWorkoutPlan(token: string, workoutPlanName: string, description: string) {
+  createWorkoutPlan(
+    token: string,
+    workoutPlanName: string,
+    description: string
+  ) {
     return mongodbHandler(async () => {
       const user: User | null = await UserModel.findOne({ token });
-      const newWorkoutPlan = { name: workoutPlanName, description, exercises: [] };
+      const newWorkoutPlan = {
+        name: workoutPlanName,
+        description,
+        exercises: [],
+      };
 
-      if (user === null) { return null }
-      if (user.workout_plans.some((workoutPlan) => workoutPlan.name === workoutPlanName)) { 
-        return null
+      if (user === null) {
+        return null;
+      }
+      if (
+        user.workout_plans.some(
+          (workoutPlan) => workoutPlan.name === workoutPlanName
+        )
+      ) {
+        return null;
       }
 
       user.workout_plans.push(newWorkoutPlan);
@@ -74,7 +113,11 @@ export class ExerciseData implements IExerciseData {
     });
   }
 
-  addExerciseToWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string) {
+  addExerciseToWorkoutPlan(
+    token: string,
+    workoutPlanName: string,
+    exerciseId: string
+  ) {
     return mongodbHandler(async () => {
       const user: User | null = await UserModel.findOne({ token });
       let workoutPlanResult = null;
@@ -82,7 +125,10 @@ export class ExerciseData implements IExerciseData {
         return null;
       }
       user.workout_plans.forEach((workoutPlan) => {
-        if (workoutPlan.name === workoutPlanName && !workoutPlan.exercises.includes(exerciseId)) {
+        if (
+          workoutPlan.name === workoutPlanName &&
+          !workoutPlan.exercises.includes(exerciseId)
+        ) {
           workoutPlan.exercises.push(exerciseId);
           workoutPlanResult = workoutPlan;
         }
