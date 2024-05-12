@@ -17,7 +17,7 @@ import { WORKOUTPAL_MONGO_URI } from "./utils/constants.ts";
 // AUTH
 const authData = new AuthData()
 const authServices = new AuthServices(authData)
-const authApi = new AuthApi(authServices, authData);
+const authApi = new AuthApi(authServices, authData)
 
 // USER
 const userData = new UserData()
@@ -49,43 +49,43 @@ app.post("/api/logout", authApi.logout)
 
 // Exercise
 app.get("/api/exercise/:exerciseId", exerciseApi.getExerciseById);
-app.get("/api/exercises/name/:exerciseName", exerciseApi.searchExercisesByName);
-app.get("/api/exercises/bodyPart/:exerciseBodyPart", exerciseApi.searchExercisesByBodyPart);
-app.get("/api/exercises/equipment/:exerciseEquipment", exerciseApi.searchExercisesByEquipment);
-app.get("/api/exercises/target/:exerciseTarget", exerciseApi.searchExercisesByTarget);
-app.get("/api/exercises/secondaryMuscle/:exerciseSecondaryMuscle", exerciseApi.searchExercisesBySecondaryMuscle);
-app.get("/api/exercises/workoutPlans", exerciseApi.getUserWorkoutPlans);
-app.post("/api/exercises/workoutPlans", exerciseApi.createWorkoutPlan);
-app.post("/api/exercises/workoutPlans/:workoutPlanName", exerciseApi.addExerciseToWorkoutPlan);
-app.get("/api/cloneDatabase", exerciseApi.cloneExerciseDB);
+app.get("/api/exercises/name/:exerciseName", exerciseApi.searchExercisesByName)
+app.get("/api/exercises/bodyPart/:exerciseBodyPart", exerciseApi.searchExercisesByBodyPart)
+app.get("/api/exercises/equipment/:exerciseEquipment", exerciseApi.searchExercisesByEquipment)
+app.get("/api/exercises/target/:exerciseTarget", exerciseApi.searchExercisesByTarget)
+app.get("/api/exercises/secondaryMuscle/:exerciseSecondaryMuscle", exerciseApi.searchExercisesBySecondaryMuscle)
+app.get("/api/exercises/workoutPlans", exerciseApi.getUserWorkoutPlans)
+app.post("/api/exercises/workoutPlans", exerciseApi.createWorkoutPlan)
+app.post("/api/exercises/workoutPlans/:workoutPlanName", exerciseApi.addExerciseToWorkoutPlan)
+app.get("/api/cloneDatabase", exerciseApi.cloneExerciseDB)
 
 // Food
-app.get("/api/food/search/name", foodApi.searchByName);
-app.get("/api/food/search/barcode", foodApi.searchByBarcode);
-app.post("/api/food/consume", foodApi.consume);
-app.get("/api/food/dailyConsumption", foodApi.dailyConsumption);
+app.get("/api/food/search/name", foodApi.searchByName)
+app.get("/api/food/search/barcode", foodApi.searchByBarcode)
+app.post("/api/food/consume", foodApi.consume)
+app.get("/api/food/dailyConsumption", foodApi.dailyConsumption)
 
 function cleanup() {
   mongoose.connection.close().then(() => {
-    console.log("MongoDB connection closed");
-    process.exit(0);
+    console.log("Mongo Connection Closed")
+    process.exit(0)
   }).catch((error) => {
-    console.error("Error while closing MongoDB connection", error);
-    process.exit(1);
-  });
+    console.error("Error while closing MongoDB connection", error)
+    process.exit(1)
+  })
 }
 
 if (WORKOUTPAL_MONGO_URI===undefined)
   throw("Undefined Mongo Uri")
-mongoose.connect(WORKOUTPAL_MONGO_URI).then(res => console.log("Mongo Connected"));
+mongoose.connect(WORKOUTPAL_MONGO_URI).then(() => console.log("Mongo Connected"))
 
-process.on('SIGINT', cleanup);
-process.on('SIGTERM', cleanup);
-process.on('SIGHUP', cleanup);
+process.on('SIGINT', cleanup)
+process.on('SIGTERM', cleanup)
+process.on('SIGHUP', cleanup)
 
 app.listen(8080, () => {
-  console.log(`Listening...\nhttp://localhost:` + port);
+  console.log(`Listening...\nhttp://localhost:` + port)
   exerciseServices.cloneExerciseDBScheduler();
-});
+})
 
-export default app;
+export default app

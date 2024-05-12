@@ -1,4 +1,4 @@
-import { User } from "../../domain/types";
+import { User } from "../../../domain/types";
 
 export const mockUser: User = {
     username: 'testUser',
@@ -9,4 +9,4 @@ export const mockUser: User = {
     days: []
 }
 
-export const mockUUID: string = 'testUUID' 
+export const mockToken: string = 'testUUID' 
