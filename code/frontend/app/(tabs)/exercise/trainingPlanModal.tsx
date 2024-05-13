@@ -67,7 +67,24 @@ export default function ModalScreen() {
   }, []);
 
   const handleTrainingPlanPress = async (trainingPlan: TrainingPlan) => {
-    console.log(trainingPlan);
+    const response = await fetch(`${localhost}8080/api/exercises/workoutPlans/${trainingPlan.name}`,
+      {
+        method: 'POST',
+        headers: {
+          authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({exerciseId: exerciseId})
+      }
+    )
+
+    if (response.status !== 200) {
+      alert("Failed to add exercise to training plan");
+      return;
+    }
+
+    alert("Exercise Added");
+    return;
   }
 
   return (
