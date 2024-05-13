@@ -121,8 +121,6 @@ function SingupButton({ setResponseError, name, email, password }: ButtonInfo) {
     const response = await signup(name, email, password);
 
     if (response.ok) {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      await login(email, password);
       router.push("/(tabs)/exercise");
     } else {
       const body: ResponseError = await response.json();
