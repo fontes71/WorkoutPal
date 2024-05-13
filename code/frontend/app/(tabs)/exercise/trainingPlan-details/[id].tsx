@@ -7,7 +7,7 @@ import { Link, useLocalSearchParams } from "expo-router";
 import { Stack } from "expo-router";
 import { Button } from "@rneui/base";
 import { router } from "expo-router";
-import search_exercises_styles from "@/utils/styles/exercises";
+import search_exercises_styles from "@/assets/styles/exercises";
 import { useEffect, useState } from "react";
 import { localhost } from "@/constants";
 

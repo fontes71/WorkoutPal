@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Link } from "expo-router";
-import styles from "@/utils/styles/auth";
+import styles from "@/assets/styles/auth";
 
 export default function ConnectWithGoogleContainerLogin() {
   return (

@@ -2,8 +2,7 @@ import React from "react";
 import { View, TouchableOpacity, StatusBar } from "react-native";
 import { Slot, useRouter } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
-import auth_styles from "@/utils/styles/auth";
-
+import auth_styles from "@/assets/styles/auth";
 const Layout = () => {
   return (
     <>

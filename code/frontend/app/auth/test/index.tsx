@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StatusBar, StyleSheet } from 'react-native';
-import PasswordInput from '@/utils/components/PasswordInput';
-import { getLocalUser } from '@/domain/auth';
+import PasswordInput from '@/assets/components/PasswordInput';
+import { getLocalUser } from "@/assets/functions/auth";;
 
 export default function LoginScreen() {
     const [password, setPassword] = useState('')

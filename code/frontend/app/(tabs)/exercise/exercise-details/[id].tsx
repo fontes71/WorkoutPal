@@ -7,7 +7,7 @@ import { Link, useLocalSearchParams } from "expo-router";
 import { Stack } from "expo-router";
 import { Button } from "@rneui/base";
 import { router } from "expo-router";
-import search_exercises_styles from "@/utils/styles/exercises";
+import search_exercises_styles from "@/assets/styles/exercises";
 
 const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>

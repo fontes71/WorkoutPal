@@ -1,12 +1,13 @@
 import React, { useState, Dispatch, SetStateAction } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { Stack, useRouter } from "expo-router";
-import PasswordInput from "@/utils/components/PasswordInput";
-import auth_styles from "@/utils/styles/auth";
-import { ResponseError, login, signup } from "@/domain/auth";
-import LogoContainer from "@/utils/components/auth/LogoContainer";
-import ErrorContainer from "@/utils/components/auth/ErrorContainer";
-import ConnectWithGoogleContainer from "@/utils/components/auth/ConnectWithGoogleContainerLogin";
+import PasswordInput from "@/assets/components/PasswordInput";
+import auth_styles from "@/assets/styles/auth";
+import { login, signup } from "@/assets/functions/auth";
+import { ResponseError } from "@/domain/auth";
+import LogoContainer from "@/assets/components/auth/LogoContainer";
+import ErrorContainer from "@/assets/components/auth/ErrorContainer";
+import ConnectWithGoogleContainer from "@/assets/components/auth/ConnectWithGoogleContainerLogin";
 
 type InputInfo = {
   readonly name: string;

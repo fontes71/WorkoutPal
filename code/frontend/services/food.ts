@@ -1,4 +1,4 @@
-import postOptions from "@/utils/functions/postOptions";
+import postOptions from "@/assets/functions/postOptions";
 import { localhost } from "@/constants";
 import { Food } from "@/domain/types";
 

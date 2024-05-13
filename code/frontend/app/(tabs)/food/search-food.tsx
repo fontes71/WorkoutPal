@@ -1,6 +1,6 @@
 import { Button, FlatList, Pressable } from "react-native";
 import { Image } from "expo-image";
-import { food_search_styles } from "@/utils/styles/food";
+import { food_search_styles } from "@/assets/styles/food";
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import { Link, Stack, router } from "expo-router";
@@ -9,9 +9,9 @@ import { useState, useEffect } from "react";
 import { Food } from "@/domain/types";
 import { localhost } from "@/constants";
 import { Linking, TouchableOpacity } from "react-native";
-import FoodCover from "@/utils/components/FoodCover";
+import FoodCover from "@/assets/components/FoodCover";
 import { searchFoodByName, searchFoodByBarcode } from "@/services/food";
-import foodItemRoute from "@/utils/functions/foodItemRoute";
+import foodItemRoute from "@/assets/functions/foodItemRoute";
 import { CameraView, Camera } from "expo-camera/next";
 import { BarCodeScanningResult } from "expo-camera/build/Camera.types";
 

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
-import PasswordInput from "@/utils/components/PasswordInput";
-import styles from "@/utils/styles/auth";
-import { login, ResponseError } from "@/domain/auth";
-import LogoContainer from "@/utils/components/auth/LogoContainer";
-import ErrorContainer from "@/utils/components/auth/ErrorContainer";
-import ConnectWithGoogleContainer from "@/utils/components/auth/ConnectWithGoogleContainerSignup";
+import PasswordInput from "@/assets/components/PasswordInput";
+import styles from "@/assets/styles/auth";
+import { login } from "@/assets/functions/auth";
+import { ResponseError } from "@/domain/auth";
+import LogoContainer from "@/assets/components/auth/LogoContainer";
+import ErrorContainer from "@/assets/components/auth/ErrorContainer";
+import ConnectWithGoogleContainer from "@/assets/components/auth/ConnectWithGoogleContainerSignup";
 
 type ErrorInfo = {
   readonly responseError: ResponseError | undefined;

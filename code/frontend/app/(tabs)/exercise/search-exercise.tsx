@@ -7,7 +7,7 @@ import { SearchBar } from "@rneui/themed";
 import { useState, useEffect } from "react";
 import { Exercise } from "@/domain/types";
 import { localhost } from "@/constants";
-import search_exercises_styles from "@/utils/styles/exercises";
+import search_exercises_styles from "@/assets/styles/exercises";
 
 const BottomText = ({ str }: { str: string | null }) => (
   <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>

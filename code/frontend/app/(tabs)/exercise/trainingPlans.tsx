@@ -8,8 +8,8 @@ import { useState, useEffect } from "react";
 import { Exercise } from "@/domain/types";
 import { localhost } from "@/constants";
 import { TrainingPlan } from "@/domain/types";
-import search_exercises_styles from "@/utils/styles/exercises";
-import { getLocalUser } from "@/domain/auth";
+import search_exercises_styles from "@/assets/styles/exercises";
+import { getLocalUser } from "@/assets/functions/auth";
 
 const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>

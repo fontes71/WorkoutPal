@@ -1,11 +1,11 @@
 import { TouchableOpacity, Image, Pressable } from "react-native";
-import { food_details_styles } from "@/utils/styles/food";
+import { food_details_styles } from "@/assets/styles/food";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import { Link, Stack, router } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
-import FoodCover from "@/utils/components/FoodCover";
+import FoodCover from "@/assets/components/FoodCover";
 import { Food } from "@/domain/types";
 import { useState } from "react";
 import { localhost } from "@/constants";
@@ -112,7 +112,7 @@ const MoreButton: React.FC<MoreButtonProps> = ({
       {buttonClicked ? "Less" : "More"}
     </Text>
     <Image
-      source={require("@/utils/images/down-arrow.png")}
+      source={require("@/assets/images/down-arrow.png")}
       style={food_details_styles.arrowIcon}
     />
   </TouchableOpacity>
@@ -166,7 +166,7 @@ const TopSection: React.FC<TopSectionProps> = ({ food }) => {
         headerRight: () => (
           <Pressable onPress={() => onSaveHook(food)}>
             <Image
-              source={require("@/utils/images/save.png")}
+              source={require("@/assets/images/save.png")}
               style={{ marginRight: 0 }}
             />
           </Pressable>

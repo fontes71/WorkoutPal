@@ -4,9 +4,9 @@ import { Image, FlatList, StyleSheet, TouchableOpacity, Pressable, Platform } fr
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
 import { Stack, useLocalSearchParams } from "expo-router";
-import trainingPlans_styles from '@/utils/styles/trainingPlans';
+import trainingPlans_styles from '@/assets/styles/trainingPlans';
 import { useEffect, useState } from 'react';
-import { getLocalUser } from '@/domain/auth';
+import { getLocalUser } from "@/assets/functions/auth";
 import { localhost } from '@/constants';
 import { TrainingPlan } from '@/domain/types';
 

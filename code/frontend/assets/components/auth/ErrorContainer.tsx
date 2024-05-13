@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { ResponseError } from "@/domain/auth";
-import styles from "@/utils/styles/auth";
+import styles from "@/assets/styles/auth";
 
 type ErrorInfo = {
   readonly responseError: ResponseError | undefined;

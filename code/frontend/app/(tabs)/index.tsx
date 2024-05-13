@@ -1,6 +1,6 @@
 import { Text, View } from "@/components/Themed";
 import { Stack, Link } from "expo-router";
-import { exercise_styles } from "@/utils/styles/exercises";
+import { exercise_styles } from "@/assets/styles/exercises";
 import { StatusBar } from "expo-status-bar";
 
 export default function App() {
