@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { Exercise } from "../domain/types";
 import { IExerciseApi, IExerciseData, IExerciseServices } from "../domain/interfaces";
 import { apiErrorHandler } from "../utils/functions/api";
+import { ParamsDictionary } from "express-serve-static-core";
+import { ParsedQs } from "qs";
 
 export class ExerciseApi implements IExerciseApi {
   private service: IExerciseServices;
@@ -111,6 +113,16 @@ export class ExerciseApi implements IExerciseApi {
       const workoutPlan = await this.service.addExerciseToWorkoutPlan(token, workoutPlanName, exerciseId);
       res.json(workoutPlan);
     });
+  }
+
+  removeExerciseFromWorkoutPlan = (req: Request, res: Response): void => {
+      apiErrorHandler(res, async () => {
+        const token = (req.headers.authorization as string).replace("Bearer ", "");
+        const workoutPlanName = req.params.workoutPlanName;
+        const exerciseId = req.params.exerciseId;
+        const workoutPlan = await this.service.removeExerciseFromWorkoutPlan(token, workoutPlanName, exerciseId);
+        res.json(workoutPlan);
+      });
   }
 
   cloneExerciseDB = (req: Request, res: Response) => {

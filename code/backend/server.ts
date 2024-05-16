@@ -57,6 +57,7 @@ app.get("/api/exercises/secondaryMuscle/:exerciseSecondaryMuscle", exerciseApi.s
 app.get("/api/exercises/workoutPlans", exerciseApi.getUserWorkoutPlans)
 app.post("/api/exercises/workoutPlans", exerciseApi.createWorkoutPlan)
 app.post("/api/exercises/workoutPlans/:workoutPlanName", exerciseApi.addExerciseToWorkoutPlan)
+app.delete("/api/exercises/workoutPlans/:workoutPlanName/exercise/:exerciseId", exerciseApi.removeExerciseFromWorkoutPlan)
 app.get("/api/cloneDatabase", exerciseApi.cloneExerciseDB)
 
 // Food

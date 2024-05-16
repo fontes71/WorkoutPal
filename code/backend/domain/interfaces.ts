@@ -13,6 +13,7 @@ export interface IExerciseApi {
   getUserWorkoutPlans(req: Request, res: Response): void;
   createWorkoutPlan(req: Request, res: Response): void;
   addExerciseToWorkoutPlan(req: Request, res: Response): void;
+  removeExerciseFromWorkoutPlan(req: Request, res: Response): void;
   cloneExerciseDB(req: Request, res: Response): void;
 }
 
@@ -42,6 +43,7 @@ export interface IExerciseServices {
   getUserWorkoutPlans(token: string): Promise<Array<WorkoutPlan>>;
   createWorkoutPlan(token: string, workoutPlanName: string, description: string): Promise<WorkoutPlan>;
   addExerciseToWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan>;
+  removeExerciseFromWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan>;
   cloneExerciseDBScheduler(): void;
 }
 
@@ -69,6 +71,7 @@ export interface IExerciseData {
   getUserWorkoutPlans(token: string): Promise<WorkoutPlan[] | null>;
   createWorkoutPlan(token: string, workoutPlanName: string, description: string): Promise<WorkoutPlan | null>;
   addExerciseToWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan | null>;
+  removeExerciseFromWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan | null>;
   cloneExerciseDB(): Promise<void>;
 }
 

@@ -1,4 +1,4 @@
-import { exercisedb_url, exercisedb_options, ALREADY_EXISTS_WORKOUTPLAN } from "../../utils/constants";
+import { exercisedb_url, exercisedb_options, ERROR_WORKOUTPLAN } from "../../utils/constants";
 import { IExerciseData } from "../../domain/interfaces";
 import {
   convertExerciseDBToExercise,
@@ -96,7 +96,7 @@ export class ExerciseData implements IExerciseData {
         exercises: [],
       };
 
-      const alreadyExistsWorkoutPlan = ALREADY_EXISTS_WORKOUTPLAN;
+      const alreadyExistsWorkoutPlan = ERROR_WORKOUTPLAN;
 
       if (user === null) {
         return null;
@@ -122,7 +122,7 @@ export class ExerciseData implements IExerciseData {
   ) {
     return mongodbHandler(async () => {
       const user: User | null = await UserModel.findOne({ token });
-      let workoutPlanResult: WorkoutPlan = ALREADY_EXISTS_WORKOUTPLAN;
+      let workoutPlanResult: WorkoutPlan = ERROR_WORKOUTPLAN;
       if (user === null) {
         return null;
       }
@@ -132,6 +132,24 @@ export class ExerciseData implements IExerciseData {
           !workoutPlan.exercises.includes(exerciseId)
         ) {
           workoutPlan.exercises.push(exerciseId);
+          workoutPlanResult = workoutPlan;
+        }
+      });
+      await UserModel.updateOne({ token }, user);
+      return workoutPlanResult;
+    });
+  }
+
+  removeExerciseFromWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan | null> {
+    return mongodbHandler(async () => {
+      const user: User | null = await UserModel.findOne({ token });
+      let workoutPlanResult: WorkoutPlan | null = ERROR_WORKOUTPLAN;
+      if (user === null) {
+        return null;
+      }
+      user.workout_plans.forEach((workoutPlan: WorkoutPlan) => {
+        if (workoutPlan.name === workoutPlanName && workoutPlan.exercises.includes(exerciseId)) {
+          workoutPlan.exercises = workoutPlan.exercises.filter((id) => id !== exerciseId);
           workoutPlanResult = workoutPlan;
         }
       });

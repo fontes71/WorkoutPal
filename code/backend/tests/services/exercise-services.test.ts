@@ -2,7 +2,7 @@ import { AlreadyExistsError, InvalidAuthorizationTokenError, NotFoundError } fro
 import { ExerciseServices } from "../../services/exercise-services.ts";
 import { ExerciseData } from "../../data/external/exercise-data.ts";
 import { mockExercise, mockExercise2, mockExercisesArray, mockWorkoutPlan } from "./utils/exercise.ts";
-import { ALREADY_EXISTS_WORKOUTPLAN } from "../../utils/constants.ts";
+import { ERROR_WORKOUTPLAN } from "../../utils/constants.ts";
 
 jest.mock('mongoose', () => ({
   connect: jest.fn(),
@@ -260,7 +260,7 @@ describe("CreateWorkoutPlan function tests", () => {
     const token = "testToken";
     const workoutPlanName = "testWorkoutPlanName";
     const description = "testDescription";
-    exerciseData.createWorkoutPlan = jest.fn().mockResolvedValue(ALREADY_EXISTS_WORKOUTPLAN);
+    exerciseData.createWorkoutPlan = jest.fn().mockResolvedValue(ERROR_WORKOUTPLAN);
     exerciseServices.createWorkoutPlan(token, workoutPlanName, description).catch((error: Error) => expect(error).toBe(AlreadyExistsError));
     expect(exerciseData.createWorkoutPlan).toHaveBeenCalledWith(token, workoutPlanName, description);
   });
@@ -290,8 +290,38 @@ describe("AddExerciseToWorkoutPlan function tests", () => {
     const token = "testToken";
     const workoutPlanName = "testWorkoutPlanName";
     const exerciseId = "testExerciseId";
-    exerciseData.addExerciseToWorkoutPlan = jest.fn().mockResolvedValue(ALREADY_EXISTS_WORKOUTPLAN);
+    exerciseData.addExerciseToWorkoutPlan = jest.fn().mockResolvedValue(ERROR_WORKOUTPLAN);
     exerciseServices.addExerciseToWorkoutPlan(token, workoutPlanName, exerciseId).catch((error: Error) => expect(error).toBe(AlreadyExistsError));
     expect(exerciseData.addExerciseToWorkoutPlan).toHaveBeenCalledWith(token, workoutPlanName, exerciseId);
+  });
+});
+
+describe("RemoveExerciseFromWorkoutPlan function tests", () => {
+  it("removeExerciseFromWorkoutPlan deletes the exercise from the workout plan successfully", async () => {
+    const token = "testToken";
+    const workoutPlanName = "testWorkoutPlanName";
+    const exerciseId = "testExerciseId";
+    exerciseData.removeExerciseFromWorkoutPlan = jest.fn().mockResolvedValue(mockWorkoutPlan);
+    const workoutPlan = await exerciseServices.removeExerciseFromWorkoutPlan(token, workoutPlanName, exerciseId);
+    expect(workoutPlan).toBe(mockWorkoutPlan);
+    expect(exerciseData.removeExerciseFromWorkoutPlan).toHaveBeenCalledWith(token, workoutPlanName, exerciseId);
+  });
+
+  it("removeExerciseFromWorkoutPlan throws InvalidAuthorizationError when the user's token does not exist", async () => {
+    const token = "testToken";
+    const workoutPlanName = "testWorkoutPlanName";
+    const exerciseId = "testExerciseId";
+    exerciseData.removeExerciseFromWorkoutPlan = jest.fn().mockResolvedValue(null);
+    exerciseServices.removeExerciseFromWorkoutPlan(token, workoutPlanName, exerciseId).catch((error: Error) => expect(error).toBe(InvalidAuthorizationTokenError));
+    expect(exerciseData.removeExerciseFromWorkoutPlan).toHaveBeenCalledWith(token, workoutPlanName, exerciseId);
+  });
+
+  it("removeExerciseFromWorkoutPlan throws NotFoundError when the exercise does not exist in the workout plan", async () => {
+    const token = "testToken";
+    const workoutPlanName = "testWorkoutPlanName";
+    const exerciseId = "testExerciseId";
+    exerciseData.removeExerciseFromWorkoutPlan = jest.fn().mockResolvedValue(ERROR_WORKOUTPLAN);
+    exerciseServices.removeExerciseFromWorkoutPlan(token, workoutPlanName, exerciseId).catch((error: Error) => expect(error).toBe(NotFoundError));
+    expect(exerciseData.removeExerciseFromWorkoutPlan).toHaveBeenCalledWith(token, workoutPlanName, exerciseId);
   });
 });
