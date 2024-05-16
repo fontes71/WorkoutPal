@@ -1,4 +1,4 @@
-import { exercisedb_url, exercisedb_options } from "../../utils/constants";
+import { exercisedb_url, exercisedb_options, ALREADY_EXISTS_WORKOUTPLAN } from "../../utils/constants";
 import { IExerciseData } from "../../domain/interfaces";
 import {
   convertExerciseDBToExercise,
@@ -7,7 +7,7 @@ import {
   rewriteFileWithObject,
 } from "../../utils/functions/data";
 import { ExerciseModel, UserModel } from "./mongoose";
-import { Exercise, ExerciseDB, User } from "../../domain/types";
+import { Exercise, ExerciseDB, User, WorkoutPlan } from "../../domain/types";
 
 export class ExerciseData implements IExerciseData {
   getExerciseById(id: string) {
@@ -96,6 +96,8 @@ export class ExerciseData implements IExerciseData {
         exercises: [],
       };
 
+      const alreadyExistsWorkoutPlan = ALREADY_EXISTS_WORKOUTPLAN;
+
       if (user === null) {
         return null;
       }
@@ -104,7 +106,7 @@ export class ExerciseData implements IExerciseData {
           (workoutPlan) => workoutPlan.name === workoutPlanName
         )
       ) {
-        return null;
+        return alreadyExistsWorkoutPlan;
       }
 
       user.workout_plans.push(newWorkoutPlan);
@@ -120,11 +122,11 @@ export class ExerciseData implements IExerciseData {
   ) {
     return mongodbHandler(async () => {
       const user: User | null = await UserModel.findOne({ token });
-      let workoutPlanResult = null;
+      let workoutPlanResult: WorkoutPlan = ALREADY_EXISTS_WORKOUTPLAN;
       if (user === null) {
         return null;
       }
-      user.workout_plans.forEach((workoutPlan) => {
+      user.workout_plans.forEach((workoutPlan: WorkoutPlan) => {
         if (
           workoutPlan.name === workoutPlanName &&
           !workoutPlan.exercises.includes(exerciseId)

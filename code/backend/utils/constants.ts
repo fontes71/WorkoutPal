@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+import { WorkoutPlan } from '../domain/types';
 dotenv.config()
 
 export const foodfacts_url = 'https://world.openfoodfacts.net/api/v2/product/3017624010701';
@@ -17,3 +18,5 @@ export const exercisedb_options = {
 
 export const WORKOUTPAL_MONGO_URI: string | undefined = process.env.WORKOUTPAL_MONGO_URI;
 export const TEST_MONGO_URI: string | undefined = process.env.TEST_MONGO_URI;
+
+export const ALREADY_EXISTS_WORKOUTPLAN: WorkoutPlan = { name: "testWorkoutPlanName", description: "testDescription", exercises: [] };

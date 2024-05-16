@@ -1,7 +1,8 @@
-import { Exercise } from "../domain/types";
-import { NotFoundError, AlreadyExistsError } from "../errors/app_errors";
+import { Exercise, WorkoutPlan } from "../domain/types";
+import { NotFoundError, AlreadyExistsError, InvalidAuthorizationTokenError } from "../errors/app_errors";
 import cron from "node-cron";
 import { IExerciseData, IExerciseServices } from "../domain/interfaces";
+import { ALREADY_EXISTS_WORKOUTPLAN } from "../utils/constants";
 
 // try catch need on services cuz sometimes data throws error and the app stop inside services
 export class ExerciseServices implements IExerciseServices {
@@ -80,20 +81,22 @@ export class ExerciseServices implements IExerciseServices {
 
   getUserWorkoutPlans = async (token: string) => {
     const workoutPlans = await this.data.getUserWorkoutPlans(token);
-    if (workoutPlans == null) throw NotFoundError;
+    if (workoutPlans == null) throw InvalidAuthorizationTokenError;
     return workoutPlans;
   }
 
   createWorkoutPlan = async (token: string, workoutPlanName: string, description: string) => {
     const workoutPlan = await this.data.createWorkoutPlan(token, workoutPlanName, description);
-    if (workoutPlan == null) throw AlreadyExistsError;
+    if (workoutPlan == null) throw InvalidAuthorizationTokenError;
+    if (workoutPlan == ALREADY_EXISTS_WORKOUTPLAN) throw AlreadyExistsError;
     return workoutPlan;
   }
 
   addExerciseToWorkoutPlan = async (token: string, workoutPlanName: string, exerciseId: string) => {
-    const result = await this.data.addExerciseToWorkoutPlan(token, workoutPlanName, exerciseId);
-    if (result == null) throw NotFoundError;
-    return result;
+    const workoutPlan = await this.data.addExerciseToWorkoutPlan(token, workoutPlanName, exerciseId);
+    if (workoutPlan == null) throw InvalidAuthorizationTokenError;
+    if (workoutPlan == ALREADY_EXISTS_WORKOUTPLAN) throw AlreadyExistsError;
+    return workoutPlan;
   }
 
   cloneExerciseDBScheduler() {
