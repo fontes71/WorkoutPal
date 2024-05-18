@@ -1,10 +1,11 @@
-/*import express from "express";
+import express from "express";
 
 import { Food, User } from "../../domain/types.ts";
 import { FoodServices } from "../../services/food-services.ts";
 import { FoodData } from "../../data/external/food-data.ts";
 import { UserData } from "../../data/external/user-data.ts";
-import { data_return_search_by_name, services_return_search_by_name } from "../files/food.ts";
+import { data_return_search_by_name, services_return_search_by_name } from "../data/food.ts";
+import { NotFoundError } from "../../errors/app_errors.ts";
 
 let foodServices: FoodServices;
 let foodData: FoodData;
@@ -36,14 +37,10 @@ beforeEach(() => {
 
 afterEach(() => {
   jest.clearAllMocks();
-});*/
+});
 
-describe("passing", () => {
-  it("passing", () => {
-    expect(true).toBe(true)
-  })
-})
-/*describe("searchFood", () => {
+
+describe("searchByName", () => {
 
   it("returns successfully", async () => {
     foodData.searchByName = jest.fn().mockResolvedValue(data_return_search_by_name);
@@ -52,7 +49,18 @@ describe("passing", () => {
 
     expect(food).toEqual(services_return_search_by_name);
   });
-  
+
+  it("throws not found exception if no results were found", async () => {
+    foodData.searchByName = jest.fn().mockResolvedValue([]);
+
+    expect(async () => {
+      await foodServices.searchByName("egg", 0, 0);
+    }).rejects.toThrow();
+
+  });
+
+})
+  /*
   it("throws exception if there's no matching elements", async () => {
     await expect(services.searchByName("notAFood", 0, 0)).rejects.toThrow(
       "NotFoundError"
@@ -78,5 +86,6 @@ describe("passing", () => {
     const food: Food[] = mapFood(food_facts_egg_4);
     expect(food[0]).toEqual(egg_2);
   });
-  
-});*/
+
+});
+  */

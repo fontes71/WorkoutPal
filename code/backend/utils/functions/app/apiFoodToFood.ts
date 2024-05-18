@@ -3,9 +3,7 @@ import { Food, FoodFactsApiFood } from "../../../domain/types";
 const stringIsInTheName = (name: string, string: string) =>
   name.toLowerCase().split(" ").includes(string.toLowerCase());
 
-const noValueIfRepeated = (name: string, string: string) =>
-  stringIsInTheName(name, string) ? "" : string;
-
+const noValueIfPresentInTheName = (name: string, string: string) => name && string && stringIsInTheName(name, string) ? "" : string;
 
 
 const getNutrimentAndUnit = (nutriments: any, nutrimentName: string) => {
@@ -35,12 +33,8 @@ export const apiFoodToFood = (apiFood: FoodFactsApiFood) => {
     const brand = brands_tags ? brands_tags[0] : "";
 
     const nameString = product_name || product_name_en;
-    const brandString =
-      nameString && brand ? noValueIfRepeated(nameString, brand) : brand;
-    const quantityToPresent =
-      nameString && quantity
-        ? noValueIfRepeated(nameString, quantity)
-        : quantity;
+    const brandString =  noValueIfPresentInTheName(nameString, brand)
+    const quantityToPresent = noValueIfPresentInTheName(nameString, quantity);
     const quantiyUnit = product_quantity_unit ? product_quantity_unit : 'g'
 
     return {
