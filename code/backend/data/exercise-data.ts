@@ -1,13 +1,17 @@
-import { exercisedb_url, exercisedb_options, ERROR_WORKOUTPLAN } from "../../utils/constants";
-import { IExerciseData } from "../../domain/interfaces";
+import {
+  exercisedb_url,
+  exercisedb_options,
+  ERROR_WORKOUTPLAN,
+} from "../utils/constants";
+import { IExerciseData } from "../domain/interfaces";
 import {
   convertExerciseDBToExercise,
   fetchData,
   mongodbHandler,
   rewriteFileWithObject,
-} from "../../utils/functions/data";
-import { ExerciseModel, UserModel } from "./mongoose";
-import { Exercise, ExerciseDB, User, WorkoutPlan } from "../../domain/types";
+} from "../utils/functions/data";
+import { ExerciseModel, UserModel } from "../mongoose/schemas";
+import { Exercise, ExerciseDB, User, WorkoutPlan } from "../domain/types";
 
 export class ExerciseData implements IExerciseData {
   getExerciseById(id: string) {
@@ -140,7 +144,11 @@ export class ExerciseData implements IExerciseData {
     });
   }
 
-  removeExerciseFromWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan | null> {
+  removeExerciseFromWorkoutPlan(
+    token: string,
+    workoutPlanName: string,
+    exerciseId: string
+  ): Promise<WorkoutPlan | null> {
     return mongodbHandler(async () => {
       const user: User | null = await UserModel.findOne({ token });
       let workoutPlanResult: WorkoutPlan | null = ERROR_WORKOUTPLAN;
@@ -148,8 +156,13 @@ export class ExerciseData implements IExerciseData {
         return null;
       }
       user.workout_plans.forEach((workoutPlan: WorkoutPlan) => {
-        if (workoutPlan.name === workoutPlanName && workoutPlan.exercises.includes(exerciseId)) {
-          workoutPlan.exercises = workoutPlan.exercises.filter((id) => id !== exerciseId);
+        if (
+          workoutPlan.name === workoutPlanName &&
+          workoutPlan.exercises.includes(exerciseId)
+        ) {
+          workoutPlan.exercises = workoutPlan.exercises.filter(
+            (id) => id !== exerciseId
+          );
           workoutPlanResult = workoutPlan;
         }
       });

@@ -31,7 +31,6 @@ export const apiFoodToFood = (apiFood: FoodFactsApiFood) => {
     } = apiFood;
 
     const brand = brands_tags ? brands_tags[0] : "";
-
     const nameString = product_name || product_name_en;
     const brandString =  noValueIfPresentInTheName(nameString, brand)
     const quantityToPresent = noValueIfPresentInTheName(nameString, quantity);

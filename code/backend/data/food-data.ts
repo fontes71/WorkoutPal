@@ -1,8 +1,8 @@
-import { IFoodData } from "../../domain/interfaces";
-import { ConsumedFood, Day, User } from "../../domain/types";
-import getDate from "../../utils/functions/app/getDate";
-import { mongodbHandler } from "../../utils/functions/data";
-import { UserModel } from "./mongoose";
+import { IFoodData } from "../domain/interfaces";
+import { ConsumedFood, Day, User } from "../domain/types";
+import getDate from "../utils/functions/app/getDate";
+import { mongodbHandler } from "../utils/functions/data";
+import { UserModel } from "../mongoose/schemas";
 
 export class FoodData implements IFoodData {
   async searchByName(query: string, skip: number, limit: number) {

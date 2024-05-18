@@ -31,7 +31,7 @@ export class FoodServices implements IFoodServices {
 
   searchByName = async (query: string, skip: number, limit: number) => {
     return transactionHandler(async () => {
-    const apiFood: any[] = await this.foodData.searchByName(query, skip, limit);
+    const apiFood: FoodFactsApiFood[] = await this.foodData.searchByName(query, skip, limit);
 
     if (!apiFood.length) throw NotFoundError;
 

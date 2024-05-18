@@ -2,16 +2,26 @@ import express from "express";
 
 import { Food, User } from "../../domain/types.ts";
 import { FoodServices } from "../../services/food-services.ts";
-import { FoodData } from "../../data/external/food-data.ts";
-import { UserData } from "../../data/external/user-data.ts";
-import { data_return_search_by_name, services_return_search_by_name } from "../data/food.ts";
+import { FoodData } from "../../data/food-data.ts";
+import { UserData } from "../../data/user-data.ts";
+import {
+  api_food,
+  api_food_brand_in_name,
+  api_food_no_name,
+  api_food_no_quantity_unit,
+  api_food_quantity_on_name,
+  food,
+  food_no_brand,
+  food_no_quantity_to_present
+} from "../data/food.ts";
+import { apiFoodToFood } from "../../utils/functions/app/apiFoodToFood.ts";
 import { NotFoundError } from "../../errors/app_errors.ts";
 
 let foodServices: FoodServices;
 let foodData: FoodData;
 let userData: UserData;
 
-jest.mock('mongoose', () => ({
+jest.mock("mongoose", () => ({
   connect: jest.fn(),
   startSession: jest.fn(() => ({
     startTransaction: jest.fn(),
@@ -22,9 +32,8 @@ jest.mock('mongoose', () => ({
   connection: {
     close: jest.fn(),
   },
-  Schema: function() {
-    return {
-    }
+  Schema: function () {
+    return {};
   },
   model: jest.fn(),
 }));
@@ -39,15 +48,15 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-
 describe("searchByName", () => {
-
   it("returns successfully", async () => {
-    foodData.searchByName = jest.fn().mockResolvedValue(data_return_search_by_name);
+    foodData.searchByName = jest
+      .fn()
+      .mockResolvedValue([api_food]);
 
-    const food = await foodServices.searchByName("egg", 0, 0);
+    const resFood = await foodServices.searchByName("egg", 0, 0);
 
-    expect(food).toEqual(services_return_search_by_name);
+    expect(resFood).toEqual([food]);
   });
 
   it("throws not found exception if no results were found", async () => {
@@ -55,37 +64,31 @@ describe("searchByName", () => {
 
     expect(async () => {
       await foodServices.searchByName("egg", 0, 0);
-    }).rejects.toThrow();
-
-  });
-
-})
-  /*
-  it("throws exception if there's no matching elements", async () => {
-    await expect(services.searchByName("notAFood", 0, 0)).rejects.toThrow(
-      "NotFoundError"
-    );
+    }).rejects.toThrow("NotFoundError");
   });
 
   it("mapFood returns correct value", () => {
-    const food: Food[] = mapFood(food_facts_egg);
-    expect(food[0]).toEqual(egg);
+    const resFood = apiFoodToFood(api_food);
+    expect(resFood).toEqual(food);
   });
 
   it("mapFood returns item with its english name if the original is not available", () => {
-    const food: Food[] = mapFood(food_facts_egg_2);
-    expect(food[0]).toEqual(egg);
+    const resFood = apiFoodToFood(api_food_no_name);
+    expect(resFood).toEqual(food);
   });
 
-  it("mapFood returns nothing as the value of the item's brand property if the brand is in the name", () => {
-    const food: Food[] = mapFood(food_facts_egg_3);
-    expect(food[0]).toEqual(egg_2);
+  it("mapFood returns nothing on the value of the item's brand property if the brand is in the name", () => {
+    const resFood = apiFoodToFood(api_food_brand_in_name);
+    expect(resFood).toEqual(food_no_brand);
   });
 
   it("mapFood returns nothing as the value of the item's quantity property if the quantity is in the name", () => {
-    const food: Food[] = mapFood(food_facts_egg_4);
-    expect(food[0]).toEqual(egg_2);
+    const resFood = apiFoodToFood(api_food_quantity_on_name);
+    expect(resFood).toEqual(food_no_quantity_to_present);
   });
 
+  it("mapFood returns item with g as the unit if no unit is provided", () => {
+    const resFood = apiFoodToFood(api_food_no_quantity_unit);
+    expect(resFood).toEqual(food);
+  });
 });
-  */
