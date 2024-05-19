@@ -9,4 +9,4 @@ export class NonExistentEmailError extends AppError {}
 export class ExistentEmailError extends AppError {}
 export class InvalidAuthorizationTokenError extends AppError {}
 export class NonExistentAuthorizationTokenError extends AppError {}
-export class Unauthorized extends AppError {}
+export class UnauthorizedError extends AppError {}

@@ -5,7 +5,7 @@ import {
   FoodFactsApiFood,
   User,
 } from "../domain/types";
-import { NotFoundError, Unauthorized } from "../errors/app_errors";
+import { NotFoundError, UnauthorizedError } from "../errors/app_errors";
 import cron from "node-cron";
 import {
   IAuthData,
@@ -31,28 +31,32 @@ export class FoodServices implements IFoodServices {
 
   searchByName = async (query: string, skip: number, limit: number) => {
     return transactionHandler(async () => {
-    const apiFood: FoodFactsApiFood[] = await this.foodData.searchByName(query, skip, limit);
+      const apiFood: FoodFactsApiFood[] = await this.foodData.searchByName(
+        query,
+        skip,
+        limit
+      );
 
-    if (!apiFood.length) throw NotFoundError;
+      if (!apiFood.length) throw NotFoundError;
 
-    const food: Food[] = apiFood.map((apiFood) => apiFoodToFood(apiFood));
+      const food: Food[] = apiFood.map((apiFood) => apiFoodToFood(apiFood));
 
-    return food;
-    })
+      return food;
+    });
   };
 
   searchByBarcode = async (barcode: number) => {
     return transactionHandler(async () => {
-    const apiFood: FoodFactsApiFood = await this.foodData.searchByBarcode(
-      barcode
-    );
+      const apiFood: FoodFactsApiFood = await this.foodData.searchByBarcode(
+        barcode
+      );
 
-    if (!apiFood) throw NotFoundError;
+      if (!apiFood) throw NotFoundError;
 
-    const food: Food = apiFoodToFood(apiFood);
+      const food: Food = apiFoodToFood(apiFood);
 
-    return food;
-  })
+      return food;
+    });
   };
 
   consume = async (
@@ -66,48 +70,51 @@ export class FoodServices implements IFoodServices {
     fiber: string | null
   ) => {
     return transactionHandler(async () => {
-    const consumedFood: ConsumedFood = {
-      id: id,
-      name: name,
-      calories: calories,
-      protein: protein,
-      fat: fat,
-      carbs: carbs,
-      fiber: fiber,
-    };
-    const user: User | null = await this.userData.getUserByToken(token);
-
-    const date = getDate();
-
-    if (!user) throw Unauthorized;
-
-    let dayIndex = user.days.findIndex((day) => day.date === date);
-
-    if (dayIndex == -1) {
-      user.days = [...user.days, { date: date, consumedFood: [consumedFood] }];
-    } else {
-      const day = user.days[dayIndex];
-      user.days[dayIndex] = {
-        ...day,
-        consumedFood: [...day.consumedFood, consumedFood],
+      const consumedFood: ConsumedFood = {
+        id: id,
+        name: name,
+        calories: calories,
+        protein: protein,
+        fat: fat,
+        carbs: carbs,
+        fiber: fiber,
       };
-    }
+      const user: User | null = await this.userData.getUserByToken(token);
 
-    this.userData.updateUser(token, user).catch((err) => console.log(err));
-  })
+      const date = getDate();
+
+      if (!user) throw UnauthorizedError;
+
+      let dayIndex = user.days.findIndex((day) => day.date === date);
+
+      if (dayIndex == -1) {
+        user.days = [
+          ...user.days,
+          { date: date, consumedFood: [consumedFood] },
+        ];
+      } else {
+        const day = user.days[dayIndex];
+        user.days[dayIndex] = {
+          ...day,
+          consumedFood: [...day.consumedFood, consumedFood],
+        };
+      }
+
+      this.userData.updateUser(token, user).catch((err) => console.log(err));
+    });
   };
 
   dailyConsumption = async (token: string, date: string) => {
     return transactionHandler(async () => {
-    const user: User | null = await this.userData.getUserByToken(token);
+      const user: User | null = await this.userData.getUserByToken(token);
 
-    if (!user) throw Unauthorized;
+      if (!user) throw UnauthorizedError;
 
-    const day = user.days.find((day) => day.date === date);
+      const day = user.days.find((day) => day.date === date);
 
-    if (!day) throw NotFoundError;
+      if (!day) throw NotFoundError;
 
-    return day.consumedFood;
-    })
+      return day.consumedFood;
+    });
   };
 }

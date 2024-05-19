@@ -6,7 +6,7 @@ import {
   ExistentEmailError,
   IncorrectPasswordError,
   NonExistentEmailError,
-  Unauthorized,
+  UnauthorizedError,
 } from "../../errors/app_errors";
 
 jest.mock("mongoose", () => ({
@@ -137,7 +137,7 @@ describe("Auth Logout Service", () => {
 
     await authServices
       .logout(mockToken)
-      .catch((err) => expect(err).toBe(Unauthorized));
+      .catch((err) => expect(err).toBe(UnauthorizedError));
 
     expect(authData.tryClearUserToken).toHaveBeenCalledWith(mockToken);
   });

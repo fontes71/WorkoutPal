@@ -1,14 +1,10 @@
 import { Button, FlatList, Pressable } from "react-native";
-import { Image } from "expo-image";
 import { food_search_styles } from "@/assets/styles/food";
-import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
-import { Link, Stack, router } from "expo-router";
+import {  Stack, router } from "expo-router";
 import { SearchBar } from "@rneui/themed";
 import { useState, useEffect } from "react";
 import { Food } from "@/domain/types";
-import { localhost } from "@/constants";
-import { Linking, TouchableOpacity } from "react-native";
 import FoodCover from "@/assets/components/FoodCover";
 import { searchFoodByName, searchFoodByBarcode } from "@/services/food";
 import foodItemRoute from "@/assets/functions/foodItemRoute";
@@ -93,9 +89,7 @@ const FoodResult: React.FC<Food> = ({
 export default function AddFoodScreen() {
   const [query, setQuery] = useState("");
   const [foodResults, setFood] = useState<Food[]>([]);
-  const [hasCameraPermission, setHasCameraPermission] = useState<
-    boolean | null
-  >(null);
+  const [hasCameraPermission, setHasCameraPermission] = useState< boolean | null>(null);
   const [scanning, setScanning] = useState(false);
 
   const scanBarCode = () => {
@@ -119,12 +113,13 @@ export default function AddFoodScreen() {
     }
   };
 
-  const handleEnter = () => {
+  const handleSearchSubmit = () => {
     const fetchFoodResults = async () => {
       const food: Food[] = await searchFoodByName(query);
 
       setFood(food);
     };
+    console.log("submiting. query =>", query)
     if (query.length > 1) fetchFoodResults();
   };
 
@@ -166,7 +161,7 @@ export default function AddFoodScreen() {
 
       <SearchBar
         placeholder="Type Here..."
-        onSubmitEditing={handleEnter}
+        onSubmitEditing={handleSearchSubmit}
         returnKeyType="search"
         onChangeText={updateQuery}
         value={query}

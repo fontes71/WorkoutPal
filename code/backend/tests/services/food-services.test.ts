@@ -10,9 +10,11 @@ import {
   api_food_no_name,
   api_food_no_quantity_unit,
   api_food_quantity_on_name,
+  consumed_food,
   food,
   food_no_brand,
-  food_no_quantity_to_present
+  food_no_quantity_to_present,
+  user
 } from "../data/food.ts";
 import { apiFoodToFood } from "../../utils/functions/app/apiFoodToFood.ts";
 import { NotFoundError } from "../../errors/app_errors.ts";
@@ -50,9 +52,7 @@ afterEach(() => {
 
 describe("searchByName", () => {
   it("returns successfully", async () => {
-    foodData.searchByName = jest
-      .fn()
-      .mockResolvedValue([api_food]);
+    foodData.searchByName = jest.fn().mockResolvedValue([api_food]);
 
     const resFood = await foodServices.searchByName("egg", 0, 0);
 
@@ -66,7 +66,55 @@ describe("searchByName", () => {
       await foodServices.searchByName("egg", 0, 0);
     }).rejects.toThrow("NotFoundError");
   });
+});
 
+describe("searchByBarcode", () => {
+  it("returns successfully", async () => {
+    foodData.searchByBarcode = jest.fn().mockResolvedValue(api_food);
+
+    const resFood = await foodServices.searchByBarcode(1234567);
+
+    expect(resFood).toEqual(food);
+  });
+
+  it("throws not found exception if no results were found", async () => {
+    foodData.searchByBarcode = jest.fn().mockResolvedValue(undefined);
+
+    expect(async () => {
+      await foodServices.searchByBarcode(1234567);
+    }).rejects.toThrow("NotFoundError");
+  });
+});
+
+describe("dailyConsumption", () => {
+  it("returns successfully", async () => {
+    userData.getUserByToken = jest.fn().mockResolvedValue(user);
+
+    const resFood = await foodServices.dailyConsumption(user.token, "17-4-2024");
+
+    expect(resFood).toEqual(consumed_food);
+  });
+
+  it("throws unauthorized exception if no user was found", async () => {
+    userData.getUserByToken = jest.fn().mockResolvedValue(undefined);
+
+    expect(async () => {
+      await foodServices.dailyConsumption(user.token, "17-4-2024");
+    }).rejects.toThrow("UnauthorizedError");
+  });
+
+  it("throws not found exception if no day was found", async () => {
+    userData.getUserByToken = jest.fn().mockResolvedValue(user);
+
+    expect(async () => {
+      await foodServices.dailyConsumption(user.token, "17-4-3000");
+    }).rejects.toThrow("NotFoundError");
+  });
+});
+
+
+
+describe("auxiliar functions", () => {
   it("mapFood returns correct value", () => {
     const resFood = apiFoodToFood(api_food);
     expect(resFood).toEqual(food);
@@ -91,4 +139,4 @@ describe("searchByName", () => {
     const resFood = apiFoodToFood(api_food_no_quantity_unit);
     expect(resFood).toEqual(food);
   });
-});
+})
