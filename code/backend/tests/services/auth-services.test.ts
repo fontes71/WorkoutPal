@@ -1,6 +1,6 @@
 import { AuthServices } from "../../services/auth-services";
 import { AuthData } from "../../data/auth-data";
-import { mockUser, mockToken } from "./utils/auth";
+import { mockUser, mockToken } from "./mockData/auth";
 import bcrypt from "bcrypt";
 import {
   ExistentEmailError,

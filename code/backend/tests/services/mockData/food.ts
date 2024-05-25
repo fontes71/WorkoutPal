@@ -1,3 +1,7 @@
+import { Food } from "../../../domain/types";
+
+
+
 export const api_food = {
   brands_tags: ["la-boulangere"],
   id: "3284230006408",
@@ -413,6 +417,9 @@ export const api_food_no_quantity_unit = {
   quantity: "400g",
 };
 
+export const date = "01-01-2024";
+export const date_that_user_has_consumed_food = "14-5-2024"
+
 export const food = {
   id: "3284230006408",
   name: "Brioche Tranchée Bio",
@@ -682,21 +689,456 @@ export const user = {
   ],
 };
 
-export const consumed_food =  [
+export const user_with_new_consumed_food_on_new_date = {
+  _id: { $oid: "65e8d6dd03a1f8425615304e" },
+  username: "user4",
+  email: "user4@gmail.com",
+  password: "$2b$10$SyhOUqWCsvK57LpA7EdTzOQKQUuEqFvr8zlyhxKdyhOgGvmKrKVKe",
+  token: "6b8c5f1d-4ce1-4982-83d3-720969912f12",
+  workout_plans: [
     {
-      id: "",
-      name: "Oreo Enrobed White",
-      calories: { $numberInt: "532" },
-      protein: "4.9g",
-      fat: "25g",
-      carbs: "70g",
+      name: "WorkoutPlan1",
+      description: "WorkoutPlan1 Description",
+      exercises: ["0006"],
+    },
+  ],
+  days: [
+    {
+      date: "17-4-2024",
+      consumedFood: [
+        {
+          id: "",
+          name: "Oreo Enrobed White",
+          calories: { $numberInt: "532" },
+          protein: "4.9g",
+          fat: "25g",
+          carbs: "70g",
+        },
+        {
+          id: "",
+          name: "Oreo Enrobed White",
+          calories: { $numberInt: "532" },
+          protein: "4.9g",
+          fat: "25g",
+          carbs: "70g",
+        },
+      ],
     },
     {
-      id: "",
-      name: "Oreo Enrobed White",
-      calories: { $numberInt: "532" },
-      protein: "4.9g",
-      fat: "25g",
-      carbs: "70g",
+      date: "30-4-2024",
+      consumedFood: [
+        {
+          id: "3021760403167",
+          name: "Pom' potes Pomme Bio",
+          calories: { $numberInt: "61" },
+          protein: "0.5g",
+          fat: "0.6g",
+          carbs: "12g",
+          fiber: "1.3g",
+        },
+        {
+          id: "3021760403167",
+          name: "Pom' potes Pomme Bio",
+          calories: { $numberInt: "61" },
+          protein: "0.5g",
+          fat: "0.6g",
+          carbs: "12g",
+          fiber: "1.3g",
+        },
+        {
+          id: "5060482840179",
+          name: "deliciously Ella apple and raisin oat bars",
+          calories: { $numberInt: "426" },
+          protein: "5.6g",
+          fat: "17.4g",
+          carbs: "59.3g",
+          fiber: "4.9g",
+        },
+        {
+          id: "3800020456293",
+          name: "Kit kat chunky",
+          calories: { $numberInt: "529" },
+          protein: "7.7g",
+          fat: "28.6g",
+          carbs: "59.5g",
+          fiber: null,
+        },
+      ],
     },
-  ]
+    {
+      date: "1-5-2024",
+      consumedFood: [
+        {
+          id: "5600826202982",
+          name: "Peanut Butter",
+          calories: { $numberInt: "630" },
+          protein: "26g",
+          fat: "52g",
+          carbs: "11g",
+          fiber: "9.9g",
+        },
+        {
+          id: "3564700301456",
+          name: "Salade iceberg",
+          protein: "1g",
+          fat: "0.5g",
+          carbs: "2.5g",
+          fiber: "1.1g",
+        },
+        {
+          id: "5601009297993",
+          name: "Arroz",
+          calories: { $numberInt: "356" },
+          protein: "6.6g",
+          fat: "0.8g",
+          carbs: "79.3g",
+          fiber: null,
+        },
+        {
+          id: "8000500037560",
+          name: "Kinder Bueno",
+          calories: { $numberInt: "572" },
+          protein: "8.6g",
+          fat: "37.3g",
+          carbs: "49.5g",
+          fiber: null,
+        },
+      ],
+    },
+    {
+      date: "2-5-2024",
+      consumedFood: [
+        {
+          id: "7622210578464",
+          name: "Green and Black's Organic 70% Dark Chocolate Bar",
+          calories: { $numberInt: "575" },
+          protein: "9.1g",
+          fat: "42g",
+          carbs: "36g",
+          fiber: "10g",
+        },
+        {
+          id: "3168930170570",
+          name: "Ice tea",
+          calories: { $numberInt: "1" },
+          protein: null,
+          fat: null,
+          carbs: null,
+          fiber: null,
+        },
+      ],
+    },
+    {
+      date: "13-5-2024",
+      consumedFood: [
+        {
+          id: "5600826203613",
+          name: "Peanut Butter Crunchy",
+          calories: { $numberInt: "630" },
+          protein: "26g",
+          fat: "52g",
+          carbs: "11g",
+          fiber: "7.2g",
+        },
+        {
+          id: "5601009112050",
+          name: "A Autêntica Bolacha Água e Sal",
+          calories: { $numberInt: "430" },
+          protein: "9.2g",
+          fat: "10.6g",
+          carbs: "72.6g",
+          fiber: "3.5g",
+        },
+        {
+          id: "5010029227062",
+          name: "Oreo o's",
+          calories: { $numberInt: "382" },
+          protein: "7.5g",
+          fat: "2.7g",
+          carbs: "80g",
+          fiber: "3.9g",
+        },
+        {
+          id: "4025700001030",
+          name: "Milka Noisette",
+          calories: { $numberInt: "557" },
+          protein: "7.6g",
+          fat: "35g",
+          carbs: "51g",
+          fiber: "3.2g",
+        },
+        {
+          id: "7622300441715",
+          name: "choco mini stars",
+          calories: { $numberInt: "505" },
+          protein: "6.4g",
+          fat: "24.5g",
+          carbs: "63.5g",
+          fiber: "2.2g",
+        },
+      ],
+    },
+    {
+      date: "14-5-2024",
+      consumedFood: [
+        {
+          id: "7622300617820",
+          name: "Milka Oreo",
+          calories: { $numberInt: "564" },
+          protein: "4.8g",
+          fat: "35g",
+          carbs: "56g",
+          fiber: "1.6g",
+        },
+      ],
+    },
+    {
+      date: date,
+      consumedFood: [
+        {
+        id: "3284230006408",
+        name: "Brioche Tranchée Bio",
+        calories: 349, 
+        carbs: "55g", 
+        fat: "10g", "fiber": "2.2g",
+        protein: "8.7g"}
+        ]
+      }
+  ],
+};
+
+
+export const user_with_new_consumed_food_on_a_certain_date= {
+  _id: { $oid: "65e8d6dd03a1f8425615304e" },
+  username: "user4",
+  email: "user4@gmail.com",
+  password: "$2b$10$SyhOUqWCsvK57LpA7EdTzOQKQUuEqFvr8zlyhxKdyhOgGvmKrKVKe",
+  token: "6b8c5f1d-4ce1-4982-83d3-720969912f12",
+  workout_plans: [
+    {
+      name: "WorkoutPlan1",
+      description: "WorkoutPlan1 Description",
+      exercises: ["0006"],
+    },
+  ],
+  days: [
+    {
+      date: "17-4-2024",
+      consumedFood: [
+        {
+          id: "",
+          name: "Oreo Enrobed White",
+          calories: { $numberInt: "532" },
+          protein: "4.9g",
+          fat: "25g",
+          carbs: "70g",
+        },
+        {
+          id: "",
+          name: "Oreo Enrobed White",
+          calories: { $numberInt: "532" },
+          protein: "4.9g",
+          fat: "25g",
+          carbs: "70g",
+        },
+      ],
+    },
+    {
+      date: "30-4-2024",
+      consumedFood: [
+        {
+          id: "3021760403167",
+          name: "Pom' potes Pomme Bio",
+          calories: { $numberInt: "61" },
+          protein: "0.5g",
+          fat: "0.6g",
+          carbs: "12g",
+          fiber: "1.3g",
+        },
+        {
+          id: "3021760403167",
+          name: "Pom' potes Pomme Bio",
+          calories: { $numberInt: "61" },
+          protein: "0.5g",
+          fat: "0.6g",
+          carbs: "12g",
+          fiber: "1.3g",
+        },
+        {
+          id: "5060482840179",
+          name: "deliciously Ella apple and raisin oat bars",
+          calories: { $numberInt: "426" },
+          protein: "5.6g",
+          fat: "17.4g",
+          carbs: "59.3g",
+          fiber: "4.9g",
+        },
+        {
+          id: "3800020456293",
+          name: "Kit kat chunky",
+          calories: { $numberInt: "529" },
+          protein: "7.7g",
+          fat: "28.6g",
+          carbs: "59.5g",
+          fiber: null,
+        },
+      ],
+    },
+    {
+      date: "1-5-2024",
+      consumedFood: [
+        {
+          id: "5600826202982",
+          name: "Peanut Butter",
+          calories: { $numberInt: "630" },
+          protein: "26g",
+          fat: "52g",
+          carbs: "11g",
+          fiber: "9.9g",
+        },
+        {
+          id: "3564700301456",
+          name: "Salade iceberg",
+          protein: "1g",
+          fat: "0.5g",
+          carbs: "2.5g",
+          fiber: "1.1g",
+        },
+        {
+          id: "5601009297993",
+          name: "Arroz",
+          calories: { $numberInt: "356" },
+          protein: "6.6g",
+          fat: "0.8g",
+          carbs: "79.3g",
+          fiber: null,
+        },
+        {
+          id: "8000500037560",
+          name: "Kinder Bueno",
+          calories: { $numberInt: "572" },
+          protein: "8.6g",
+          fat: "37.3g",
+          carbs: "49.5g",
+          fiber: null,
+        },
+      ],
+    },
+    {
+      date: "2-5-2024",
+      consumedFood: [
+        {
+          id: "7622210578464",
+          name: "Green and Black's Organic 70% Dark Chocolate Bar",
+          calories: { $numberInt: "575" },
+          protein: "9.1g",
+          fat: "42g",
+          carbs: "36g",
+          fiber: "10g",
+        },
+        {
+          id: "3168930170570",
+          name: "Ice tea",
+          calories: { $numberInt: "1" },
+          protein: null,
+          fat: null,
+          carbs: null,
+          fiber: null,
+        },
+      ],
+    },
+    {
+      date: "13-5-2024",
+      consumedFood: [
+        {
+          id: "5600826203613",
+          name: "Peanut Butter Crunchy",
+          calories: { $numberInt: "630" },
+          protein: "26g",
+          fat: "52g",
+          carbs: "11g",
+          fiber: "7.2g",
+        },
+        {
+          id: "5601009112050",
+          name: "A Autêntica Bolacha Água e Sal",
+          calories: { $numberInt: "430" },
+          protein: "9.2g",
+          fat: "10.6g",
+          carbs: "72.6g",
+          fiber: "3.5g",
+        },
+        {
+          id: "5010029227062",
+          name: "Oreo o's",
+          calories: { $numberInt: "382" },
+          protein: "7.5g",
+          fat: "2.7g",
+          carbs: "80g",
+          fiber: "3.9g",
+        },
+        {
+          id: "4025700001030",
+          name: "Milka Noisette",
+          calories: { $numberInt: "557" },
+          protein: "7.6g",
+          fat: "35g",
+          carbs: "51g",
+          fiber: "3.2g",
+        },
+        {
+          id: "7622300441715",
+          name: "choco mini stars",
+          calories: { $numberInt: "505" },
+          protein: "6.4g",
+          fat: "24.5g",
+          carbs: "63.5g",
+          fiber: "2.2g",
+        },
+      ],
+    },
+    {
+      date: date_that_user_has_consumed_food,
+      consumedFood: [
+        {
+          id: "7622300617820",
+          name: "Milka Oreo",
+          calories: { $numberInt: "564" },
+          protein: "4.8g",
+          fat: "35g",
+          carbs: "56g",
+          fiber: "1.6g",
+        },
+        {
+          id: "3284230006408",
+          name: "Brioche Tranchée Bio",
+          calories: 349, 
+          carbs: "55g", 
+          fat: "10g", "fiber": "2.2g",
+          protein: "8.7g"
+        }
+      ],
+    }
+  ],
+};
+
+export const consumed_food = [
+  {
+    id: "",
+    name: "Oreo Enrobed White",
+    calories: { $numberInt: "532" },
+    protein: "4.9g",
+    fat: "25g",
+    carbs: "70g",
+  },
+  {
+    id: "",
+    name: "Oreo Enrobed White",
+    calories: { $numberInt: "532" },
+    protein: "4.9g",
+    fat: "25g",
+    carbs: "70g",
+  },
+];
+
+

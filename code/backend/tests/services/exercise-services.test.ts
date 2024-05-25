@@ -10,7 +10,7 @@ import {
   mockExercise2,
   mockExercisesArray,
   mockWorkoutPlan,
-} from "./utils/exercise.ts";
+} from "./mockData/exercise.ts";
 import { ERROR_WORKOUTPLAN } from "../../utils/constants.ts";
 
 jest.mock("mongoose", () => ({

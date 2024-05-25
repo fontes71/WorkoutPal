@@ -79,6 +79,7 @@ export class FoodServices implements IFoodServices {
         carbs: carbs,
         fiber: fiber,
       };
+      
       const user: User | null = await this.userData.getUserByToken(token);
 
       const date = getDate();
@@ -100,7 +101,7 @@ export class FoodServices implements IFoodServices {
         };
       }
 
-      this.userData.updateUser(token, user).catch((err) => console.log(err));
+      this.userData.updateUser(token, user);
     });
   };
 
