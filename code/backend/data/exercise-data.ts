@@ -170,7 +170,8 @@ export class ExerciseData implements IExerciseData {
       return workoutPlanResult;
     });
   }
-
+  
+  //test 
   async cloneExerciseDB() {
     const exercisesFromDB: Array<ExerciseDB> = await fetchData(
       exercisedb_url,
