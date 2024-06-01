@@ -171,7 +171,6 @@ export class ExerciseData implements IExerciseData {
     });
   }
   
-  //test 
   async cloneExerciseDB() {
     const exercisesFromDB: Array<ExerciseDB> = await fetchData(
       exercisedb_url,
