@@ -21,4 +21,5 @@ const errorsMap: Record<string, HttpError> = {
 }
 
 export function mapAppErrorToHttpError(error: Error): HttpError {
-  return errorsMap[error.name] || { code: 500, status: 'INTERNAL_SERVER_ERROR', message: 'An internal error has occurre
+  return errorsMap[error.name] || { code: 500, status: 'INTERNAL_SERVER_ERROR', message: 'An internal error has occurred' }
+}
