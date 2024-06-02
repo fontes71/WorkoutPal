@@ -34,8 +34,8 @@ jest.mock("uuid", () => ({
   v4: jest.fn(() => mockToken),
 }));
 
-let authServices: AuthServices;
 let authData: AuthData;
+let authServices: AuthServices;
 
 beforeEach(() => {
   authData = new AuthData();

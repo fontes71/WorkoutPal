@@ -114,7 +114,8 @@ function LoginButton({ setResponseError, email, password }: ButtonInfo) {
       router.push("/(tabs)/exercise");
     } else {
       const body: ResponseError = await response.json();
-      setResponseError(body);
+      const hardCodedResponseError: ResponseError = { error_message: 'Invalid Credentials' } // Hardcoded just for the presentation, modifications on backend neeeded
+      setResponseError(hardCodedResponseError);
     }
   };
 

@@ -16,10 +16,9 @@ const errorsMap: Record<string, HttpError> = {
   'NonExistentEmailError': { code: 404, status: 'NOT_FOUND', message: 'No user associated with the inserted email' },
   'ExistentEmailError': { code: 409, status: 'CONFLICT', message: 'There is already an account with the inserted email' },
   'InvalidAuthorizationTokenError': { code: 400, status: 'BAD_REQUEST', message: 'Authorization token needs to be bearer' },
-  'NonExistentAuthorizationTokenError': { code: 404, status: 'NOT_FOUND', message: 'No authorization token provided' },
-  'Unauthorized': { code: 401, status: 'UNAUTHORIZED', message: 'Access denied' },
+  'NonExistentAuthorizationTokenError': { code: 400, status: 'BAD_REQUEST', message: 'No authorization token provided' },
+  'UnauthorizedError': { code: 401, status: 'UNAUTHORIZED', message: 'Access denied' },
 }
 
 export function mapAppErrorToHttpError(error: Error): HttpError {
-  return errorsMap[error.name] || { code: 500, status: 'INTERNAL_SERVER_ERROR', message: 'An internal error has occurred' }
-}
+  return errorsMap[error.name] || { code: 500, status: 'INTERNAL_SERVER_ERROR', message: 'An internal error has occurre

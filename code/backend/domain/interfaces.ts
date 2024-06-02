@@ -28,7 +28,6 @@ export interface IAuthApi {
   signup(req: Request, res: Response): void;
   login(req: Request, res: Response): void;
   logout(req: Request, res: Response): void;
-  userToUserResponse(user: User): UserResponse;
   userToAuthInfoUser(user: User): AuthInfoUser;
 }
 
@@ -55,7 +54,7 @@ export interface IFoodServices {
 }
 
 export interface IAuthServices {
-  signup(username: string, password: string, email: string): Promise<string>;
+  signup(username: string, password: string, email: string): Promise<User>;
   login(email: string, password: string): Promise<User>;
   logout(token: string): Promise<void>;
 }

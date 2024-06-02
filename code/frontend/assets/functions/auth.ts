@@ -41,6 +41,11 @@ export const signup = async (name: string, email: string, password: string) => {
         }
     )
 
+    if (response.ok) {
+        const body: AuthResponse = await response.json()
+        await storeUserLocally(body.user)
+    }
+
     return response
 }
 
@@ -51,9 +56,4 @@ const storeUserLocally = async (user: User) => {
 
 export const getLocalUser = async (): Promise<User | null> => {
     const stringJson = await AsyncStorage.getItem('user')
-    return stringJson != null ? JSON.parse(stringJson) : null
-}
-
-export const removeUser = async () => {
-    return await AsyncStorage.removeItem('user')
-}
+    return stringJson != n

@@ -3,7 +3,7 @@ import {
   NonExistentEmailError,
   IncorrectPasswordError,
   ExistentEmailError,
-  UnauthorizedError,
+  Unauthorized,
 } from "../errors/app_errors";
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
@@ -44,7 +44,7 @@ export class AuthServices implements IAuthServices {
   logout = (token: string) => {
     return transactionHandler(async () => {
       const user = await this.data.tryClearUserToken(token)
-      if (!user) throw UnauthorizedError
+      if (!user) throw Unauthorized
     })
   }
 }
