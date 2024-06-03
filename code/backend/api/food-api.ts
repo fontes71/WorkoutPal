@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Exercise, Food } from "../domain/types";
 import { IFoodApi, IFoodData, IFoodServices } from "../domain/interfaces";
 import { InvalidParamsError } from "../errors/app_errors";
-import { apiErrorHandler } from "../utils/functions/api";
+import { apiErrorHandler, getToken } from "../utils/functions/api";
 
 export class FoodApi implements IFoodApi {
   private service: IFoodServices;
@@ -35,7 +35,7 @@ export class FoodApi implements IFoodApi {
 
   consume = async (req: Request, res: Response) => {
     await apiErrorHandler(res, async () => {
-      const token = "6b8c5f1d-4ce1-4982-83d3-720969912f12";
+      const token = getToken(req)
 
       const { id, name, calories, protein, fat, carbs } = req.body;
 
@@ -55,7 +55,7 @@ export class FoodApi implements IFoodApi {
 
   dailyConsumption = async (req: Request, res: Response) => {
     await apiErrorHandler(res, async () => {
-      const token = "6b8c5f1d-4ce1-4982-83d3-720969912f12";
+      const token = getToken(req)
 
       const { query } = req.query;
 

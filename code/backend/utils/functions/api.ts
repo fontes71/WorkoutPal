@@ -1,5 +1,9 @@
-import { Response } from "express";
+
+import { InvalidAuthorizationTokenError, NonExistentAuthorizationTokenError } from "../../errors/app_errors";
 import { HttpError, mapAppErrorToHttpError } from "../../errors/http_errors";
+import { Request, Response, NextFunction } from "express";
+
+
 
 export async function apiErrorHandler(res: Response, action: () => Promise<void>) {
     try {
@@ -10,3 +14,14 @@ export async function apiErrorHandler(res: Response, action: () => Promise<void>
         res.status(httpError.code).json({error_message: httpError.message})
     }
 }
+
+export function getToken(req: Request): string {
+    const authHeader = req.headers.authorization
+    if (!authHeader) throw NonExistentAuthorizationTokenError
+    else {
+      const tokenInfo = authHeader.split(' ')
+      const tokenType = tokenInfo[0]
+      if (tokenType != 'Bearer') throw InvalidAuthorizationTokenError
+      return tokenInfo[1]
+    }
+  }

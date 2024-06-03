@@ -2,7 +2,7 @@ import { FoodServices } from "../../services/food-services.ts";
 import { FoodApi } from "../../api/food-api.ts";
 import { FoodData } from "../../data/food-data.ts";
 import { UserData } from "../../data/user-data.ts";
-import {  mock_services_return_value, mock_request_with_query, mock_request_without_query, mock_request_with_query_thats_not_a_string, mock_request_with_barcode_query, parsed_barcode, mock_request_with_body } from "./mockData/food.ts";
+import {  mock_services_return_value, mock_request_with_query, mock_request_without_query, mock_request_with_query_thats_not_a_string, mock_request_with_barcode_query, parsed_barcode, mock_request_with_body, mock_token } from "./mockData/food.ts";
 import { UnauthorizedError } from "../../errors/app_errors.ts";
 
 const foodData = new FoodData()
@@ -129,7 +129,7 @@ describe("/api/food/consume", () => {
 
     const { id, name, calories, protein, fat, carbs } = mock_request_with_body.body;
 
-    expect(foodServices.consume).toHaveBeenCalledWith("6b8c5f1d-4ce1-4982-83d3-720969912f12", id, name, calories, protein, fat, carbs)
+    expect(foodServices.consume).toHaveBeenCalledWith(mock_token, id, name, calories, protein, fat, carbs)
 
     expect(mockResponse.status).toHaveBeenCalledWith(201)
   })
@@ -149,7 +149,7 @@ describe("/api/food/dailyConsumption", () => {
 
     await foodApi.dailyConsumption(mock_request_with_query as any, mockResponse as any);
 
-    expect(foodServices.dailyConsumption).toHaveBeenCalledWith("6b8c5f1d-4ce1-4982-83d3-720969912f12", mock_request_with_query.query.query)
+    expect(foodServices.dailyConsumption).toHaveBeenCalledWith(mock_token, mock_request_with_query.query.query)
 
     expect(mockResponse.status).toHaveBeenCalledWith(200)
     expect(mockResponse.json).toHaveBeenCalledWith(mock_services_return_value)
@@ -161,7 +161,7 @@ describe("/api/food/dailyConsumption", () => {
 
     await foodApi.dailyConsumption(mock_request_with_query as any, mockResponse as any);
 
-    expect(foodServices.dailyConsumption).toHaveBeenCalledWith("6b8c5f1d-4ce1-4982-83d3-720969912f12", mock_request_with_query.query.query)
+    expect(foodServices.dailyConsumption).toHaveBeenCalledWith(mock_token, mock_request_with_query.query.query)
 
     expect(mockResponse.status).toHaveBeenCalledWith(200)
     expect(mockResponse.json).toHaveBeenCalledWith([])

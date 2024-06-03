@@ -53,7 +53,8 @@ const storeUserLocally = async (user: User) => {
     const jsonValue = JSON.stringify(user)
     await AsyncStorage.setItem('user', jsonValue)
 }
-
+/*
 export const getLocalUser = async (): Promise<User | null> => {
     const stringJson = await AsyncStorage.getItem('user')
     return stringJson != n
+    */
