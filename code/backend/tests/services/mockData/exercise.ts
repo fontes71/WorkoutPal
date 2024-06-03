@@ -29,3 +29,5 @@ export const mockWorkoutPlan: WorkoutPlan = {
     description: "testDescription",
     exercises: ["0001", "0002"]
 };
+
+export const dailyLoggedWorkoutPlans = ["testWorkoutPlan"];

@@ -19,7 +19,7 @@ export class ExerciseApi implements IExerciseApi {
       const exercise: Exercise = await this.service.getExerciseById(
         req.params.exerciseId
       );
-      res.json(exercise);
+      res.status(200).json(exercise);
     });
   }
 
@@ -32,7 +32,7 @@ export class ExerciseApi implements IExerciseApi {
         parseInt(skip),
         parseInt(limit)
       );
-      res.json(exercises);
+      res.status(200).json(exercises);
     });
   }
 
@@ -45,7 +45,7 @@ export class ExerciseApi implements IExerciseApi {
         parseInt(skip),
         parseInt(limit)
       );
-      res.json(exercises);
+      res.status(200).json(exercises);
     });
   }
 
@@ -58,7 +58,7 @@ export class ExerciseApi implements IExerciseApi {
         parseInt(skip),
         parseInt(limit)
       );
-      res.json(exercises);
+      res.status(200).json(exercises);
     });
   }
 
@@ -71,7 +71,7 @@ export class ExerciseApi implements IExerciseApi {
         parseInt(skip),
         parseInt(limit)
       );
-      res.json(exercises);
+      res.status(200).json(exercises);
     });
   }
 
@@ -84,7 +84,7 @@ export class ExerciseApi implements IExerciseApi {
         parseInt(skip),
         parseInt(limit)
       );
-      res.json(exercises);
+      res.status(200).json(exercises);
     });
   }
 
@@ -92,7 +92,7 @@ export class ExerciseApi implements IExerciseApi {
     apiErrorHandler(res, async () => {
       const token = (req.headers.authorization as string).replace("Bearer ", "");
       const workoutPlans = await this.service.getUserWorkoutPlans(token);
-      res.json(workoutPlans);
+      res.status(200).json(workoutPlans);
     });
   }
 
@@ -101,7 +101,7 @@ export class ExerciseApi implements IExerciseApi {
       const token = (req.headers.authorization as string).replace("Bearer ", "");
       const { workoutPlanName, description } = req.body;
       const workoutPlan = await this.service.createWorkoutPlan(token, workoutPlanName, description);
-      res.json(workoutPlan);
+      res.status(201).json(workoutPlan);
     });
   }
 
@@ -111,7 +111,7 @@ export class ExerciseApi implements IExerciseApi {
       const workoutPlanName = req.params.workoutPlanName;
       const { exerciseId } = req.body;
       const workoutPlan = await this.service.addExerciseToWorkoutPlan(token, workoutPlanName, exerciseId);
-      res.json(workoutPlan);
+      res.status(200).json(workoutPlan);
     });
   }
 
@@ -121,8 +121,26 @@ export class ExerciseApi implements IExerciseApi {
         const workoutPlanName = req.params.workoutPlanName;
         const exerciseId = req.params.exerciseId;
         const workoutPlan = await this.service.removeExerciseFromWorkoutPlan(token, workoutPlanName, exerciseId);
-        res.json(workoutPlan);
+        res.status(200).json(workoutPlan);
       });
+  }
+
+  logWorkoutPlan = (req: Request, res: Response) => {
+    apiErrorHandler(res, async () => {
+      const token = (req.headers.authorization as string).replace("Bearer ", "");
+      const { workoutPlanName } = req.body;
+      const workoutPlan = await this.service.logWorkoutPlan(token, workoutPlanName);
+      res.status(200).json(workoutPlan);
+    });
+  }
+
+  getDailyLoggedWorkoutPlans = (req: Request, res: Response) => {
+    apiErrorHandler(res, async () => {
+      const token = (req.headers.authorization as string).replace("Bearer ", "");
+      const day = req.params.day;
+      const workoutPlans = await this.service.getDailyLoggedWorkoutPlans(token, day);
+      res.status(200).json(workoutPlans);
+    });
   }
 
   cloneExerciseDB = (req: Request, res: Response) => {

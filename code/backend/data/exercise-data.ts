@@ -12,6 +12,7 @@ import {
 } from "../utils/functions/data";
 import { ExerciseModel, UserModel } from "../mongoose/schemas";
 import { Exercise, ExerciseDB, User, WorkoutPlan } from "../domain/types";
+import getDate from "../utils/functions/app/getDate";
 
 export class ExerciseData implements IExerciseData {
   getExerciseById(id: string) {
@@ -168,6 +169,58 @@ export class ExerciseData implements IExerciseData {
       });
       await UserModel.updateOne({ token }, user);
       return workoutPlanResult;
+    });
+  }
+
+  logWorkoutPlan(token: string, workoutPlanName: string) {
+    return mongodbHandler(async () => {
+      const user: User | null = await UserModel.findOne({ token });
+      const date = getDate();
+
+      if (user === null) {
+        return null;
+      }
+
+      const dayIndex = user.days.findIndex((day) => day.date === date);
+      const workoutPlan = user.workout_plans.find((workoutPlan) => workoutPlan.name === workoutPlanName);
+
+      if (workoutPlan === undefined) {
+        return ERROR_WORKOUTPLAN;
+      }
+
+      if (dayIndex == -1) {
+        user.days = [
+          ...user.days,
+          { date: date, consumedFood: [], workoutPlansDone: [workoutPlanName] },
+        ];
+      } else {
+        const day = user.days[dayIndex];
+        user.days[dayIndex] = {
+          ...day,
+          workoutPlansDone: [...day.workoutPlansDone, workoutPlanName],
+        };
+      }
+
+      await UserModel.updateOne({ token }, user);
+      return workoutPlan;
+    });
+  }
+
+  getDailyLoggedWorkoutPlans(token: string, day: string) {
+    return mongodbHandler(async () => {
+      const user: User | null = await UserModel.findOne({ token });
+
+      if (user === null) {
+        return null;
+      }
+
+      const dailyLoggedWorkoutPlans = user.days.find((userDay) => userDay.date === day);
+
+      if (dailyLoggedWorkoutPlans === undefined) {
+        return [];
+      }
+
+      return dailyLoggedWorkoutPlans.workoutPlansDone;
     });
   }
   

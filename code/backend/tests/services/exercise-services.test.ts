@@ -1,17 +1,20 @@
 import {
   AlreadyExistsError,
   InvalidAuthorizationTokenError,
+  InvalidParamsError,
   NotFoundError,
 } from "../../errors/app_errors.ts";
 import { ExerciseServices } from "../../services/exercise-services.ts";
 import { ExerciseData } from "../../data/exercise-data.ts";
 import {
+  dailyLoggedWorkoutPlans,
   mockExercise,
   mockExercise2,
   mockExercisesArray,
   mockWorkoutPlan,
 } from "./mockData/exercise.ts";
 import { ERROR_WORKOUTPLAN } from "../../utils/constants.ts";
+import { isValidDate } from "../../utils/functions/app/isValidDate.ts";
 
 jest.mock("mongoose", () => ({
   connect: jest.fn(),
@@ -568,16 +571,87 @@ describe("RemoveExerciseFromWorkoutPlan function tests", () => {
     const token = "testToken";
     const workoutPlanName = "testWorkoutPlanName";
     const exerciseId = "testExerciseId";
-    exerciseData.removeExerciseFromWorkoutPlan = jest
-      .fn()
-      .mockResolvedValue(ERROR_WORKOUTPLAN);
+    exerciseData.removeExerciseFromWorkoutPlan = jest.fn().mockResolvedValue(ERROR_WORKOUTPLAN);
+    exerciseServices.removeExerciseFromWorkoutPlan(token, workoutPlanName, exerciseId).catch((error: Error) => expect(error).toBe(NotFoundError));
+    expect(exerciseData.removeExerciseFromWorkoutPlan).toHaveBeenCalledWith(token, workoutPlanName, exerciseId);
+  });
+});
+
+describe("LogWorkoutPlan function tests", () => {
+  it("logWorkoutPlan logs the workout plan successfully", async () => {
+    const token = "testToken";
+    const workoutPlanName = "testWorkoutPlanName";
+    exerciseData.logWorkoutPlan = jest.fn().mockResolvedValue(mockWorkoutPlan);
+    const workoutPlan = await exerciseServices.logWorkoutPlan(token, workoutPlanName);
+    expect(workoutPlan).toBe(mockWorkoutPlan);
+    expect(exerciseData.logWorkoutPlan).toHaveBeenCalledWith(token, workoutPlanName);
+  });
+
+  it("logWorkoutPlan throws InvalidAuthorizationError when the user's token does not exist", async () => {
+    const token = "testToken";
+    const workoutPlanName = "testWorkoutPlanName";
+    exerciseData.logWorkoutPlan = jest.fn().mockResolvedValue(null);
     exerciseServices
-      .removeExerciseFromWorkoutPlan(token, workoutPlanName, exerciseId)
+      .logWorkoutPlan(token, workoutPlanName)
+      .catch((error: Error) => expect(error).toBe(InvalidAuthorizationTokenError));
+    expect(exerciseData.logWorkoutPlan).toHaveBeenCalledWith(token, workoutPlanName);
+  });
+
+  it("logWorkoutPlan throws NotFoundError when the workout plan does not exist", async () => {
+    const token = "testToken";
+    const workoutPlanName = "testWorkoutPlanName";
+    exerciseData.logWorkoutPlan = jest.fn().mockResolvedValue(ERROR_WORKOUTPLAN);
+    exerciseServices
+      .logWorkoutPlan(token, workoutPlanName)
       .catch((error: Error) => expect(error).toBe(NotFoundError));
-    expect(exerciseData.removeExerciseFromWorkoutPlan).toHaveBeenCalledWith(
-      token,
-      workoutPlanName,
-      exerciseId
-    );
+    expect(exerciseData.logWorkoutPlan).toHaveBeenCalledWith(token, workoutPlanName);
+  });
+});
+
+describe("GetDailyLoggedWorkoutPlans function tests", () => {
+  it("getDailyLoggedWorkoutPlans returns the user's daily logged workout plans successfully", async () => {
+    const token = "testToken";
+    const day = "3-4-2024";
+    exerciseData.getDailyLoggedWorkoutPlans = jest.fn().mockResolvedValue(dailyLoggedWorkoutPlans);
+    const workoutPlans = await exerciseServices.getDailyLoggedWorkoutPlans(token, day);
+    expect(workoutPlans).toBe(dailyLoggedWorkoutPlans);
+    expect(exerciseData.getDailyLoggedWorkoutPlans).toHaveBeenCalledWith(token, day);
+  });
+
+  it("getDailyLoggedWorkoutPlans returns an empty array when the user's daily logged workout plans do not exist", async () => {
+    const token = "testToken";
+    const day = "3-4-2024";
+    exerciseData.getDailyLoggedWorkoutPlans = jest.fn().mockResolvedValue([]);
+    const workoutPlans = await exerciseServices.getDailyLoggedWorkoutPlans(token, day);
+    expect(workoutPlans).toEqual([]);
+    expect(exerciseData.getDailyLoggedWorkoutPlans).toHaveBeenCalledWith(token, day);
+  });
+
+  it("getDailyLoggedWorkoutPlans throws InvalidParamsError when the date is invalid", async () => {
+    const token = "testToken";
+    const day = "invalidDate";
+    exerciseData.getDailyLoggedWorkoutPlans = jest.fn().mockResolvedValue(null);
+    exerciseServices.getDailyLoggedWorkoutPlans(token, day).catch((error: Error) => expect(error).toBe(InvalidParamsError));
+    expect(exerciseData.getDailyLoggedWorkoutPlans).not.toHaveBeenCalledWith(token, day);
+  });
+
+  it("getDailyLoggedWorkoutPlans throws InvalidAuthorizationError when the user's token does not exist", async () => {
+    const token = "testToken";
+    const day = "3-4-2024";
+    exerciseData.getDailyLoggedWorkoutPlans = jest.fn().mockResolvedValue(null);
+    exerciseServices.getDailyLoggedWorkoutPlans(token, day).catch((error: Error) => expect(error).toBe(InvalidAuthorizationTokenError));
+    expect(exerciseData.getDailyLoggedWorkoutPlans).toHaveBeenCalledWith(token, day);
+  });
+});
+
+describe("Auxiliary functions tests", () => {
+  it("isValidDate returns true when the date is valid", () => {
+    const date = "3-4-2024";
+    expect(isValidDate(date)).toBe(true);
+  });
+
+  it("isValidDate returns false when the date is invalid", () => {
+    const date = "invalidDate";
+    expect(isValidDate(date)).toBe(false);
   });
 });
