@@ -9,7 +9,10 @@ import {
   mockNoTokenLogoutRequest, mockNotBearerTokenLogoutRequest 
 } from "./utils/auth.ts";
 import { AuthApi } from "../../api/auth-api.ts";
-import { ExistentEmailError, IncorrectPasswordError, InvalidParamsError, NonExistentEmailError, UnauthorizedError } from "../../errors/app_errors.ts";
+import { 
+  ExistentEmailError, IncorrectPasswordError, InvalidParamsError,
+  NonExistentEmailError, UnauthorizedError 
+} from "../../errors/app_errors.ts";
 
 const authData = new AuthData()
 let authServices: AuthServices;

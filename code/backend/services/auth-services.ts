@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 import { IAuthData, IAuthServices } from "../domain/interfaces";
 import { transactionHandler } from "../utils/functions/data";
+import { User } from "../domain/types";
 
 export class AuthServices implements IAuthServices {
   private data: IAuthData;
@@ -37,7 +38,8 @@ export class AuthServices implements IAuthServices {
       const token = uuidv4()
       const hashedPassword = await bcrypt.hash(password, 10)
       await this.data.createUser(username, hashedPassword, email, token)
-      return token
+      const newUser = this.newSimpleUser(username, hashedPassword, email, token)
+      return newUser
     })
   }
 
@@ -46,5 +48,9 @@ export class AuthServices implements IAuthServices {
       const user = await this.data.tryClearUserToken(token)
       if (!user) throw UnauthorizedError
     })
+  }
+
+  newSimpleUser = (username: string, password: string, email: string, token: string): User => {
+    return {username, email, password, token, workout_plans: [], days: []}
   }
 }
