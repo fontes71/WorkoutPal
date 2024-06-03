@@ -81,5 +81,4 @@ export interface ConsumedFood {
   protein: string | null;
   fat: string | null;
   carbs: string | null;
-  fiber: string | null;
 }

@@ -29,7 +29,7 @@ const exerciseApi = new ExerciseApi(exerciseServices, exerciseData);
 
 const foodData = new FoodData();
 const foodServices = new FoodServices(foodData, userData);
-const foodApi = new FoodApi(foodServices, foodData);
+const foodApi = new FoodApi(foodServices);
 
 const port = 8080;
 

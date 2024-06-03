@@ -1,41 +1,198 @@
-import { Exercise, Food } from "../../domain/types.ts";
-import app from "../../server.ts";
-import request from "supertest";
-//import { food_results } from "../files/food.ts";
+import { FoodServices } from "../../services/food-services.ts";
+import { FoodApi } from "../../api/food-api.ts";
+import { FoodData } from "../../data/food-data.ts";
+import { UserData } from "../../data/user-data.ts";
+import {  mock_services_return_value, mock_request_with_query, mock_request_without_query, mock_request_with_query_thats_not_a_string, mock_request_with_barcode_query, parsed_barcode, mock_request_with_body } from "./mockData/food.ts";
+import { UnauthorizedError } from "../../errors/app_errors.ts";
 
-describe("GetExerciseById function tests", () => {
-  it("getExerciseById returns the exercise successfully", () => {
-    expect(true).toBe(true)
+const foodData = new FoodData()
+const userData = new UserData()
+let foodServices: FoodServices;
+let foodApi: FoodApi;
+
+
+const mockResponse = {
+  status: jest.fn().mockReturnThis(),
+  json: jest.fn(),
+}
+
+beforeEach(() => {
+  foodServices = new FoodServices(foodData, userData)
+  foodApi = new FoodApi(foodServices)
+})
+
+afterEach(() => {
+  jest.clearAllMocks()
+})
+
+// Tokens não serem hardcoded
+// Respostas terem status
+
+describe("/api/food/search/name", () => {
+  it('returns the items successfully', async () => {
+    foodServices.searchByName = jest.fn().mockResolvedValue(Promise.resolve(mock_services_return_value))
+
+    await foodApi.searchByName(mock_request_with_query as any, mockResponse as any);
+
+    expect(foodServices.searchByName).toHaveBeenCalledWith(mock_request_with_query.query.query, 0, 0)
+
+    expect(mockResponse.status).toHaveBeenCalledWith(200)
+    expect(mockResponse.json).toHaveBeenCalledWith(mock_services_return_value)
+  })
+
+  it('returns no items successfully', async () => {
+    foodServices.searchByName = jest.fn().mockResolvedValue(Promise.resolve([]))
+
+    await foodApi.searchByName(mock_request_with_query as any, mockResponse as any);
+
+    expect(foodServices.searchByName).toHaveBeenCalledWith(mock_request_with_query.query.query, 0, 0)
+
+    expect(mockResponse.status).toHaveBeenCalledWith(200)
+    expect(mockResponse.json).toHaveBeenCalledWith([])
+  })
+
+  
+  it('returns an error when no query value is given', async () => {
+    foodServices.searchByName = jest.fn().mockResolvedValue(Promise.resolve([]))
+
+    await foodApi.searchByName(mock_request_without_query as any, mockResponse as any);
+    
+
+    expect(mockResponse.status).toHaveBeenCalledWith(400)
+
+    expect(foodServices.searchByName).not.toHaveBeenCalled()
+  })
+
+  it('returns an error when the query value given is not a string', async () => {
+    foodServices.searchByName = jest.fn().mockResolvedValue(Promise.resolve([]))
+
+    await foodApi.searchByName(mock_request_with_query_thats_not_a_string as any, mockResponse as any);
+
+    expect(mockResponse.status).toHaveBeenCalledWith(400)
+
+    expect(foodServices.searchByName).not.toHaveBeenCalled()
   })
 })
-/*
-describe("Endpoint: /api/food/search", () => {
-  it("test1", async () => {
-    expect(true).toStrictEqual(true)
+
+describe("/api/food/search/barcode", () => {
+  it('returns the item successfully', async () => {
+    foodServices.searchByBarcode = jest.fn().mockResolvedValue(Promise.resolve(mock_services_return_value))
+
+    await foodApi.searchByBarcode(mock_request_with_barcode_query as any, mockResponse as any);
+
+    expect(foodServices.searchByBarcode).toHaveBeenCalledWith(parsed_barcode)
+
+    expect(mockResponse.status).toHaveBeenCalledWith(200)
+    expect(mockResponse.json).toHaveBeenCalledWith(mock_services_return_value)
   })
-  /*it("GET -> Response contains food items", async () => {
 
-    const res = await request(app)
-      .get("/api/food/search?query=egg")
-      .expect("Content-Type", /json/)
-      .expect(200);
+  it('returns no item successfully', async () => {
+    foodServices.searchByBarcode = jest.fn().mockResolvedValue(Promise.resolve({}))
 
-    const receivedBody = res.body as Food[];
-    expect(receivedBody).toStrictEqual(food_results);
-  });
+    await foodApi.searchByBarcode(mock_request_with_barcode_query as any, mockResponse as any);
 
-  it("GET -> Response has status 404 if not items were found", async () => {
-    const res = await request(app)
-      .get("/api/food/search?query=notAFood")
-      .expect("Content-Type", /json/)
-      .expect(404);
-  });
+    expect(foodServices.searchByBarcode).toHaveBeenCalledWith(parsed_barcode)
 
-  it("GET -> Response has status 400 when query is not defined", async () => {
-    const res = await request(app)
-      .get("/api/food/search?query=")
-      .expect("Content-Type", /json/)
-      .expect(400);
-  });
-});
-*/
+    expect(mockResponse.status).toHaveBeenCalledWith(200)
+    expect(mockResponse.json).toHaveBeenCalledWith({})
+  })
+
+  
+  it('returns an error when no query value is given', async () => {
+    foodServices.searchByBarcode = jest.fn().mockResolvedValue(Promise.resolve([]))
+
+    await foodApi.searchByBarcode(mock_request_without_query as any, mockResponse as any);
+    
+
+    expect(mockResponse.status).toHaveBeenCalledWith(400)
+
+    expect(foodServices.searchByBarcode).not.toHaveBeenCalled()
+  })
+
+  it('returns an error when the query value given is not a string', async () => {
+    foodServices.searchByBarcode = jest.fn().mockResolvedValue(Promise.resolve([]))
+
+    await foodApi.searchByBarcode(mock_request_with_query_thats_not_a_string as any, mockResponse as any);
+
+    expect(mockResponse.status).toHaveBeenCalledWith(400)
+
+    expect(foodServices.searchByBarcode).not.toHaveBeenCalled()
+  })
+
+})
+
+describe("/api/food/consume", () => {
+  it('item is consumed successfully', async () => {
+    foodServices.consume = jest.fn()
+
+    await foodApi.consume(mock_request_with_body as any, mockResponse as any);
+
+    const { id, name, calories, protein, fat, carbs } = mock_request_with_body.body;
+
+    expect(foodServices.consume).toHaveBeenCalledWith("6b8c5f1d-4ce1-4982-83d3-720969912f12", id, name, calories, protein, fat, carbs)
+
+    expect(mockResponse.status).toHaveBeenCalledWith(201)
+  })
+
+  it('user token is not associated with a valid user', async () => {
+    foodServices.consume = jest.fn().mockRejectedValue(UnauthorizedError)
+
+    await foodApi.consume(mock_request_with_body as any, mockResponse as any);
+
+    expect(mockResponse.status).toHaveBeenCalledWith(401)
+  })
+})
+
+describe("/api/food/dailyConsumption", () => {
+  it('item is consumed successfully', async () => {
+    foodServices.dailyConsumption = jest.fn().mockResolvedValue(Promise.resolve(mock_services_return_value))
+
+    await foodApi.dailyConsumption(mock_request_with_query as any, mockResponse as any);
+
+    expect(foodServices.dailyConsumption).toHaveBeenCalledWith("6b8c5f1d-4ce1-4982-83d3-720969912f12", mock_request_with_query.query.query)
+
+    expect(mockResponse.status).toHaveBeenCalledWith(200)
+    expect(mockResponse.json).toHaveBeenCalledWith(mock_services_return_value)
+  })
+
+  
+  it('returns no items successfully', async () => {
+    foodServices.dailyConsumption = jest.fn().mockResolvedValue(Promise.resolve([]))
+
+    await foodApi.dailyConsumption(mock_request_with_query as any, mockResponse as any);
+
+    expect(foodServices.dailyConsumption).toHaveBeenCalledWith("6b8c5f1d-4ce1-4982-83d3-720969912f12", mock_request_with_query.query.query)
+
+    expect(mockResponse.status).toHaveBeenCalledWith(200)
+    expect(mockResponse.json).toHaveBeenCalledWith([])
+  })
+
+  
+  it('returns an error when no query value is given', async () => {
+    foodServices.dailyConsumption = jest.fn().mockResolvedValue(Promise.resolve([]))
+
+    await foodApi.dailyConsumption(mock_request_without_query as any, mockResponse as any);
+
+    expect(mockResponse.status).toHaveBeenCalledWith(400)
+
+    expect(foodServices.dailyConsumption).not.toHaveBeenCalled()
+  })
+
+  it('returns an error when the query value given is not a string', async () => {
+    foodServices.dailyConsumption = jest.fn().mockResolvedValue(Promise.resolve([]))
+
+    await foodApi.dailyConsumption(mock_request_with_query_thats_not_a_string as any, mockResponse as any);
+
+    expect(mockResponse.status).toHaveBeenCalledWith(400)
+
+    expect(foodServices.dailyConsumption).not.toHaveBeenCalled()
+  })
+
+  it('user token is not associated with a valid user', async () => {
+    foodServices.dailyConsumption = jest.fn().mockRejectedValue(UnauthorizedError)
+
+    await foodApi.dailyConsumption(mock_request_with_query as any, mockResponse as any);
+
+    expect(mockResponse.status).toHaveBeenCalledWith(401)
+  })
+})

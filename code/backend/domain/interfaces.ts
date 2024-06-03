@@ -49,7 +49,7 @@ export interface IExerciseServices {
 export interface IFoodServices {
   searchByName(query: string, skip: number, limit: number): Promise<Array<Food>>;
   searchByBarcode(barcode: number): Promise<Food>;
-  consume(token: string, id: string,name: string | null, calories: number | null, protein: string | null, fat: string | null, carbs: string | null, fiber: string | null): any
+  consume(token: string, id: string,name: string | null, calories: number | null, protein: string | null, fat: string | null, carbs: string | null): any
   dailyConsumption(token: string, day: string): Promise<Array<ConsumedFood>>;
 }
 

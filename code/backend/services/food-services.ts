@@ -19,7 +19,6 @@ import { apiFoodToFood } from "../utils/functions/app/apiFoodToFood";
 import getDate from "../utils/functions/app/getDate";
 import { mongodbHandler, transactionHandler } from "../utils/functions/data";
 
-// try catch need on services cuz sometimes data throws error and the app stop inside services
 export class FoodServices implements IFoodServices {
   private foodData: IFoodData;
   private userData: IUserData;
@@ -37,7 +36,7 @@ export class FoodServices implements IFoodServices {
         limit
       );
 
-      if (!apiFood.length) throw NotFoundError;
+      if (!apiFood.length) [];
 
       const food: Food[] = apiFood.map((apiFood) => apiFoodToFood(apiFood));
 
@@ -51,7 +50,7 @@ export class FoodServices implements IFoodServices {
         barcode
       );
 
-      if (!apiFood) throw NotFoundError;
+      if (!apiFood) {}
 
       const food: Food = apiFoodToFood(apiFood);
 
@@ -66,8 +65,7 @@ export class FoodServices implements IFoodServices {
     calories: number | null,
     protein: string | null,
     fat: string | null,
-    carbs: string | null,
-    fiber: string | null
+    carbs: string | null
   ) => {
     return transactionHandler(async () => {
       const consumedFood: ConsumedFood = {
@@ -76,10 +74,9 @@ export class FoodServices implements IFoodServices {
         calories: calories,
         protein: protein,
         fat: fat,
-        carbs: carbs,
-        fiber: fiber,
+        carbs: carbs
       };
-      
+
       const user: User | null = await this.userData.getUserByToken(token);
 
       const date = getDate();
@@ -113,7 +110,7 @@ export class FoodServices implements IFoodServices {
 
       const day = user.days.find((day) => day.date === date);
 
-      if (!day) throw NotFoundError;
+      if (!day) return [];
 
       return day.consumedFood;
     });

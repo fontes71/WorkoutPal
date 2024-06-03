@@ -6,40 +6,38 @@ import { apiErrorHandler } from "../utils/functions/api";
 
 export class FoodApi implements IFoodApi {
   private service: IFoodServices;
-  private data: IFoodData;
 
-  constructor(service: IFoodServices, data: IFoodData) {
+  constructor(service: IFoodServices) {
     this.service = service;
-    this.data = data;
   }
 
-  searchByName = (req: Request, res: Response) => {
-    apiErrorHandler(res, async () => {
+  searchByName = async (req: Request, res: Response) => {
+    await apiErrorHandler(res, async () => {
       const { query } = req.query;
 
       if (!query || typeof query != "string") throw InvalidParamsError;
 
       const food: Food[] = await this.service.searchByName(query, 0, 0);
-      res.json(food);
+      res.status(200).json(food);
     });
   };
 
-  searchByBarcode = (req: Request, res: Response) => {
-    apiErrorHandler(res, async () => {
+  searchByBarcode = async (req: Request, res: Response) => {
+    await apiErrorHandler(res, async () => {
       const { barcode } = req.query;
 
       if (!barcode || typeof barcode != "string") throw InvalidParamsError;
 
       const food: Food = await this.service.searchByBarcode(parseInt(barcode));
-      res.json(food);
+      res.status(200).json(food);
     });
   };
 
-  consume = (req: Request, res: Response) => {
-    apiErrorHandler(res, async () => {
+  consume = async (req: Request, res: Response) => {
+    await apiErrorHandler(res, async () => {
       const token = "6b8c5f1d-4ce1-4982-83d3-720969912f12";
 
-      const { id, name, calories, protein, fat, carbs, fiber } = req.body;
+      const { id, name, calories, protein, fat, carbs } = req.body;
 
       await this.service.consume(
         token,
@@ -48,19 +46,16 @@ export class FoodApi implements IFoodApi {
         calories,
         protein,
         fat,
-        carbs,
-        fiber
+        carbs
       );
 
-      res.status(200).json({});
+      res.status(201).json({});
     });
   };
 
-  dailyConsumption = (req: Request, res: Response) => {
-    apiErrorHandler(res, async () => {
+  dailyConsumption = async (req: Request, res: Response) => {
+    await apiErrorHandler(res, async () => {
       const token = "6b8c5f1d-4ce1-4982-83d3-720969912f12";
-
-      console.log("DAY");
 
       const { query } = req.query;
 
@@ -68,7 +63,7 @@ export class FoodApi implements IFoodApi {
 
       const food = await this.service.dailyConsumption(token, query);
 
-      res.json(food);
+      res.status(200).json(food);
     });
   };
 }
