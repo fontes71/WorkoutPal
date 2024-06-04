@@ -1,4 +1,4 @@
-import React, { useState, Dispatch, SetStateAction } from "react";
+import React, { useState, Dispatch, SetStateAction, useContext } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import PasswordInput from "@/assets/components/PasswordInput";
@@ -8,6 +8,7 @@ import { ResponseError } from "@/domain/auth";
 import LogoContainer from "@/assets/components/auth/LogoContainer";
 import ErrorContainer from "@/assets/components/auth/ErrorContainer";
 import ConnectWithGoogleContainer from "@/assets/components/auth/ConnectWithGoogleContainerLogin";
+import { UserContext } from '@/assets/components/auth/AuthContext'
 
 type InputInfo = {
   readonly name: string;
@@ -115,10 +116,11 @@ function InputsContainer({
 function SingupButton({ setResponseError, name, email, password }: ButtonInfo) {
   const [fetching, setFetching] = useState(false);
   const router = useRouter();
+  const { setUserContext } = useContext(UserContext);
 
   const signupAction = async () => {
     setFetching(true);
-    const response = await signup(name, email, password);
+    const response = await signup(name, email, password, setUserContext);
 
     if (response.ok) {
       router.push("/(tabs)/exercise");

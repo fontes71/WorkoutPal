@@ -3,13 +3,14 @@ import { food_search_styles } from "@/assets/styles/food";
 import { Text, View } from "@/components/Themed";
 import {  Stack, router } from "expo-router";
 import { SearchBar } from "@rneui/themed";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Food } from "@/domain/types";
 import FoodCover from "@/assets/components/FoodCover";
 import { searchFoodByName, searchFoodByBarcode } from "@/services/food";
 import foodItemRoute from "@/assets/functions/foodItemRoute";
 import { CameraView, Camera } from "expo-camera/next";
 import { BarCodeScanningResult } from "expo-camera/build/Camera.types";
+import { UserContext } from "@/app/_layout";
 
 const capitalizeWords = (str: string | null) => {
   if (str === null) {
@@ -92,6 +93,9 @@ export default function AddFoodScreen() {
   const [hasCameraPermission, setHasCameraPermission] = useState< boolean | null>(null);
   const [scanning, setScanning] = useState(false);
 
+
+
+
   const scanBarCode = () => {
     const getCameraPermissions = async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -119,7 +123,7 @@ export default function AddFoodScreen() {
 
       setFood(food);
     };
-    console.log("submiting. query =>", query)
+
     if (query.length > 1) fetchFoodResults();
   };
 

@@ -1,10 +1,17 @@
-import { Stack } from 'expo-router/stack';
-import { StatusBar } from 'expo-status-bar';
+import UserProvider from "@/assets/components/auth/AuthContext";
+import { getLocalUser } from "@/assets/functions/auth";
+import { User } from "@/domain/auth";
+import { Stack } from "expo-router/stack";
+import { createContext, useEffect, useState } from "react";
+
+
 
 export default function AppLayout() {
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-    </Stack>
+    <UserProvider>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack>
+    </UserProvider>
   );
 }

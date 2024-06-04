@@ -1,35 +1,48 @@
-import { getLocalUser } from "@/assets/functions/auth";
-import postOptions from "@/assets/functions/postOptions";
 import { localhost } from "@/constants";
 import { Food } from "@/domain/types";
 
 export const searchFoodByName = async (query: string) => {
+  
   const res = await fetch(`${localhost}8080/api/food/search/name?query=${query}`);
 
-  return res.ok ? res.json() : null;
+  const resValue = await res.json()  
+  return res.ok ? resValue.obj : null;
 };
 
 export const searchFoodByBarcode = async (barcode: string) => {
-  const res = await fetch(`${localhost}8080/api/food/search/barcode?barcode=${barcode}`, {
-    headers: {
-      'Authorization': `Bearer ${getLocalUser()}`
-    }
-  });
+  const res = await fetch(`${localhost}8080/api/food/search/barcode?barcode=${barcode}`);
 
-  return res.ok ? res.json() : null;
+  const resValue = await res.json()
+  return res.ok ? resValue.obj : null;
 };
 
-export const consumeFood = async (food: Food) => {
+export const consumeFood = async (userToken: string | undefined, food: Food) => {
+  console.log("token => ", userToken)
   const res = await fetch(
     `${localhost}8080/api/food/consume`,
-    postOptions(food)
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${userToken}`
+      },
+      body: JSON.stringify(food),
+    }
   );
-  return res.ok ? res.json() : null;
+  const resValue = await res.json()
+  return res.ok ? resValue.obj : null;
 };
 
-export const consumedFoodOfTheDay = async (date: string) => {
+export const consumedFoodOfTheDay = async (userToken: string | undefined, date: string) => {
   const res = await fetch(
-    `${localhost}8080/api/food/dailyConsumption?query=${date}`
+    `${localhost}8080/api/food/dailyConsumption?query=${date}`, {
+      headers: {
+        'Authorization': `Bearer ${userToken}`
+      }
+    }
   );
-  return res.ok ? res.json() : null;
+
+  const resValue = await res.json()
+  return res.ok ? resValue.obj : null;
 };

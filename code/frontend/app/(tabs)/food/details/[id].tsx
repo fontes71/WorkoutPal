@@ -7,9 +7,10 @@ import { Link, Stack, router } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import FoodCover from "@/assets/components/FoodCover";
 import { Food } from "@/domain/types";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { localhost } from "@/constants";
 import { consumeFood } from "@/services/food";
+import { UserContext } from '@/assets/components/auth/AuthContext'
 
 const display = (value: string) => (value ? `${value}` : "-");
 
@@ -153,8 +154,9 @@ interface TopSectionProps {
 }
 
 const TopSection: React.FC<TopSectionProps> = ({ food }) => {
+  const { userContext } = useContext(UserContext)
   const onSaveHook = async (food: Food) => {
-    await consumeFood(food);
+    await consumeFood(userContext?.token, food);
 
     router.push(`/food/`);
   };
