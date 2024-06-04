@@ -83,6 +83,7 @@ export class FoodServices implements IFoodServices {
 
       if (!user) throw UnauthorizedError;
 
+
       let dayIndex = user.days.findIndex((day) => day.date === date);
 
       if (dayIndex == -1) {
@@ -97,8 +98,8 @@ export class FoodServices implements IFoodServices {
           consumedFood: [...day.consumedFood, consumedFood],
         };
       }
-
-      this.userData.updateUser(token, user);
+    
+       await this.userData.updateUser(token, user)
     });
   };
 
