@@ -6,8 +6,11 @@ import {
   mockInvalidSignupRequest, mockIncorrectPasswordLoginRequest, 
   mockExistentEmailSignupRequest, mockLogoutRequest, 
   mockUnauthorizedLogoutRequest, mockUnauthorizedToken, 
-  mockNoTokenLogoutRequest, mockNotBearerTokenLogoutRequest 
-} from "./utils/auth.ts";
+  mockNoTokenLogoutRequest, mockNotBearerTokenLogoutRequest, 
+  mockResponseLoginBody,
+  mockResponseSignupBody,
+  mockResponseLogoutBody
+} from "./mockData/auth.ts";
 import { AuthApi } from "../../api/auth-api.ts";
 import { 
   ExistentEmailError, IncorrectPasswordError, InvalidParamsError,
@@ -36,10 +39,10 @@ describe("api/signup", () => {
   it('should sign up a new user successfully', async () => {
     authServices.signup = jest.fn().mockResolvedValue(Promise.resolve(mockResponseUser))
 
-    await authApi.signup(mockSignupRequest as any, mockResponse as any);
+    await authApi.signup(mockSignupRequest as any, mockResponse as any)
 
     expect(mockResponse.status).toHaveBeenCalledWith(201)
-    expect(mockResponse.json).toHaveBeenCalledWith({status: "Signup successful", user: mockResponseUser })
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseSignupBody)
   
     expect(authServices.signup).toHaveBeenCalledWith(
       mockSignupRequest.body.username,
@@ -53,7 +56,7 @@ describe("api/signup", () => {
 
     const mockResponse = {
       status: jest.fn().mockReturnThis(),
-      json: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
     }
 
     await authApi.signup(mockExistentEmailSignupRequest as any, mockResponse as any);
@@ -96,7 +99,7 @@ describe("api/login", () => {
     await authApi.login(mockLoginRequest as any, mockResponse as any);
 
     expect(mockResponse.status).toHaveBeenCalledWith(200)
-    expect(mockResponse.json).toHaveBeenCalledWith({status: "Login successful", user: mockResponseUser })
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseLoginBody)
   
     expect(authServices.login).toHaveBeenCalledWith(
       mockLoginRequest.body.email,
@@ -147,7 +150,6 @@ describe("api/login", () => {
   })
 })
 
-
 describe("api/logout", () => {
   it('should log out an user successfully', async () => {
     authServices.logout = jest.fn().mockResolvedValue(Promise.resolve())
@@ -155,7 +157,7 @@ describe("api/logout", () => {
     await authApi.logout(mockLogoutRequest as any, mockResponse as any);
 
     expect(mockResponse.status).toHaveBeenCalledWith(200)
-    expect(mockResponse.json).toHaveBeenCalledWith({status: "Logout successful" })
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseLogoutBody)
   
     expect(authServices.logout).toHaveBeenCalledWith(mockToken)
   })

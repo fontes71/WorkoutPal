@@ -102,7 +102,6 @@ describe("/api/food/search/barcode", () => {
     foodServices.searchByBarcode = jest.fn().mockResolvedValue(Promise.resolve([]))
 
     await foodApi.searchByBarcode(mock_request_without_query as any, mockResponse as any);
-    
 
     expect(mockResponse.status).toHaveBeenCalledWith(400)
 
