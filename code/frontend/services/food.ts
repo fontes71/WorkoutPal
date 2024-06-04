@@ -1,3 +1,4 @@
+import { getLocalUser } from "@/assets/functions/auth";
 import postOptions from "@/assets/functions/postOptions";
 import { localhost } from "@/constants";
 import { Food } from "@/domain/types";
@@ -9,7 +10,11 @@ export const searchFoodByName = async (query: string) => {
 };
 
 export const searchFoodByBarcode = async (barcode: string) => {
-  const res = await fetch(`${localhost}8080/api/food/search/barcode?barcode=${barcode}`);
+  const res = await fetch(`${localhost}8080/api/food/search/barcode?barcode=${barcode}`, {
+    headers: {
+      'Authorization': `Bearer ${getLocalUser()}`
+    }
+  });
 
   return res.ok ? res.json() : null;
 };

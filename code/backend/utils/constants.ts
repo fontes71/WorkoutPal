@@ -20,3 +20,4 @@ export const WORKOUTPAL_MONGO_URI: string | undefined = process.env.WORKOUTPAL_M
 export const TEST_MONGO_URI: string | undefined = process.env.TEST_MONGO_URI;
 
 export const ERROR_WORKOUTPLAN: WorkoutPlan = { name: "", description: "", exercises: [] };
+

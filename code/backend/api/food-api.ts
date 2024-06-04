@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 import { Exercise, Food } from "../domain/types";
 import { IFoodApi, IFoodData, IFoodServices } from "../domain/interfaces";
 import { InvalidParamsError } from "../errors/app_errors";
-import { apiErrorHandler, getToken } from "../utils/functions/api";
+import { apiErrorHandler, getToken, sendResponse } from "../utils/functions/api";
+import { StatusCode } from "../domain/api";
 
 export class FoodApi implements IFoodApi {
   private service: IFoodServices;
@@ -18,7 +19,7 @@ export class FoodApi implements IFoodApi {
       if (!query || typeof query != "string") throw InvalidParamsError;
 
       const food: Food[] = await this.service.searchByName(query, 0, 0);
-      res.status(200).json(food);
+      sendResponse(res, StatusCode.Success, "Search successful", food)
     });
   };
 
@@ -29,13 +30,13 @@ export class FoodApi implements IFoodApi {
       if (!barcode || typeof barcode != "string") throw InvalidParamsError;
 
       const food: Food = await this.service.searchByBarcode(parseInt(barcode));
-      res.status(200).json(food);
+      sendResponse(res, StatusCode.Success, "Search successful", food)
     });
   };
 
   consume = async (req: Request, res: Response) => {
     await apiErrorHandler(res, async () => {
-      const token = getToken(req)
+      const token = getToken(req);
 
       const { id, name, calories, protein, fat, carbs } = req.body;
 
@@ -49,13 +50,13 @@ export class FoodApi implements IFoodApi {
         carbs
       );
 
-      res.status(201).json({});
+      sendResponse(res, StatusCode.Created, "Food item consumed successfully", {})
     });
   };
 
   dailyConsumption = async (req: Request, res: Response) => {
     await apiErrorHandler(res, async () => {
-      const token = getToken(req)
+      const token = getToken(req);
 
       const { query } = req.query;
 
@@ -63,7 +64,8 @@ export class FoodApi implements IFoodApi {
 
       const food = await this.service.dailyConsumption(token, query);
 
-      res.status(200).json(food);
+      sendResponse(res, StatusCode.Success, "Daily consumption fetch successful", food)
     });
   };
 }
+

@@ -25,3 +25,17 @@ export function getToken(req: Request): string {
       return tokenInfo[1]
     }
   }
+
+ export const sendResponse = (
+    res: Response<any, Record<string, any>>,
+    code: number,
+    message: string,
+    obj: any
+  ) => {
+    return res.status(code).json({
+      statusCode: code,
+      message: message,
+      obj: obj,
+    });
+  };
+  
