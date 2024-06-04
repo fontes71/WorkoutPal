@@ -71,7 +71,8 @@ export interface Food {
 
 export interface Day {
   date: string,
-  consumedFood: ConsumedFood[]
+  consumedFood: ConsumedFood[],
+  workoutPlansDone: string[]
 }
 
 export interface ConsumedFood {

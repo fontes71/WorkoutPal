@@ -67,6 +67,8 @@ app.get(
   "/api/exercises/secondaryMuscle/:exerciseSecondaryMuscle",
   exerciseApi.searchExercisesBySecondaryMuscle
 );
+app.get("/api/exercises/workoutPlans/log/:day", exerciseApi.getDailyLoggedWorkoutPlans);
+app.post("/api/exercises/workoutPlans/log", exerciseApi.logWorkoutPlan);
 app.get("/api/exercises/workoutPlans", exerciseApi.getUserWorkoutPlans);
 app.post("/api/exercises/workoutPlans", exerciseApi.createWorkoutPlan);
 app.post(

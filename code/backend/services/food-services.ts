@@ -88,7 +88,7 @@ export class FoodServices implements IFoodServices {
       if (dayIndex == -1) {
         user.days = [
           ...user.days,
-          { date: date, consumedFood: [consumedFood] },
+          { date: date, consumedFood: [consumedFood], workoutPlansDone: []},
         ];
       } else {
         const day = user.days[dayIndex];
