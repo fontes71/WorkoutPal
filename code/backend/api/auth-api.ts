@@ -1,11 +1,10 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import passport from 'passport';
 import passport_http_bearer from 'passport-http-bearer';
 import { User } from "../domain/types.ts";
 import { IAuthApi, IAuthData, IAuthServices } from "../domain/interfaces.ts";
 import { apiErrorHandler, getToken, sendResponse } from "../utils/functions/api.ts";
 import { AuthInfoUser, StatusCode, UserResponse } from "../domain/api.ts";
-import { InvalidAuthorizationTokenError, NonExistentAuthorizationTokenError } from "../errors/app_errors.ts";
 
 const BearerStrategy = passport_http_bearer.Strategy
 
@@ -17,12 +16,13 @@ export class AuthApi implements IAuthApi {
     this.services = services;
     this.data = data;
 
+    // prob not going to need it
     passport.use(new BearerStrategy(async (token, done) => {
         const user = await this.data.getUserByToken(token)
         if (!user) { return done(null, false); }
-        return done(null, user, { scope: 'all' });
+        return done(null, user, { scope: 'all' })
       }
-    ));
+    ))
   }
 
   signup = async (req: Request, res: Response) => {
@@ -36,7 +36,7 @@ export class AuthApi implements IAuthApi {
     await apiErrorHandler(res, async () => {
       const user: User = await this.services.login(req.body.email, req.body.password)
       sendResponse(res, StatusCode.Success, "Login successful", this.userToUserResponse(user))
-    });
+    })
   }
 
   logout = async (req: Request, res: Response) => {

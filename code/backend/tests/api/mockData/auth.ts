@@ -15,7 +15,7 @@ export const mockServiceUser: User = {
 }
 
 export const mockResponseUser = {
-    username: 'test',
+    username: 'test', 
     email: 'test@gmail.com',
     token: 'mockToken',
 }
@@ -85,4 +85,27 @@ export const mockNotBearerTokenLogoutRequest = {
     headers: {
         authorization: `NotBearer ${mockUnauthorizedToken}`
     }
+}
+
+export const mockResponseLoginBody = {
+    message: "Login successful",
+    obj: {
+        email: "test@gmail.com",
+        token: "mockToken",
+        username: "test",
+    }
+}
+
+export const mockResponseSignupBody = {
+    message: "Signup successful",
+    obj: {
+        email: "test@gmail.com",
+        token: "mockToken",
+        username: "test"
+    }
+}
+
+export const mockResponseLogoutBody = {
+    message: "Logout successful",
+    obj: {}
 }

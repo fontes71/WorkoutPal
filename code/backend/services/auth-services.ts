@@ -51,6 +51,6 @@ export class AuthServices implements IAuthServices {
   }
 
   newSimpleUser = (username: string, password: string, email: string, token: string): User => {
-    return {username, email, password, token, workout_plans: [], days: []}
+    return { username, email, password, token, workout_plans: [], days: [] }
   }
 }
