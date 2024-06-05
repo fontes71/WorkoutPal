@@ -25,7 +25,7 @@ export class ExerciseServices implements IExerciseServices {
       skip,
       limit
     );
-    if (exercises.length == 0) throw NotFoundError;
+    if (exercises.length == 0) return [];
     return exercises;
   };
 
@@ -36,7 +36,7 @@ export class ExerciseServices implements IExerciseServices {
   ) => {
     const exercises: Array<Exercise> =
       await this.data.searchExercisesByBodyPart(bodyPart, skip, limit);
-    if (exercises.length == 0) throw NotFoundError;
+    if (exercises.length == 0) return [];
     return exercises;
   };
 
@@ -47,7 +47,7 @@ export class ExerciseServices implements IExerciseServices {
   ) => {
     const exercises: Array<Exercise> =
       await this.data.searchExercisesByEquipment(equipment, skip, limit);
-    if (exercises.length == 0) throw NotFoundError;
+    if (exercises.length == 0) return [];
     return exercises;
   };
 
@@ -61,7 +61,7 @@ export class ExerciseServices implements IExerciseServices {
       skip,
       limit
     );
-    if (exercises.length == 0) throw NotFoundError;
+    if (exercises.length == 0) return [];
     return exercises;
   };
 
@@ -76,39 +76,39 @@ export class ExerciseServices implements IExerciseServices {
         skip,
         limit
       );
-    if (exercises.length == 0) throw NotFoundError;
+    if (exercises.length == 0) return [];
     return exercises;
   };
 
   getUserWorkoutPlans = async (token: string) => {
-    const workoutPlans = await this.data.getUserWorkoutPlans(token);
+    const workoutPlans: WorkoutPlan[] | null = await this.data.getUserWorkoutPlans(token);
     if (workoutPlans == null) throw InvalidAuthorizationTokenError;
     return workoutPlans;
   }
 
   createWorkoutPlan = async (token: string, workoutPlanName: string, description: string) => {
-    const workoutPlan = await this.data.createWorkoutPlan(token, workoutPlanName, description);
+    const workoutPlan: WorkoutPlan | null = await this.data.createWorkoutPlan(token, workoutPlanName, description);
     if (workoutPlan == null) throw InvalidAuthorizationTokenError;
     if (workoutPlan == ERROR_WORKOUTPLAN) throw AlreadyExistsError;
     return workoutPlan;
   }
 
   addExerciseToWorkoutPlan = async (token: string, workoutPlanName: string, exerciseId: string) => {
-    const workoutPlan = await this.data.addExerciseToWorkoutPlan(token, workoutPlanName, exerciseId);
+    const workoutPlan: WorkoutPlan | null = await this.data.addExerciseToWorkoutPlan(token, workoutPlanName, exerciseId);
     if (workoutPlan == null) throw InvalidAuthorizationTokenError;
     if (workoutPlan == ERROR_WORKOUTPLAN) throw AlreadyExistsError;
     return workoutPlan;
   }
 
   removeExerciseFromWorkoutPlan = async (token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan> => {
-    const workoutPlan = await this.data.removeExerciseFromWorkoutPlan(token, workoutPlanName, exerciseId);
+    const workoutPlan: WorkoutPlan | null = await this.data.removeExerciseFromWorkoutPlan(token, workoutPlanName, exerciseId);
     if (workoutPlan == null) throw InvalidAuthorizationTokenError;
     if (workoutPlan == ERROR_WORKOUTPLAN) throw NotFoundError;
     return workoutPlan;
   }
 
   logWorkoutPlan = async (token: string, workoutPlanName: string): Promise<WorkoutPlan> => {
-    const workoutPlan = await this.data.logWorkoutPlan(token, workoutPlanName);
+    const workoutPlan: WorkoutPlan | null = await this.data.logWorkoutPlan(token, workoutPlanName);
     if (workoutPlan == null) throw InvalidAuthorizationTokenError;
     if (workoutPlan == ERROR_WORKOUTPLAN) throw NotFoundError;
     return workoutPlan;
@@ -118,7 +118,7 @@ export class ExerciseServices implements IExerciseServices {
     if(!isValidDate(day)) {
       throw InvalidParamsError;
     };
-    const workoutPlans = await this.data.getDailyLoggedWorkoutPlans(token, day);
+    const workoutPlans: string[] | null = await this.data.getDailyLoggedWorkoutPlans(token, day);
     if (workoutPlans == null) throw InvalidAuthorizationTokenError;
     return workoutPlans;
   }

@@ -1,166 +1,414 @@
-import { Exercise } from "../../domain/types.ts";
-import app from "../../server.ts";
-import request from "supertest";
+import { ExerciseData } from "../../data/exercise-data.ts";
+import { ExerciseServices } from "../../services/exercise-services.ts";
+import { ExerciseApi } from "../../api/exercise-api.ts";
+import { mockAddExerciseToWorkoutPlanRequest, mockCreateWorkoutPlanRequest, mockExercise, mockGetDailyLoggedWorkoutPlansRequest, mockGetUserWorkoutPlansRequest, mockLogWorkoutPlanRequest, mockRemoveExerciseFromWorkoutPlanRequest, mockResponseAddExerciseToWorkoutPlanBody, mockResponseCreateWorkoutPlanBody, mockResponseEmptySearchBody, mockResponseGetDailyLoggedWorkoutPlansBody, mockResponseGetUserWorkoutPlansBody, mockResponseLogWorkoutPlanBody, mockResponseRemoveExerciseFromWorkoutPlanBody, mockResponseSearchBody, mockResponseSearchByIdBody, mockSearchByBodyPartRequest, mockSearchByEquipmentRequest, mockSearchByIdRequest, mockSearchByNameRequest, mockSearchBySecondaryMuscleRequest, mockSearchByTargetRequest, mockWorkoutPlan } from "./mockData/exercise.ts";
+import { AlreadyExistsError, InvalidAuthorizationTokenError, InvalidParamsError, NotFoundError } from "../../errors/app_errors.ts";
 
-describe("GetExerciseById function tests", () => {
-  it("getExerciseById returns the exercise successfully", () => {
-    expect(true).toBe(true)
-  })
+const exerciseData = new ExerciseData()
+let exerciseServices: ExerciseServices;
+let exerciseApi: ExerciseApi;
+
+const mockResponse = {
+  status: jest.fn().mockReturnThis(),
+  json: jest.fn(),
+}
+
+beforeEach(() => {
+  exerciseServices = new ExerciseServices(exerciseData)
+  exerciseApi = new ExerciseApi(exerciseServices, exerciseData)
 })
 
-/*
-    A worker process has failed to exit gracefully and has been force exited. This is likely
-    caused by tests leaking due to improper teardown. Try running with --detectOpenHandles to
-    find leaks. Active timers can also cause this, ensure that .unref() was called on them.
- */
-/*
+afterEach(() => {
+  jest.clearAllMocks()
+})
+
 describe("Endpoint: /api/exercise/:exerciseId", () => {
-  it("test1", async () => {
-    
-    expect(true).toStrictEqual(true);
-  });
-  /*it("GET -> Response contains exercise", async () => {
-    const expectedExerciseId: string = "0001";
+  it("GET -> Returns the Exercise successfully", async () => {
+    exerciseServices.getExerciseById = jest.fn().mockResolvedValue(mockExercise);
 
-    const res = await request(app)
-      .get("/api/exercise/0001")
-      .expect("Content-Type", /json/)
-      .expect(200);
+    await exerciseApi.getExerciseById(mockSearchByIdRequest as any, mockResponse as any);
 
-    const receivedBody = res.body as Exercise;
-
-    expect(receivedBody._id).toStrictEqual(expectedExerciseId);
+    expect(exerciseServices.getExerciseById).toHaveBeenCalledWith(mockSearchByIdRequest.params.exerciseId);
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseSearchByIdBody);
   });
 
-  it("GET -> Response does not contain exercise", async () => {
-    const res = await request(app)
-      .get("/api/exercise/-1")
-      .expect("Content-Type", /json/)
-      .expect(404);
+  it("GET -> Returns NotFoundError", async () => {
+    exerciseServices.getExerciseById = jest.fn().mockRejectedValue(NotFoundError);
+
+    await exerciseApi.getExerciseById(mockSearchByIdRequest as any, mockResponse as any);
+
+    expect(exerciseServices.getExerciseById).toHaveBeenCalledWith(mockSearchByIdRequest.params.exerciseId);
+    expect(mockResponse.status).toHaveBeenCalledWith(404);
   });
 });
 
 describe("Endpoint: /api/exercises/name/:exerciseName", () => {
-  it("GET -> Response contains exercises", async () => {
-    const expectedExerciseId: string = "0981";
+  it("GET -> Returns the Exercises successfully", async () => {
+    exerciseServices.searchExercisesByName = jest.fn().mockResolvedValue([mockExercise]);
 
-    const res = await request(app)
-      .get("/api/exercises/name/sit?limit=2&skip=2")
-      .expect("Content-Type", /json/)
-      .expect(200);
+    await exerciseApi.searchExercisesByName(mockSearchByNameRequest as any, mockResponse as any);
 
-    const receivedBody = res.body as Exercise[];
-    
-    expect(receivedBody[0]._id).toStrictEqual(expectedExerciseId);
+    expect(exerciseServices.searchExercisesByName).toHaveBeenCalledWith(
+      mockSearchByNameRequest.params.exerciseName, 
+      mockSearchByNameRequest.query.skip,
+      mockSearchByNameRequest.query.limit
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseSearchBody);
   });
 
-  it("GET -> Response does not contain exercises", async () => {
-    const res = await request(app)
-      .get("/api/exercises/name/-1")
-      .expect("Content-Type", /json/)
-      .expect(404);
+  it("GET -> Returns no Exercises successfully", async () => {
+    exerciseServices.searchExercisesByName = jest.fn().mockResolvedValue([]);
+
+    await exerciseApi.searchExercisesByName(mockSearchByNameRequest as any, mockResponse as any);
+
+    expect(exerciseServices.searchExercisesByName).toHaveBeenCalledWith(
+      mockSearchByNameRequest.params.exerciseName, 
+      mockSearchByNameRequest.query.skip, 
+      mockSearchByNameRequest.query.limit
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseEmptySearchBody);
   });
 });
 
-describe("Endpoint: /api/exercises/bodypart/:exerciseBodyPart", () => {
-  it("GET -> Response contains exercises", async () => {
-    const expectedExerciseId: string = "0001";
+describe("Endpoint: /api/exercises/bodyPart/:exerciseBodyPart", () => {
+  it("GET -> Returns the Exercises successfully", async () => {
+    exerciseServices.searchExercisesByBodyPart = jest.fn().mockResolvedValue([mockExercise]);
 
-    const res = await request(app)
-      .get("/api/exercises/bodyPart/waist?limit=2&skip=2")
-      .expect("Content-Type", /json/)
-      .expect(200);
+    await exerciseApi.searchExercisesByBodyPart(mockSearchByBodyPartRequest as any, mockResponse as any);
 
-    const receivedBody = res.body as Exercise[];
-    
-    expect(receivedBody[0]._id).toStrictEqual(expectedExerciseId);
+    expect(exerciseServices.searchExercisesByBodyPart).toHaveBeenCalledWith(
+      mockSearchByBodyPartRequest.params.exerciseBodyPart, 
+      mockSearchByBodyPartRequest.query.skip, 
+      mockSearchByBodyPartRequest.query.limit
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseSearchBody);
   });
 
-  it("GET -> Response does not contain exercises", async () => {
-    const res = await request(app)
-      .get("/api/exercises/bodyPart/-1")
-      .expect("Content-Type", /json/)
-      .expect(404);
+  it("GET -> Returns no Exercises successfully", async () => {
+    exerciseServices.searchExercisesByBodyPart = jest.fn().mockResolvedValue([]);
+
+    await exerciseApi.searchExercisesByBodyPart(mockSearchByBodyPartRequest as any, mockResponse as any);
+
+    expect(exerciseServices.searchExercisesByBodyPart).toHaveBeenCalledWith(
+      mockSearchByBodyPartRequest.params.exerciseBodyPart, 
+      mockSearchByBodyPartRequest.query.skip, 
+      mockSearchByBodyPartRequest.query.limit
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseEmptySearchBody);
   });
 });
 
 describe("Endpoint: /api/exercises/equipment/:exerciseEquipment", () => {
-  it("GET -> Response contains exercises", async () => {
-    const expectedExerciseId: string = "1405";
+  it("GET -> Returns the Exercises successfully", async () => {
+    exerciseServices.searchExercisesByEquipment = jest.fn().mockResolvedValue([mockExercise]);
 
-    const res = await request(app)
-      .get("/api/exercises/equipment/body weight?limit=2&skip=2")
-      .expect("Content-Type", /json/)
-      .expect(200);
+    await exerciseApi.searchExercisesByEquipment(mockSearchByEquipmentRequest as any, mockResponse as any);
 
-    const receivedBody = res.body as Exercise[];
-    
-    expect(receivedBody[0]._id).toStrictEqual(expectedExerciseId);
+    expect(exerciseServices.searchExercisesByEquipment).toHaveBeenCalledWith(
+      mockSearchByEquipmentRequest.params.exerciseEquipment, 
+      mockSearchByEquipmentRequest.query.skip, 
+      mockSearchByEquipmentRequest.query.limit
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseSearchBody);
   });
 
-  it("GET -> Response does not contain exercises", async () => {
-    const res = await request(app)
-      .get("/api/exercises/equipment/-1")
-      .expect("Content-Type", /json/)
-      .expect(404);
+  it("GET -> Returns no Exercises successfully", async () => {
+    exerciseServices.searchExercisesByEquipment = jest.fn().mockResolvedValue([]);
+
+    await exerciseApi.searchExercisesByEquipment(mockSearchByEquipmentRequest as any, mockResponse as any);
+
+    expect(exerciseServices.searchExercisesByEquipment).toHaveBeenCalledWith(
+      mockSearchByEquipmentRequest.params.exerciseEquipment, 
+      mockSearchByEquipmentRequest.query.skip, 
+      mockSearchByEquipmentRequest.query.limit
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseEmptySearchBody);
   });
 });
 
 describe("Endpoint: /api/exercises/target/:exerciseTarget", () => {
-  it("GET -> Response contains exercises", async () => {
-    const expectedExerciseId: string = "0001";
+  it("GET -> Returns the Exercises successfully", async () => {
+    exerciseServices.searchExercisesByTarget = jest.fn().mockResolvedValue([mockExercise]);
 
-    const res = await request(app)
-      .get("/api/exercises/target/abs?limit=2&skip=2")
-      .expect("Content-Type", /json/)
-      .expect(200);
+    await exerciseApi.searchExercisesByTarget(mockSearchByTargetRequest as any, mockResponse as any);
 
-    const receivedBody = res.body as Exercise[];
-    
-    expect(receivedBody[0]._id).toStrictEqual(expectedExerciseId);
+    expect(exerciseServices.searchExercisesByTarget).toHaveBeenCalledWith(
+      mockSearchByTargetRequest.params.exerciseTarget, 
+      mockSearchByTargetRequest.query.skip, 
+      mockSearchByTargetRequest.query.limit
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseSearchBody);
   });
 
-  it("GET -> Response does not contain exercises", async () => {
-    const res = await request(app)
-      .get("/api/exercises/target/-1")
-      .expect("Content-Type", /json/)
-      .expect(404);
+  it("GET -> Returns no Exercises successfully", async () => {
+    exerciseServices.searchExercisesByTarget = jest.fn().mockResolvedValue([]);
+
+    await exerciseApi.searchExercisesByTarget(mockSearchByTargetRequest as any, mockResponse as any);
+
+    expect(exerciseServices.searchExercisesByTarget).toHaveBeenCalledWith(
+      mockSearchByTargetRequest.params.exerciseTarget, 
+      mockSearchByTargetRequest.query.skip, 
+      mockSearchByTargetRequest.query.limit
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseEmptySearchBody);
   });
 });
 
 describe("Endpoint: /api/exercises/secondaryMuscle/:exerciseSecondaryMuscle", () => {
-  it("GET -> Response contains exercises", async () => {
-    const expectedExerciseId: string = "0020";
+  it("GET -> Returns the Exercises successfully", async () => {
+    exerciseServices.searchExercisesBySecondaryMuscle = jest.fn().mockResolvedValue([mockExercise]);
 
-    const res = await request(app)
-      .get("/api/exercises/secondaryMuscle/glutes?limit=2&skip=2")
-      .expect("Content-Type", /json/)
-      .expect(200);
+    await exerciseApi.searchExercisesBySecondaryMuscle(mockSearchBySecondaryMuscleRequest as any, mockResponse as any);
 
-    const receivedBody = res.body as Exercise[];
-    
-    expect(receivedBody[0]._id).toStrictEqual(expectedExerciseId);
+    expect(exerciseServices.searchExercisesBySecondaryMuscle).toHaveBeenCalledWith(
+      mockSearchBySecondaryMuscleRequest.params.exerciseSecondaryMuscle, 
+      mockSearchBySecondaryMuscleRequest.query.skip, 
+      mockSearchBySecondaryMuscleRequest.query.limit
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseSearchBody);
   });
 
-  it("GET -> Response does not contain exercises", async () => {
-    const res = await request(app)
-      .get("/api/exercises/secondaryMuscle/-1")
-      .expect("Content-Type", /json/)
-      .expect(404);
+  it("GET -> Returns no Exercises successfully", async () => {
+    exerciseServices.searchExercisesBySecondaryMuscle = jest.fn().mockResolvedValue([]);
+
+    await exerciseApi.searchExercisesBySecondaryMuscle(mockSearchBySecondaryMuscleRequest as any, mockResponse as any);
+
+    expect(exerciseServices.searchExercisesBySecondaryMuscle).toHaveBeenCalledWith(
+      mockSearchBySecondaryMuscleRequest.params.exerciseSecondaryMuscle, 
+      mockSearchBySecondaryMuscleRequest.query.skip, 
+      mockSearchBySecondaryMuscleRequest.query.limit
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseEmptySearchBody);
   });
 });
 
+describe("Endpoint: /api/exercises/workoutPlans", () => {
+  it("GET -> Returns the WorkoutPlans successfully", async () => {
+    exerciseServices.getUserWorkoutPlans = jest.fn().mockResolvedValue([mockWorkoutPlan]);
 
-describe("POST /users", () => {
+    await exerciseApi.getUserWorkoutPlans(mockGetUserWorkoutPlansRequest as any, mockResponse as any);
 
-  describe("when passed a username and password", () => {
-    test("should respond with a 200 status code", async () => {
-      const response = await request(app).post("/users").send({ 
-        username: "username", 
-        password: "password" 
-      })
-      expect(response.statusCode).toBe(200)
-    })
-  })
+    expect(exerciseServices.getUserWorkoutPlans).toHaveBeenCalledWith(mockGetUserWorkoutPlansRequest.headers.authorization);
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseGetUserWorkoutPlansBody);
+  });
 
-}) */
+  it("GET -> Return InvalidAuthorizationTokenError", async () => {
+    exerciseServices.getUserWorkoutPlans = jest.fn().mockRejectedValue(InvalidAuthorizationTokenError);
+
+    await exerciseApi.getUserWorkoutPlans(mockGetUserWorkoutPlansRequest as any, mockResponse as any);
+
+    expect(exerciseServices.getUserWorkoutPlans).toHaveBeenCalledWith(mockGetUserWorkoutPlansRequest.headers.authorization);
+    expect(mockResponse.status).toHaveBeenCalledWith(400);
+  });
+
+  it("POST -> Creates a new WorkoutPlan successfully", async () => {
+    exerciseServices.createWorkoutPlan = jest.fn().mockResolvedValue(mockWorkoutPlan);
+
+    await exerciseApi.createWorkoutPlan(mockCreateWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.createWorkoutPlan).toHaveBeenCalledWith(
+      mockCreateWorkoutPlanRequest.headers.authorization, 
+      mockCreateWorkoutPlanRequest.body.workoutPlanName, 
+      mockCreateWorkoutPlanRequest.body.description
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(201);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseCreateWorkoutPlanBody);
+  });
+
+  it("POST -> Returns InvalidAuthorizationTokenError", async () => {
+    exerciseServices.createWorkoutPlan = jest.fn().mockRejectedValue(InvalidAuthorizationTokenError);
+
+    await exerciseApi.createWorkoutPlan(mockCreateWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.createWorkoutPlan).toHaveBeenCalledWith(
+      mockCreateWorkoutPlanRequest.headers.authorization, 
+      mockCreateWorkoutPlanRequest.body.workoutPlanName, 
+      mockCreateWorkoutPlanRequest.body.description
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(400);
+  });
+
+  it("POST -> Returns AlreadyExistsError", async () => {
+    exerciseServices.createWorkoutPlan = jest.fn().mockRejectedValue(AlreadyExistsError);
+
+    await exerciseApi.createWorkoutPlan(mockCreateWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.createWorkoutPlan).toHaveBeenCalledWith(
+      mockCreateWorkoutPlanRequest.headers.authorization, 
+      mockCreateWorkoutPlanRequest.body.workoutPlanName, 
+      mockCreateWorkoutPlanRequest.body.description
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(409);
+  });
+});
+
+describe("Endpoint: /api/exercises/workoutPlans/:workoutPlanName", () => {
+  it("POST -> Adds an Exercise to a WorkoutPlan successfully", async () => {
+    exerciseServices.addExerciseToWorkoutPlan = jest.fn().mockResolvedValue(mockWorkoutPlan);
+
+    await exerciseApi.addExerciseToWorkoutPlan(mockAddExerciseToWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.addExerciseToWorkoutPlan).toHaveBeenCalledWith(
+      mockAddExerciseToWorkoutPlanRequest.headers.authorization, 
+      mockAddExerciseToWorkoutPlanRequest.params.workoutPlanName, 
+      mockAddExerciseToWorkoutPlanRequest.body.exerciseId
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseAddExerciseToWorkoutPlanBody);
+  });
+
+  it("POST -> Returns InvalidAuthorizationTokenError", async () => {
+    exerciseServices.addExerciseToWorkoutPlan = jest.fn().mockRejectedValue(InvalidAuthorizationTokenError);
+
+    await exerciseApi.addExerciseToWorkoutPlan(mockAddExerciseToWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.addExerciseToWorkoutPlan).toHaveBeenCalledWith(
+      mockAddExerciseToWorkoutPlanRequest.headers.authorization, 
+      mockAddExerciseToWorkoutPlanRequest.params.workoutPlanName, 
+      mockAddExerciseToWorkoutPlanRequest.body.exerciseId
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(400);
+  });
+
+  it("POST -> Returns AlreadyExistsError", async () => {
+    exerciseServices.addExerciseToWorkoutPlan = jest.fn().mockRejectedValue(AlreadyExistsError);
+
+    await exerciseApi.addExerciseToWorkoutPlan(mockAddExerciseToWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.addExerciseToWorkoutPlan).toHaveBeenCalledWith(
+      mockAddExerciseToWorkoutPlanRequest.headers.authorization, 
+      mockAddExerciseToWorkoutPlanRequest.params.workoutPlanName, 
+      mockAddExerciseToWorkoutPlanRequest.body.exerciseId
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(409);
+  });
+});
+
+describe("Endpoint: /api/exercises/workoutPlans/:workoutPlanName/exercise/:exerciseId", () => {
+  it("DELETE -> Removes an Exercise from a WorkoutPlan successfully", async () => {
+    exerciseServices.removeExerciseFromWorkoutPlan = jest.fn().mockResolvedValue(mockWorkoutPlan);
+
+    await exerciseApi.removeExerciseFromWorkoutPlan(mockRemoveExerciseFromWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.removeExerciseFromWorkoutPlan).toHaveBeenCalledWith(
+      mockRemoveExerciseFromWorkoutPlanRequest.headers.authorization, 
+      mockRemoveExerciseFromWorkoutPlanRequest.params.workoutPlanName, 
+      mockRemoveExerciseFromWorkoutPlanRequest.params.exerciseId
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseRemoveExerciseFromWorkoutPlanBody);
+  });
+
+  it("DELETE -> Returns InvalidAuthorizationTokenError", async () => {
+    exerciseServices.removeExerciseFromWorkoutPlan = jest.fn().mockRejectedValue(InvalidAuthorizationTokenError);
+
+    await exerciseApi.removeExerciseFromWorkoutPlan(mockRemoveExerciseFromWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.removeExerciseFromWorkoutPlan).toHaveBeenCalledWith(
+      mockRemoveExerciseFromWorkoutPlanRequest.headers.authorization, 
+      mockRemoveExerciseFromWorkoutPlanRequest.params.workoutPlanName, 
+      mockRemoveExerciseFromWorkoutPlanRequest.params.exerciseId
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(400);
+  });
+
+  it("DELETE -> Returns NotFoundError", async () => {
+    exerciseServices.removeExerciseFromWorkoutPlan = jest.fn().mockRejectedValue(NotFoundError);
+
+    await exerciseApi.removeExerciseFromWorkoutPlan(mockRemoveExerciseFromWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.removeExerciseFromWorkoutPlan).toHaveBeenCalledWith(
+      mockRemoveExerciseFromWorkoutPlanRequest.headers.authorization, 
+      mockRemoveExerciseFromWorkoutPlanRequest.params.workoutPlanName, 
+      mockRemoveExerciseFromWorkoutPlanRequest.params.exerciseId
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(404);
+  });
+});
+
+describe("Endpoint: /api/exercises/workoutPlans/log", () => {
+  it("POST -> Logs a WorkoutPlan successfully", async () => {
+    exerciseServices.logWorkoutPlan = jest.fn().mockResolvedValue(mockWorkoutPlan);
+
+    await exerciseApi.logWorkoutPlan(mockLogWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.logWorkoutPlan).toHaveBeenCalledWith(
+      mockLogWorkoutPlanRequest.headers.authorization, 
+      mockLogWorkoutPlanRequest.body.workoutPlanName
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseLogWorkoutPlanBody);
+  });
+
+  it("POST -> Returns InvalidAuthorizationTokenError", async () => {
+    exerciseServices.logWorkoutPlan = jest.fn().mockRejectedValue(InvalidAuthorizationTokenError);
+
+    await exerciseApi.logWorkoutPlan(mockLogWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.logWorkoutPlan).toHaveBeenCalledWith(
+      mockLogWorkoutPlanRequest.headers.authorization, 
+      mockLogWorkoutPlanRequest.body.workoutPlanName
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(400);
+  });
+
+  it("POST -> Returns NotFoundError", async () => {
+    exerciseServices.logWorkoutPlan = jest.fn().mockRejectedValue(NotFoundError);
+
+    await exerciseApi.logWorkoutPlan(mockLogWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.logWorkoutPlan).toHaveBeenCalledWith(
+      mockLogWorkoutPlanRequest.headers.authorization, 
+      mockLogWorkoutPlanRequest.body.workoutPlanName
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(404);
+  });
+});
+
+describe("Endpoint: /api/exercises/workoutPlans/log/:day", () => {
+  it("GET -> Returns the Daily Logged WorkoutPlans successfully", async () => {
+    exerciseServices.getDailyLoggedWorkoutPlans = jest.fn().mockResolvedValue([mockWorkoutPlan]);
+
+    await exerciseApi.getDailyLoggedWorkoutPlans(mockGetDailyLoggedWorkoutPlansRequest as any, mockResponse as any);
+
+    expect(exerciseServices.getDailyLoggedWorkoutPlans).toHaveBeenCalledWith(
+      mockGetDailyLoggedWorkoutPlansRequest.headers.authorization, 
+      mockGetDailyLoggedWorkoutPlansRequest.params.day
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseGetDailyLoggedWorkoutPlansBody);
+  });
+
+  it("GET -> Returns InvalidAuthorizationTokenError", async () => {
+    exerciseServices.getDailyLoggedWorkoutPlans = jest.fn().mockRejectedValue(InvalidAuthorizationTokenError);
+
+    await exerciseApi.getDailyLoggedWorkoutPlans(mockGetDailyLoggedWorkoutPlansRequest as any, mockResponse as any);
+
+    expect(exerciseServices.getDailyLoggedWorkoutPlans).toHaveBeenCalledWith(
+      mockGetDailyLoggedWorkoutPlansRequest.headers.authorization, 
+      mockGetDailyLoggedWorkoutPlansRequest.params.day
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(400);
+  });
+
+  it("GET -> Returns InvalidParamsError", async () => {
+    exerciseServices.getDailyLoggedWorkoutPlans = jest.fn().mockRejectedValue(InvalidParamsError);
+
+    await exerciseApi.getDailyLoggedWorkoutPlans(mockGetDailyLoggedWorkoutPlansRequest as any, mockResponse as any);
+
+    expect(exerciseServices.getDailyLoggedWorkoutPlans).not.toHaveBeenCalledWith();
+    expect(mockResponse.status).toHaveBeenCalledWith(400);
+  });
+});

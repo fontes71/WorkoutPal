@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import { Exercise } from "../domain/types";
 import { IExerciseApi, IExerciseData, IExerciseServices } from "../domain/interfaces";
-import { apiErrorHandler } from "../utils/functions/api";
+import { apiErrorHandler, sendResponse } from "../utils/functions/api";
 import { ParamsDictionary } from "express-serve-static-core";
 import { ParsedQs } from "qs";
+import { StatusCode } from "../domain/api";
+import { send } from "process";
 
 export class ExerciseApi implements IExerciseApi {
   private service: IExerciseServices;
@@ -14,132 +16,132 @@ export class ExerciseApi implements IExerciseApi {
     this.data = data;
   }
 
-  getExerciseById = (req: Request, res: Response) => {
-    apiErrorHandler(res, async () => {
+  getExerciseById = async (req: Request, res: Response) => {
+    await apiErrorHandler(res, async () => {
       const exercise: Exercise = await this.service.getExerciseById(
         req.params.exerciseId
       );
-      res.status(200).json(exercise);
+      sendResponse(res, StatusCode.Success, "Exercise found", exercise);
     });
   }
 
-  searchExercisesByName = (req: Request, res: Response) => {
+  searchExercisesByName = async (req: Request, res: Response) => {
     const skip = !req.query.skip ? '0' : req.query.skip as string;
     const limit = !req.query.limit ? '10': req.query.limit as string;
-    apiErrorHandler(res, async () => {
+    await apiErrorHandler(res, async () => {
       const exercises: Array<Exercise> = await this.service.searchExercisesByName(
         req.params.exerciseName,
         parseInt(skip),
         parseInt(limit)
       );
-      res.status(200).json(exercises);
+      sendResponse(res, StatusCode.Success, "Search successful", exercises);
     });
   }
 
-  searchExercisesByBodyPart = (req: Request, res: Response) => {
+  searchExercisesByBodyPart = async (req: Request, res: Response) => {
     const skip = !req.query.skip ? '0' : req.query.skip as string;
     const limit = !req.query.limit ? '10': req.query.limit as string;
-    apiErrorHandler(res, async () => {
+    await apiErrorHandler(res, async () => {
       const exercises: Array<Exercise> = await this.service.searchExercisesByBodyPart(
         req.params.exerciseBodyPart,
         parseInt(skip),
         parseInt(limit)
       );
-      res.status(200).json(exercises);
+      sendResponse(res, StatusCode.Success, "Search successful", exercises);
     });
   }
 
-  searchExercisesByEquipment = (req: Request, res: Response) => {
+  searchExercisesByEquipment = async (req: Request, res: Response) => {
     const skip = !req.query.skip ? '0' : req.query.skip as string;
     const limit = !req.query.limit ? '10': req.query.limit as string;
-    apiErrorHandler(res, async () => {
+    await apiErrorHandler(res, async () => {
       const exercises: Array<Exercise> = await this.service.searchExercisesByEquipment(
         req.params.exerciseEquipment,
         parseInt(skip),
         parseInt(limit)
       );
-      res.status(200).json(exercises);
+      sendResponse(res, StatusCode.Success, "Search successful", exercises);
     });
   }
 
-  searchExercisesByTarget = (req: Request, res: Response) => {
+  searchExercisesByTarget = async (req: Request, res: Response) => {
     const skip = !req.query.skip ? '0' : req.query.skip as string;
     const limit = !req.query.limit ? '10': req.query.limit as string;
-    apiErrorHandler(res, async () => {
+    await apiErrorHandler(res, async () => {
       const exercises: Array<Exercise> = await this.service.searchExercisesByTarget(
         req.params.exerciseTarget,
         parseInt(skip),
         parseInt(limit)
       );
-      res.status(200).json(exercises);
+      sendResponse(res, StatusCode.Success, "Search successful", exercises);
     });
   }
 
-  searchExercisesBySecondaryMuscle = (req: Request, res: Response) => {
+  searchExercisesBySecondaryMuscle = async (req: Request, res: Response) => {
     const skip = !req.query.skip ? '0' : req.query.skip as string;
     const limit = !req.query.limit ? '10': req.query.limit as string;
-    apiErrorHandler(res, async () => {
+    await apiErrorHandler(res, async () => {
       const exercises: Array<Exercise> = await this.service.searchExercisesBySecondaryMuscle(
         req.params.exerciseSecondaryMuscle,
         parseInt(skip),
         parseInt(limit)
       );
-      res.status(200).json(exercises);
+      sendResponse(res, StatusCode.Success, "Search successful", exercises);
     });
   }
 
-  getUserWorkoutPlans = (req: Request, res: Response) => {
-    apiErrorHandler(res, async () => {
+  getUserWorkoutPlans = async (req: Request, res: Response) => {
+    await apiErrorHandler(res, async () => {
       const token = (req.headers.authorization as string).replace("Bearer ", "");
       const workoutPlans = await this.service.getUserWorkoutPlans(token);
-      res.status(200).json(workoutPlans);
+      sendResponse(res, StatusCode.Success, "Workout plans fetched successfully", workoutPlans);
     });
   }
 
-  createWorkoutPlan = (req: Request, res: Response) => {
-    apiErrorHandler(res, async () => {
+  createWorkoutPlan = async (req: Request, res: Response) => {
+    await apiErrorHandler(res, async () => {
       const token = (req.headers.authorization as string).replace("Bearer ", "");
       const { workoutPlanName, description } = req.body;
       const workoutPlan = await this.service.createWorkoutPlan(token, workoutPlanName, description);
-      res.status(201).json(workoutPlan);
+      sendResponse(res, StatusCode.Created, "Workout plan created", workoutPlan);
     });
   }
 
-  addExerciseToWorkoutPlan = (req: Request, res: Response) => {
-    apiErrorHandler(res, async () => {
+  addExerciseToWorkoutPlan = async (req: Request, res: Response) => {
+    await apiErrorHandler(res, async () => {
       const token = (req.headers.authorization as string).replace("Bearer ", "");
       const workoutPlanName = req.params.workoutPlanName;
       const { exerciseId } = req.body;
       const workoutPlan = await this.service.addExerciseToWorkoutPlan(token, workoutPlanName, exerciseId);
-      res.status(200).json(workoutPlan);
+      sendResponse(res, StatusCode.Success, "Exercise added to workout plan", workoutPlan);
     });
   }
 
-  removeExerciseFromWorkoutPlan = (req: Request, res: Response): void => {
-      apiErrorHandler(res, async () => {
-        const token = (req.headers.authorization as string).replace("Bearer ", "");
-        const workoutPlanName = req.params.workoutPlanName;
-        const exerciseId = req.params.exerciseId;
-        const workoutPlan = await this.service.removeExerciseFromWorkoutPlan(token, workoutPlanName, exerciseId);
-        res.status(200).json(workoutPlan);
-      });
+  removeExerciseFromWorkoutPlan = async (req: Request, res: Response) => {
+    await apiErrorHandler(res, async () => {
+      const token = (req.headers.authorization as string).replace("Bearer ", "");
+      const workoutPlanName = req.params.workoutPlanName;
+      const exerciseId = req.params.exerciseId;
+      const workoutPlan = await this.service.removeExerciseFromWorkoutPlan(token, workoutPlanName, exerciseId);
+      sendResponse(res, StatusCode.Success, "Exercise removed from workout plan", workoutPlan);
+    });
   }
 
-  logWorkoutPlan = (req: Request, res: Response) => {
-    apiErrorHandler(res, async () => {
+  logWorkoutPlan = async (req: Request, res: Response) => {
+    await apiErrorHandler(res, async () => {
       const token = (req.headers.authorization as string).replace("Bearer ", "");
       const { workoutPlanName } = req.body;
       const workoutPlan = await this.service.logWorkoutPlan(token, workoutPlanName);
-      res.status(200).json(workoutPlan);
+      sendResponse(res, StatusCode.Success, "Workout plan logged", workoutPlan);
     });
   }
 
-  getDailyLoggedWorkoutPlans = (req: Request, res: Response) => {
-    apiErrorHandler(res, async () => {
+  getDailyLoggedWorkoutPlans = async (req: Request, res: Response) => {
+    await apiErrorHandler(res, async () => {
       const token = (req.headers.authorization as string).replace("Bearer ", "");
       const day = req.params.day;
       const workoutPlans = await this.service.getDailyLoggedWorkoutPlans(token, day);
-      res.status(200).json(workoutPlans);
+      sendResponse(res, StatusCode.Success, "Daily logged workout plans fetched successfully", workoutPlans);
     });
   }
 
