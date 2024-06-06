@@ -25,9 +25,6 @@ afterEach(() => {
   jest.clearAllMocks()
 })
 
-// Tokens não serem hardcoded
-// Respostas terem status
-
 describe("/api/food/search/name", () => {
   it('returns the items successfully', async () => {
     foodServices.searchByName = jest.fn().mockResolvedValue(Promise.resolve(mock_services_return_value))
@@ -37,7 +34,7 @@ describe("/api/food/search/name", () => {
     expect(foodServices.searchByName).toHaveBeenCalledWith(mock_request_with_query.query.query, 0, 0)
 
     expect(mockResponse.status).toHaveBeenCalledWith(200)
-    expect(mockResponse.json).toHaveBeenCalledWith(mock_services_return_value)
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Search successful", obj: mock_services_return_value})
   })
 
   it('returns no items successfully', async () => {
@@ -48,7 +45,7 @@ describe("/api/food/search/name", () => {
     expect(foodServices.searchByName).toHaveBeenCalledWith(mock_request_with_query.query.query, 0, 0)
 
     expect(mockResponse.status).toHaveBeenCalledWith(200)
-    expect(mockResponse.json).toHaveBeenCalledWith([])
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Search successful", obj: []})
   })
 
   
@@ -83,7 +80,7 @@ describe("/api/food/search/barcode", () => {
     expect(foodServices.searchByBarcode).toHaveBeenCalledWith(parsed_barcode)
 
     expect(mockResponse.status).toHaveBeenCalledWith(200)
-    expect(mockResponse.json).toHaveBeenCalledWith(mock_services_return_value)
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Search successful", obj: mock_services_return_value})
   })
 
   it('returns no item successfully', async () => {
@@ -94,7 +91,7 @@ describe("/api/food/search/barcode", () => {
     expect(foodServices.searchByBarcode).toHaveBeenCalledWith(parsed_barcode)
 
     expect(mockResponse.status).toHaveBeenCalledWith(200)
-    expect(mockResponse.json).toHaveBeenCalledWith({})
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Search successful", obj: {}})
   })
 
   
@@ -139,6 +136,7 @@ describe("/api/food/consume", () => {
     await foodApi.consume(mock_request_with_body as any, mockResponse as any);
 
     expect(mockResponse.status).toHaveBeenCalledWith(401)
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: Access denied", obj: {}})
   })
 })
 
@@ -151,7 +149,7 @@ describe("/api/food/dailyConsumption", () => {
     expect(foodServices.dailyConsumption).toHaveBeenCalledWith(mock_token, mock_request_with_query.query.query)
 
     expect(mockResponse.status).toHaveBeenCalledWith(200)
-    expect(mockResponse.json).toHaveBeenCalledWith(mock_services_return_value)
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Daily consumption fetch successful", obj: mock_services_return_value} )
   })
 
   
@@ -163,7 +161,7 @@ describe("/api/food/dailyConsumption", () => {
     expect(foodServices.dailyConsumption).toHaveBeenCalledWith(mock_token, mock_request_with_query.query.query)
 
     expect(mockResponse.status).toHaveBeenCalledWith(200)
-    expect(mockResponse.json).toHaveBeenCalledWith([])
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Daily consumption fetch successful", obj: []})
   })
 
   
@@ -193,5 +191,6 @@ describe("/api/food/dailyConsumption", () => {
     await foodApi.dailyConsumption(mock_request_with_query as any, mockResponse as any);
 
     expect(mockResponse.status).toHaveBeenCalledWith(401)
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: Access denied", obj: {}})
   })
 })

@@ -90,10 +90,8 @@ const FoodResult: React.FC<Food> = ({
 export default function AddFoodScreen() {
   const [query, setQuery] = useState("");
   const [foodResults, setFood] = useState<Food[]>([]);
-  const [hasCameraPermission, setHasCameraPermission] = useState< boolean | null>(null);
+  const [hasCameraPermission, setHasCameraPermission] = useState<boolean | null>(null);
   const [scanning, setScanning] = useState(false);
-
-
 
 
   const scanBarCode = () => {

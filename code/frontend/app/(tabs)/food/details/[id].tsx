@@ -156,6 +156,8 @@ interface TopSectionProps {
 const TopSection: React.FC<TopSectionProps> = ({ food }) => {
   const { userContext } = useContext(UserContext)
   const onSaveHook = async (food: Food) => {
+    if (!userContext)
+      router.push(`/auth/login/`);
     await consumeFood(userContext?.token, food);
 
     router.push(`/food/`);
