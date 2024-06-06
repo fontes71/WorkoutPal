@@ -11,7 +11,7 @@ export async function apiErrorHandler(res: Response, action: () => Promise<void>
     } catch(error: any) {
         console.log("Error -> ", error)
         const httpError: HttpError = mapAppErrorToHttpError(error)
-        res.status(httpError.code).json({error_message: httpError.message})
+        sendResponse(res, httpError.code,"Error: " + httpError.message, {});
     }
 }
 
