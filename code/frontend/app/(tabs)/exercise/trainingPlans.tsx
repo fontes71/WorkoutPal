@@ -5,7 +5,7 @@ import { Text, View } from "@/components/Themed";
 import { Link, Stack, router } from "expo-router";
 import { SearchBar } from '@rneui/themed';
 import { useState, useEffect } from "react";
-import { Exercise } from "@/domain/types";
+import { Exercise, TrainingPlanResponse } from "@/domain/types";
 import { localhost } from "@/constants";
 import { TrainingPlan } from "@/domain/types";
 import search_exercises_styles from "@/assets/styles/exercises";
@@ -40,13 +40,13 @@ export default function TrainingPlansScreen() {
         const fetchTrainingPlans = async () => {
             const user = await getLocalUser();
 
-            if (user === null) {
+            /*if (user === null) {
                 return;
             }
 
             if (user.token === undefined) {
                 return;
-            }
+            }*/
 
             const response = await fetch(`${localhost}8080/api/exercises/workoutPlans`, 
                 {
@@ -62,8 +62,8 @@ export default function TrainingPlansScreen() {
                 return;
             }
 
-            const trainingPlans: TrainingPlan[] = await response.json();
-            setTrainingPlans(trainingPlans);
+            const trainingPlans: TrainingPlanResponse = await response.json();
+            setTrainingPlans(trainingPlans.obj);
         }
 
         fetchTrainingPlans();

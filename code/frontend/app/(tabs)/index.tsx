@@ -10,6 +10,9 @@ export default function App() {
       <Link style={exercise_styles.link} href={"/exercise/search-exercise"}>
         Search Exercise
       </Link>
+      <Link style={exercise_styles.link} href={"/exercise/trainingPlans"}>
+        Training Plans
+      </Link>
     </View>
   );
 }
