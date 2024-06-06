@@ -12,6 +12,7 @@
     "testFoodServices": "jest ./tests/services/food-services.test.ts",
     "testExerciseApi": "jest ./tests/api/exercise-api.test.ts",
     "testExerciseServices": "jest ./tests/services/exercise-services.test.ts",
+    "testDataUtils": "jest ./tests/data/utils.test.ts",
     "start": "ts-node server.ts",
     "clone": "node cron-clone.ts"
   },
