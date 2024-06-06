@@ -123,7 +123,7 @@ function SingupButton({ setResponseError, name, email, password }: ButtonInfo) {
     const response = await signup(name, email, password, setUserContext);
 
     if (response.ok) {
-      router.push("/(tabs)/exercise");
+      router.push("/(tabs)");
     } else {
       const body: ResponseError = await response.json();
       setResponseError(body);

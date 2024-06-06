@@ -8,9 +8,8 @@ import { Food } from "@/domain/types";
 import FoodCover from "@/assets/components/FoodCover";
 import { searchFoodByName, searchFoodByBarcode } from "@/services/food";
 import foodItemRoute from "@/assets/functions/foodItemRoute";
-import { CameraView, Camera } from "expo-camera/next";
-import { BarCodeScanningResult } from "expo-camera/build/Camera.types";
-import { UserContext } from "@/app/_layout";
+import { CameraView, Camera } from "expo-camera";
+import { BarCodeScanningResult } from "expo-camera/build/legacy/Camera.types";
 
 const capitalizeWords = (str: string | null) => {
   if (str === null) {

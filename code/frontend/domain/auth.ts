@@ -10,5 +10,5 @@ export type User = {
 
 export type AuthResponse = {
     status: string,
-    user: User
+    obj: User
 }

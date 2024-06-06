@@ -113,11 +113,11 @@ function LoginButton({ setResponseError, email, password }: ButtonInfo) {
     setFetching(false);
 
     if (response.ok) {
-      router.push("/(tabs)/exercise");
+      router.push("/(tabs)");
     } else {
       const body: ResponseError = await response.json();
-      const hardCodedResponseError: ResponseError = { error_message: 'Invalid Credentials' } // Hardcoded just for the presentation, modifications on backend neeeded
-      setResponseError(hardCodedResponseError);
+      //const hardCodedResponseError: ResponseError = { error_message: 'Invalid Credentials' } // Hardcoded just for the presentation, modifications on backend neeeded
+      setResponseError(body);
     }
   };
 

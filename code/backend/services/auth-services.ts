@@ -4,6 +4,7 @@ import {
   IncorrectPasswordError,
   ExistentEmailError,
   UnauthorizedError,
+  InvalidCredentialsError,
 } from "../errors/app_errors";
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
@@ -23,9 +24,9 @@ export class AuthServices implements IAuthServices {
       const token = uuidv4()
       if (!email || !password) throw InvalidParamsError
       const user = await this.data.getUserAndUpdateToken(email, token)
-      if (!user) throw NonExistentEmailError
+      if (!user) throw InvalidCredentialsError
       const match = await bcrypt.compare(password, user.password)
-      if (!match) throw IncorrectPasswordError
+      if (!match) throw InvalidCredentialsError
       return user
     })
   }

@@ -17,8 +17,8 @@ export const login = async (email: string, password: string, setUserContext: Rea
 
   if (response.ok) {
     const body: AuthResponse = await response.json();
-    await storeUserLocally(body.user);
-    setUserContext(body.user)
+    await storeUserLocally(body.obj);
+    setUserContext(body.obj)
   }
 
   return response;
@@ -41,8 +41,8 @@ export const signup = async (name: string, email: string, password: string, setU
 
   if (response.ok) {
     const body: AuthResponse = await response.json();
-    await storeUserLocally(body.user);
-    setUserContext(body.user)
+    await storeUserLocally(body.obj);
+    setUserContext(body.obj)
   }
 
   return response;
