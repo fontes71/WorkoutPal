@@ -36,7 +36,7 @@ export class FoodServices implements IFoodServices {
         limit
       );
 
-      if (!apiFood.length) [];
+      if (!apiFood.length) return [];
 
       const food: Food[] = apiFood.map((apiFood) => apiFoodToFood(apiFood));
 
@@ -50,7 +50,7 @@ export class FoodServices implements IFoodServices {
         barcode
       );
 
-      if (!apiFood) {}
+      if (!apiFood) return {};
 
       const food: Food = apiFoodToFood(apiFood);
 
@@ -74,7 +74,7 @@ export class FoodServices implements IFoodServices {
         calories: calories,
         protein: protein,
         fat: fat,
-        carbs: carbs
+        carbs: carbs,
       };
 
       const user: User | null = await this.userData.getUserByToken(token);
@@ -83,13 +83,12 @@ export class FoodServices implements IFoodServices {
 
       if (!user) throw UnauthorizedError;
 
-
       let dayIndex = user.days.findIndex((day) => day.date === date);
 
       if (dayIndex == -1) {
         user.days = [
           ...user.days,
-          { date: date, consumedFood: [consumedFood], workoutPlansDone: []},
+          { date: date, consumedFood: [consumedFood], workoutPlansDone: [] },
         ];
       } else {
         const day = user.days[dayIndex];
@@ -98,8 +97,8 @@ export class FoodServices implements IFoodServices {
           consumedFood: [...day.consumedFood, consumedFood],
         };
       }
-    
-       await this.userData.updateUser(token, user)
+
+      await this.userData.updateUser(token, user);
     });
   };
 

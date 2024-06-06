@@ -66,13 +66,13 @@ describe("searchByName", () => {
     expect(resFood).toEqual([food]);
   });
 
-  it("throws not found exception if no results were found", async () => {
+  it("returns successfully even if no results were returned", async () => {
     foodData.searchByName = jest.fn().mockResolvedValue([]);
 
-    expect(async () => {
-      await foodServices.searchByName("irrelevant", 0, 0);
-    }).rejects.toThrow("NotFoundError");
-  });
+   const resFood = await foodServices.searchByName("irrelevant", 0, 0);
+    
+   expect(resFood).toEqual([]);
+  })
 });
 
 describe("searchByBarcode", () => {
@@ -84,12 +84,12 @@ describe("searchByBarcode", () => {
     expect(resFood).toEqual(food);
   });
 
-  it("throws not found exception if no results were found", async () => {
+  it("returns successfully even if no result was returned", async () => {
     foodData.searchByBarcode = jest.fn().mockResolvedValue(undefined);
 
-    expect(async () => {
-      await foodServices.searchByBarcode(1234567);
-    }).rejects.toThrow("NotFoundError");
+    const resFood = await foodServices.searchByBarcode(1234567);
+    
+    expect(resFood).toEqual({});
   });
 });
 
@@ -113,12 +113,13 @@ describe("dailyConsumption", () => {
     }).rejects.toThrow("UnauthorizedError");
   });
 
-  it("throws not found exception if no day was found", async () => {
+  it("returns successfully even if no day was found", async () => {
     userData.getUserByToken = jest.fn().mockResolvedValue(user);
 
-    expect(async () => {
-      await foodServices.dailyConsumption(user.token, "17-4-3000");
-    }).rejects.toThrow("NotFoundError");
+    const resFood = await foodServices.dailyConsumption(user.token, "17-4-3000");
+
+
+    expect(resFood).toEqual([]);
   });
 });
 
@@ -138,8 +139,7 @@ describe("consume", () => {
       food.calories,
       food.protein,
       food.fat,
-      food.carbs,
-      food.fiber
+      food.carbs
     );
 
     expect(userData.updateUser).toHaveBeenCalledWith(
@@ -160,8 +160,7 @@ describe("consume", () => {
       food.calories,
       food.protein,
       food.fat,
-      food.carbs,
-      food.fiber
+      food.carbs
     ); 
     
 
@@ -184,8 +183,7 @@ describe("consume", () => {
         food.calories,
         food.protein,
         food.fat,
-        food.carbs,
-        food.fiber
+        food.carbs
       ); 
     }).rejects.toThrow("Unauthorized");
   });

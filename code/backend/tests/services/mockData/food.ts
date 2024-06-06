@@ -499,6 +499,7 @@ export const user = {
   days: [
     {
       date: "17-4-2024",
+       workoutPlansDone: [],
       consumedFood: [
         {
           id: "",
@@ -520,6 +521,7 @@ export const user = {
     },
     {
       date: "30-4-2024",
+      workoutPlansDone: [],
       consumedFood: [
         {
           id: "3021760403167",
@@ -528,7 +530,6 @@ export const user = {
           protein: "0.5g",
           fat: "0.6g",
           carbs: "12g",
-          fiber: "1.3g",
         },
         {
           id: "3021760403167",
@@ -536,8 +537,7 @@ export const user = {
           calories: { $numberInt: "61" },
           protein: "0.5g",
           fat: "0.6g",
-          carbs: "12g",
-          fiber: "1.3g",
+          carbs: "12g"
         },
         {
           id: "5060482840179",
@@ -545,8 +545,7 @@ export const user = {
           calories: { $numberInt: "426" },
           protein: "5.6g",
           fat: "17.4g",
-          carbs: "59.3g",
-          fiber: "4.9g",
+          carbs: "59.3g"
         },
         {
           id: "3800020456293",
@@ -554,13 +553,13 @@ export const user = {
           calories: { $numberInt: "529" },
           protein: "7.7g",
           fat: "28.6g",
-          carbs: "59.5g",
-          fiber: null,
+          carbs: "59.5g"
         },
       ],
     },
     {
       date: "1-5-2024",
+      workoutPlansDone: [],
       consumedFood: [
         {
           id: "5600826202982",
@@ -568,16 +567,14 @@ export const user = {
           calories: { $numberInt: "630" },
           protein: "26g",
           fat: "52g",
-          carbs: "11g",
-          fiber: "9.9g",
+          carbs: "11g"
         },
         {
           id: "3564700301456",
           name: "Salade iceberg",
           protein: "1g",
           fat: "0.5g",
-          carbs: "2.5g",
-          fiber: "1.1g",
+          carbs: "2.5g"
         },
         {
           id: "5601009297993",
@@ -585,8 +582,7 @@ export const user = {
           calories: { $numberInt: "356" },
           protein: "6.6g",
           fat: "0.8g",
-          carbs: "79.3g",
-          fiber: null,
+          carbs: "79.3g"
         },
         {
           id: "8000500037560",
@@ -594,13 +590,13 @@ export const user = {
           calories: { $numberInt: "572" },
           protein: "8.6g",
           fat: "37.3g",
-          carbs: "49.5g",
-          fiber: null,
+          carbs: "49.5g"
         },
       ],
     },
     {
       date: "2-5-2024",
+      workoutPlansDone: [],
       consumedFood: [
         {
           id: "7622210578464",
@@ -608,8 +604,7 @@ export const user = {
           calories: { $numberInt: "575" },
           protein: "9.1g",
           fat: "42g",
-          carbs: "36g",
-          fiber: "10g",
+          carbs: "36g"
         },
         {
           id: "3168930170570",
@@ -617,13 +612,13 @@ export const user = {
           calories: { $numberInt: "1" },
           protein: null,
           fat: null,
-          carbs: null,
-          fiber: null,
+          carbs: null
         },
       ],
     },
     {
       date: "13-5-2024",
+      workoutPlansDone: [],
       consumedFood: [
         {
           id: "5600826203613",
@@ -631,8 +626,7 @@ export const user = {
           calories: { $numberInt: "630" },
           protein: "26g",
           fat: "52g",
-          carbs: "11g",
-          fiber: "7.2g",
+          carbs: "11g"
         },
         {
           id: "5601009112050",
@@ -640,8 +634,7 @@ export const user = {
           calories: { $numberInt: "430" },
           protein: "9.2g",
           fat: "10.6g",
-          carbs: "72.6g",
-          fiber: "3.5g",
+          carbs: "72.6g"
         },
         {
           id: "5010029227062",
@@ -649,8 +642,7 @@ export const user = {
           calories: { $numberInt: "382" },
           protein: "7.5g",
           fat: "2.7g",
-          carbs: "80g",
-          fiber: "3.9g",
+          carbs: "80g"
         },
         {
           id: "4025700001030",
@@ -658,8 +650,7 @@ export const user = {
           calories: { $numberInt: "557" },
           protein: "7.6g",
           fat: "35g",
-          carbs: "51g",
-          fiber: "3.2g",
+          carbs: "51g"
         },
         {
           id: "7622300441715",
@@ -667,13 +658,13 @@ export const user = {
           calories: { $numberInt: "505" },
           protein: "6.4g",
           fat: "24.5g",
-          carbs: "63.5g",
-          fiber: "2.2g",
+          carbs: "63.5g"
         },
       ],
     },
     {
       date: "14-5-2024",
+      workoutPlansDone: [],
       consumedFood: [
         {
           id: "7622300617820",
@@ -681,8 +672,7 @@ export const user = {
           calories: { $numberInt: "564" },
           protein: "4.8g",
           fat: "35g",
-          carbs: "56g",
-          fiber: "1.6g",
+          carbs: "56g"
         },
       ],
     },
@@ -705,6 +695,7 @@ export const user_with_new_consumed_food_on_new_date = {
   days: [
     {
       date: "17-4-2024",
+      workoutPlansDone: [],
       consumedFood: [
         {
           id: "",
@@ -726,6 +717,7 @@ export const user_with_new_consumed_food_on_new_date = {
     },
     {
       date: "30-4-2024",
+      workoutPlansDone: [],
       consumedFood: [
         {
           id: "3021760403167",
@@ -733,8 +725,7 @@ export const user_with_new_consumed_food_on_new_date = {
           calories: { $numberInt: "61" },
           protein: "0.5g",
           fat: "0.6g",
-          carbs: "12g",
-          fiber: "1.3g",
+          carbs: "12g"
         },
         {
           id: "3021760403167",
@@ -742,8 +733,7 @@ export const user_with_new_consumed_food_on_new_date = {
           calories: { $numberInt: "61" },
           protein: "0.5g",
           fat: "0.6g",
-          carbs: "12g",
-          fiber: "1.3g",
+          carbs: "12g"
         },
         {
           id: "5060482840179",
@@ -751,8 +741,7 @@ export const user_with_new_consumed_food_on_new_date = {
           calories: { $numberInt: "426" },
           protein: "5.6g",
           fat: "17.4g",
-          carbs: "59.3g",
-          fiber: "4.9g",
+          carbs: "59.3g"
         },
         {
           id: "3800020456293",
@@ -760,13 +749,13 @@ export const user_with_new_consumed_food_on_new_date = {
           calories: { $numberInt: "529" },
           protein: "7.7g",
           fat: "28.6g",
-          carbs: "59.5g",
-          fiber: null,
+          carbs: "59.5g"
         },
       ],
     },
     {
       date: "1-5-2024",
+      workoutPlansDone: [],
       consumedFood: [
         {
           id: "5600826202982",
@@ -774,16 +763,14 @@ export const user_with_new_consumed_food_on_new_date = {
           calories: { $numberInt: "630" },
           protein: "26g",
           fat: "52g",
-          carbs: "11g",
-          fiber: "9.9g",
+          carbs: "11g"
         },
         {
           id: "3564700301456",
           name: "Salade iceberg",
           protein: "1g",
           fat: "0.5g",
-          carbs: "2.5g",
-          fiber: "1.1g",
+          carbs: "2.5g"
         },
         {
           id: "5601009297993",
@@ -791,8 +778,7 @@ export const user_with_new_consumed_food_on_new_date = {
           calories: { $numberInt: "356" },
           protein: "6.6g",
           fat: "0.8g",
-          carbs: "79.3g",
-          fiber: null,
+          carbs: "79.3g"
         },
         {
           id: "8000500037560",
@@ -800,13 +786,13 @@ export const user_with_new_consumed_food_on_new_date = {
           calories: { $numberInt: "572" },
           protein: "8.6g",
           fat: "37.3g",
-          carbs: "49.5g",
-          fiber: null,
+          carbs: "49.5g"
         },
       ],
     },
     {
       date: "2-5-2024",
+      workoutPlansDone: [],
       consumedFood: [
         {
           id: "7622210578464",
@@ -814,8 +800,7 @@ export const user_with_new_consumed_food_on_new_date = {
           calories: { $numberInt: "575" },
           protein: "9.1g",
           fat: "42g",
-          carbs: "36g",
-          fiber: "10g",
+          carbs: "36g"
         },
         {
           id: "3168930170570",
@@ -823,13 +808,13 @@ export const user_with_new_consumed_food_on_new_date = {
           calories: { $numberInt: "1" },
           protein: null,
           fat: null,
-          carbs: null,
-          fiber: null,
+          carbs: null
         },
       ],
     },
     {
       date: "13-5-2024",
+      workoutPlansDone: [],
       consumedFood: [
         {
           id: "5600826203613",
@@ -837,8 +822,7 @@ export const user_with_new_consumed_food_on_new_date = {
           calories: { $numberInt: "630" },
           protein: "26g",
           fat: "52g",
-          carbs: "11g",
-          fiber: "7.2g",
+          carbs: "11g"
         },
         {
           id: "5601009112050",
@@ -846,8 +830,7 @@ export const user_with_new_consumed_food_on_new_date = {
           calories: { $numberInt: "430" },
           protein: "9.2g",
           fat: "10.6g",
-          carbs: "72.6g",
-          fiber: "3.5g",
+          carbs: "72.6g"
         },
         {
           id: "5010029227062",
@@ -855,8 +838,7 @@ export const user_with_new_consumed_food_on_new_date = {
           calories: { $numberInt: "382" },
           protein: "7.5g",
           fat: "2.7g",
-          carbs: "80g",
-          fiber: "3.9g",
+          carbs: "80g"
         },
         {
           id: "4025700001030",
@@ -864,8 +846,7 @@ export const user_with_new_consumed_food_on_new_date = {
           calories: { $numberInt: "557" },
           protein: "7.6g",
           fat: "35g",
-          carbs: "51g",
-          fiber: "3.2g",
+          carbs: "51g"
         },
         {
           id: "7622300441715",
@@ -873,13 +854,13 @@ export const user_with_new_consumed_food_on_new_date = {
           calories: { $numberInt: "505" },
           protein: "6.4g",
           fat: "24.5g",
-          carbs: "63.5g",
-          fiber: "2.2g",
+          carbs: "63.5g"
         },
       ],
     },
     {
       date: "14-5-2024",
+      workoutPlansDone: [],
       consumedFood: [
         {
           id: "7622300617820",
@@ -887,20 +868,20 @@ export const user_with_new_consumed_food_on_new_date = {
           calories: { $numberInt: "564" },
           protein: "4.8g",
           fat: "35g",
-          carbs: "56g",
-          fiber: "1.6g",
+          carbs: "56g"
         },
       ],
     },
     {
       date: date,
+      workoutPlansDone: [],
       consumedFood: [
         {
         id: "3284230006408",
         name: "Brioche Tranchée Bio",
         calories: 349, 
         carbs: "55g", 
-        fat: "10g", "fiber": "2.2g",
+        fat: "10g",
         protein: "8.7g"}
         ]
       }
@@ -924,6 +905,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
   days: [
     {
       date: "17-4-2024",
+      workoutPlansDone: [],
       consumedFood: [
         {
           id: "",
@@ -945,6 +927,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
     },
     {
       date: "30-4-2024",
+      workoutPlansDone: [],
       consumedFood: [
         {
           id: "3021760403167",
@@ -952,8 +935,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           calories: { $numberInt: "61" },
           protein: "0.5g",
           fat: "0.6g",
-          carbs: "12g",
-          fiber: "1.3g",
+          carbs: "12g"
         },
         {
           id: "3021760403167",
@@ -961,8 +943,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           calories: { $numberInt: "61" },
           protein: "0.5g",
           fat: "0.6g",
-          carbs: "12g",
-          fiber: "1.3g",
+          carbs: "12g"
         },
         {
           id: "5060482840179",
@@ -970,8 +951,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           calories: { $numberInt: "426" },
           protein: "5.6g",
           fat: "17.4g",
-          carbs: "59.3g",
-          fiber: "4.9g",
+          carbs: "59.3g"
         },
         {
           id: "3800020456293",
@@ -980,12 +960,12 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           protein: "7.7g",
           fat: "28.6g",
           carbs: "59.5g",
-          fiber: null,
         },
       ],
     },
     {
       date: "1-5-2024",
+      workoutPlansDone: [],
       consumedFood: [
         {
           id: "5600826202982",
@@ -994,7 +974,6 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           protein: "26g",
           fat: "52g",
           carbs: "11g",
-          fiber: "9.9g",
         },
         {
           id: "3564700301456",
@@ -1002,7 +981,6 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           protein: "1g",
           fat: "0.5g",
           carbs: "2.5g",
-          fiber: "1.1g",
         },
         {
           id: "5601009297993",
@@ -1011,7 +989,6 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           protein: "6.6g",
           fat: "0.8g",
           carbs: "79.3g",
-          fiber: null,
         },
         {
           id: "8000500037560",
@@ -1020,12 +997,12 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           protein: "8.6g",
           fat: "37.3g",
           carbs: "49.5g",
-          fiber: null,
         },
       ],
     },
     {
       date: "2-5-2024",
+      workoutPlansDone: [],
       consumedFood: [
         {
           id: "7622210578464",
@@ -1034,7 +1011,6 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           protein: "9.1g",
           fat: "42g",
           carbs: "36g",
-          fiber: "10g",
         },
         {
           id: "3168930170570",
@@ -1043,12 +1019,12 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           protein: null,
           fat: null,
           carbs: null,
-          fiber: null,
         },
       ],
     },
     {
       date: "13-5-2024",
+      workoutPlansDone: [],
       consumedFood: [
         {
           id: "5600826203613",
@@ -1057,7 +1033,6 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           protein: "26g",
           fat: "52g",
           carbs: "11g",
-          fiber: "7.2g",
         },
         {
           id: "5601009112050",
@@ -1066,7 +1041,6 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           protein: "9.2g",
           fat: "10.6g",
           carbs: "72.6g",
-          fiber: "3.5g",
         },
         {
           id: "5010029227062",
@@ -1075,7 +1049,6 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           protein: "7.5g",
           fat: "2.7g",
           carbs: "80g",
-          fiber: "3.9g",
         },
         {
           id: "4025700001030",
@@ -1084,7 +1057,6 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           protein: "7.6g",
           fat: "35g",
           carbs: "51g",
-          fiber: "3.2g",
         },
         {
           id: "7622300441715",
@@ -1093,12 +1065,12 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           protein: "6.4g",
           fat: "24.5g",
           carbs: "63.5g",
-          fiber: "2.2g",
         },
       ],
     },
     {
       date: date_that_user_has_consumed_food,
+      workoutPlansDone: [],
       consumedFood: [
         {
           id: "7622300617820",
@@ -1107,14 +1079,13 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           protein: "4.8g",
           fat: "35g",
           carbs: "56g",
-          fiber: "1.6g",
         },
         {
           id: "3284230006408",
           name: "Brioche Tranchée Bio",
           calories: 349, 
           carbs: "55g", 
-          fat: "10g", "fiber": "2.2g",
+          fat: "10g", 
           protein: "8.7g"
         }
       ],
