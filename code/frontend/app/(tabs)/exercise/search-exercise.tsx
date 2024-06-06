@@ -5,7 +5,7 @@ import { Text, View } from "@/components/Themed";
 import { Stack, router } from "expo-router";
 import { SearchBar } from "@rneui/themed";
 import { useState, useEffect } from "react";
-import { Exercise } from "@/domain/types";
+import { Exercise, ExerciseResponse } from "@/domain/types";
 import { localhost } from "@/constants";
 import search_exercises_styles from "@/assets/styles/exercises";
 
@@ -59,9 +59,9 @@ export default function SearchExerciseScreen() {
         return;
       }
 
-      const exercises: Exercise[] = await response.json();
+      const exercises: ExerciseResponse = await response.json();
       const modifiedExercises: Exercise[] =
-        removeParenthesesFromExerciseName(exercises);
+        removeParenthesesFromExerciseName(exercises.obj);
       setExercises(modifiedExercises);
     };
 

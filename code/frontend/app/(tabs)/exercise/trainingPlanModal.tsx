@@ -8,7 +8,7 @@ import trainingPlans_styles from '@/assets/styles/trainingPlans';
 import { useEffect, useState } from 'react';
 import { getLocalUser } from "@/assets/functions/auth";
 import { localhost } from '@/constants';
-import { TrainingPlan } from '@/domain/types';
+import { TrainingPlan, TrainingPlanResponse } from '@/domain/types';
 
 const BottomText = ({ str }: { str: string | null }) => (
   <>{str && <Text style={trainingPlans_styles.bottomText}>{str}</Text>}</>
@@ -34,13 +34,13 @@ export default function ModalScreen() {
     const fetchTrainingPlans = async () => {
         const user = await getLocalUser();
 
-        if (user === null) {
+        /*if (user === null) {
             return;
         }
 
         if (user.token === undefined) {
             return;
-        }
+        }*/
 
         //setToken(user.token);
         setToken("147f3bb2-0791-41c2-8805-8dc660d9a157");
@@ -59,14 +59,15 @@ export default function ModalScreen() {
             return;
         }
 
-        const trainingPlans: TrainingPlan[] = await response.json();
-        setTrainingPlans(trainingPlans);
+        const trainingPlans: TrainingPlanResponse = await response.json();
+        setTrainingPlans(trainingPlans.obj);
     }
 
     fetchTrainingPlans();
   }, []);
 
   const handleTrainingPlanPress = async (trainingPlan: TrainingPlan) => {
+    console.log(trainingPlan)
     const response = await fetch(`${localhost}8080/api/exercises/workoutPlans/${trainingPlan.name}`,
       {
         method: 'POST',
@@ -79,7 +80,11 @@ export default function ModalScreen() {
     )
 
     if (response.status !== 200) {
-      alert("Failed to add exercise to training plan");
+      if(response.status === 409) {
+        alert("Exercise already exists in training plan");
+      } else {
+        alert("Failed to add exercise to training plan");
+      }
       return;
     }
 

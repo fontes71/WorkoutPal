@@ -2,7 +2,7 @@ import { FlatList, Image, Pressable, StyleSheet } from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
-import { Exercise, TrainingPlan } from "@/domain/types";
+import { Exercise, ExerciseByIdResponse, TrainingPlan } from "@/domain/types";
 import { Link, useLocalSearchParams } from "expo-router";
 import { Stack } from "expo-router";
 import { Button } from "@rneui/base";
@@ -78,8 +78,8 @@ const TrainingPlanDetailsScreen = () => {
                         continue; // Skip to the next exercise if request fails
                     }
 
-                    const exerciseResult = await response.json();
-                    const modifiedExercise = removeParenthesesFromExerciseName(exerciseResult);
+                    const exerciseResult: ExerciseByIdResponse = await response.json();
+                    const modifiedExercise = removeParenthesesFromExerciseName(exerciseResult.obj);
 
                     setExercises(prevExercises => [...prevExercises, modifiedExercise]);
                 } catch (error) {

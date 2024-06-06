@@ -34,4 +34,19 @@ export interface TrainingPlan {
     description: string;
     exercises: Array<string>;
 }
+
+export interface ExerciseByIdResponse {
+    message: string;
+    obj: Exercise;
+}
+
+export interface ExerciseResponse {
+    message: string;
+    obj: Exercise[];
+}
+
+export interface TrainingPlanResponse {
+    message: string;
+    obj: TrainingPlan[];
+}
   
