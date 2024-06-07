@@ -2,7 +2,7 @@ import { Exercise, WorkoutPlan } from "../domain/types";
 import { NotFoundError, AlreadyExistsError, InvalidAuthorizationTokenError, InvalidParamsError } from "../errors/app_errors";
 import cron from "node-cron";
 import { IExerciseData, IExerciseServices } from "../domain/interfaces";
-import { ERROR_WORKOUTPLAN } from "../utils/constants";
+import { ERROR_EXERCISE, ERROR_WORKOUTPLAN } from "../utils/constants";
 import { isValidDate } from "../utils/functions/app/isValidDate";
 
 // try catch need on services cuz sometimes data throws error and the app stop inside services
@@ -87,6 +87,8 @@ export class ExerciseServices implements IExerciseServices {
   }
 
   createWorkoutPlan = async (token: string, workoutPlanName: string, description: string) => {
+    if (workoutPlanName.length == 0) throw InvalidParamsError;
+    if (description.length == 0) description = "No description";
     const workoutPlan: WorkoutPlan | null = await this.data.createWorkoutPlan(token, workoutPlanName, description);
     if (workoutPlan == null) throw InvalidAuthorizationTokenError;
     if (workoutPlan == ERROR_WORKOUTPLAN) throw AlreadyExistsError;
@@ -121,6 +123,13 @@ export class ExerciseServices implements IExerciseServices {
     const workoutPlans: string[] | null = await this.data.getDailyLoggedWorkoutPlans(token, day);
     if (workoutPlans == null) throw InvalidAuthorizationTokenError;
     return workoutPlans;
+  }
+
+  getExercisesFromWorkoutPlan = async (token: string, workoutPlanName: string): Promise<Array<Exercise>> => {
+    const exercises: Exercise[] | null = await this.data.getExercisesFromWorkoutPlan(token, workoutPlanName);
+    if (exercises == null) throw InvalidAuthorizationTokenError;
+    if (exercises.includes(ERROR_EXERCISE)) throw NotFoundError;
+    return exercises;
   }
 
   cloneExerciseDBScheduler() {

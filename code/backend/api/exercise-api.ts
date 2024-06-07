@@ -102,6 +102,8 @@ export class ExerciseApi implements IExerciseApi {
     await apiErrorHandler(res, async () => {
       const token = (req.headers.authorization as string).replace("Bearer ", "");
       const { workoutPlanName, description } = req.body;
+      console.log("WORKOUT PLAN NAME: ", workoutPlanName)
+      console.log("DESCRIPTION: ", description)
       const workoutPlan = await this.service.createWorkoutPlan(token, workoutPlanName, description);
       sendResponse(res, StatusCode.Created, "Workout plan created", workoutPlan);
     });
@@ -143,6 +145,15 @@ export class ExerciseApi implements IExerciseApi {
       const workoutPlans = await this.service.getDailyLoggedWorkoutPlans(token, day);
       sendResponse(res, StatusCode.Success, "Daily logged workout plans fetched successfully", workoutPlans);
     });
+  }
+
+  getExercisesFromWorkoutPlan = async (req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => {
+      await apiErrorHandler(res, async () => {
+        const token = (req.headers.authorization as string).replace("Bearer ", "");
+        const workoutPlanName = req.params.workoutPlanName;
+        const exercises = await this.service.getExercisesFromWorkoutPlan(token, workoutPlanName);
+        sendResponse(res, StatusCode.Success, "Exercises fetched successfully", exercises);
+      });
   }
 
   cloneExerciseDB = (req: Request, res: Response) => {

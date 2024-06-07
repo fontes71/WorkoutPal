@@ -1,3 +1,4 @@
+import { Button } from "@rneui/base";
 import { StyleSheet } from "react-native";
 
 export const exercise_styles = StyleSheet.create({
@@ -20,6 +21,13 @@ export const search_exercises_styles = StyleSheet.create({
     exerciseResultContainer: {
         flexDirection: "row",
         padding: 10,
+        alignItems: "center",
+        justifyContent: "space-evenly",
+    },
+    traingPlansResultContainer: {
+        flexDirection: "column",
+        padding: 10,
+        justifyContent: "space-evenly",
     },
     imageContainer: {
         width: 90,
@@ -31,6 +39,7 @@ export const search_exercises_styles = StyleSheet.create({
     },
     exerciseResultTextContainer: {
         flex: 1,
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "space-evenly",
     },

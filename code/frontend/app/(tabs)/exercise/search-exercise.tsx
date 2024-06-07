@@ -56,6 +56,8 @@ export default function SearchExerciseScreen() {
       );
 
       if (response.status !== 200) {
+        const errorMessage: ExerciseResponse = await response.json()
+        alert(errorMessage.message);
         return;
       }
 

@@ -25,7 +25,7 @@ const TrainingPlanResult: React.FC<any> = ({ name, description }) => {
   );
 }
 
-export default function ModalScreen() {
+export default function TrainingPlansModalScreen() {
   const {exerciseId} = useLocalSearchParams<{ exerciseId: string }>();
   const [trainingPlans, setTrainingPlans] = useState<TrainingPlan[]>([]);
   const [token, setToken] = useState<string | null>(null);
@@ -56,7 +56,9 @@ export default function ModalScreen() {
         );
 
         if (response.status !== 200) {
-            return;
+          const errorMessage: TrainingPlanResponse = await response.json()
+          alert(errorMessage.message);
+          return;
         }
 
         const trainingPlans: TrainingPlanResponse = await response.json();

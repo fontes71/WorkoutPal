@@ -79,6 +79,7 @@ app.delete(
   "/api/exercises/workoutPlans/:workoutPlanName/exercise/:exerciseId",
   exerciseApi.removeExerciseFromWorkoutPlan
 );
+app.get("/api/exercises/workoutPlans/:workoutPlanName", exerciseApi.getExercisesFromWorkoutPlan);
 app.get("/api/cloneDatabase", exerciseApi.cloneExerciseDB);
 
 // Food

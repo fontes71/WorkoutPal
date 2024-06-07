@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { create } from "react-test-renderer";
 
 const trainingPlans_styles = StyleSheet.create({
     trainingPlansContainer: {
@@ -23,6 +24,24 @@ const trainingPlans_styles = StyleSheet.create({
       flex: 1,
       alignItems: "center",
       justifyContent: "space-evenly",
+    },
+    createTrainingPlanContainer: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    inputs_container: {
+      paddingBottom: 35,
+      paddingHorizontal: 30,
+      height: '100%',
+    },
+    input: {
+      backgroundColor: 'white',
+      height: 43,
+      borderColor: 'gray',
+      borderWidth: 1,
+      paddingHorizontal: 20,
+      marginBottom: 15,
+      borderRadius: 10,
     },
     bottomTextContainer: {
         flexDirection: "row",

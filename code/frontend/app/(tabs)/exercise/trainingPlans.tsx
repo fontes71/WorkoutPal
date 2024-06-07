@@ -10,6 +10,7 @@ import { localhost } from "@/constants";
 import { TrainingPlan } from "@/domain/types";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { getLocalUser } from "@/assets/functions/auth";
+import { Button } from "@rneui/base";
 
 const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
@@ -17,7 +18,7 @@ const BottomText = ({ str }: { str: string | null }) => (
 
 const TrainingPlanResult: React.FC<TrainingPlan> = ({ name, description }) => {
     return (
-        <View style={search_exercises_styles.exerciseResultContainer}>
+        <View style={search_exercises_styles.traingPlansResultContainer}>
           <View style={search_exercises_styles.exerciseResultTextContainer}>
             <Text style={search_exercises_styles.topText}>{name}</Text>
             <BottomText str={'Description: ' + description} />
@@ -35,6 +36,7 @@ const handleTrainingPlanPress = (trainingPlan: TrainingPlan) => {
 
 export default function TrainingPlansScreen() {
     const [trainingPlans, setTrainingPlans] = useState<TrainingPlan[]>([]);
+    const [token, setToken] = useState<string>("");
 
     useEffect(() => {
         const fetchTrainingPlans = async () => {
@@ -46,8 +48,12 @@ export default function TrainingPlansScreen() {
 
             if (user.token === undefined) {
                 return;
-            }*/
+            }
+            
+            setToken(user.token)*/
 
+            setToken("147f3bb2-0791-41c2-8805-8dc660d9a157")
+           
             const response = await fetch(`${localhost}8080/api/exercises/workoutPlans`, 
                 {
                     method: 'GET',
@@ -69,21 +75,31 @@ export default function TrainingPlansScreen() {
         fetchTrainingPlans();
     }, []);
 
+    const handleAddButtonPress = () => {
+        router.push({ 
+            pathname: `/exercise/createTrainingPlanModal`,
+            params: { token: token }
+        });
+    }
+
     return (
         <View>
             <Stack.Screen options={{ title: "Training Plans" }}/>
-            <View style={search_exercises_styles.exerciseResultContainer}>
+            <View style={search_exercises_styles.traingPlansResultContainer}>
                 { trainingPlans.length !== 0 ?
-                    <FlatList
-                        data={trainingPlans}
-                        renderItem={({ item }) => 
-                            <Pressable onPress={() => {handleTrainingPlanPress(item)}}>
-                                <TrainingPlanResult {...item} />
-                            </Pressable>
-                        }
-                        keyExtractor={(item: TrainingPlan) => item.name}
-                    /> : 
-                    <View style={search_exercises_styles.exerciseResultTextContainer}>
+                    <View>
+                        <FlatList
+                            data={trainingPlans}
+                            renderItem={({ item }) => 
+                                <Pressable onPress={() => {handleTrainingPlanPress(item)}}>
+                                    <TrainingPlanResult {...item} />
+                                </Pressable>
+                            }
+                            keyExtractor={(item: TrainingPlan) => item.name}
+                        /> 
+                        <Button onPress={() => handleAddButtonPress()}>Create Training Plan</Button>
+                    </View> : 
+                    <View style={search_exercises_styles.exerciseResultContainer}>
                         <Text style={search_exercises_styles.topText}>Loading your training plans...</Text>
                     </View>
                 }

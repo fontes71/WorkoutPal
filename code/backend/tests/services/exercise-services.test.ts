@@ -469,6 +469,17 @@ describe("CreateWorkoutPlan function tests", () => {
       description
     );
   });
+
+  it("createWorkoutPlan throws InvalidParamsError when the workout plan name is empty", async () => {
+    const token = "testToken";
+    const workoutPlanName = "";
+    const description = "testDescription";
+    exerciseData.createWorkoutPlan = jest.fn().mockResolvedValue(null);
+    exerciseServices
+      .createWorkoutPlan(token, workoutPlanName, description)
+      .catch((error: Error) => expect(error).toBe(InvalidParamsError)); 
+    expect(exerciseData.createWorkoutPlan).not.toHaveBeenCalledWith()
+  });
 });
 
 describe("AddExerciseToWorkoutPlan function tests", () => {

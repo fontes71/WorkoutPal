@@ -252,6 +252,15 @@ describe("Endpoint: /api/exercises/workoutPlans", () => {
     );
     expect(mockResponse.status).toHaveBeenCalledWith(409);
   });
+
+  it("POST -> Returns InvalidParamsError", async () => {
+    exerciseServices.createWorkoutPlan = jest.fn().mockRejectedValue(InvalidParamsError);
+
+    await exerciseApi.createWorkoutPlan(mockCreateWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.createWorkoutPlan).not.toHaveBeenCalledWith();
+    expect(mockResponse.status).toHaveBeenCalledWith(400);
+  });
 });
 
 describe("Endpoint: /api/exercises/workoutPlans/:workoutPlanName", () => {

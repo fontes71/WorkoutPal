@@ -2,6 +2,7 @@ import {
   exercisedb_url,
   exercisedb_options,
   ERROR_WORKOUTPLAN,
+  ERROR_EXERCISE,
 } from "../utils/constants";
 import { IExerciseData } from "../domain/interfaces";
 import {
@@ -221,6 +222,26 @@ export class ExerciseData implements IExerciseData {
       }
 
       return dailyLoggedWorkoutPlans.workoutPlansDone;
+    });
+  }
+
+  getExercisesFromWorkoutPlan(token: string, workoutPlanName: string) {
+    return mongodbHandler(async () => {
+      const user: User | null = await UserModel.findOne({ token });
+
+      if (user === null) {
+        return null;
+      }
+
+      const workoutPlan = user.workout_plans.find((workoutPlan) => workoutPlan.name === workoutPlanName);
+
+      if (workoutPlan === undefined) {
+        return [ERROR_EXERCISE];
+      }
+
+      const exercises = ExerciseModel.find({ _id: { $in: workoutPlan.exercises } });
+
+      return exercises;
     });
   }
   

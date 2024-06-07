@@ -35,9 +35,9 @@ export interface TrainingPlan {
     exercises: Array<string>;
 }
 
-export interface ExerciseByIdResponse {
+export interface ExercisesFromWorkoutPlanResponse {
     message: string;
-    obj: Exercise;
+    obj: Exercise[];
 }
 
 export interface ExerciseResponse {
