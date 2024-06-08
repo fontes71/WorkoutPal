@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import { create } from "react-test-renderer";
 
 const workoutPlans_styles = StyleSheet.create({
     workoutPlansContainer: {

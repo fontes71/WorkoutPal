@@ -10,7 +10,6 @@ import { router } from "expo-router";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { useContext, useEffect, useState } from "react";
 import { Colors, localhost } from "@/constants";
-import { getLocalUser } from "@/assets/functions/auth";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 
 const BottomText = ({ str }: { str: string | null }) => (
@@ -79,6 +78,9 @@ interface TopSectionProps {
 
 const WorkoutPlanDetailsScreen = () => {
     const { workoutPlanJSON: workoutPlanJSON } = useLocalSearchParams<{ workoutPlanJSON: string }>();
+    if(!workoutPlanJSON) {
+        return <Text>Workout plan not found</Text>
+    }
     const workoutPlan = JSON.parse(workoutPlanJSON) as WorkoutPlan;
     const [exercises, setExercises] = useState<Exercise[]>([]);
     const [token, setToken] = useState<string>("");
@@ -88,17 +90,17 @@ const WorkoutPlanDetailsScreen = () => {
         const fetchExercises = async () => {
             
             try {
-                const user = await getLocalUser();
+                const { userContext } = useContext(UserContext);
 
-                /*if (user === null) {
+                /*if (userContext === null) {
                     return;
                 }
 
-                if (user.token === undefined) {
+                if (userContext.token === undefined) {
                     return;
                 }
-                    
-                setToken(user.token)*/
+
+                setToken(userContext.token)*/
 
                 setToken("147f3bb2-0791-41c2-8805-8dc660d9a157");
 

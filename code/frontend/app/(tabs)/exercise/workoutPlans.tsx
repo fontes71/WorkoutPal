@@ -4,13 +4,13 @@ import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import { Link, Stack, router } from "expo-router";
 import { SearchBar } from '@rneui/themed';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Exercise, WorkoutPlanResponse } from "@/domain/types";
 import { localhost } from "@/constants";
 import { WorkoutPlan } from "@/domain/types";
 import search_exercises_styles from "@/assets/styles/exercises";
-import { getLocalUser } from "@/assets/functions/auth";
 import { Button } from "@rneui/base";
+import { UserContext } from "@/assets/components/auth/AuthContext";
 
 const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
@@ -40,18 +40,17 @@ export default function WorkoutPlansScreen() {
 
     useEffect(() => {
         const fetchWorkoutPlans = async () => {
-            const user = await getLocalUser();
+            const { userContext } = useContext(UserContext);
 
-            /*if (user === null) {
+            /*if (userContext === null) {
                 return;
             }
 
-            if (user.token === undefined) {
+            if (userContext.token === undefined) {
                 return;
             }
-            
-            setToken(user.token)*/
 
+            setToken(userContext.token);*/
             setToken("147f3bb2-0791-41c2-8805-8dc660d9a157")
            
             const response = await fetch(`${localhost}8080/api/exercises/workoutPlans`, 

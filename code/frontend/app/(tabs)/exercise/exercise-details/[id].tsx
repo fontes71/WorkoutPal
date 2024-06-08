@@ -22,6 +22,9 @@ const handleAddButtonPress = (exercise: Exercise) => {
 
 const ExerciseDetailsScreen = () => {
     const { exerciseJSON } = useLocalSearchParams<{ exerciseJSON: string }>();
+    if (!exerciseJSON) {
+        return <Text>Exercise not found</Text>;
+    }
     const exercise = JSON.parse(exerciseJSON) as Exercise;
 
     return (
