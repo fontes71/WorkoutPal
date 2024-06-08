@@ -1,4 +1,4 @@
-import { Button, FlatList, Pressable } from "react-native";
+import { Button, FlatList, Pressable} from "react-native";
 import { food_search_styles } from "@/assets/styles/food";
 import { Text, View } from "@/components/Themed";
 import {  Stack, router } from "expo-router";

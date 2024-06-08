@@ -78,7 +78,7 @@ const auth_styles = StyleSheet.create({
         width: '100%',
         textAlign: 'center', 
         color: 'red', 
-        fontSize: 12
+        fontSize: 12,
     },
     inputs_container: {
         paddingBottom: 35

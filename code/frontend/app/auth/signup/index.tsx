@@ -78,7 +78,7 @@ function SignupHeader() {
         Fill the details and create your account now
       </Text>
     </View>
-  );
+  )
 }
 
 function InputsContainer({
