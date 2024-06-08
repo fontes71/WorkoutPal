@@ -4,34 +4,34 @@ import { Image, FlatList, StyleSheet, TouchableOpacity, Pressable, Platform } fr
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
 import { Stack, useLocalSearchParams } from "expo-router";
-import trainingPlans_styles from '@/assets/styles/trainingPlans';
+import workoutPlans_styles from '@/assets/styles/workoutPlans';
 import { useEffect, useState } from 'react';
 import { getLocalUser } from "@/assets/functions/auth";
 import { localhost } from '@/constants';
-import { TrainingPlan, TrainingPlanResponse } from '@/domain/types';
+import { WorkoutPlan, WorkoutPlanResponse } from '@/domain/types';
 
 const BottomText = ({ str }: { str: string | null }) => (
-  <>{str && <Text style={trainingPlans_styles.bottomText}>{str}</Text>}</>
+  <>{str && <Text style={workoutPlans_styles.bottomText}>{str}</Text>}</>
 );
 
-const TrainingPlanResult: React.FC<any> = ({ name, description }) => {
+const WorkoutPlanResult: React.FC<any> = ({ name, description }) => {
   return (
-      <View style={trainingPlans_styles.trainingPlansResultContainer}>
-        <View style={trainingPlans_styles.trainingPlansResultTextContainer}>
-          <Text style={trainingPlans_styles.topText}>{name}</Text>
+      <View style={workoutPlans_styles.workoutPlansResultContainer}>
+        <View style={workoutPlans_styles.workoutPlansResultTextContainer}>
+          <Text style={workoutPlans_styles.topText}>{name}</Text>
           <BottomText str={'Description: ' + description} />
         </View>
       </View>
   );
 }
 
-export default function TrainingPlansModalScreen() {
+export default function WorkoutPlansModalScreen() {
   const {exerciseId} = useLocalSearchParams<{ exerciseId: string }>();
-  const [trainingPlans, setTrainingPlans] = useState<TrainingPlan[]>([]);
+  const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>([]);
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchTrainingPlans = async () => {
+    const fetchWorkoutPlans = async () => {
         const user = await getLocalUser();
 
         /*if (user === null) {
@@ -56,21 +56,21 @@ export default function TrainingPlansModalScreen() {
         );
 
         if (response.status !== 200) {
-          const errorMessage: TrainingPlanResponse = await response.json()
+          const errorMessage: WorkoutPlanResponse = await response.json()
           alert(errorMessage.message);
           return;
         }
 
-        const trainingPlans: TrainingPlanResponse = await response.json();
-        setTrainingPlans(trainingPlans.obj);
+        const workoutPlans: WorkoutPlanResponse = await response.json();
+        setWorkoutPlans(workoutPlans.obj);
     }
 
-    fetchTrainingPlans();
+    fetchWorkoutPlans();
   }, []);
 
-  const handleTrainingPlanPress = async (trainingPlan: TrainingPlan) => {
-    console.log(trainingPlan)
-    const response = await fetch(`${localhost}8080/api/exercises/workoutPlans/${trainingPlan.name}`,
+  const handleWorkoutPlanPress = async (workoutPlan: WorkoutPlan) => {
+    console.log(workoutPlan)
+    const response = await fetch(`${localhost}8080/api/exercises/workoutPlans/${workoutPlan.name}`,
       {
         method: 'POST',
         headers: {
@@ -83,9 +83,9 @@ export default function TrainingPlansModalScreen() {
 
     if (response.status !== 200) {
       if(response.status === 409) {
-        alert("Exercise already exists in training plan");
+        alert("Exercise already exists in workout plan");
       } else {
-        alert("Failed to add exercise to training plan");
+        alert("Failed to add exercise to workout plan");
       }
       return;
     }
@@ -95,20 +95,20 @@ export default function TrainingPlansModalScreen() {
   }
 
   return (
-    <View style={trainingPlans_styles.trainingPlansContainer}>
-      <Stack.Screen options={{ title: "Training Plans" }}/>
-      <Text style={trainingPlans_styles.title}>Training Plans</Text>
-      <View style={trainingPlans_styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+    <View style={workoutPlans_styles.workoutPlansContainer}>
+      <Stack.Screen options={{ title: "Workout Plans" }}/>
+      <Text style={workoutPlans_styles.title}>Workout Plans</Text>
+      <View style={workoutPlans_styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
-      <View style={trainingPlans_styles.trainingPlansResultContainer}>
+      <View style={workoutPlans_styles.workoutPlansResultContainer}>
         <FlatList
-            data={trainingPlans}
+            data={workoutPlans}
             renderItem={({ item }) => 
-                <Pressable onPress={() => {handleTrainingPlanPress(item)}}>
-                    <TrainingPlanResult {...item} />
+                <Pressable onPress={() => {handleWorkoutPlanPress(item)}}>
+                    <WorkoutPlanResult {...item} />
                 </Pressable>
             }
-            keyExtractor={(item: TrainingPlan) => item.name}
+            keyExtractor={(item: WorkoutPlan) => item.name}
           />
       </View>
 

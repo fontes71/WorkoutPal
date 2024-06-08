@@ -2,15 +2,16 @@ import { FlatList, Image, Pressable, StyleSheet } from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
-import { Exercise, ExercisesFromWorkoutPlanResponse, TrainingPlan, TrainingPlanResponse } from "@/domain/types";
+import { Exercise, ExercisesFromWorkoutPlanResponse, WorkoutPlan, WorkoutPlanResponse } from "@/domain/types";
 import { Link, useLocalSearchParams } from "expo-router";
 import { Stack } from "expo-router";
 import { Button, color } from "@rneui/base";
 import { router } from "expo-router";
 import search_exercises_styles from "@/assets/styles/exercises";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Colors, localhost } from "@/constants";
 import { getLocalUser } from "@/assets/functions/auth";
+import { UserContext } from "@/assets/components/auth/AuthContext";
 
 const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
@@ -30,9 +31,55 @@ const handleExercisePress = async (exercise: Exercise) => {
     });
 }
 
-const TrainingPlanDetailsScreen = () => {
-    const { trainingPlanJSON } = useLocalSearchParams<{ trainingPlanJSON: string }>();
-    const trainingPlan = JSON.parse(trainingPlanJSON) as TrainingPlan;
+interface TopSectionProps {
+    workoutPlan: WorkoutPlan;
+  }
+  
+  const TopSection: React.FC<TopSectionProps> = ({ workoutPlan: workoutPlan }) => {
+    const { userContext } = useContext(UserContext)
+    const onSaveHook = async (workoutPlan: WorkoutPlan) => {
+        if (!userContext && userContext === null) {
+          router.push(`/auth/login/`);
+          return;
+        }
+        const response = await fetch(`${localhost}8080/api/exercises/workoutPlans/log`, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${userContext.token}`,
+          },
+          body: JSON.stringify({ workoutPlanName: workoutPlan.name}),
+        });
+
+        if (response.status !== 200) {
+            alert("Failed to save workout plan");
+            return;
+        }
+  
+        router.push(`/exercise/`);
+    };
+  
+    return (
+      <Stack.Screen
+        options={{
+          headerTitle: "Log Workout Plan",
+          headerRight: () => (
+            <Pressable onPress={() => onSaveHook(workoutPlan)}>
+              <Image
+                source={require("@/assets/images/save.png")}
+                style={{ marginRight: 0 }}
+              />
+            </Pressable>
+          ),
+          headerTitleAlign: "left",
+        }}
+      />
+    );
+  };
+
+const WorkoutPlanDetailsScreen = () => {
+    const { workoutPlanJSON: workoutPlanJSON } = useLocalSearchParams<{ workoutPlanJSON: string }>();
+    const workoutPlan = JSON.parse(workoutPlanJSON) as WorkoutPlan;
     const [exercises, setExercises] = useState<Exercise[]>([]);
     const [token, setToken] = useState<string>("");
     const [loaded, setLoaded] = useState(false);
@@ -55,7 +102,7 @@ const TrainingPlanDetailsScreen = () => {
 
                 setToken("147f3bb2-0791-41c2-8805-8dc660d9a157");
 
-                const response = await fetch(`${localhost}8080/api/exercises/workoutPlans/${trainingPlan.name}`,
+                const response = await fetch(`${localhost}8080/api/exercises/workoutPlans/${workoutPlan.name}`,
                     {
                         method: 'GET',
                         headers: {
@@ -66,7 +113,7 @@ const TrainingPlanDetailsScreen = () => {
                 );
 
                 if (response.status !== 200) {
-                    alert(`Failed to fetch exercises of ${trainingPlan.name}`);
+                    alert(`Failed to fetch exercises of ${workoutPlan.name}`);
                 }
 
                 const exercisesResult: ExercisesFromWorkoutPlanResponse = await response.json();
@@ -77,7 +124,7 @@ const TrainingPlanDetailsScreen = () => {
 
                 setExercises(modifiedExercises);
             } catch (error) {
-                console.error(`Error fetching exercises of ${trainingPlan.name}:`, error);
+                console.error(`Error fetching exercises of ${workoutPlan.name}:`, error);
             }
 
             setLoaded(true);
@@ -101,13 +148,13 @@ const TrainingPlanDetailsScreen = () => {
                     <Text style={search_exercises_styles.bottomText}>{name}</Text>
                     <BottomText str={'Equipment: ' + equipment} />
                 </View>
-                <Button color={"error"} onPress={() => {handleDeletePress(trainingPlan.name, _id, token)}}>Delete</Button>
+                <Button color={"error"} onPress={() => {handleDeletePress(workoutPlan.name, _id, token)}}>Delete</Button>
             </View>
         );
     }
 
-    const handleDeletePress = async (trainingPlanName:string, exerciseId: string, token: string) => {
-        const response = await fetch(`${localhost}8080/api/exercises/workoutPLans/${trainingPlanName}/exercise/${exerciseId}`,
+    const handleDeletePress = async (workoutPlanName:string, exerciseId: string, token: string) => {
+        const response = await fetch(`${localhost}8080/api/exercises/workoutPLans/${workoutPlanName}/exercise/${exerciseId}`,
             {
                 method: 'DELETE',
                 headers: {
@@ -118,7 +165,7 @@ const TrainingPlanDetailsScreen = () => {
         )
     
         if (response.status !== 200) {
-            const errorMessage: TrainingPlanResponse = await response.json()
+            const errorMessage: WorkoutPlanResponse = await response.json()
             alert(errorMessage.message);
             return;
         }
@@ -134,9 +181,10 @@ const TrainingPlanDetailsScreen = () => {
             <View style={search_exercises_styles.exerciseResultContainer}>
                 {loaded ? 
                     <View style={search_exercises_styles.exerciseResultTextContainer}>
-                        <Text style={search_exercises_styles.topText}>{trainingPlan.name}</Text>
+                        <TopSection workoutPlan={workoutPlan}/>
+                        <Text style={search_exercises_styles.topText}>{workoutPlan.name}</Text>
                         <Text style={search_exercises_styles.topText}/>
-                        <BottomText str={'Description: ' + trainingPlan.description} />
+                        <BottomText str={'Description: ' + workoutPlan.description} />
                         <Text style={search_exercises_styles.topText}></Text>
                         <Text style={search_exercises_styles.topText}>Exercises:</Text>
                         <FlatList
@@ -158,4 +206,4 @@ const TrainingPlanDetailsScreen = () => {
     );
 }
 
-export default TrainingPlanDetailsScreen;
+export default WorkoutPlanDetailsScreen;

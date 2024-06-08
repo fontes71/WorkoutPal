@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
 import { create } from "react-test-renderer";
 
-const trainingPlans_styles = StyleSheet.create({
-    trainingPlansContainer: {
+const workoutPlans_styles = StyleSheet.create({
+    workoutPlansContainer: {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
@@ -16,16 +16,16 @@ const trainingPlans_styles = StyleSheet.create({
       height: 1,
       width: '80%',
     },
-    trainingPlansResultContainer: {
+    workoutPlansResultContainer: {
       flexDirection: "row",
       padding: 10,
     },
-    trainingPlansResultTextContainer: {
+    workoutPlansResultTextContainer: {
       flex: 1,
       alignItems: "center",
       justifyContent: "space-evenly",
     },
-    createTrainingPlanContainer: {
+    createWorkoutPlanContainer: {
       flex: 1,
       alignItems: 'center',
     },
@@ -57,4 +57,4 @@ const trainingPlans_styles = StyleSheet.create({
     },
 });
 
-export default trainingPlans_styles;
+export default workoutPlans_styles;

@@ -5,9 +5,9 @@ import { Text, View } from "@/components/Themed";
 import { Link, Stack, router } from "expo-router";
 import { SearchBar } from '@rneui/themed';
 import { useState, useEffect } from "react";
-import { Exercise, TrainingPlanResponse } from "@/domain/types";
+import { Exercise, WorkoutPlanResponse } from "@/domain/types";
 import { localhost } from "@/constants";
-import { TrainingPlan } from "@/domain/types";
+import { WorkoutPlan } from "@/domain/types";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { getLocalUser } from "@/assets/functions/auth";
 import { Button } from "@rneui/base";
@@ -16,9 +16,9 @@ const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
 );
 
-const TrainingPlanResult: React.FC<TrainingPlan> = ({ name, description }) => {
+const WorkoutPlanResult: React.FC<WorkoutPlan> = ({ name, description }) => {
     return (
-        <View style={search_exercises_styles.traingPlansResultContainer}>
+        <View style={search_exercises_styles.workoutPlansResultContainer}>
           <View style={search_exercises_styles.exerciseResultTextContainer}>
             <Text style={search_exercises_styles.topText}>{name}</Text>
             <BottomText str={'Description: ' + description} />
@@ -27,19 +27,19 @@ const TrainingPlanResult: React.FC<TrainingPlan> = ({ name, description }) => {
     );
 }
 
-const handleTrainingPlanPress = (trainingPlan: TrainingPlan) => {
+const handleWorkoutPlanPress = (workoutPlan: WorkoutPlan) => {
     router.push({
-        pathname: `/exercise/trainingPlan-details/${trainingPlan.name}`,
-        params: { trainingPlanJSON: JSON.stringify(trainingPlan) }
+        pathname: `/exercise/workoutPlan-details/${workoutPlan.name}`,
+        params: { workoutPlanJSON: JSON.stringify(workoutPlan) }
     });
 }
 
-export default function TrainingPlansScreen() {
-    const [trainingPlans, setTrainingPlans] = useState<TrainingPlan[]>([]);
+export default function WorkoutPlansScreen() {
+    const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>([]);
     const [token, setToken] = useState<string>("");
 
     useEffect(() => {
-        const fetchTrainingPlans = async () => {
+        const fetchWorkoutPlans = async () => {
             const user = await getLocalUser();
 
             /*if (user === null) {
@@ -68,39 +68,39 @@ export default function TrainingPlansScreen() {
                 return;
             }
 
-            const trainingPlans: TrainingPlanResponse = await response.json();
-            setTrainingPlans(trainingPlans.obj);
+            const workoutPlans: WorkoutPlanResponse = await response.json();
+            setWorkoutPlans(workoutPlans.obj);
         }
 
-        fetchTrainingPlans();
+        fetchWorkoutPlans();
     }, []);
 
     const handleAddButtonPress = () => {
         router.push({ 
-            pathname: `/exercise/createTrainingPlanModal`,
+            pathname: `/exercise/createWorkoutPlanModal`,
             params: { token: token }
         });
     }
 
     return (
         <View>
-            <Stack.Screen options={{ title: "Training Plans" }}/>
-            <View style={search_exercises_styles.traingPlansResultContainer}>
-                { trainingPlans.length !== 0 ?
+            <Stack.Screen options={{ title: "Workout Plans" }}/>
+            <View style={search_exercises_styles.workoutPlansResultContainer}>
+                { workoutPlans.length !== 0 ?
                     <View>
                         <FlatList
-                            data={trainingPlans}
+                            data={workoutPlans}
                             renderItem={({ item }) => 
-                                <Pressable onPress={() => {handleTrainingPlanPress(item)}}>
-                                    <TrainingPlanResult {...item} />
+                                <Pressable onPress={() => {handleWorkoutPlanPress(item)}}>
+                                    <WorkoutPlanResult {...item} />
                                 </Pressable>
                             }
-                            keyExtractor={(item: TrainingPlan) => item.name}
+                            keyExtractor={(item: WorkoutPlan) => item.name}
                         /> 
-                        <Button onPress={() => handleAddButtonPress()}>Create Training Plan</Button>
+                        <Button onPress={() => handleAddButtonPress()}>Create Workout Plan</Button>
                     </View> : 
                     <View style={search_exercises_styles.exerciseResultContainer}>
-                        <Text style={search_exercises_styles.topText}>Loading your training plans...</Text>
+                        <Text style={search_exercises_styles.topText}>Loading your workout plans...</Text>
                     </View>
                 }
             </View>

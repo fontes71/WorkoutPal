@@ -4,15 +4,15 @@ import { Image, FlatList, StyleSheet, TouchableOpacity, Pressable, Platform, Tex
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
 import { Stack, router, useLocalSearchParams } from "expo-router";
-import trainingPlans_styles from '@/assets/styles/trainingPlans';
+import workoutPlans_styles from '@/assets/styles/workoutPlans';
 import { useEffect, useState } from 'react';
 import { getLocalUser } from "@/assets/functions/auth";
 import { localhost } from '@/constants';
-import { TrainingPlan, TrainingPlanResponse } from '@/domain/types';
+import { WorkoutPlan, WorkoutPlanResponse } from '@/domain/types';
 import { Button } from '@rneui/base';
 
 const BottomText = ({ str }: { str: string | null }) => (
-  <>{str && <Text style={trainingPlans_styles.bottomText}>{str}</Text>}</>
+  <>{str && <Text style={workoutPlans_styles.bottomText}>{str}</Text>}</>
 );
 
 const handleCreateButtonPress = async (workoutPlanName: string, description: string, token: string) => {
@@ -28,16 +28,16 @@ const handleCreateButtonPress = async (workoutPlanName: string, description: str
   )
 
   if (response.status !== 200) {
-    const errorMessage: TrainingPlanResponse = await response.json()
+    const errorMessage: WorkoutPlanResponse = await response.json()
     alert(errorMessage.message);
     return;
   }
 
-  alert("Training plan created successfully");
+  alert("Workout plan created successfully");
   router.back();
 }
 
-export default function CreateTrainingPlansModalScreen() {
+export default function CreateWorkoutPlansModalScreen() {
   const { token } = useLocalSearchParams<{ token: string }>();
   const tokenString = token as string;
   const [name, setName] = useState<string>("");
@@ -45,21 +45,21 @@ export default function CreateTrainingPlansModalScreen() {
 
   return (
     <View>
-      <Stack.Screen options={{ title: "Create Training Plan" }}/>
-      <View style={trainingPlans_styles.inputs_container}>
+      <Stack.Screen options={{ title: "Create Workout Plan" }}/>
+      <View style={workoutPlans_styles.inputs_container}>
        <TextInput 
-          style={trainingPlans_styles.input}
+          style={workoutPlans_styles.input}
           placeholder="Name"
           value={name}
           onChangeText={setName}
         />
        <TextInput 
-          style={trainingPlans_styles.input} 
+          style={workoutPlans_styles.input} 
           placeholder="Descritpion (Optional)"
           value={description}
           onChangeText={setDescription}
        />
-       <View style={trainingPlans_styles.createTrainingPlanContainer}>
+       <View style={workoutPlans_styles.createWorkoutPlanContainer}>
         <Button onPress={() => {handleCreateButtonPress(name, description, tokenString)}}>Create</Button>
        </View>
       </View>

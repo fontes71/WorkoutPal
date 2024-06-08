@@ -15,7 +15,7 @@ const BottomText = ({ str }: { str: string | null }) => (
 
 const handleAddButtonPress = (exercise: Exercise) => {
     router.push({
-        pathname: `/exercise/trainingPlanModal`,
+        pathname: `/exercise/workoutPlanModal`,
         params: { exerciseId: exercise._id }
     });
 }
@@ -47,7 +47,7 @@ const ExerciseDetailsScreen = () => {
                     {exercise.instructions.map((instruction, index) => (
                         <Text key={index} style={search_exercises_styles.bottomText}>{instruction}</Text>
                     ))}
-                    <Button onPress={() => handleAddButtonPress(exercise)}>Add To Training Plan</Button>
+                    <Button onPress={() => handleAddButtonPress(exercise)}>Add To Workout Plan</Button>
                 </View>
             </View>
         </View>

@@ -29,7 +29,7 @@ export interface Exercise {
     instructions: Array<string>;
 }
 
-export interface TrainingPlan {
+export interface WorkoutPlan {
     name: string;
     description: string;
     exercises: Array<string>;
@@ -45,8 +45,8 @@ export interface ExerciseResponse {
     obj: Exercise[];
 }
 
-export interface TrainingPlanResponse {
+export interface WorkoutPlanResponse {
     message: string;
-    obj: TrainingPlan[];
+    obj: WorkoutPlan[];
 }
   

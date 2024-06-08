@@ -24,7 +24,7 @@ export const search_exercises_styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-evenly",
     },
-    traingPlansResultContainer: {
+    workoutPlansResultContainer: {
         flexDirection: "column",
         padding: 10,
         justifyContent: "space-evenly",
