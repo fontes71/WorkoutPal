@@ -90,9 +90,9 @@ const WorkoutPlanDetailsScreen = () => {
         const fetchExercises = async () => {
             
             try {
-                const { userContext } = useContext(UserContext);
+                //const { userContext } = useContext(UserContext);
 
-                /*if (userContext === null) {
+                /*if (!userContext) {
                     return;
                 }
 

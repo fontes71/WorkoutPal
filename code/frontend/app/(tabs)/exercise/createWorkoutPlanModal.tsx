@@ -11,10 +11,6 @@ import { localhost } from '@/constants';
 import { WorkoutPlan, WorkoutPlanResponse } from '@/domain/types';
 import { Button } from '@rneui/base';
 
-const BottomText = ({ str }: { str: string | null }) => (
-  <>{str && <Text style={workoutPlans_styles.bottomText}>{str}</Text>}</>
-);
-
 const handleCreateButtonPress = async (workoutPlanName: string, description: string, token: string) => {
   const response = await fetch(`${localhost}8080/api/exercises/workoutPlans`, 
     {
@@ -32,7 +28,6 @@ const handleCreateButtonPress = async (workoutPlanName: string, description: str
     alert(errorMessage.message);
     return;
   }
-
   alert("Workout plan created successfully");
   router.back();
 }

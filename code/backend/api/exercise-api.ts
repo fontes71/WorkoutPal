@@ -102,8 +102,6 @@ export class ExerciseApi implements IExerciseApi {
     await apiErrorHandler(res, async () => {
       const token = (req.headers.authorization as string).replace("Bearer ", "");
       const { workoutPlanName, description } = req.body;
-      console.log("WORKOUT PLAN NAME: ", workoutPlanName)
-      console.log("DESCRIPTION: ", description)
       const workoutPlan = await this.service.createWorkoutPlan(token, workoutPlanName, description);
       sendResponse(res, StatusCode.Created, "Workout plan created", workoutPlan);
     });

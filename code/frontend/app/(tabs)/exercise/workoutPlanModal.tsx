@@ -32,9 +32,9 @@ export default function WorkoutPlansModalScreen() {
 
   useEffect(() => {
     const fetchWorkoutPlans = async () => {
-        const { userContext } = useContext(UserContext);
+        //const { userContext } = useContext(UserContext);
 
-        /*if (userContext === null) {
+        /*if (!userContext) {
             return;
         }
 

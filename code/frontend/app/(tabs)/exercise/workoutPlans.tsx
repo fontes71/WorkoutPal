@@ -1,4 +1,4 @@
-import { Image, FlatList, StyleSheet, TouchableOpacity, Pressable  } from "react-native";
+import { Image, FlatList, StyleSheet, TouchableOpacity, Pressable, RefreshControl  } from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
@@ -40,7 +40,7 @@ export default function WorkoutPlansScreen() {
 
     useEffect(() => {
         const fetchWorkoutPlans = async () => {
-            const { userContext } = useContext(UserContext);
+            //const { userContext } = useContext(UserContext);
 
             /*if (userContext === null) {
                 return;
@@ -81,6 +81,25 @@ export default function WorkoutPlansScreen() {
         });
     }
 
+    const handleReload = async (token: string) => {
+        const response = await fetch(`${localhost}8080/api/exercises/workoutPlans`, 
+            {
+                method: 'GET',
+                headers: {
+                  'Authorization': `Bearer 147f3bb2-0791-41c2-8805-8dc660d9a157`,
+                  'Content-Type': 'application/json',
+                },
+            }
+        );
+    
+        if (response.status !== 200) {
+            return;
+        }
+    
+        const workoutPlans: WorkoutPlanResponse = await response.json();
+        setWorkoutPlans(workoutPlans.obj);
+    }
+
     return (
         <View>
             <Stack.Screen options={{ title: "Workout Plans" }}/>
@@ -95,6 +114,12 @@ export default function WorkoutPlansScreen() {
                                 </Pressable>
                             }
                             keyExtractor={(item: WorkoutPlan) => item.name}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={false}
+                                    onRefresh={() => handleReload(token)}
+                                />
+                            }
                         /> 
                         <Button onPress={() => handleAddButtonPress()}>Create Workout Plan</Button>
                     </View> : 
