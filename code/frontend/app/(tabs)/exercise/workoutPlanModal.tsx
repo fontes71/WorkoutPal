@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Image, FlatList, StyleSheet, TouchableOpacity, Pressable, Platform } from "react-native";
+import { Modal, Image, FlatList, StyleSheet, TouchableOpacity, Pressable, Platform } from "react-native";
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
@@ -9,6 +9,8 @@ import { useContext, useEffect, useState } from 'react';
 import { localhost } from '@/constants';
 import { WorkoutPlan, WorkoutPlanResponse } from '@/domain/types';
 import { UserContext } from '@/assets/components/auth/AuthContext';
+import modal_styles from '@/assets/styles/modals';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const BottomText = ({ str }: { str: string | null }) => (
   <>{str && <Text style={workoutPlans_styles.bottomText}>{str}</Text>}</>
@@ -25,7 +27,7 @@ const WorkoutPlanResult: React.FC<any> = ({ name, description }) => {
   );
 }
 
-export default function WorkoutPlansModalScreen() {
+export default function WorkoutPlansModalScreen({ isVisible, onClose }: { isVisible: boolean, onClose: () => void }){
   const {exerciseId} = useLocalSearchParams<{ exerciseId: string }>();
   const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>([]);
   const [token, setToken] = useState<string | null>(null);
@@ -95,25 +97,34 @@ export default function WorkoutPlansModalScreen() {
   }
 
   return (
-    <View style={workoutPlans_styles.workoutPlansContainer}>
+    <Modal animationType="slide" transparent={false} visible={isVisible}>
       <Stack.Screen options={{ title: "Workout Plans" }}/>
-      <Text style={workoutPlans_styles.title}>Workout Plans</Text>
-      <View style={workoutPlans_styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <View style={modal_styles.modalContent}>
+        <View style={modal_styles.titleContainer}>
+          <Text style={modal_styles.title}>Select a Workout Plan</Text>
+          <Pressable onPress={onClose}>
+            <MaterialIcons name="close" color="#fff" size={22} />
+          </Pressable>
+        </View>
+        <View style={workoutPlans_styles.workoutPlansContainer}>
+        <Text style={workoutPlans_styles.title}>Workout Plans</Text>
+        <View style={workoutPlans_styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
-      <View style={workoutPlans_styles.workoutPlansResultContainer}>
-        <FlatList
-            data={workoutPlans}
-            renderItem={({ item }) => 
-                <Pressable onPress={() => {handleWorkoutPlanPress(item)}}>
-                    <WorkoutPlanResult {...item} />
-                </Pressable>
-            }
-            keyExtractor={(item: WorkoutPlan) => item.name}
-          />
+        <View style={workoutPlans_styles.workoutPlansResultContainer}>
+          <FlatList
+              data={workoutPlans}
+              renderItem={({ item }) => 
+                  <Pressable onPress={() => {handleWorkoutPlanPress(item)}}>
+                      <WorkoutPlanResult {...item} />
+                  </Pressable>
+              }
+              keyExtractor={(item: WorkoutPlan) => item.name}
+            />
+          </View>
+          {/* Use a light status bar on iOS to account for the black space above the modal */}
+          <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+        </View>
       </View>
-
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
-    </View>
+    </Modal>
   );
 }

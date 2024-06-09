@@ -8,6 +8,8 @@ import { Stack } from "expo-router";
 import { Button } from "@rneui/base";
 import { router } from "expo-router";
 import search_exercises_styles from "@/assets/styles/exercises";
+import WorkoutPlansModalScreen from "../workoutPlanModal";
+import { useState } from "react";
 
 const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
@@ -26,6 +28,8 @@ const ExerciseDetailsScreen = () => {
         return <Text>Exercise not found</Text>;
     }
     const exercise = JSON.parse(exerciseJSON) as Exercise;
+
+    const [modalVisible, setModalVisible] = useState(false);
 
     return (
         <View>
@@ -50,7 +54,8 @@ const ExerciseDetailsScreen = () => {
                     {exercise.instructions.map((instruction, index) => (
                         <Text key={index} style={search_exercises_styles.bottomText}>{instruction}</Text>
                     ))}
-                    <Button onPress={() => handleAddButtonPress(exercise)}>Add To Workout Plan</Button>
+                    <Button onPress={() => {setModalVisible(true)}}>Add To Workout Plan</Button>
+                    <WorkoutPlansModalScreen isVisible={modalVisible} onClose={() => {setModalVisible(false)}}/>
                 </View>
             </View>
         </View>

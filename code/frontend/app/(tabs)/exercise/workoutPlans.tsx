@@ -11,6 +11,7 @@ import { WorkoutPlan } from "@/domain/types";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { Button } from "@rneui/base";
 import { UserContext } from "@/assets/components/auth/AuthContext";
+import CreateWorkoutPlansModalScreen from "./createWorkoutPlanModal";
 
 const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
@@ -37,6 +38,7 @@ const handleWorkoutPlanPress = (workoutPlan: WorkoutPlan) => {
 export default function WorkoutPlansScreen() {
     const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>([]);
     const [token, setToken] = useState<string>("");
+    const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
         const fetchWorkoutPlans = async () => {
@@ -121,7 +123,8 @@ export default function WorkoutPlansScreen() {
                                 />
                             }
                         /> 
-                        <Button onPress={() => handleAddButtonPress()}>Create Workout Plan</Button>
+                        <Button onPress={() => {setModalVisible(true)}}>Create Workout Plan</Button>
+                        <CreateWorkoutPlansModalScreen isVisible={modalVisible} onClose={() => {setModalVisible(false)}}/>
                     </View> : 
                     <View style={search_exercises_styles.exerciseResultContainer}>
                         <Text style={search_exercises_styles.topText}>Loading your workout plans...</Text>
