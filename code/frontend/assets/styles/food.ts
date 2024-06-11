@@ -4,7 +4,12 @@ export const food_styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        justifyContent: "flex-start"
+        justifyContent: "flex-start",
+       
+      },
+      nutrients : {
+        flexDirection: "row",
+        paddingBottom: 20
       },
       title: {
         fontSize: 20,

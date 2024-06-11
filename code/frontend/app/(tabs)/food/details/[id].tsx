@@ -101,6 +101,7 @@ const MoreInfo: React.FC<MoreProps> = ({
     <InfoText label="Nutriscore Grade" value={nutriscoreGrade} />
   </View>
 );
+
 const MoreButton: React.FC<MoreButtonProps> = ({
   buttonClicked,
   setButtonClicked,
@@ -156,8 +157,15 @@ interface TopSectionProps {
 const TopSection: React.FC<TopSectionProps> = ({ food }) => {
   const { userContext } = useContext(UserContext)
   const onSaveHook = async (food: Food) => {
-    if (!userContext)
+    console.log("INHERE")
+
+    if (!userContext) {
+      console.log("USER CONTEXT => ", userContext)
       router.push(`/auth/login/`);
+      return
+    }
+  
+
     await consumeFood(userContext?.token, food);
 
     router.push(`/food/`);
