@@ -15,21 +15,23 @@ export class ExerciseServices implements IExerciseServices {
   }
 
   getExerciseById = async (id: string) => {
-    const exercise: Exercise | null = await this.data.getExerciseById(id);
-    if (exercise == null) throw NotFoundError;
-    return exercise;
+    return transactionHandler(async () => {
+      const exercise: Exercise | null = await this.data.getExerciseById(id);
+      if (exercise == null) throw NotFoundError;
+      return exercise;
+    });
   };
 
   searchExercisesByName = async (name: string, skip: number, limit: number) => {
     return transactionHandler(async () => {
-    const exercises: Array<Exercise> = await this.data.searchExercisesByName(
-      name,
-      skip,
-      limit
-    );
-    if (exercises.length == 0) return [];
-    return exercises;
-  })
+      const exercises: Array<Exercise> = await this.data.searchExercisesByName(
+        name,
+        skip,
+        limit
+      );
+      if (exercises.length == 0) return [];
+      return exercises;
+    })
   };
 
   searchExercisesByBodyPart = async (
@@ -37,10 +39,12 @@ export class ExerciseServices implements IExerciseServices {
     skip: number,
     limit: number
   ) => {
-    const exercises: Array<Exercise> =
-      await this.data.searchExercisesByBodyPart(bodyPart, skip, limit);
-    if (exercises.length == 0) return [];
-    return exercises;
+    return transactionHandler(async () => {
+      const exercises: Array<Exercise> =
+        await this.data.searchExercisesByBodyPart(bodyPart, skip, limit);
+      if (exercises.length == 0) return [];
+      return exercises;
+    });
   };
 
   searchExercisesByEquipment = async (
@@ -48,10 +52,12 @@ export class ExerciseServices implements IExerciseServices {
     skip: number,
     limit: number
   ) => {
-    const exercises: Array<Exercise> =
-      await this.data.searchExercisesByEquipment(equipment, skip, limit);
-    if (exercises.length == 0) return [];
-    return exercises;
+    return transactionHandler(async () => {
+      const exercises: Array<Exercise> =
+        await this.data.searchExercisesByEquipment(equipment, skip, limit);
+      if (exercises.length == 0) return [];
+      return exercises;
+    });
   };
 
   searchExercisesByTarget = async (
@@ -59,13 +65,15 @@ export class ExerciseServices implements IExerciseServices {
     skip: number,
     limit: number
   ) => {
-    const exercises: Array<Exercise> = await this.data.searchExercisesByTarget(
-      target,
-      skip,
-      limit
-    );
-    if (exercises.length == 0) return [];
-    return exercises;
+    return transactionHandler(async () => {
+      const exercises: Array<Exercise> = await this.data.searchExercisesByTarget(
+        target,
+        skip,
+        limit
+      );
+      if (exercises.length == 0) return [];
+      return exercises;
+    });
   };
 
   searchExercisesBySecondaryMuscle = async (
@@ -73,66 +81,82 @@ export class ExerciseServices implements IExerciseServices {
     skip: number,
     limit: number
   ) => {
-    const exercises: Array<Exercise> =
-      await this.data.searchExercisesBySecondaryMuscle(
-        secondaryMuscle,
-        skip,
-        limit
-      );
-    if (exercises.length == 0) return [];
-    return exercises;
+    return transactionHandler(async () => {
+      const exercises: Array<Exercise> =
+        await this.data.searchExercisesBySecondaryMuscle(
+          secondaryMuscle,
+          skip,
+          limit
+        );
+      if (exercises.length == 0) return [];
+      return exercises;
+    });
   };
 
   getUserWorkoutPlans = async (token: string) => {
-    const workoutPlans: WorkoutPlan[] | null = await this.data.getUserWorkoutPlans(token);
-    if (workoutPlans == null) throw InvalidAuthorizationTokenError;
-    return workoutPlans;
+    return transactionHandler(async () => {
+      const workoutPlans: WorkoutPlan[] | null = await this.data.getUserWorkoutPlans(token);
+      if (workoutPlans == null) throw InvalidAuthorizationTokenError;
+      return workoutPlans;
+    });
   }
 
   createWorkoutPlan = async (token: string, workoutPlanName: string, description: string) => {
-    if (workoutPlanName.length == 0) throw InvalidParamsError;
-    if (description.length == 0) description = "No description";
-    const workoutPlan: WorkoutPlan | null = await this.data.createWorkoutPlan(token, workoutPlanName, description);
-    if (workoutPlan == null) throw InvalidAuthorizationTokenError;
-    if (workoutPlan == ERROR_WORKOUTPLAN) throw AlreadyExistsError;
-    return workoutPlan;
+    return transactionHandler(async () => {
+      if (workoutPlanName.length == 0) throw InvalidParamsError;
+      if (description.length == 0) description = "No description";
+      const workoutPlan: WorkoutPlan | null = await this.data.createWorkoutPlan(token, workoutPlanName, description);
+      if (workoutPlan == null) throw InvalidAuthorizationTokenError;
+      if (workoutPlan == ERROR_WORKOUTPLAN) throw AlreadyExistsError;
+      return workoutPlan;
+    });
   }
 
   addExerciseToWorkoutPlan = async (token: string, workoutPlanName: string, exerciseId: string) => {
-    const workoutPlan: WorkoutPlan | null = await this.data.addExerciseToWorkoutPlan(token, workoutPlanName, exerciseId);
-    if (workoutPlan == null) throw InvalidAuthorizationTokenError;
-    if (workoutPlan == ERROR_WORKOUTPLAN) throw AlreadyExistsError;
-    return workoutPlan;
+    return transactionHandler(async () => {
+      const workoutPlan: WorkoutPlan | null = await this.data.addExerciseToWorkoutPlan(token, workoutPlanName, exerciseId);
+      if (workoutPlan == null) throw InvalidAuthorizationTokenError;
+      if (workoutPlan == ERROR_WORKOUTPLAN) throw AlreadyExistsError;
+      return workoutPlan;
+    });
   }
 
   removeExerciseFromWorkoutPlan = async (token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan> => {
-    const workoutPlan: WorkoutPlan | null = await this.data.removeExerciseFromWorkoutPlan(token, workoutPlanName, exerciseId);
-    if (workoutPlan == null) throw InvalidAuthorizationTokenError;
-    if (workoutPlan == ERROR_WORKOUTPLAN) throw NotFoundError;
-    return workoutPlan;
+    return transactionHandler(async () => {
+      const workoutPlan: WorkoutPlan | null = await this.data.removeExerciseFromWorkoutPlan(token, workoutPlanName, exerciseId);
+      if (workoutPlan == null) throw InvalidAuthorizationTokenError;
+      if (workoutPlan == ERROR_WORKOUTPLAN) throw NotFoundError;
+      return workoutPlan;
+    });
   }
 
   logWorkoutPlan = async (token: string, workoutPlanName: string): Promise<WorkoutPlan> => {
-    const workoutPlan: WorkoutPlan | null = await this.data.logWorkoutPlan(token, workoutPlanName);
-    if (workoutPlan == null) throw InvalidAuthorizationTokenError;
-    if (workoutPlan == ERROR_WORKOUTPLAN) throw NotFoundError;
-    return workoutPlan;
+    return transactionHandler(async () => {
+      const workoutPlan: WorkoutPlan | null = await this.data.logWorkoutPlan(token, workoutPlanName);
+      if (workoutPlan == null) throw InvalidAuthorizationTokenError;
+      if (workoutPlan == ERROR_WORKOUTPLAN) throw NotFoundError;
+      return workoutPlan;
+    });
   }
 
   getDailyLoggedWorkoutPlans = async (token: string, day: string): Promise<Array<string>> => {
-    if(!isValidDate(day)) {
-      throw InvalidParamsError;
-    };
-    const workoutPlans: string[] | null = await this.data.getDailyLoggedWorkoutPlans(token, day);
-    if (workoutPlans == null) throw InvalidAuthorizationTokenError;
-    return workoutPlans;
+    return transactionHandler(async () => {
+      if(!isValidDate(day)) {
+        throw InvalidParamsError;
+      };
+      const workoutPlans: string[] | null = await this.data.getDailyLoggedWorkoutPlans(token, day);
+      if (workoutPlans == null) throw InvalidAuthorizationTokenError;
+      return workoutPlans;
+    });
   }
 
   getExercisesFromWorkoutPlan = async (token: string, workoutPlanName: string): Promise<Array<Exercise>> => {
-    const exercises: Exercise[] | null = await this.data.getExercisesFromWorkoutPlan(token, workoutPlanName);
-    if (exercises == null) throw InvalidAuthorizationTokenError;
-    if (exercises.includes(ERROR_EXERCISE)) throw NotFoundError;
-    return exercises;
+    return transactionHandler(async () => {
+      const exercises: Exercise[] | null = await this.data.getExercisesFromWorkoutPlan(token, workoutPlanName);
+      if (exercises == null) throw InvalidAuthorizationTokenError;
+      if (exercises.includes(ERROR_EXERCISE)) throw NotFoundError;
+      return exercises;
+    });
   }
 
   cloneExerciseDBScheduler() {
