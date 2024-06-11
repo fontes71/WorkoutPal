@@ -191,6 +191,8 @@ const TopSection: React.FC<TopSectionProps> = ({ food }) => {
 
 export default function FoodDetailsScreen() {
   const { foodJSON } = useLocalSearchParams<{ foodJSON: string }>();
+  if (!foodJSON)
+    return <Text>Error</Text>
   const food = JSON.parse(foodJSON) as Food;
 
   return (

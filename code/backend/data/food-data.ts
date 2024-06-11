@@ -8,8 +8,10 @@ import getSearchByBarcodeApiUrl from "../utils/functions/app/getSearchByBarcodeA
 
 export class FoodData implements IFoodData {
   async searchByName(query: string, skip: number, limit: number) {
+    console.log("FETCHING")
     const res = await fetch(getSearchByNameApiUrl(query));
     const { products } = await res.json();
+    console.log("FETCHED")
     return products;
   }
 

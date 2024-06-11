@@ -68,7 +68,7 @@ export interface IAuthServices {
 // DATA
 export interface IExerciseData {
   getExerciseById(id: string): Promise<Exercise | null>;
-  searchExercisesByName(name: string,skip: number,limit: number): Promise<Exercise[]>;
+  searchExercisesByName(name: string,skip: number,limit: number): Promise<any>;
   searchExercisesByBodyPart(bodyPart: string,skip: number, limit: number): Promise<Exercise[]>;
   searchExercisesByEquipment(equipment: string,skip: number,limit: number): Promise<Exercise[]>;
   searchExercisesByTarget(target: string,skip: number,limit: number): Promise<Exercise[]>;

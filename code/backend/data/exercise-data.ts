@@ -23,15 +23,14 @@ export class ExerciseData implements IExerciseData {
     });
   }
 
-  searchExercisesByName(name: string, skip: number, limit: number) {
-    return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({
+ async searchExercisesByName(name: string, skip: number, limit: number) {
+      const exercises = await ExerciseModel.find({
         name: { $regex: `${name.toLowerCase()}` },
       })
         .skip(skip)
         .limit(limit);
       return exercises;
-    });
+    
   }
 
   searchExercisesByBodyPart(bodyPart: string, skip: number, limit: number) {

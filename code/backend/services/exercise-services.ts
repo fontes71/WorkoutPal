@@ -4,6 +4,7 @@ import cron from "node-cron";
 import { IExerciseData, IExerciseServices } from "../domain/interfaces";
 import { ERROR_EXERCISE, ERROR_WORKOUTPLAN } from "../utils/constants";
 import { isValidDate } from "../utils/functions/app/isValidDate";
+import { transactionHandler } from "../utils/functions/data";
 
 // try catch need on services cuz sometimes data throws error and the app stop inside services
 export class ExerciseServices implements IExerciseServices {
@@ -20,6 +21,7 @@ export class ExerciseServices implements IExerciseServices {
   };
 
   searchExercisesByName = async (name: string, skip: number, limit: number) => {
+    return transactionHandler(async () => {
     const exercises: Array<Exercise> = await this.data.searchExercisesByName(
       name,
       skip,
@@ -27,6 +29,7 @@ export class ExerciseServices implements IExerciseServices {
     );
     if (exercises.length == 0) return [];
     return exercises;
+  })
   };
 
   searchExercisesByBodyPart = async (
