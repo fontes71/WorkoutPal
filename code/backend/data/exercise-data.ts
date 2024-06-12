@@ -16,232 +16,214 @@ import { Exercise, ExerciseDB, User, WorkoutPlan } from "../domain/types";
 import getDate from "../utils/functions/app/getDate";
 
 export class ExerciseData implements IExerciseData {
-  getExerciseById(id: string) {
-    return mongodbHandler(async () => {
-      const exercise = ExerciseModel.findOne({ _id: id });
-      return exercise;
-    });
+  async getExerciseById(id: string) {
+    const exercise = await ExerciseModel.findOne({ _id: id });
+    return exercise;
   }
 
  async searchExercisesByName(name: string, skip: number, limit: number) {
-      const exercises = await ExerciseModel.find({
-        name: { $regex: `${name.toLowerCase()}` },
-      })
-        .skip(skip)
-        .limit(limit);
-      return exercises;
+    const exercises = await ExerciseModel.find({
+      name: { $regex: `${name.toLowerCase()}` },
+    })
+      .skip(skip)
+      .limit(limit);
+    return exercises;
     
   }
 
-  searchExercisesByBodyPart(bodyPart: string, skip: number, limit: number) {
-    return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({
-        bodyPart: { $regex: `${bodyPart.toLowerCase()}` },
-      })
-        .skip(skip)
-        .limit(limit);
-      return exercises;
-    });
+  async searchExercisesByBodyPart(bodyPart: string, skip: number, limit: number) {
+    const exercises = await ExerciseModel.find({
+      bodyPart: { $regex: `${bodyPart.toLowerCase()}` },
+    })
+      .skip(skip)
+      .limit(limit);
+    return exercises;
   }
 
-  searchExercisesByEquipment(equipment: string, skip: number, limit: number) {
-    return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({
-        equipment: { $regex: `${equipment.toLowerCase()}` },
-      })
-        .skip(skip)
-        .limit(limit);
-      return exercises;
-    });
+  async searchExercisesByEquipment(equipment: string, skip: number, limit: number) {
+    const exercises = await ExerciseModel.find({
+      equipment: { $regex: `${equipment.toLowerCase()}` },
+    })
+      .skip(skip)
+      .limit(limit);
+    return exercises;
   }
 
-  searchExercisesByTarget(target: string, skip: number, limit: number) {
-    return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({
-        target: { $regex: `${target.toLowerCase()}` },
-      })
-        .skip(skip)
-        .limit(limit);
-      return exercises;
-    });
+  async searchExercisesByTarget(target: string, skip: number, limit: number) {
+    const exercises = await ExerciseModel.find({
+      target: { $regex: `${target.toLowerCase()}` },
+    })
+      .skip(skip)
+      .limit(limit);
+    return exercises;
   }
 
-  searchExercisesBySecondaryMuscle(
+  async searchExercisesBySecondaryMuscle(
     secondaryMuscle: string,
     skip: number,
     limit: number
   ) {
-    return mongodbHandler(async () => {
-      const exercises = ExerciseModel.find({
-        secondaryMuscles: { $regex: `${secondaryMuscle.toLowerCase()}` },
-      })
-        .skip(skip)
-        .limit(limit);
-      return exercises;
-    });
+    const exercises = await ExerciseModel.find({
+      secondaryMuscles: { $regex: `${secondaryMuscle.toLowerCase()}` },
+    })
+      .skip(skip)
+      .limit(limit);
+    return exercises;
   }
 
-  getUserWorkoutPlans(token: string) {
-    return mongodbHandler(async () => {
-      const user: User | null = await UserModel.findOne({ token });
-      return user !== null ? user.workout_plans : null;
-    });
+  async getUserWorkoutPlans(token: string) {
+    const user: User | null = await UserModel.findOne({ token });
+    return user !== null ? user.workout_plans : null;
   }
 
-  createWorkoutPlan(
+  async createWorkoutPlan(
     token: string,
     workoutPlanName: string,
     description: string
   ) {
-    return mongodbHandler(async () => {
-      const user: User | null = await UserModel.findOne({ token });
-      const newWorkoutPlan = {
-        name: workoutPlanName,
-        description,
-        exercises: [],
-      };
+    const user: User | null = await UserModel.findOne({ token });
+    const newWorkoutPlan = {
+      name: workoutPlanName,
+      description,
+      exercises: [],
+    };
+    const alreadyExistsWorkoutPlan = ERROR_WORKOUTPLAN;
 
-      const alreadyExistsWorkoutPlan = ERROR_WORKOUTPLAN;
+    if (user === null) {
+      return null;
+    }
 
-      if (user === null) {
-        return null;
-      }
-      if (
-        user.workout_plans.some(
-          (workoutPlan) => workoutPlan.name === workoutPlanName
-        )
-      ) {
-        return alreadyExistsWorkoutPlan;
-      }
+    if (
+      user.workout_plans.some(
+        (workoutPlan) => workoutPlan.name === workoutPlanName
+      )
+    ) {
+      return alreadyExistsWorkoutPlan;
+    }
 
-      user.workout_plans.push(newWorkoutPlan);
-      await UserModel.updateOne({ token }, user);
-      return newWorkoutPlan;
-    });
+    user.workout_plans.push(newWorkoutPlan);
+    await UserModel.updateOne({ token }, user);
+    return newWorkoutPlan;
   }
 
-  addExerciseToWorkoutPlan(
+  async addExerciseToWorkoutPlan(
     token: string,
     workoutPlanName: string,
     exerciseId: string
   ) {
-    return mongodbHandler(async () => {
-      const user: User | null = await UserModel.findOne({ token });
-      let workoutPlanResult: WorkoutPlan = ERROR_WORKOUTPLAN;
-      if (user === null) {
-        return null;
+    const user: User | null = await UserModel.findOne({ token });
+    let workoutPlanResult: WorkoutPlan = ERROR_WORKOUTPLAN;
+
+    if (user === null) {
+      return null;
+    }
+
+    user.workout_plans.forEach((workoutPlan: WorkoutPlan) => {
+      if (
+        workoutPlan.name === workoutPlanName &&
+        !workoutPlan.exercises.includes(exerciseId)
+      ) {
+        workoutPlan.exercises.push(exerciseId);
+        workoutPlanResult = workoutPlan;
       }
-      user.workout_plans.forEach((workoutPlan: WorkoutPlan) => {
-        if (
-          workoutPlan.name === workoutPlanName &&
-          !workoutPlan.exercises.includes(exerciseId)
-        ) {
-          workoutPlan.exercises.push(exerciseId);
-          workoutPlanResult = workoutPlan;
-        }
-      });
-      await UserModel.updateOne({ token }, user);
-      return workoutPlanResult;
     });
+
+    await UserModel.updateOne({ token }, user);
+    return workoutPlanResult;
   }
 
-  removeExerciseFromWorkoutPlan(
+  async removeExerciseFromWorkoutPlan(
     token: string,
     workoutPlanName: string,
     exerciseId: string
   ): Promise<WorkoutPlan | null> {
-    return mongodbHandler(async () => {
-      const user: User | null = await UserModel.findOne({ token });
-      let workoutPlanResult: WorkoutPlan | null = ERROR_WORKOUTPLAN;
-      if (user === null) {
-        return null;
+    const user: User | null = await UserModel.findOne({ token });
+    let workoutPlanResult: WorkoutPlan | null = ERROR_WORKOUTPLAN;
+
+    if (user === null) {
+      return null;
+    }
+
+    user.workout_plans.forEach((workoutPlan: WorkoutPlan) => {
+      if (
+        workoutPlan.name === workoutPlanName &&
+        workoutPlan.exercises.includes(exerciseId)
+      ) {
+        workoutPlan.exercises = workoutPlan.exercises.filter(
+          (id) => id !== exerciseId
+        );
+        workoutPlanResult = workoutPlan;
       }
-      user.workout_plans.forEach((workoutPlan: WorkoutPlan) => {
-        if (
-          workoutPlan.name === workoutPlanName &&
-          workoutPlan.exercises.includes(exerciseId)
-        ) {
-          workoutPlan.exercises = workoutPlan.exercises.filter(
-            (id) => id !== exerciseId
-          );
-          workoutPlanResult = workoutPlan;
-        }
-      });
-      await UserModel.updateOne({ token }, user);
-      return workoutPlanResult;
     });
+
+    await UserModel.updateOne({ token }, user);
+    return workoutPlanResult;
   }
 
-  logWorkoutPlan(token: string, workoutPlanName: string) {
-    return mongodbHandler(async () => {
-      const user: User | null = await UserModel.findOne({ token });
-      const date = getDate();
+  async logWorkoutPlan(token: string, workoutPlanName: string) {
+    const user: User | null = await UserModel.findOne({ token });
+    const date = getDate();
 
-      if (user === null) {
-        return null;
-      }
+    if (user === null) {
+      return null;
+    }
 
-      const dayIndex = user.days.findIndex((day) => day.date === date);
-      const workoutPlan = user.workout_plans.find((workoutPlan) => workoutPlan.name === workoutPlanName);
+    const dayIndex = user.days.findIndex((day) => day.date === date);
+    const workoutPlan = user.workout_plans.find((workoutPlan) => workoutPlan.name === workoutPlanName);
 
-      if (workoutPlan === undefined) {
-        return ERROR_WORKOUTPLAN;
-      }
+    if (workoutPlan === undefined) {
+      return ERROR_WORKOUTPLAN;
+    }
 
-      if (dayIndex == -1) {
-        user.days = [
-          ...user.days,
-          { date: date, consumedFood: [], workoutPlansDone: [workoutPlanName] },
-        ];
-      } else {
-        const day = user.days[dayIndex];
-        user.days[dayIndex] = {
-          ...day,
-          workoutPlansDone: [...day.workoutPlansDone, workoutPlanName],
-        };
-      }
+    if (dayIndex == -1) {
+      user.days = [
+        ...user.days,
+        { date: date, consumedFood: [], workoutPlansDone: [workoutPlanName] },
+      ];
+    } else {
+      const day = user.days[dayIndex];
+      user.days[dayIndex] = {
+        ...day,
+        workoutPlansDone: [...day.workoutPlansDone, workoutPlanName],
+      };
+    }
 
-      await UserModel.updateOne({ token }, user);
-      return workoutPlan;
-    });
+    await UserModel.updateOne({ token }, user);
+    return workoutPlan;
   }
 
-  getDailyLoggedWorkoutPlans(token: string, day: string) {
-    return mongodbHandler(async () => {
-      const user: User | null = await UserModel.findOne({ token });
+  async getDailyLoggedWorkoutPlans(token: string, day: string) {
+    const user: User | null = await UserModel.findOne({ token });
 
-      if (user === null) {
-        return null;
-      }
+    if (user === null) {
+      return null;
+    }
 
-      const dailyLoggedWorkoutPlans = user.days.find((userDay) => userDay.date === day);
+    const dailyLoggedWorkoutPlans = user.days.find((userDay) => userDay.date === day);
 
-      if (dailyLoggedWorkoutPlans === undefined) {
-        return [];
-      }
+    if (dailyLoggedWorkoutPlans === undefined) {
+      return [];
+    }
 
-      return dailyLoggedWorkoutPlans.workoutPlansDone;
-    });
+    return dailyLoggedWorkoutPlans.workoutPlansDone;
   }
 
-  getExercisesFromWorkoutPlan(token: string, workoutPlanName: string) {
-    return mongodbHandler(async () => {
-      const user: User | null = await UserModel.findOne({ token });
+  async getExercisesFromWorkoutPlan(token: string, workoutPlanName: string) {
+    const user: User | null = await UserModel.findOne({ token });
 
-      if (user === null) {
-        return null;
-      }
+    if (user === null) {
+      return null;
+    }
 
-      const workoutPlan = user.workout_plans.find((workoutPlan) => workoutPlan.name === workoutPlanName);
+    const workoutPlan = user.workout_plans.find((workoutPlan) => workoutPlan.name === workoutPlanName);
 
-      if (workoutPlan === undefined) {
-        return [ERROR_EXERCISE];
-      }
+    if (workoutPlan === undefined) {
+      return [ERROR_EXERCISE];
+    }
 
-      const exercises = ExerciseModel.find({ _id: { $in: workoutPlan.exercises } });
+    const exercises = ExerciseModel.find({ _id: { $in: workoutPlan.exercises } });
 
-      return exercises;
-    });
+    return exercises;
   }
   
   async cloneExerciseDB() {

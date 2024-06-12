@@ -67,19 +67,19 @@ export interface IAuthServices {
 
 // DATA
 export interface IExerciseData {
-  getExerciseById(id: string): Promise<Exercise | null>;
+  getExerciseById(id: string): Promise<any>;
   searchExercisesByName(name: string,skip: number,limit: number): Promise<any>;
-  searchExercisesByBodyPart(bodyPart: string,skip: number, limit: number): Promise<Exercise[]>;
-  searchExercisesByEquipment(equipment: string,skip: number,limit: number): Promise<Exercise[]>;
-  searchExercisesByTarget(target: string,skip: number,limit: number): Promise<Exercise[]>;
-  searchExercisesBySecondaryMuscle(secondaryMuscle: string,skip: number,limit: number): Promise<Exercise[]>;
-  getUserWorkoutPlans(token: string): Promise<WorkoutPlan[] | null>;
-  createWorkoutPlan(token: string, workoutPlanName: string, description: string): Promise<WorkoutPlan | null>;
-  addExerciseToWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan | null>;
-  removeExerciseFromWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan | null>;
-  logWorkoutPlan(token: string, workoutPlan: string): Promise<WorkoutPlan | null>;
-  getDailyLoggedWorkoutPlans(token: string, day: string): Promise<Array<string> | null>;
-  getExercisesFromWorkoutPlan(token: string, workoutPlanName: string): Promise<Array<Exercise> | null>;
+  searchExercisesByBodyPart(bodyPart: string,skip: number, limit: number): Promise<any>;
+  searchExercisesByEquipment(equipment: string,skip: number,limit: number): Promise<any>;
+  searchExercisesByTarget(target: string,skip: number,limit: number): Promise<any>;
+  searchExercisesBySecondaryMuscle(secondaryMuscle: string,skip: number,limit: number): Promise<any>;
+  getUserWorkoutPlans(token: string): Promise<any>;
+  createWorkoutPlan(token: string, workoutPlanName: string, description: string): Promise<any>;
+  addExerciseToWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<any>;
+  removeExerciseFromWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<any>;
+  logWorkoutPlan(token: string, workoutPlan: string): Promise<any>;
+  getDailyLoggedWorkoutPlans(token: string, day: string): Promise<any>;
+  getExercisesFromWorkoutPlan(token: string, workoutPlanName: string): Promise<any>;
   cloneExerciseDB(): Promise<void>;
 }
 
