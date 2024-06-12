@@ -50,7 +50,7 @@ export const food_search_styles = StyleSheet.create({
   }
 });
 
-export const food_details_styles = StyleSheet.create({
+export const food_details_screen = StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -68,29 +68,7 @@ export const food_details_styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#dadada",
   },
-  overviewText: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    height: 90,
-  },
-  macronutrientsContainer: {
-    flexDirection: "row",
-  },
-  text_medium: {
-    fontSize: 18,
-  },
-  text_small: {
-    fontSize: 16,
-  },
-  quantityContainer: {
-    height: 90,
-    alignItems: "center",
-    justifyContent: "center",
-    borderBottomWidth: 1,
-    borderColor: "#dadada",
-    flexDirection: "row",
-  },
+
   moreContainer: {
     marginTop: 10,
     justifyContent: "center",
