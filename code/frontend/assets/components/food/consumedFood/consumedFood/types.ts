@@ -1,7 +1,6 @@
-import { Food } from "@/domain/types";
-
+import { Food } from "@/domain/exercise";
 
 export type ConsumedFoodProps = {
-    food: Food[] | null;
-    handleFoodPress: (item: Food) => void;
-  };
+  food: Food[] | null;
+  handleFoodPress: (item: Food) => void;
+};

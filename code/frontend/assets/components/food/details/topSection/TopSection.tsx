@@ -1,6 +1,6 @@
 import { Image, Pressable } from "react-native";
 import { Stack, router } from "expo-router";
-import { Food } from "@/domain/types";
+import { Food } from "@/domain/exercise";
 import { useContext } from "react";
 import { consumeFood } from "@/services/food";
 import { UserContext } from "@/assets/components/auth/AuthContext";

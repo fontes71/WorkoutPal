@@ -1,14 +1,12 @@
 import { Text, View } from "@/components/Themed";
-import { Food } from "@/domain/types";
+import { Food } from "@/domain/exercise";
 import FoodCover from "@/assets/components/FoodCover";
 import { addCommaIfNeeded, capitalizeWords, handleFoodPress } from "./utils";
 import styles from "./styles";
 import { FlatList, Pressable } from "react-native";
 import { FoodResultTextProps, FoodResultsProps } from "./types";
 
-const FoodResults: React.FC<FoodResultsProps> = ({
-  results
-}) => (
+const FoodResults: React.FC<FoodResultsProps> = ({ results }) => (
   <FlatList
     data={results}
     renderItem={({ item }) => (

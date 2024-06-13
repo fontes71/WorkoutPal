@@ -1,6 +1,5 @@
-import { Food } from "@/domain/types";
+import { Food } from "@/domain/exercise";
 
 export type NutrientsOverviewProps = {
-    food: Food[] | null;
-  };
-  
+  food: Food[] | null;
+};

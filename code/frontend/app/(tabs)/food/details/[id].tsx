@@ -2,17 +2,14 @@ import { food_details_screen } from "@/assets/styles/food";
 import { Text, View } from "@/components/Themed";
 import { useLocalSearchParams } from "expo-router";
 import FoodCover from "@/assets/components/FoodCover";
-import { Food } from "@/domain/types";
 import TopSection from "@/assets/components/food/details/topSection/TopSection";
 import OverviewText from "@/assets/components/food/details/overviewText/OverviewText";
 import Quantity from "@/assets/components/food/details/quantity/Quantity";
 import More from "@/assets/components/food/details/more/More";
 
-
 export default function FoodDetailsScreen() {
   const { foodJSON } = useLocalSearchParams<{ foodJSON: string }>();
-  if (!foodJSON)
-    return <Text>Error</Text>
+  if (!foodJSON) return <Text>Error</Text>;
   const food = JSON.parse(foodJSON) as Food;
 
   return (

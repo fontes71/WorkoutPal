@@ -1,50 +1,57 @@
-import { Image, FlatList, StyleSheet, TouchableOpacity, Pressable, RefreshControl  } from "react-native";
+import {
+  Image,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  Pressable,
+  RefreshControl,
+} from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import { Link, Stack, router } from "expo-router";
-import { SearchBar } from '@rneui/themed';
+import { SearchBar } from "@rneui/themed";
 import { useState, useEffect, useContext } from "react";
-import { Exercise, WorkoutPlanResponse } from "@/domain/types";
+import { Exercise, WorkoutPlanResponse } from "@/domain/exercise";
 import { localhost } from "@/constants";
-import { WorkoutPlan } from "@/domain/types";
+import { WorkoutPlan } from "@/domain/exercise";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { Button } from "@rneui/base";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import CreateWorkoutPlansModalScreen from "./createWorkoutPlanModal";
 
 const BottomText = ({ str }: { str: string | null }) => (
-    <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
+  <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
 );
 
 const WorkoutPlanResult: React.FC<WorkoutPlan> = ({ name, description }) => {
-    return (
-        <View style={search_exercises_styles.workoutPlansResultContainer}>
-          <View style={search_exercises_styles.exerciseResultTextContainer}>
-            <Text style={search_exercises_styles.topText}>{name}</Text>
-            <BottomText str={'Description: ' + description} />
-          </View>
-        </View>
-    );
-}
+  return (
+    <View style={search_exercises_styles.workoutPlansResultContainer}>
+      <View style={search_exercises_styles.exerciseResultTextContainer}>
+        <Text style={search_exercises_styles.topText}>{name}</Text>
+        <BottomText str={"Description: " + description} />
+      </View>
+    </View>
+  );
+};
 
 const handleWorkoutPlanPress = (workoutPlan: WorkoutPlan) => {
-    router.push({
-        pathname: `/exercise/workoutPlan-details/${workoutPlan.name}`,
-        params: { workoutPlanJSON: JSON.stringify(workoutPlan) }
-    });
-}
+  router.push({
+    pathname: `/exercise/workoutPlan-details/${workoutPlan.name}`,
+    params: { workoutPlanJSON: JSON.stringify(workoutPlan) },
+  });
+};
 
 export default function WorkoutPlansScreen() {
-    const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>([]);
-    const [token, setToken] = useState<string>("");
-    const [modalVisible, setModalVisible] = useState(false);
+  const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>([]);
+  const [token, setToken] = useState<string>("");
+  const [modalVisible, setModalVisible] = useState(false);
 
-    useEffect(() => {
-        const fetchWorkoutPlans = async () => {
-            //const { userContext } = useContext(UserContext);
+  useEffect(() => {
+    const fetchWorkoutPlans = async () => {
+      //const { userContext } = useContext(UserContext);
 
-            /*if (userContext === null) {
+      /*if (userContext === null) {
                 return;
             }
 
@@ -53,85 +60,104 @@ export default function WorkoutPlansScreen() {
             }
 
             setToken(userContext.token);*/
-            setToken("147f3bb2-0791-41c2-8805-8dc660d9a157")
-           
-            const response = await fetch(`${localhost}8080/api/exercises/workoutPlans`, 
-                {
-                    method: 'GET',
-                    headers: {
-                      'Authorization': `Bearer 147f3bb2-0791-41c2-8805-8dc660d9a157`,
-                      'Content-Type': 'application/json',
-                    },
-                }
-            );
+      setToken("147f3bb2-0791-41c2-8805-8dc660d9a157");
 
-            if (response.status !== 200) {
-                return;
-            }
-
-            const workoutPlans: WorkoutPlanResponse = await response.json();
-            setWorkoutPlans(workoutPlans.obj);
+      const response = await fetch(
+        `${localhost}8080/api/exercises/workoutPlans`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer 147f3bb2-0791-41c2-8805-8dc660d9a157`,
+            "Content-Type": "application/json",
+          },
         }
+      );
 
-        fetchWorkoutPlans();
-    }, []);
+      if (response.status !== 200) {
+        return;
+      }
 
-    const handleAddButtonPress = () => {
-        router.push({ 
-            pathname: `/exercise/createWorkoutPlanModal`,
-            params: { token: token }
-        });
-    }
+      const workoutPlans: WorkoutPlanResponse = await response.json();
+      setWorkoutPlans(workoutPlans.obj);
+    };
 
-    const handleReload = async (token: string) => {
-        const response = await fetch(`${localhost}8080/api/exercises/workoutPlans`, 
-            {
-                method: 'GET',
-                headers: {
-                  'Authorization': `Bearer 147f3bb2-0791-41c2-8805-8dc660d9a157`,
-                  'Content-Type': 'application/json',
-                },
-            }
-        );
-    
-        if (response.status !== 200) {
-            return;
-        }
-    
-        const workoutPlans: WorkoutPlanResponse = await response.json();
-        setWorkoutPlans(workoutPlans.obj);
-    }
+    fetchWorkoutPlans();
+  }, []);
 
-    return (
-        <View>
-            <Stack.Screen options={{ title: "Workout Plans" }}/>
-            <View style={search_exercises_styles.workoutPlansResultContainer}>
-                { workoutPlans.length !== 0 ?
-                    <View>
-                        <FlatList
-                            data={workoutPlans}
-                            renderItem={({ item }) => 
-                                <Pressable onPress={() => {handleWorkoutPlanPress(item)}}>
-                                    <WorkoutPlanResult {...item} />
-                                </Pressable>
-                            }
-                            keyExtractor={(item: WorkoutPlan) => item.name}
-                            refreshControl={
-                                <RefreshControl
-                                    refreshing={false}
-                                    onRefresh={() => handleReload(token)}
-                                />
-                            }
-                        /> 
-                        <Button onPress={() => {setModalVisible(true)}}>Create Workout Plan</Button>
-                        <CreateWorkoutPlansModalScreen isVisible={modalVisible} onClose={() => {setModalVisible(false)}}/>
-                    </View> : 
-                    <View style={search_exercises_styles.exerciseResultContainer}>
-                        <Text style={search_exercises_styles.topText}>Loading your workout plans...</Text>
-                    </View>
-                }
-            </View>
-        </View>
+  const handleAddButtonPress = () => {
+    router.push({
+      pathname: `/exercise/createWorkoutPlanModal`,
+      params: { token: token },
+    });
+  };
+
+  const handleReload = async (token: string) => {
+    const response = await fetch(
+      `${localhost}8080/api/exercises/workoutPlans`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer 147f3bb2-0791-41c2-8805-8dc660d9a157`,
+          "Content-Type": "application/json",
+        },
+      }
     );
-    
+
+    if (response.status !== 200) {
+      return;
+    }
+
+    const workoutPlans: WorkoutPlanResponse = await response.json();
+    setWorkoutPlans(workoutPlans.obj);
+  };
+
+  return (
+    <View>
+      <Stack.Screen options={{ title: "Workout Plans" }} />
+      <View style={search_exercises_styles.workoutPlansResultContainer}>
+        {workoutPlans.length !== 0 ? (
+          <View>
+            <FlatList
+              data={workoutPlans}
+              renderItem={({ item }) => (
+                <Pressable
+                  onPress={() => {
+                    handleWorkoutPlanPress(item);
+                  }}
+                >
+                  <WorkoutPlanResult {...item} />
+                </Pressable>
+              )}
+              keyExtractor={(item: WorkoutPlan) => item.name}
+              refreshControl={
+                <RefreshControl
+                  refreshing={false}
+                  onRefresh={() => handleReload(token)}
+                />
+              }
+            />
+            <Button
+              onPress={() => {
+                setModalVisible(true);
+              }}
+            >
+              Create Workout Plan
+            </Button>
+            <CreateWorkoutPlansModalScreen
+              isVisible={modalVisible}
+              onClose={() => {
+                setModalVisible(false);
+              }}
+            />
+          </View>
+        ) : (
+          <View style={search_exercises_styles.exerciseResultContainer}>
+            <Text style={search_exercises_styles.topText}>
+              Loading your workout plans...
+            </Text>
+          </View>
+        )}
+      </View>
+    </View>
+  );
 }

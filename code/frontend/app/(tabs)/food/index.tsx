@@ -3,7 +3,6 @@ import { Text, View } from "@/components/Themed";
 import { Link, Stack, router } from "expo-router";
 import { useContext, useEffect, useState } from "react";
 import getDate from "@/assets/functions/getDate";
-import { Food } from "@/domain/types";
 import foodItemRoute from "@/assets/functions/foodItemRoute";
 import { consumedFoodOfTheDay } from "@/services/food";
 import { UserContext } from "@/assets/components/auth/AuthContext";

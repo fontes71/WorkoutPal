@@ -1,18 +1,23 @@
-import { Image, FlatList, StyleSheet, TouchableOpacity, Pressable  } from "react-native";
+import {
+  Image,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  Pressable,
+} from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import { Stack, router } from "expo-router";
 import { SearchBar } from "@rneui/themed";
 import { useState, useEffect } from "react";
-import { Exercise, ExerciseResponse } from "@/domain/types";
+import { Exercise, ExerciseResponse } from "@/domain/exercise";
 import { localhost } from "@/constants";
 import search_exercises_styles from "@/assets/styles/exercises";
 
 const BottomText = ({ str }: { str: string | null }) => (
   <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
 );
-  
 
 const ExerciseResult: React.FC<Exercise> = ({ name, gifUrl, equipment }) => {
   return (
@@ -56,14 +61,15 @@ export default function SearchExerciseScreen() {
       );
 
       if (response.status !== 200) {
-        const errorMessage: ExerciseResponse = await response.json()
+        const errorMessage: ExerciseResponse = await response.json();
         alert(errorMessage.message);
         return;
       }
 
       const exercises: ExerciseResponse = await response.json();
-      const modifiedExercises: Exercise[] =
-        removeParenthesesFromExerciseName(exercises.obj);
+      const modifiedExercises: Exercise[] = removeParenthesesFromExerciseName(
+        exercises.obj
+      );
       setExercises(modifiedExercises);
     };
 
@@ -74,12 +80,12 @@ export default function SearchExerciseScreen() {
     setExerciseName(value);
   };
 
-    const handleExercisePress = async (exercise: Exercise) => {
-        router.push({
-            pathname: `/exercise/exercise-details/${exercise._id}`,
-            params: { exerciseJSON: JSON.stringify(exercise) }
-        });
-    }
+  const handleExercisePress = async (exercise: Exercise) => {
+    router.push({
+      pathname: `/exercise/exercise-details/${exercise._id}`,
+      params: { exerciseJSON: JSON.stringify(exercise) },
+    });
+  };
 
   return (
     <View>
