@@ -7,10 +7,7 @@ export const food_styles = StyleSheet.create({
         justifyContent: "flex-start",
        
       },
-      nutrients : {
-        flexDirection: "row",
-        paddingBottom: 20
-      },
+   
       title: {
         fontSize: 20,
         fontWeight: "bold",
@@ -21,34 +18,7 @@ export const food_styles = StyleSheet.create({
 })
 
 
-export const food_search_styles = StyleSheet.create({
-  foodResultContainer: {
-    flexDirection: "row",
-    borderBottomWidth: 1,
-    borderBottomColor: "#dadada",
-    padding: 10,
-  },
-  foodResultTextContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-  },
-  bottomTextContainer: {
-    flexDirection: "row",
-  },
-  topText: {
-    fontWeight: "bold",
-    paddingBottom: 5,
-    fontSize: 16,
-  },
-  bottomText: {
-    fontSize: 14,
-  },
-  absoluteFillObject: {
-    width:400,
-    height:400
-  }
-});
+
 
 export const food_details_screen = StyleSheet.create({
   container: {
