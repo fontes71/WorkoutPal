@@ -11,7 +11,6 @@ import { Text, View } from "@/components/Themed";
 import { Stack, router } from "expo-router";
 import { SearchBar } from "@rneui/themed";
 import { useState, useEffect } from "react";
-import { Exercise, ExerciseResponse } from "@/domain/exercise";
 import { localhost } from "@/constants";
 import search_exercises_styles from "@/assets/styles/exercises";
 

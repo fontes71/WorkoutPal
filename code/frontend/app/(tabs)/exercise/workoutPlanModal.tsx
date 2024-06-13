@@ -15,7 +15,6 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import workoutPlans_styles from "@/assets/styles/workoutPlans";
 import { useContext, useEffect, useState } from "react";
 import { localhost } from "@/constants";
-import { WorkoutPlan, WorkoutPlanResponse } from "@/domain/exercise";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import modal_styles from "@/assets/styles/modals";
 import { MaterialIcons } from "@expo/vector-icons";

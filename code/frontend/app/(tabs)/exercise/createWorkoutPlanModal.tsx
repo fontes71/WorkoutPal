@@ -17,7 +17,6 @@ import workoutPlans_styles from "@/assets/styles/workoutPlans";
 import { useEffect, useState } from "react";
 import { getLocalUser } from "@/assets/functions/auth";
 import { localhost } from "@/constants";
-import { WorkoutPlan, WorkoutPlanResponse } from "@/domain/exercise";
 import { Button } from "@rneui/base";
 import modal_styles from "@/assets/styles/modals";
 import { MaterialIcons } from "@expo/vector-icons";
