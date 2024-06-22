@@ -1,14 +1,48 @@
 import { Text, View } from "@/components/Themed";
-import { Food } from "@/domain/exercise";
 import FoodCover from "@/assets/components/FoodCover";
-import { addCommaIfNeeded, capitalizeWords, handleFoodPress } from "./utils";
+import {  capitalizeWords, fetchResults, getBrandString, getCaloriesString, handleFoodPress } from "./utils";
 import styles from "./styles";
 import { FlatList, Pressable } from "react-native";
-import { FoodResultTextProps, FoodResultsProps } from "./types";
+import { useEffect, useState } from "react";
 
-const FoodResults: React.FC<FoodResultsProps> = ({ results }) => (
-  <FlatList
+const FoodResults: React.FC<FoodResultsProps> = ({ name }) => {
+  const [results, setResults] = useState<Food[]>([])
+  const [isFetching, setIsFetching] = useState(false);
+  const [page, setPage] = useState(1);
+
+  console.log(results)
+
+ 
+  
+  useEffect(() => {
+
+    if (!isFetching && results.length < 60) 
+        loadMoreResults();
+    
+      
+  }, [page, name]);
+
+  const handlePageNum = () => {
+ 
+    if (!isFetching)
+    setPage(page + 1)
+  }
+  
+  async function loadMoreResults() {
+    setIsFetching(true);
+
+    console.log("USEEFFECT")
+    await fetchResults(name, setResults, page);
+
+    setIsFetching(false);
+  }
+
+
+  
+  return (<FlatList
     data={results}
+    onEndReached={handlePageNum}
+
     renderItem={({ item }) => (
       <Pressable
         onPress={() => {
@@ -19,27 +53,19 @@ const FoodResults: React.FC<FoodResultsProps> = ({ results }) => (
       </Pressable>
     )}
   />
-);
+  )}
 
 const FoodResult: React.FC<Food> = ({
   name,
   imageUrl,
   brand,
-  calories,
+  calories ,
   quantity,
 }) => {
   const nameString = name || brand;
-  let brandString = name && brand ? brand : ``;
-  let caloriesString = calories ? `${calories} cal ` : ``;
-
-  brandString = addCommaIfNeeded(
-    !(brandString && (caloriesString || quantity)),
-    brandString
-  );
-  caloriesString = addCommaIfNeeded(
-    !(caloriesString && quantity),
-    caloriesString
-  );
+  const caloriesString = getCaloriesString(calories, quantity)
+  const brandString = getBrandString(name, brand, caloriesString, quantity)
+  
   return (
     <>
       {nameString && (

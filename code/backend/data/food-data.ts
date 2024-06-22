@@ -1,14 +1,10 @@
 import { IFoodData } from "../domain/interfaces";
-import { ConsumedFood, Day, User } from "../domain/types";
-import getDate from "../utils/functions/app/getDate";
-import { mongodbHandler } from "../utils/functions/data";
-import { UserModel } from "../mongoose/schemas";
 import getSearchByNameApiUrl from "../utils/functions/app/getSearchByNameApiUrl";
 import getSearchByBarcodeApiUrl from "../utils/functions/app/getSearchByBarcodeApiUrl";
 
 export class FoodData implements IFoodData {
-  async searchByName(query: string, skip: number, limit: number) {
-    const res = await fetch(getSearchByNameApiUrl(query));
+  async searchByName(query: string, page: number, limit: number) {
+    const res = await fetch(getSearchByNameApiUrl(query, page, limit));
     const { products } = await res.json();
     return products;
   }

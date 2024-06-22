@@ -1,12 +1,12 @@
-import { Food } from "@/domain/exercise";
-
-export type FoodResultTextProps = {
+type FoodResultTextProps = {
   nameString: string;
   brandString: string;
   calorieString: string;
   quantity: string;
 };
 
-export type FoodResultsProps = {
-  results: Food[];
+type FoodResultsProps = {
+  name: string
 };
+
+

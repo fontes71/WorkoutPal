@@ -2,8 +2,8 @@ import fetchData from "@/assets/functions/getData";
 import { localhost } from "@/constants";
 
 
-export const searchFoodByName = async (query: string) =>
-  fetchData(`${localhost}/api/food/search/name?query=${query}`);
+export const searchFoodByName = async (query: string, page: number) =>
+  fetchData(`${localhost}/api/food/search/name?query=${query}&page=${page}`);
 
 export const searchFoodByBarcode = async (barcode: string) =>
   fetchData(`${localhost}/api/food/search/barcode?barcode=${barcode}`);

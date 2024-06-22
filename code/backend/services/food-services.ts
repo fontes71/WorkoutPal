@@ -18,6 +18,7 @@ import {
 import { apiFoodToFood } from "../utils/functions/app/apiFoodToFood";
 import getDate from "../utils/functions/app/getDate";
 import { mongodbHandler, transactionHandler } from "../utils/functions/data";
+import { SEARCH_FOOD_BY_NAME_RES_LIMIT } from "../utils/constants";
 
 export class FoodServices implements IFoodServices {
   private foodData: IFoodData;
@@ -28,12 +29,12 @@ export class FoodServices implements IFoodServices {
     this.userData = userData;
   }
 
-  searchByName = async (query: string, skip: number, limit: number) => {
+  searchByName = async (query: string, page: number) => {
     return transactionHandler(async () => {
       const apiFood: FoodFactsApiFood[] = await this.foodData.searchByName(
         query,
-        skip,
-        limit
+        page,
+        SEARCH_FOOD_BY_NAME_RES_LIMIT
       );
 
       if (!apiFood.length) return [];

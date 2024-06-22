@@ -1,4 +1,3 @@
-import { Food } from "@/domain/exercise";
 import { searchFoodByName } from "@/services/food";
 
 const handleSearchSubmit = (

@@ -6,7 +6,7 @@ type Food = {
     quantity: string,
     quantityUnit: string;
     imageUrl: string;
-    calories: number;
+    calories: number | null;
     protein: string | null;
     fat: string | null;
     carbs: string | null;
