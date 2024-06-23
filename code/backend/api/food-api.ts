@@ -17,9 +17,14 @@ export class FoodApi implements IFoodApi {
       const { query } = req.query;
       const { page } = req.query;
 
+     
+  
+
       if (!query || typeof query != "string" || !page || typeof page != "string") throw InvalidParamsError;
 
       const food: Food[] = await this.service.searchByName(query, parseInt(page));
+
+ 
       sendResponse(res, StatusCode.Success, "Search successful", food)
     });
   };

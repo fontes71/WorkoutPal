@@ -9,4 +9,8 @@ type FoodResultsProps = {
   name: string
 };
 
+type ResultProps = {
+  item: Food; 
+  handleFoodPress: (food: Food) => Promise<void>;
+}
 

@@ -3,12 +3,9 @@ import { useState } from "react";
 import FoodResults from "@/assets/components/food/search/foodResults/FoodResults";
 import FoodSearchBar from "@/assets/components/food/search/foodSearchBar/FoodSearchBar";
 
-// Resolver erro das keys
-// Resolver erro do null
+// Rate limiting
 const SearchByName = () => {
     const [name, setName] = useState("");
-
-    console.log("name =>", name)
 
     return (  
     <>

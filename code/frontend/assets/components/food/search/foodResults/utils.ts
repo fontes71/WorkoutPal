@@ -38,6 +38,9 @@ export const fetchResults = async (
   page: number
 ) => {
 
-    const newResults: Food[] = await searchFoodByName(name, page);
+    const newResults: Food[] | null = await searchFoodByName(name, page);
+
+    if (newResults == null)
+      return 
     setResults((res) =>  newSearchOrAppend(res, newResults, page));
 };
