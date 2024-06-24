@@ -3,12 +3,11 @@ import { FlatList, Pressable, RefreshControl  } from "react-native";
 import { Text, View } from "react-native";
 import { Stack, router } from "expo-router";
 import { useState, useEffect } from "react";
-import { WorkoutPlanResponse } from "@/domain/types";
 import { localhost } from "@/constants";
-import { WorkoutPlan } from "@/domain/types";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { Button } from "@rneui/base";
 import CreateWorkoutPlansModalScreen from "@modals/createWorkoutPlan";
+import { getLocalUser } from "@/assets/functions/auth";
 
 const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
@@ -36,38 +35,32 @@ export default function WorkoutPlansScreen() {
     const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>([]);
     const [token, setToken] = useState<string>("");
     const [modalVisible, setModalVisible] = useState(false);
+    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
         const fetchWorkoutPlans = async () => {
-            //const { userContext } = useContext(UserContext);
-
-            /*if (userContext === null) {
-                return;
-            }
-
-            if (userContext.token === undefined) {
-                return;
-            }
-
-            setToken(userContext.token);*/
-            setToken("147f3bb2-0791-41c2-8805-8dc660d9a157")
+            const user = await getLocalUser();
+            setToken(user.token);
            
             const response = await fetch(`${localhost}8080/api/exercises/workoutPlans`, 
                 {
                     method: 'GET',
                     headers: {
-                      'Authorization': `Bearer 147f3bb2-0791-41c2-8805-8dc660d9a157`,
+                      'Authorization': `Bearer ${user.token}`,
                       'Content-Type': 'application/json',
                     },
                 }
             );
 
             if (response.status !== 200) {
+                const errorMessage = await response.json();
+                alert(errorMessage.message);
                 return;
             }
 
             const workoutPlans: WorkoutPlanResponse = await response.json();
             setWorkoutPlans(workoutPlans.obj);
+            setLoaded(true);
         }
 
         fetchWorkoutPlans();
@@ -85,7 +78,7 @@ export default function WorkoutPlansScreen() {
             {
                 method: 'GET',
                 headers: {
-                  'Authorization': `Bearer 147f3bb2-0791-41c2-8805-8dc660d9a157`,
+                  'Authorization': `Bearer ${token}`,
                   'Content-Type': 'application/json',
                 },
             }
@@ -99,11 +92,17 @@ export default function WorkoutPlansScreen() {
         setWorkoutPlans(workoutPlans.obj);
     }
 
+    useEffect(() => {
+        if (modalVisible == false) {
+            handleReload(token);
+        }
+    }, [modalVisible]);
+
     return (
         <View>
             <Stack.Screen options={{ title: "Workout Plans" }}/>
             <View style={search_exercises_styles.workoutPlansResultContainer}>
-                { workoutPlans.length !== 0 ?
+                { loaded ?
                     <View>
                         <FlatList
                             data={workoutPlans}

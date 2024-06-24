@@ -5,14 +5,16 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import workoutPlans_styles from '@/assets/styles/workoutPlans';
 import { useState } from 'react';
 import { localhost } from '@/constants';
-import { WorkoutPlanResponse } from '@/domain/types';
 import { Button } from '@rneui/base';
 import modal_styles from '@/assets/styles/modals';
 import { MaterialIcons } from '@expo/vector-icons';
+import { getLocalUser } from '@/assets/functions/auth';
 
 export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { isVisible: boolean, onClose: () => void }) {
-  const { token } = useLocalSearchParams<{ token: string }>();
-  const tokenString = token as string;
+  let userToken = "";
+  getLocalUser().then((user) => {
+    userToken = user.token;
+  });
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
@@ -63,7 +65,7 @@ export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { 
               onChangeText={setDescription}
            />
            <View style={workoutPlans_styles.createWorkoutPlanContainer}>
-            <Button onPress={() => {handleCreateButtonPress(name, description, tokenString)}}>Create</Button>
+            <Button onPress={() => {handleCreateButtonPress(name, description, userToken)}}>Create</Button>
            </View>
           </View>
 

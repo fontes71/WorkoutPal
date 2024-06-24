@@ -5,10 +5,9 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import workoutPlans_styles from '@/assets/styles/workoutPlans';
 import { useContext, useEffect, useState } from 'react';
 import { localhost } from '@/constants';
-import { WorkoutPlan, WorkoutPlanResponse } from '@/domain/types';
-import { UserContext } from '@/assets/components/auth/AuthContext';
 import modal_styles from '@/assets/styles/modals';
 import { MaterialIcons } from '@expo/vector-icons';
+import { getLocalUser } from '@/assets/functions/auth';
 
 const BottomText = ({ str }: { str: string | null }) => (
   <>{str && <Text style={workoutPlans_styles.bottomText}>{str}</Text>}</>
@@ -25,31 +24,20 @@ const WorkoutPlanResult: React.FC<any> = ({ name, description }) => {
   );
 }
 
-export default function WorkoutPlansModalScreen({ isVisible, onClose }: { isVisible: boolean, onClose: () => void }){
-  const {exerciseId} = useLocalSearchParams<{ exerciseId: string }>();
+export default function WorkoutPlansModalScreen({ isVisible, onClose, exerciseId }: { isVisible: boolean, onClose: () => void, exerciseId: string}){
   const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>([]);
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchWorkoutPlans = async () => {
-        //const { userContext } = useContext(UserContext);
-
-        /*if (!userContext) {
-            return;
-        }
-
-        if (userContext.token === undefined) {
-            return;
-        }
-
-        setToken(userContext.token);*/
-        setToken("147f3bb2-0791-41c2-8805-8dc660d9a157");
+        const user = await getLocalUser();
+        setToken(user.token);
 
         const response = await fetch(`${localhost}8080/api/exercises/workoutPlans`,
             {
                 method: 'GET',
                 headers: {
-                  'Authorization': `Bearer 147f3bb2-0791-41c2-8805-8dc660d9a157`,
+                  'Authorization': `Bearer ${user.token}`,
                   'Content-Type': 'application/json',
                 },
             }
@@ -69,7 +57,6 @@ export default function WorkoutPlansModalScreen({ isVisible, onClose }: { isVisi
   }, []);
 
   const handleWorkoutPlanPress = async (workoutPlan: WorkoutPlan) => {
-    console.log(workoutPlan)
     const response = await fetch(`${localhost}8080/api/exercises/workoutPlans/${workoutPlan.name}`,
       {
         method: 'POST',

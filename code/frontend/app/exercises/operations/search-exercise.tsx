@@ -8,7 +8,6 @@ import { useState, useEffect } from "react";
 import { localhost } from "@/constants";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { Text, View } from "react-native";
-import { Exercise, ExerciseResponse } from "@/domain/types";
 import { SearchBar } from "@rneui/themed";
 
 const BottomText = ({ str }: { str: string | null }) => (

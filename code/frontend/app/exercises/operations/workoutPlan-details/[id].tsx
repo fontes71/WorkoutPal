@@ -1,12 +1,12 @@
 import { FlatList, Image, Pressable, Text, View } from "react-native";
 
-import { Exercise, ExercisesFromWorkoutPlanResponse, WorkoutPlan, WorkoutPlanResponse } from "@/domain/types";
 import { useLocalSearchParams, Stack, router } from "expo-router";
 import { Button, color } from "@rneui/base";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { useContext, useEffect, useState } from "react";
 import { localhost } from "@/constants";
 import { UserContext } from "@/assets/components/auth/AuthContext";
+import { getLocalUser } from "@/assets/functions/auth";
 
 const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
@@ -86,25 +86,14 @@ const WorkoutPlanDetailsScreen = () => {
         const fetchExercises = async () => {
             
             try {
-                //const { userContext } = useContext(UserContext);
-
-                /*if (!userContext) {
-                    return;
-                }
-
-                if (userContext.token === undefined) {
-                    return;
-                }
-
-                setToken(userContext.token)*/
-
-                setToken("147f3bb2-0791-41c2-8805-8dc660d9a157");
+                const user = await getLocalUser();
+                setToken(user.token);
 
                 const response = await fetch(`${localhost}8080/api/exercises/workoutPlans/${workoutPlan.name}`,
                     {
                         method: 'GET',
                         headers: {
-                          'Authorization': `Bearer 147f3bb2-0791-41c2-8805-8dc660d9a157`,
+                          'Authorization': `Bearer ${user.token}`,
                           'Content-Type': 'application/json',
                         },
                     }
@@ -185,6 +174,7 @@ const WorkoutPlanDetailsScreen = () => {
                         <BottomText str={'Description: ' + workoutPlan.description} />
                         <Text style={search_exercises_styles.topText}></Text>
                         <Text style={search_exercises_styles.topText}>Exercises:</Text>
+                        {exercises.length === 0 && <Text style={search_exercises_styles.bottomText}>No exercises added yet</Text>}
                         <FlatList
                             data={exercises}
                             renderItem={({ item }) => 

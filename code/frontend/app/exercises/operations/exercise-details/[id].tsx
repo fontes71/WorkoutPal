@@ -1,5 +1,4 @@
 import { Image, Text, View } from "react-native";
-import { Exercise } from "@/domain/types";
 import { useLocalSearchParams, Stack, router } from "expo-router";
 import { Button } from "@rneui/base";
 import search_exercises_styles from "@/assets/styles/exercises";
@@ -50,7 +49,7 @@ const ExerciseDetailsScreen = () => {
                         <Text key={index} style={search_exercises_styles.bottomText}>{instruction}</Text>
                     ))}
                     <Button onPress={() => {setModalVisible(true)}}>Add To Workout Plan</Button>
-                    <WorkoutPlansModalScreen isVisible={modalVisible} onClose={() => {setModalVisible(false)}}/>
+                    <WorkoutPlansModalScreen isVisible={modalVisible} onClose={() => {setModalVisible(false)}} exerciseId={exercise._id}/>
                 </View>
             </View>
         </View>
