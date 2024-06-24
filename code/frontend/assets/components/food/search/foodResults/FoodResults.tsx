@@ -4,7 +4,6 @@ import styles from "./styles";
 import { FlatList, Pressable, Text, View  } from "react-native";
 import { PureComponent, useEffect, useRef, useState } from "react";
 import React from "react";
-import { Food } from "@/domain/food";
 
 const FoodResults: React.FC<FoodResultsProps> = ({ name }) => {
   const [results, setResults] = useState<Food[]>([])

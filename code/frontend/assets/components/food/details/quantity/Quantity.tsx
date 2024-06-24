@@ -1,4 +1,4 @@
-import { Text, View } from "@/components/Themed";
+import { Text, View } from "react-native";
 import { display } from "./utils";
 import styles from "./styles";
 
