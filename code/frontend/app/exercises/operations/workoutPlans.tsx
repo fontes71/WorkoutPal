@@ -70,6 +70,13 @@ export default function WorkoutPlansScreen() {
         fetchWorkoutPlans();
     }, []);
 
+    const handleAddButtonPress = () => {
+        router.push({ 
+            pathname: `modals/createWorkoutPlan`,
+            params: { token: token }
+        });
+    }
+
     const handleReload = async (token: string) => {
         const response = await fetch(`${localhost}/api/exercises/workoutPlans`, 
             {
