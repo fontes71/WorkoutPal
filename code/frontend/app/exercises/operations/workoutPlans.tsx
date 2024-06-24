@@ -6,8 +6,8 @@ import { useState, useEffect } from "react";
 import { localhost } from "@/constants";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { Button } from "@rneui/base";
-import CreateWorkoutPlansModalScreen from "@modals/createWorkoutPlan";
 import { getLocalUser } from "@/assets/functions/auth";
+import CreateWorkoutPlansModalScreen from "@/app/modals/createWorkoutPlan";
 
 const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
@@ -69,13 +69,6 @@ export default function WorkoutPlansScreen() {
 
         fetchWorkoutPlans();
     }, []);
-
-    const handleAddButtonPress = () => {
-        router.push({ 
-            pathname: `modals/createWorkoutPlan`,
-            params: { token: token }
-        });
-    }
 
     const handleReload = async (token: string) => {
         const response = await fetch(`${localhost}/api/exercises/workoutPlans`, 

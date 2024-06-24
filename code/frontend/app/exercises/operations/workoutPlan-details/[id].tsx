@@ -1,4 +1,4 @@
-import { FlatList, Image, Pressable, Text, View } from "react-native";
+import { Alert, FlatList, Image, Pressable, Text, View } from "react-native";
 
 import { useLocalSearchParams, Stack, router } from "expo-router";
 import { Button, color } from "@rneui/base";
@@ -145,25 +145,39 @@ const WorkoutPlanDetailsScreen = () => {
     }
 
     const handleDeletePress = async (workoutPlanName:string, exerciseId: string, token: string) => {
-        const response = await fetch(`${localhost}/api/exercises/workoutPLans/${workoutPlanName}/exercise/${exerciseId}`,
-            {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                }
-            }
-        )
-    
-        if (response.status !== 200) {
-            const errorMessage: WorkoutPlanResponse = await response.json()
-            alert(errorMessage.message);
-            return;
+        try {
+            Alert.alert("Delete Exercise", "Are you sure you want to delete this exercise?", [
+                {
+                    text: "Yes",
+                    onPress: async () => { 
+                        const response = await fetch(`${localhost}/api/exercises/workoutPLans/${workoutPlanName}/exercise/${exerciseId}`,
+                            {
+                                method: 'DELETE',
+                                headers: {
+                                    'Authorization': `Bearer ${token}`,
+                                    'Content-Type': 'application/json',
+                                }
+                            }
+                        )
+                        
+                        if (response.status !== 200) {
+                            const errorMessage: WorkoutPlanResponse = await response.json()
+                            alert(errorMessage.message);
+                            return;
+                        }
+                        
+                        exercises.splice(exercises.findIndex(exercise => exercise._id === exerciseId), 1);
+                        setExercises([...exercises]);
+                     },
+                },
+                {
+                    text: "No",
+                    onPress: () => { return },
+                },
+            ]);
+        } catch (error) {
+            console.error(`Error deleting exercise ${exerciseId} from ${workoutPlanName}:`, error);
         }
-    
-        exercises.splice(exercises.findIndex(exercise => exercise._id === exerciseId), 1);
-        setExercises([...exercises]);
-        alert("Exercise deleted successfully");
     }
 
     return (
