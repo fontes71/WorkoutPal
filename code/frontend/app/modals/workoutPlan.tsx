@@ -31,6 +31,10 @@ export default function WorkoutPlansModalScreen({ isVisible, onClose, exerciseId
   useEffect(() => {
     const fetchWorkoutPlans = async () => {
         const user = await getLocalUser();
+        if (!user) {
+          alert("An error occurred while fetching user data");
+          return;
+        }
         setToken(user.token);
 
         const response = await fetch(`${localhost}8080/api/exercises/workoutPlans`,

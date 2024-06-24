@@ -13,8 +13,15 @@ import { getLocalUser } from '@/assets/functions/auth';
 export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { isVisible: boolean, onClose: () => void }) {
   let userToken = "";
   getLocalUser().then((user) => {
+    if (!user) {
+      alert("An error occurred while fetching user data");
+      return;
+    }
     userToken = user.token;
   });
+  if (!userToken) {
+    return;
+  }
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
