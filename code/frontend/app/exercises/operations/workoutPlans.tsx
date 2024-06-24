@@ -70,13 +70,6 @@ export default function WorkoutPlansScreen() {
         fetchWorkoutPlans();
     }, []);
 
-    const handleAddButtonPress = () => {
-        router.push({ 
-            pathname: `/exercise/createWorkoutPlanModal`,
-            params: { token: token }
-        });
-    }
-
     const handleReload = async (token: string) => {
         const response = await fetch(`${localhost}/api/exercises/workoutPlans`, 
             {
@@ -116,6 +109,7 @@ export default function WorkoutPlansScreen() {
                                 </Pressable>
                             }
                             keyExtractor={(item: WorkoutPlan) => item.name}
+                            contentContainerStyle={{ paddingBottom: 40 }}
                             refreshControl={
                                 <RefreshControl
                                     refreshing={false}

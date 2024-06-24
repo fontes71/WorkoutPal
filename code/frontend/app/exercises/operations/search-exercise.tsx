@@ -4,7 +4,7 @@ import {
   Pressable,
 } from "react-native";
 import { Stack, router } from "expo-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { localhost } from "@/constants";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { Text, View } from "react-native";
@@ -48,27 +48,36 @@ const removeParenthesesFromExerciseName = (exercises: Exercise[]) => {
 export default function SearchExerciseScreen() {
   const [exerciseName, setExerciseName] = useState("");
   const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [isFetching, setIsFetching] = useState(true);
+  const [page, setPage] = useState(10);
+  const flatListRef = useRef<FlatList | null>(null);
 
   const handleEnter = () => {
     const fetchExercise = async () => {
-      const response = await fetch(
-        `${localhost}/api/exercises/name/${exerciseName}`
-      );
-
-      if (response.status !== 200) {
-        const errorMessage: ExerciseResponse = await response.json();
-        alert(errorMessage.message);
-        return;
+      try {
+        const response = await fetch(
+          `${localhost}/api/exercises/name/${exerciseName}`
+        );
+  
+        if (response.status !== 200) {
+          const errorMessage: ExerciseResponse = await response.json();
+          alert(errorMessage.message);
+          return;
+        }
+  
+        const exercises: ExerciseResponse = await response.json();
+        const modifiedExercises: Exercise[] = removeParenthesesFromExerciseName(
+          exercises.obj
+        );
+        setExercises(modifiedExercises);
+      } catch (error) {
+        console.error("handleEnter ERROR -> ", error);
       }
-
-      const exercises: ExerciseResponse = await response.json();
-      const modifiedExercises: Exercise[] = removeParenthesesFromExerciseName(
-        exercises.obj
-      );
-      setExercises(modifiedExercises);
     };
 
+    setIsFetching(true);
     if (exerciseName.length > 1) fetchExercise();
+    setIsFetching(false);
   };
 
   const updateExerciseName = (value: string) => {
@@ -82,6 +91,63 @@ export default function SearchExerciseScreen() {
     });
   };
 
+  useEffect(() => {
+    setPage(10)
+    if (flatListRef.current) {
+      flatListRef.current.scrollToOffset({ animated: false, offset: 0 });
+    }
+  }, [exerciseName])
+ 
+  
+  useEffect(() => {
+    if ((exercises.length < 60 || page == 10) && exerciseName.length > 1) {
+      loadMoreResults();
+    }  
+  }, [page]);
+
+  const handlePageNum = () => {
+    if (!isFetching) {
+      setPage(page + 10);
+    }
+  }
+
+  const newSearchOrAppend = (res: Exercise[], newResults: Exercise[], page: number) => page == 10 ? newResults : [...res, ...newResults]
+
+  const fetchResults = async (
+    setResults: React.Dispatch<React.SetStateAction<Exercise[]>>,
+    page: number
+  ) => {
+    try {
+      const response = await fetch(
+        `${localhost}/api/exercises/name/${exerciseName}?skip=${page}`
+      );
+
+      if (response.status !== 200) {
+        const errorMessage: ExerciseResponse = await response.json();
+        alert(errorMessage.message);
+        return;
+      }
+
+      const exercises: ExerciseResponse = await response.json();
+      if (exercises.obj.length == 0) {
+        return;
+      }
+      const newResults: Exercise[] = removeParenthesesFromExerciseName(
+        exercises.obj
+      );
+
+      setResults((res) =>  newSearchOrAppend(res, newResults, page));
+    } catch (error) {
+      console.error("fetchResults ERROR -> ", error);
+    }
+  };
+  
+  async function loadMoreResults() {
+    setIsFetching(true);
+    await fetchResults(setExercises, page);
+    setIsFetching(false);
+  }
+
   return (
     <View>
       <Stack.Screen options={{ title: "Search exercise" }} />
@@ -92,7 +158,12 @@ export default function SearchExerciseScreen() {
         onChangeText={updateExerciseName}
         value={exerciseName}
       />
+      {exercises.length == 0 && !isFetching  ? (
+        <Text>No results were found</Text>
+      ) :
+      (
       <FlatList
+        ref={flatListRef}
         data={exercises}
         renderItem={({ item }) => (
           <Pressable
@@ -104,7 +175,10 @@ export default function SearchExerciseScreen() {
           </Pressable>
         )}
         keyExtractor={(item: Exercise) => item._id}
-      />
+        onEndReached={handlePageNum}
+        onEndReachedThreshold={0.4}
+        contentContainerStyle={{ paddingBottom: 40 }}
+      /> )}
     </View>
   );
 }

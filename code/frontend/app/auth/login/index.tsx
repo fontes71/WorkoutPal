@@ -29,7 +29,7 @@ type ButtonInfo = {
 };
 
 function LoginScreen() {
-  deleteUser().then() // to test the redirection, needs to get outta here
+  //deleteUser().then() // to test the redirection, needs to get outta here
   const [user, setUser] = useState<User | null>(null)
   getLocalUser().then( u => {
     if (u != null) setUser(u)

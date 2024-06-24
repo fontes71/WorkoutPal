@@ -187,6 +187,7 @@ const WorkoutPlanDetailsScreen = () => {
                                 </Pressable>
                             }
                             keyExtractor={(item: Exercise) => item._id}
+                            contentContainerStyle={{ paddingBottom: 40 }}
                         />
                     </View> : 
                     <View style={search_exercises_styles.exerciseResultTextContainer}>

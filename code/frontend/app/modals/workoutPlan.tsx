@@ -108,6 +108,7 @@ export default function WorkoutPlansModalScreen({ isVisible, onClose, exerciseId
                   </Pressable>
               }
               keyExtractor={(item: WorkoutPlan) => item.name}
+              contentContainerStyle={{ paddingBottom: 40 }}
             />
           </View>
           {/* Use a light status bar on iOS to account for the black space above the modal */}
