@@ -9,13 +9,6 @@ const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
 );
 
-const handleAddButtonPress = (exercise: Exercise) => {
-    router.push({
-        pathname: `/exercises/operations/workoutPlanModal`,
-        params: { exerciseId: exercise._id }
-    });
-}
-
 const ExerciseDetailsScreen = () => {
     const { exerciseJSON } = useLocalSearchParams<{ exerciseJSON: string }>();
     if (!exerciseJSON) {

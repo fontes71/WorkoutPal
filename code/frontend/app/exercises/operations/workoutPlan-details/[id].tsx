@@ -37,7 +37,7 @@ interface TopSectionProps {
           router.push(`/auth/login/`);
           return;
         }
-        const response = await fetch(`${localhost}8080/api/exercises/workoutPlans/log`, {
+        const response = await fetch(`${localhost}/api/exercises/workoutPlans/log`, {
           method: "POST",
           headers: {
               "Content-Type": "application/json",
@@ -88,12 +88,12 @@ const WorkoutPlanDetailsScreen = () => {
             try {
                 const user = await getLocalUser();
                 if (!user) {
-                    alert("An error occurred while fetching user data");
+                    router.push(`/auth/login/`);
                     return;
                 }
                 setToken(user.token);
 
-                const response = await fetch(`${localhost}8080/api/exercises/workoutPlans/${workoutPlan.name}`,
+                const response = await fetch(`${localhost}/api/exercises/workoutPlans/${workoutPlan.name}`,
                     {
                         method: 'GET',
                         headers: {
@@ -145,7 +145,7 @@ const WorkoutPlanDetailsScreen = () => {
     }
 
     const handleDeletePress = async (workoutPlanName:string, exerciseId: string, token: string) => {
-        const response = await fetch(`${localhost}8080/api/exercises/workoutPLans/${workoutPlanName}/exercise/${exerciseId}`,
+        const response = await fetch(`${localhost}/api/exercises/workoutPLans/${workoutPlanName}/exercise/${exerciseId}`,
             {
                 method: 'DELETE',
                 headers: {

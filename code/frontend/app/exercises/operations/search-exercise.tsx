@@ -52,7 +52,7 @@ export default function SearchExerciseScreen() {
   const handleEnter = () => {
     const fetchExercise = async () => {
       const response = await fetch(
-        `${localhost}8080/api/exercises/name/${exerciseName}`
+        `${localhost}/api/exercises/name/${exerciseName}`
       );
 
       if (response.status !== 200) {

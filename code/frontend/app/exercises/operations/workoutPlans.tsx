@@ -41,12 +41,12 @@ export default function WorkoutPlansScreen() {
         const fetchWorkoutPlans = async () => {
             const user = await getLocalUser();
             if (!user) {
-                alert("An error occurred while fetching user data");
+                router.push(`/auth/login/`);
                 return;
             }
             setToken(user.token);
            
-            const response = await fetch(`${localhost}8080/api/exercises/workoutPlans`, 
+            const response = await fetch(`${localhost}/api/exercises/workoutPlans`, 
                 {
                     method: 'GET',
                     headers: {
@@ -78,7 +78,7 @@ export default function WorkoutPlansScreen() {
     }
 
     const handleReload = async (token: string) => {
-        const response = await fetch(`${localhost}8080/api/exercises/workoutPlans`, 
+        const response = await fetch(`${localhost}/api/exercises/workoutPlans`, 
             {
                 method: 'GET',
                 headers: {

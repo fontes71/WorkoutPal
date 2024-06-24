@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { Modal, Pressable, Platform, TextInput } from "react-native";
 import { View, Text } from 'react-native';
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Stack, router, useLocalSearchParams } from "expo-router";
 import workoutPlans_styles from '@/assets/styles/workoutPlans';
 import { useState } from 'react';
 import { localhost } from '@/constants';
@@ -14,7 +14,7 @@ export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { 
   let userToken = "";
   getLocalUser().then((user) => {
     if (!user) {
-      alert("An error occurred while fetching user data");
+      router.push(`/auth/login/`);
       return;
     }
     userToken = user.token;
@@ -26,7 +26,7 @@ export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { 
   const [description, setDescription] = useState<string>("");
 
   const handleCreateButtonPress = async (workoutPlanName: string, description: string, token: string) => {
-    const response = await fetch(`${localhost}8080/api/exercises/workoutPlans`, 
+    const response = await fetch(`${localhost}/api/exercises/workoutPlans`, 
       {
         method: 'POST',
         headers: {
