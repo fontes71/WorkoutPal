@@ -1,10 +1,9 @@
 import { localhost } from "@/constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AuthResponse, User } from "@/domain/auth";
 
 // the response status is checked here and inside loginAction (LoginScreen), there should be a way to be checked only once
 export const login = async (email: string, password: string, setUserContext: React.Dispatch<React.SetStateAction<User | null>>) => {
-  const response = await fetch(`${localhost}8080/api/login`, {
+  const response = await fetch(`${localhost}/api/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -27,7 +26,7 @@ export const login = async (email: string, password: string, setUserContext: Rea
 // the response status is checked here and inside signupAction (SignupScreen), there should be a way to be checked only once
 export const signup = async (name: string, email: string, password: string, setUserContext: React.Dispatch<React.SetStateAction<User | null>>) => {
 
-  const response = await fetch(`${localhost}8080/api/signup`, {
+  const response = await fetch(`${localhost}/api/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
