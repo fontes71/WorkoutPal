@@ -72,7 +72,7 @@ export default function WorkoutPlansScreen() {
 
     const handleAddButtonPress = () => {
         router.push({ 
-            pathname: `/exercise/createWorkoutPlanModal`,
+            pathname: `modals/createWorkoutPlan`,
             params: { token: token }
         });
     }
