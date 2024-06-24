@@ -60,3 +60,8 @@ export const getLocalUser = async (): Promise<User | null> => {
 
   return JSON.parse(userString);
 };
+
+export const deleteUser = async () => {
+  await AsyncStorage.removeItem("user");
+};
+

@@ -1,29 +1,29 @@
 import React from "react";
-import { View, TouchableOpacity, StatusBar } from "react-native";
+import { View, TouchableOpacity, StatusBar, Text, StyleSheet } from "react-native";
 import { Slot, useRouter } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import auth_styles from "@/assets/styles/auth";
+
 const Layout = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
+      <Header></Header>
       <Slot />
+      <Footer></Footer>
     </>
   );
 };
 
 const Header = () => {
-  const router = useRouter();
-
   return (
-    <>
-      <View style={auth_styles.horizontal_line} />
-      <View style={auth_styles.top_bar_container}>
-        <TouchableOpacity style={auth_styles.back_button} onPress={router.back}>
-          <FontAwesome style={auth_styles.back_icon} name="angle-left" />
-        </TouchableOpacity>
-      </View>
-    </>
+    <View style={auth_styles.horizontal_line} />
+  );
+};
+
+const Footer = () => {
+  return (
+      <Text>Footer Here</Text>
   );
 };
 

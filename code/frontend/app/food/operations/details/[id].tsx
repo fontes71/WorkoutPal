@@ -6,6 +6,7 @@ import TopSection from "@/assets/components/food/details/topSection/TopSection";
 import OverviewText from "@/assets/components/food/details/overviewText/OverviewText";
 import Quantity from "@/assets/components/food/details/quantity/Quantity";
 import More from "@/assets/components/food/details/more/More";
+import { Food } from "@/domain/food";
 
 export default function FoodDetailsScreen() {
   const { foodJSON } = useLocalSearchParams<{ foodJSON: string }>();

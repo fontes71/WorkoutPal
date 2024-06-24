@@ -1,5 +1,5 @@
 type OverviewTextProps = {
-    calories: number;
+    calories: number | null;
     carbs: string | null;
     fat: string | null;
     protein: string | null;

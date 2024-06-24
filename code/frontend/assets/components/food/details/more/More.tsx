@@ -1,6 +1,5 @@
-import { TouchableOpacity, Image } from "react-native";
+import { TouchableOpacity, Image, Text, View  } from "react-native";
 import {  useState } from "react";
-import { Text, View } from "@/components/Themed";
 import styles from "./styles";
 
 const More: React.FC<MoreProps> = ({

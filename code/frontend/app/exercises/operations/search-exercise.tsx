@@ -1,18 +1,15 @@
 import {
   Image,
   FlatList,
-  StyleSheet,
-  TouchableOpacity,
   Pressable,
 } from "react-native";
-
-import EditScreenInfo from "@/components/EditScreenInfo";
-import { Text, View } from "@/components/Themed";
 import { Stack, router } from "expo-router";
-import { SearchBar } from "@rneui/themed";
 import { useState, useEffect } from "react";
 import { localhost } from "@/constants";
 import search_exercises_styles from "@/assets/styles/exercises";
+import { Text, View } from "react-native";
+import { Exercise, ExerciseResponse } from "@/domain/types";
+import { SearchBar } from "@rneui/themed";
 
 const BottomText = ({ str }: { str: string | null }) => (
   <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
@@ -81,7 +78,7 @@ export default function SearchExerciseScreen() {
 
   const handleExercisePress = async (exercise: Exercise) => {
     router.push({
-      pathname: `/exercise/exercise-details/${exercise._id}`,
+      pathname: `/exercises/operations/exercise-details/${exercise._id}`,
       params: { exerciseJSON: JSON.stringify(exercise) },
     });
   };

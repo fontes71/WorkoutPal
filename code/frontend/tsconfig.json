@@ -6,7 +6,8 @@
       "@/*": [
         "./*"
       ],
-      "@images/*": ["./assets/images/*"]
+      "@images/*": ["./assets/images/*"],
+      "@modals/*": ["./app/modals/*"]
     }
   },
   "include": [
@@ -14,5 +15,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "app/(tabs)/food/details/[id].tsx"  ]
+, "app/(tabs)/food1/details/[id].tsx"  ]
 }

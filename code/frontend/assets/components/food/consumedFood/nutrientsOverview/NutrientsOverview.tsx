@@ -1,5 +1,5 @@
 import styles from "./styles";
-import { Text, View } from "@/components/Themed";
+import { Text, View } from "react-native";
 import getNutrients from "./utils";
 import { NutrientsOverviewProps } from "./types";
 

@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { Food } from "@/domain/exercise";
+import { Food } from "@/domain/food";
 import { searchFoodByBarcode } from "@/services/food";
 import foodItemRoute from "@/assets/functions/foodItemRoute";
 import { Camera } from "expo-camera";

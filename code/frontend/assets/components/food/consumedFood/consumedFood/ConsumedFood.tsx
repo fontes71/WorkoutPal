@@ -1,4 +1,4 @@
-import { Text, View } from "@/components/Themed";
+import { Text, View } from "react-native";
 import { ConsumedFoodProps } from "./types";
 
 const ConsumedFood: React.FC<ConsumedFoodProps> = ({ food }) => (

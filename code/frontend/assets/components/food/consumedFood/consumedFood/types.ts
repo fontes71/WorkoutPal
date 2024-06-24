@@ -1,4 +1,4 @@
-import { Food } from "@/domain/exercise";
+import { Food } from "@/domain/food";
 
 export type ConsumedFoodProps = {
   food: Food[] | null;

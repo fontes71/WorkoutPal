@@ -1,10 +1,9 @@
 import React, { useContext, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
-import PasswordInput from "@/assets/components/PasswordInput";
+import { Redirect, useRouter } from "expo-router";
+import PasswordInput from "@/assets/components/auth/PasswordInput";
 import styles from "@/assets/styles/auth";
-import { login } from "@/assets/functions/auth";
-import { ResponseError } from "@/domain/auth";
+import { deleteUser, getLocalUser, login } from "@/assets/functions/auth";
 import LogoContainer from "@/assets/components/auth/LogoContainer";
 import ErrorContainer from "@/assets/components/auth/ErrorContainer";
 import ConnectWithGoogleContainer from "@/assets/components/auth/ConnectWithGoogleContainerSignup";
@@ -30,11 +29,21 @@ type ButtonInfo = {
 };
 
 function LoginScreen() {
+  //deleteUser().then() // to test the redirection, needs to get outta here
+  const [user, setUser] = useState<User | null>(null)
+  getLocalUser().then( u => {
+    if (u != null) setUser(u)
+  })
+
   return (
-    <View style={styles.main_container}>
-      <LogoContainer imageStyle={styles.logo_image_login} />
-      <LoginContainer />
-    </View>
+    <>
+      { user ? <Redirect href="exercises"/> : 
+        <View style={styles.main_container}>
+          <LogoContainer imageStyle={styles.logo_image_login} />
+          <LoginContainer />
+        </View>
+      }
+    </>
   );
 }
 
@@ -113,7 +122,7 @@ function LoginButton({ setResponseError, email, password }: ButtonInfo) {
     setFetching(false);
 
     if (response.ok) {
-      router.push("/(tabs)");
+      router.push("/exercises"); // (push tabs maybe)
     } else {
       const body: ResponseError = await response.json();
       //const hardCodedResponseError: ResponseError = { error_message: 'Invalid Credentials' } // Hardcoded just for the presentation, modifications on backend neeeded

@@ -1,7 +1,7 @@
 import React, { useState, Dispatch, SetStateAction, useContext } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { Stack, useRouter } from "expo-router";
-import PasswordInput from "@/assets/components/PasswordInput";
+import PasswordInput from "@/assets/components/auth/PasswordInput";
 import auth_styles from "@/assets/styles/auth";
 import { login, signup } from "@/assets/functions/auth";
 import { ResponseError } from "@/domain/auth";
@@ -123,7 +123,7 @@ function SingupButton({ setResponseError, name, email, password }: ButtonInfo) {
     const response = await signup(name, email, password, setUserContext);
 
     if (response.ok) {
-      router.push("/(tabs)");
+      router.push("/exercises"); // push tabs maybe
     } else {
       const body: ResponseError = await response.json();
       setResponseError(body);
