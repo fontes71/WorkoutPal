@@ -13,7 +13,7 @@ const Layout = () => {
         <View style={styles.children_slot}>
             <Slot />
         </View>
-        <Footer></Footer>
+
     </>
   );
 };

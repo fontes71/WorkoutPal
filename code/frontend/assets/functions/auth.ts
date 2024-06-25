@@ -17,6 +17,7 @@ export const login = async (email: string, password: string, setUserContext: Rea
   if (response.ok) {
     const body: AuthResponse = await response.json();
     await storeUserLocally(body.obj);
+    console.log("HERE context => ", body.obj)
     setUserContext(body.obj)
   }
 

@@ -1,5 +1,4 @@
 import { getLocalUser } from "@/assets/functions/auth";
-import { User } from "@/domain/auth";
 import { createContext, useEffect, useState } from "react";
 
 type UserContextType = {
