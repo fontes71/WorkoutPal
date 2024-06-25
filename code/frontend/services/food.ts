@@ -8,7 +8,8 @@ export const searchFoodByName = async (query: string, page: number) =>
 export const searchFoodByBarcode = async (barcode: string) =>
   fetchData(`${localhost}/api/food/search/barcode?barcode=${barcode}`);
 
-export const consumeFood = async (userToken: string | undefined, food: Food) =>
+export const consumeFood = async (userToken: string | undefined, food: Food) => {
+  console.log("body -----------------------------------=>", JSON.stringify(food))
   fetchData(`${localhost}/api/food/consume`, {
     method: "POST",
     headers: {
@@ -18,6 +19,7 @@ export const consumeFood = async (userToken: string | undefined, food: Food) =>
     },
     body: JSON.stringify(food),
   });
+}
 
 export const consumedFoodOfTheDay = async (
   userToken: string | undefined,

@@ -9,6 +9,7 @@ import { UserContext } from "@/assets/components/auth/AuthContext";
 import ConsumedFood from "@/assets/components/food/consumedFood/consumedFood/ConsumedFood";
 import NutrientsOverview from "@/assets/components/food/consumedFood/nutrientsOverview/NutrientsOverview";
 import Layout from "@/assets/components/general/Layout";
+import fetchConsumedFoodHook from "@/assets/components/food/utils";
 
 
 export default function FoodScreen() {
@@ -22,30 +23,17 @@ export default function FoodScreen() {
 const Component = () => {
   const [food, setFood] = useState<Food[] | null>(null);
   const { userContext } = useContext(UserContext);
+  
+  fetchConsumedFoodHook(userContext, setFood)
+ 
+  console.log(userContext)
 
-  useEffect(() => {
-    const fetchConsumedFoodOfTheDay = async () => {
-      const date = getDate();
-      console.log(date);
 
-      const food: Food[] | null = await consumedFoodOfTheDay(
-        userContext?.token,
-        date
-      );
-
-      setFood(food);
-    };
-    fetchConsumedFoodOfTheDay();
-  }, []);
-
-  const handleFoodPress = async (food: Food) => {
-    router.push(foodItemRoute(food));
-  };
 
   return (
     <View style={food_styles.container}>
       <NutrientsOverview food={food} />
-      <ConsumedFood food={food} handleFoodPress={handleFoodPress} />
+      <ConsumedFood food={food} />
       <Link style={food_styles.link} href={"food/operations/search-food"} >
         Add Food +
       </Link>

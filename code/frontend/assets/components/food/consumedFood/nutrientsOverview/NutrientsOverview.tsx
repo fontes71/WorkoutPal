@@ -1,7 +1,6 @@
 import styles from "./styles";
 import { Text, View } from "react-native";
 import getNutrients from "./utils";
-import { NutrientsOverviewProps } from "./types";
 
 const NutrientsOverview: React.FC<NutrientsOverviewProps> = ({ food }) => {
   const { calories, protein, carbs, fat } = getNutrients(food);

@@ -21,12 +21,13 @@ export default function FoodDetailsScreen() {
 
   //simplificar isto
   const { userContext } = useContext(UserContext);
-  console.log(userContext)
   const onSaveHook = async (food: Food) => {
     if (!userContext) {
       router.push(`/auth/login/`);
       return;
     }
+
+
 
     await consumeFood(userContext?.token, food);
 

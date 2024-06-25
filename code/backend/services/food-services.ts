@@ -5,7 +5,12 @@ import {
   FoodFactsApiFood,
   User,
 } from "../domain/types";
-import { NotFoundError, UnauthorizedError } from "../errors/app_errors";
+import {
+  InvalidConsumedFoodIndex,
+  NoItemToDelete,
+  NotFoundError,
+  UnauthorizedError,
+} from "../errors/app_errors";
 import cron from "node-cron";
 import {
   IAuthData,
@@ -84,7 +89,7 @@ export class FoodServices implements IFoodServices {
 
       if (!user) throw UnauthorizedError;
 
-      let dayIndex = user.days.findIndex((day) => day.date === date);
+      const dayIndex = user.days.findIndex((day) => day.date === date);
 
       if (dayIndex == -1) {
         user.days = [
@@ -98,6 +103,30 @@ export class FoodServices implements IFoodServices {
           consumedFood: [...day.consumedFood, consumedFood],
         };
       }
+
+      await this.userData.updateUser(token, user);
+    });
+  };
+
+  delete = async (token: string, index: number) => {
+    return transactionHandler(async () => {
+      const user: User | null = await this.userData.getUserByToken(token);
+
+      const date = getDate();
+
+      if (!user) throw UnauthorizedError;
+
+      const dayIndex = user.days.findIndex((day) => day.date === date);
+
+      const consumedFoodLength = user.days[dayIndex].consumedFood.length
+
+      if (dayIndex == -1 || consumedFoodLength == 0) 
+        throw NoItemToDelete;
+
+      if (consumedFoodLength <= index || index < 0)
+        throw InvalidConsumedFoodIndex;
+
+      user.days[dayIndex].consumedFood.splice(index, 1);
 
       await this.userData.updateUser(token, user);
     });

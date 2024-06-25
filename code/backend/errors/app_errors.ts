@@ -10,4 +10,6 @@ export class ExistentEmailError extends AppError {}
 export class InvalidAuthorizationTokenError extends AppError {}
 export class NonExistentAuthorizationTokenError extends AppError {}
 export class UnauthorizedError extends AppError {}
+export class NoItemToDelete extends AppError {}
+export class InvalidConsumedFoodIndex extends AppError {}
 export class InvalidDateError extends AppError {}

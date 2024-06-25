@@ -51,34 +51,16 @@ app.post("/api/logout", authApi.logout);
 // Exercise
 app.get("/api/exercise/:exerciseId", exerciseApi.getExerciseById);
 app.get("/api/exercises/name/:exerciseName", exerciseApi.searchExercisesByName);
-app.get(
-  "/api/exercises/bodyPart/:exerciseBodyPart",
-  exerciseApi.searchExercisesByBodyPart
-);
-app.get(
-  "/api/exercises/equipment/:exerciseEquipment",
-  exerciseApi.searchExercisesByEquipment
-);
-app.get(
-  "/api/exercises/target/:exerciseTarget",
-  exerciseApi.searchExercisesByTarget
-);
-app.get(
-  "/api/exercises/secondaryMuscle/:exerciseSecondaryMuscle",
-  exerciseApi.searchExercisesBySecondaryMuscle
-);
+app.get( "/api/exercises/bodyPart/:exerciseBodyPart", exerciseApi.searchExercisesByBodyPart);
+app.get( "/api/exercises/equipment/:exerciseEquipment", exerciseApi.searchExercisesByEquipment);
+app.get( "/api/exercises/target/:exerciseTarget", exerciseApi.searchExercisesByTarget);
+app.get( "/api/exercises/secondaryMuscle/:exerciseSecondaryMuscle", exerciseApi.searchExercisesBySecondaryMuscle);
 app.get("/api/exercises/workoutPlans/log/:day", exerciseApi.getDailyLoggedWorkoutPlans);
 app.post("/api/exercises/workoutPlans/log", exerciseApi.logWorkoutPlan);
 app.get("/api/exercises/workoutPlans", exerciseApi.getUserWorkoutPlans);
 app.post("/api/exercises/workoutPlans", exerciseApi.createWorkoutPlan);
-app.post(
-  "/api/exercises/workoutPlans/:workoutPlanName",
-  exerciseApi.addExerciseToWorkoutPlan
-);
-app.delete(
-  "/api/exercises/workoutPlans/:workoutPlanName/exercise/:exerciseId",
-  exerciseApi.removeExerciseFromWorkoutPlan
-);
+app.post( "/api/exercises/workoutPlans/:workoutPlanName", exerciseApi.addExerciseToWorkoutPlan);
+app.delete( "/api/exercises/workoutPlans/:workoutPlanName/exercise/:exerciseId", exerciseApi.removeExerciseFromWorkoutPlan);
 app.get("/api/exercises/workoutPlans/:workoutPlanName", exerciseApi.getExercisesFromWorkoutPlan);
 app.get("/api/cloneDatabase", exerciseApi.cloneExerciseDB);
 
@@ -86,6 +68,7 @@ app.get("/api/cloneDatabase", exerciseApi.cloneExerciseDB);
 app.get("/api/food/search/name", foodApi.searchByName);
 app.get("/api/food/search/barcode", foodApi.searchByBarcode);
 app.post("/api/food/consume", foodApi.consume);
+app.delete("/api/food/delete/:itemIndex", foodApi.delete);
 app.get("/api/food/dailyConsumption", foodApi.dailyConsumption);
 
 function cleanup() {

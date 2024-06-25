@@ -16,8 +16,6 @@ export class FoodApi implements IFoodApi {
     await apiErrorHandler(res, async () => {
       const { query } = req.query;
       const { page } = req.query;
-
-     
   
 
       if (!query || typeof query != "string" || !page || typeof page != "string") throw InvalidParamsError;
@@ -60,6 +58,17 @@ export class FoodApi implements IFoodApi {
     });
   };
 
+  
+  delete = async (req: Request, res: Response) => {
+    await apiErrorHandler(res, async () => {
+      const token = getToken(req);
+
+      await this.service.delete(token, parseInt(req.params.itemIndex));
+
+      sendResponse(res, StatusCode.Success, "Food item deleted successfully", {})
+    });
+  };
+
   dailyConsumption = async (req: Request, res: Response) => {
     await apiErrorHandler(res, async () => {
       const token = getToken(req);
@@ -73,5 +82,6 @@ export class FoodApi implements IFoodApi {
       sendResponse(res, StatusCode.Success, "Daily consumption fetch successful", food)
     });
   };
+
 }
 

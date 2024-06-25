@@ -1,5 +1,4 @@
-import { Food } from "@/domain/food";
 
-export type NutrientsOverviewProps = {
+type NutrientsOverviewProps = {
   food: Food[] | null;
 };
