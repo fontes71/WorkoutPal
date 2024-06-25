@@ -29,7 +29,7 @@ type ButtonInfo = {
 };
 
 function LoginScreen() {
-  deleteUser().then() // to test the redirection, needs to get outta here
+  //deleteUser().then() // to test the redirection, needs to get outta here
   const [user, setUser] = useState<User | null>(null)
   getLocalUser().then( u => {
     if (u != null) setUser(u)
@@ -122,10 +122,9 @@ function LoginButton({ setResponseError, email, password }: ButtonInfo) {
     setFetching(false);
 
     if (response.ok) {
-      router.push("/exercises"); // (push tabs maybe)
+      router.push("/exercises");
     } else {
       const body: ResponseError = await response.json();
-      //const hardCodedResponseError: ResponseError = { error_message: 'Invalid Credentials' } // Hardcoded just for the presentation, modifications on backend neeeded
       setResponseError(body);
     }
   };

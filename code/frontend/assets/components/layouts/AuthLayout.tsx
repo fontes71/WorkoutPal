@@ -2,7 +2,6 @@ import React from "react";
 import { StatusBar, View } from "react-native";
 import auth_styles from "@/assets/styles/auth";
 import { Slot } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AuthLayout() {
   return (
