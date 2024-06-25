@@ -63,9 +63,9 @@ export class FoodApi implements IFoodApi {
     await apiErrorHandler(res, async () => {
       const token = getToken(req);
 
-      await this.service.delete(token, parseInt(req.params.itemIndex));
+      const food = await this.service.delete(token, parseInt(req.params.itemIndex));
 
-      sendResponse(res, StatusCode.Success, "Food item deleted successfully", {})
+      sendResponse(res, StatusCode.Success, "Food item deleted successfully", food)
     });
   };
 

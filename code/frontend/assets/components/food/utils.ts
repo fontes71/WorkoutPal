@@ -3,16 +3,16 @@ import { consumedFoodOfTheDay } from '@/services/food';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../auth/AuthContext';
 
-const fetchConsumedFoodHook = (userContext: User | null, setFood: React.Dispatch<React.SetStateAction<Food[] | null>> ) => {
+const fetchConsumedFoodHook = (user: User | null, setFood: React.Dispatch<React.SetStateAction<Food[] | null>> ) => {
   useEffect(() => {
-    if (userContext == null)
+    if (user == null)
       return
 
     const fetchConsumedFoodOfTheDay = async () => {
       const date = getDate();
 
       const food: Food[] | null = await consumedFoodOfTheDay(
-        userContext?.token,
+        user?.token,
         date
       );
 

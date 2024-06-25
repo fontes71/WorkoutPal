@@ -129,6 +129,7 @@ export class FoodServices implements IFoodServices {
       user.days[dayIndex].consumedFood.splice(index, 1);
 
       await this.userData.updateUser(token, user);
+      return user.days[dayIndex].consumedFood
     });
   };
 

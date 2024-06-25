@@ -26,14 +26,10 @@ const Component = () => {
   
   fetchConsumedFoodHook(userContext, setFood)
  
-  console.log(userContext)
-
-
-
   return (
     <View style={food_styles.container}>
       <NutrientsOverview food={food} />
-      <ConsumedFood food={food} />
+      <ConsumedFood food={food} setFood={setFood}/>
       <Link style={food_styles.link} href={"food/operations/search-food"} >
         Add Food +
       </Link>
