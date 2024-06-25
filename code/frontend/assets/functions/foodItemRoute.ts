@@ -1,6 +1,6 @@
 const foodItemRoute = (food: Food): any => {
   return {
-    pathname: `/food/operations/details/${food.id}`,
+    pathname: `/food/details/${food.id}`,
     params: { foodJSON: JSON.stringify(food) },
   };
 };

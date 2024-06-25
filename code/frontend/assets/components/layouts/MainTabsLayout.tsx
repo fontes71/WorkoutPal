@@ -1,15 +1,15 @@
 import React from "react";
 import { View, TouchableOpacity, StatusBar, Text, StyleSheet, Image } from "react-native";
-import { useRouter, Link } from "expo-router";
+import { useRouter, Link, Slot } from "expo-router";
 import auth_styles from "@/assets/styles/auth";
 import { Colors } from "@/constants";
 
-const Layout = ({ children }: any) => {
+export default function MainTabsLayout() {
   return (
     <>
       <StatusBar barStyle="dark-content"/>
       <Header></Header>
-      {children}
+      <Slot></Slot>
       <Footer></Footer>
     </>
   );
@@ -70,5 +70,3 @@ const styles = StyleSheet.create({
     fontSize: 17
   }
 })
-
-export default Layout

@@ -26,7 +26,7 @@ const WorkoutPlanResult: React.FC<WorkoutPlan> = ({ name, description }) => {
 
 const handleWorkoutPlanPress = (workoutPlan: WorkoutPlan) => {
     router.push({
-        pathname: `/exercises/operations/workoutPlan-details/${workoutPlan.name}`,
+        pathname: `/exercises/workoutPlan-details/${workoutPlan.name}`,
         params: { workoutPlanJSON: JSON.stringify(workoutPlan) }
     });
 }

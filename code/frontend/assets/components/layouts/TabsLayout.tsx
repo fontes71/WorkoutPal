@@ -1,11 +1,11 @@
 import React from "react";
-import { View, TouchableOpacity, StatusBar, Text, StyleSheet, Image } from "react-native";
+import { View, TouchableOpacity, StatusBar, Text, StyleSheet } from "react-native";
 import { Slot, useRouter } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import auth_styles from "@/assets/styles/auth";
 import { Colors } from "@/constants";
 
-const Layout = () => {
+export default function TabsLayout() {
   return (
     <>
         <StatusBar barStyle="dark-content"/>
@@ -13,7 +13,6 @@ const Layout = () => {
         <View style={styles.children_slot}>
             <Slot />
         </View>
-        <Footer></Footer>
     </>
   );
 };
@@ -67,4 +66,3 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Layout;

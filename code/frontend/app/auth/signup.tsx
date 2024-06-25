@@ -1,72 +1,65 @@
-import React, { useContext, useState } from "react";
+import React, { useState, Dispatch, SetStateAction, useContext } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { Redirect, useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import PasswordInput from "@/assets/components/auth/PasswordInput";
-import styles from "@/assets/styles/auth";
-import { deleteUser, getLocalUser, login } from "@/assets/functions/auth";
+import auth_styles from "@/assets/styles/auth";
+import { login, signup } from "@/assets/functions/auth";
 import LogoContainer from "@/assets/components/auth/LogoContainer";
 import ErrorContainer from "@/assets/components/auth/ErrorContainer";
-import ConnectWithGoogleContainer from "@/assets/components/auth/ConnectWithGoogleContainerSignup";
+import ConnectWithGoogleContainer from "@/assets/components/auth/ConnectWithGoogleContainerLogin";
 import { UserContext } from '@/assets/components/auth/AuthContext'
 
-type ErrorInfo = {
-  readonly responseError: ResponseError | undefined;
-};
-
 type InputInfo = {
+  readonly name: string;
+  readonly setName: Dispatch<SetStateAction<string>>;
   readonly email: string;
-  readonly setEmail: React.Dispatch<React.SetStateAction<string>>;
+  readonly setEmail: Dispatch<SetStateAction<string>>;
   readonly password: string;
-  readonly setPassword: React.Dispatch<React.SetStateAction<string>>;
+  readonly setPassword: Dispatch<SetStateAction<string>>;
 };
 
 type ButtonInfo = {
-  readonly setResponseError: React.Dispatch<
-    React.SetStateAction<ResponseError | undefined>
+  readonly setResponseError: Dispatch<
+    SetStateAction<ResponseError | undefined>
   >;
+  readonly name: string;
   readonly email: string;
   readonly password: string;
 };
 
-function LoginScreen() {
-  //deleteUser().then() // to test the redirection, needs to get outta here
-  const [user, setUser] = useState<User | null>(null)
-  getLocalUser().then( u => {
-    if (u != null) setUser(u)
-  })
-
+function SignupScreen() {
   return (
-    <>
-      { user ? <Redirect href="exercises"/> : 
-        <View style={styles.main_container}>
-          <LogoContainer imageStyle={styles.logo_image_login} />
-          <LoginContainer />
-        </View>
-      }
-    </>
+    <View style={styles.main_container}>
+      <LogoContainer imageStyle={styles.logo_image_signup} />
+      <SignupContainer />
+    </View>
   );
 }
 
-function LoginContainer() {
+function SignupContainer() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [responseError, setResponseError] = useState<
-    ResponseError | undefined
-  >();
+  const [responseError, setResponseError] = useState<ResponseError | undefined>(
+    undefined
+  );
 
   return (
     <View style={styles.login_container}>
-      <LoginHeader />
+      <SignupHeader />
 
       <ErrorContainer responseError={responseError} />
       <InputsContainer
+        name={name}
+        setName={setName}
         email={email}
         setEmail={setEmail}
         password={password}
         setPassword={setPassword}
       />
-      <LoginButton
+      <SingupButton
         setResponseError={setResponseError}
+        name={name}
         email={email}
         password={password}
       />
@@ -76,18 +69,20 @@ function LoginContainer() {
   );
 }
 
-function LoginHeader() {
+function SignupHeader() {
   return (
     <View>
-      <Text style={[styles.text, styles.header_text]}>Log In</Text>
+      <Text style={[styles.text, styles.header_text]}>Sign Up</Text>
       <Text style={[styles.text, styles.small_text]}>
-        Sign In and start getting the most out of our app
+        Fill the details and create your account now
       </Text>
     </View>
-  );
+  )
 }
 
 function InputsContainer({
+  name,
+  setName,
   email,
   setEmail,
   password,
@@ -95,6 +90,12 @@ function InputsContainer({
 }: InputInfo) {
   return (
     <View style={styles.inputs_container}>
+      <TextInput
+        style={styles.input}
+        onChangeText={setName}
+        value={name}
+        placeholder="Name"
+      />
       <TextInput
         style={styles.input}
         onChangeText={setEmail}
@@ -111,29 +112,28 @@ function InputsContainer({
   );
 }
 
-function LoginButton({ setResponseError, email, password }: ButtonInfo) {
+function SingupButton({ setResponseError, name, email, password }: ButtonInfo) {
   const [fetching, setFetching] = useState(false);
   const router = useRouter();
   const { setUserContext } = useContext(UserContext);
 
-  const loginAction = async () => {
+  const signupAction = async () => {
     setFetching(true);
-    const response = await login(email, password, setUserContext);
-    setFetching(false);
+    const response = await signup(name, email, password, setUserContext);
 
     if (response.ok) {
-      router.push("/exercises"); // (push tabs maybe)
+      router.push("/exercises"); // push tabs maybe
     } else {
       const body: ResponseError = await response.json();
-      //const hardCodedResponseError: ResponseError = { error_message: 'Invalid Credentials' } // Hardcoded just for the presentation, modifications on backend neeeded
       setResponseError(body);
     }
+    setFetching(false);
   };
 
   return (
-    <TouchableOpacity style={styles.button} onPress={loginAction}>
+    <TouchableOpacity style={styles.button} onPress={signupAction}>
       {!fetching ? (
-        <Text style={styles.buttonText}>Log In</Text>
+        <Text style={styles.buttonText}>Sign Up</Text>
       ) : (
         <Text style={styles.buttonText}>Loading...</Text>
       )}
@@ -141,4 +141,6 @@ function LoginButton({ setResponseError, email, password }: ButtonInfo) {
   );
 }
 
-export default LoginScreen;
+export default SignupScreen;
+
+const styles = auth_styles;
