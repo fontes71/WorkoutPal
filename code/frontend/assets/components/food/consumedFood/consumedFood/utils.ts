@@ -1,7 +1,6 @@
 import { router } from "expo-router";
 import foodItemRoute from "@/assets/functions/foodItemRoute";
 import {  deleteFood } from "@/services/food";
-import { deleteAlert } from "./ConsumedFood";
 
 
 

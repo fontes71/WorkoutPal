@@ -15,7 +15,7 @@ export const mock_request_with_query = {
 
 export const mock_request_without_query = {
   query: {
-    query: undefined,
+    query: undefined
   },
   headers: {
     authorization: `Bearer ${mock_token}`,

@@ -31,7 +31,7 @@ describe("/api/food/search/name", () => {
 
     await foodApi.searchByName(mock_request_with_query as any, mockResponse as any);
 
-    expect(foodServices.searchByName).toHaveBeenCalledWith(mock_request_with_query.query.query, 0, 0)
+    expect(foodServices.searchByName).toHaveBeenCalledWith(mock_request_with_query.query.query, 0)
 
     expect(mockResponse.status).toHaveBeenCalledWith(200)
     expect(mockResponse.json).toHaveBeenCalledWith({message: "Search successful", obj: mock_services_return_value})
@@ -42,7 +42,7 @@ describe("/api/food/search/name", () => {
 
     await foodApi.searchByName(mock_request_with_query as any, mockResponse as any);
 
-    expect(foodServices.searchByName).toHaveBeenCalledWith(mock_request_with_query.query.query, 0, 0)
+    expect(foodServices.searchByName).toHaveBeenCalledWith(mock_request_with_query.query.query, 0)
 
     expect(mockResponse.status).toHaveBeenCalledWith(200)
     expect(mockResponse.json).toHaveBeenCalledWith({message: "Search successful", obj: []})

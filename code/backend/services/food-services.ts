@@ -91,20 +91,26 @@ export class FoodServices implements IFoodServices {
 
       const dayIndex = user.days.findIndex((day) => day.date === date);
 
+      let consumedFoodRes: ConsumedFood[] = [];
+
       if (dayIndex == -1) {
         user.days = [
           ...user.days,
           { date: date, consumedFood: [consumedFood], workoutPlansDone: [] },
         ];
+        consumedFoodRes = [consumedFood]
       } else {
         const day = user.days[dayIndex];
         user.days[dayIndex] = {
           ...day,
           consumedFood: [...day.consumedFood, consumedFood],
         };
+        consumedFoodRes = user.days[dayIndex].consumedFood;
+        
       }
 
       await this.userData.updateUser(token, user);
+      return consumedFoodRes
     });
   };
 

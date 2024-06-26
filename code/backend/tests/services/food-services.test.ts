@@ -61,7 +61,7 @@ describe("searchByName", () => {
   it("returns successfully", async () => {
     foodData.searchByName = jest.fn().mockResolvedValue([api_food]);
 
-    const resFood = await foodServices.searchByName("irrelevant", 0, 0);
+    const resFood = await foodServices.searchByName("irrelevant", 0);
 
     expect(resFood).toEqual([food]);
   });
@@ -69,7 +69,7 @@ describe("searchByName", () => {
   it("returns successfully even if no results were returned", async () => {
     foodData.searchByName = jest.fn().mockResolvedValue([]);
 
-   const resFood = await foodServices.searchByName("irrelevant", 0, 0);
+   const resFood = await foodServices.searchByName("irrelevant", 0);
     
    expect(resFood).toEqual([]);
   })

@@ -18,9 +18,11 @@ export class FoodApi implements IFoodApi {
       const { page } = req.query;
   
 
-      if (!query || typeof query != "string" || !page || typeof page != "string") throw InvalidParamsError;
+      if (!query || typeof query != "string" || page && typeof page != "string") throw InvalidParamsError;
 
-      const food: Food[] = await this.service.searchByName(query, parseInt(page));
+      const parsedPage = page ? parseInt(page) : 0
+
+      const food: Food[] = await this.service.searchByName(query, parsedPage);
 
  
       sendResponse(res, StatusCode.Success, "Search successful", food)
@@ -44,7 +46,9 @@ export class FoodApi implements IFoodApi {
 
       const { id, name, calories, protein, fat, carbs } = req.body;
 
-      await this.service.consume(
+  
+
+      const food = await this.service.consume(
         token,
         id,
         name,
@@ -54,7 +58,7 @@ export class FoodApi implements IFoodApi {
         carbs
       );
 
-      sendResponse(res, StatusCode.Created, "Food item consumed successfully", {})
+      sendResponse(res, StatusCode.Created, "Food item consumed successfully", food)
     });
   };
 

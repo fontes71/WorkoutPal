@@ -57,9 +57,9 @@ export interface IExerciseServices {
 export interface IFoodServices {
   searchByName(query: string, page: number): Promise<Array<Food>>;
   searchByBarcode(barcode: number): Promise<Food>;
-  consume(token: string, id: string,name: string | null, calories: number | null, protein: string | null, fat: string | null, carbs: string | null): void;
-  delete(token: string, idx: number): void
-  dailyConsumption(token: string, day: string): Promise<Array<ConsumedFood>>;
+  consume(token: string, id: string,name: string | null, calories: number | null, protein: string | null, fat: string | null, carbs: string | null):Promise<ConsumedFood[]>;
+  delete(token: string, idx: number):Promise<ConsumedFood[]>
+  dailyConsumption(token: string, day: string): Promise<ConsumedFood[]>;
 }
 
 export interface IAuthServices {
