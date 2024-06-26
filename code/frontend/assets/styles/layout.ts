@@ -50,6 +50,15 @@ const header_styles = StyleSheet.create({
         marginTop: 6,
         flexDirection: "row",
     },
+    header_container_dark_mode: {
+        borderTopColor: "black",
+        backgroundColor: Colors.lightBlack,
+        width: "100%",
+        height: "9%",
+        borderBottomLeftRadius: 7,
+        borderBottomRightRadius: 7,
+        flexDirection: "row",
+    },
     menu_button_container: {
         width: "50%", 
         alignItems: "flex-end",
