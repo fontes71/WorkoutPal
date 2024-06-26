@@ -1,5 +1,5 @@
 type ResponseError = {
-    error_message: string
+    message: string
 }
 
 type User = {
