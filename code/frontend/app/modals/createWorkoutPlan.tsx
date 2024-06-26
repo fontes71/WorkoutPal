@@ -13,7 +13,7 @@ import { getLocalUser } from '@/assets/functions/auth';
 export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { isVisible: boolean, onClose: () => void }) {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  let userToken = "";
+  const [userToken, setUserToken] = useState<string>("");
 
   const handleCreateButtonPress = async (workoutPlanName: string, description: string, token: string) => {
     const response = await fetch(`${localhost}/api/exercises/workoutPlans`, 
@@ -37,13 +37,13 @@ export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { 
   }
 
   useEffect(() => {
-    if (userToken === null) {
+    if (userToken == "") {
       getLocalUser().then((user) => {
         if (!user) {
           router.push(`/auth/login/`);
           return;
         }
-        userToken = user.token;
+        setUserToken(user.token);
       });
     }
   }, []);

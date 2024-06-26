@@ -1,10 +1,10 @@
-import { FlatList, Pressable, RefreshControl  } from "react-native";
+import { FlatList, Pressable, RefreshControl, TouchableOpacity  } from "react-native";
 
 import { Text, View } from "react-native";
 import { Stack, router } from "expo-router";
 import { useState, useEffect } from "react";
 import { localhost } from "@/constants";
-import search_exercises_styles from "@/assets/styles/exercises";
+import search_exercises_styles, { exercise_styles } from "@/assets/styles/exercises";
 import { Button } from "@rneui/base";
 import { getLocalUser } from "@/assets/functions/auth";
 import CreateWorkoutPlansModalScreen from "@/app/modals/createWorkoutPlan";
@@ -117,7 +117,9 @@ export default function WorkoutPlansScreen() {
                                 />
                             }
                         /> 
-                        <Button onPress={() => {setModalVisible(true)}}>Create Workout Plan</Button>
+                        <TouchableOpacity style={search_exercises_styles.floatingButton} onPress={() => { setModalVisible(true) }}>
+                            <Text style={search_exercises_styles.floatingButtonText}>+</Text>
+                        </TouchableOpacity>
                         <CreateWorkoutPlansModalScreen isVisible={modalVisible} onClose={() => {setModalVisible(false)}}/>
                     </View> : 
                     <View style={search_exercises_styles.exerciseResultContainer}>
