@@ -441,6 +441,15 @@ export const food = {
   nutriscoreGrade: "b",
 };
 
+export const consumed_food = {
+  id: "3284230006408",
+  name: "Brioche Tranchée Bio",
+  calories: 349,
+  protein: "8.7g",
+  fat: "10g",
+  carbs: "55g",
+}
+
 export const food_no_brand = {
   id: "3284230006408",
   name: "la-boulangere Brioche Tranchée Bio",
@@ -484,7 +493,7 @@ export const food_no_quantity_to_present = {
 };
 
 export const user = {
-  _id: { $oid: "65e8d6dd03a1f8425615304e" },
+  _id: "65e8d6dd03a1f8425615304e",
   username: "user4",
   email: "user4@gmail.com",
   password: "$2b$10$SyhOUqWCsvK57LpA7EdTzOQKQUuEqFvr8zlyhxKdyhOgGvmKrKVKe",
@@ -504,7 +513,7 @@ export const user = {
         {
           id: "",
           name: "Oreo Enrobed White",
-          calories: { $numberInt: "532" },
+          calories: 532,
           protein: "4.9g",
           fat: "25g",
           carbs: "70g",
@@ -512,7 +521,7 @@ export const user = {
         {
           id: "",
           name: "Oreo Enrobed White",
-          calories: { $numberInt: "532" },
+          calories: 532,
           protein: "4.9g",
           fat: "25g",
           carbs: "70g",
@@ -526,7 +535,7 @@ export const user = {
         {
           id: "3021760403167",
           name: "Pom' potes Pomme Bio",
-          calories: { $numberInt: "61" },
+          calories: 61,
           protein: "0.5g",
           fat: "0.6g",
           carbs: "12g",
@@ -534,7 +543,7 @@ export const user = {
         {
           id: "3021760403167",
           name: "Pom' potes Pomme Bio",
-          calories: { $numberInt: "61" },
+          calories: 61,
           protein: "0.5g",
           fat: "0.6g",
           carbs: "12g"
@@ -542,7 +551,7 @@ export const user = {
         {
           id: "5060482840179",
           name: "deliciously Ella apple and raisin oat bars",
-          calories: { $numberInt: "426" },
+          calories: 426,
           protein: "5.6g",
           fat: "17.4g",
           carbs: "59.3g"
@@ -550,7 +559,7 @@ export const user = {
         {
           id: "3800020456293",
           name: "Kit kat chunky",
-          calories: { $numberInt: "529" },
+          calories: 529,
           protein: "7.7g",
           fat: "28.6g",
           carbs: "59.5g"
@@ -564,7 +573,7 @@ export const user = {
         {
           id: "5600826202982",
           name: "Peanut Butter",
-          calories: { $numberInt: "630" },
+          calories: 630,
           protein: "26g",
           fat: "52g",
           carbs: "11g"
@@ -579,7 +588,7 @@ export const user = {
         {
           id: "5601009297993",
           name: "Arroz",
-          calories: { $numberInt: "356" },
+          calories: 356,
           protein: "6.6g",
           fat: "0.8g",
           carbs: "79.3g"
@@ -587,7 +596,7 @@ export const user = {
         {
           id: "8000500037560",
           name: "Kinder Bueno",
-          calories: { $numberInt: "572" },
+          calories: 572,
           protein: "8.6g",
           fat: "37.3g",
           carbs: "49.5g"
@@ -601,7 +610,7 @@ export const user = {
         {
           id: "7622210578464",
           name: "Green and Black's Organic 70% Dark Chocolate Bar",
-          calories: { $numberInt: "575" },
+          calories: 575,
           protein: "9.1g",
           fat: "42g",
           carbs: "36g"
@@ -609,7 +618,7 @@ export const user = {
         {
           id: "3168930170570",
           name: "Ice tea",
-          calories: { $numberInt: "1" },
+          calories: 1,
           protein: null,
           fat: null,
           carbs: null
@@ -623,7 +632,7 @@ export const user = {
         {
           id: "5600826203613",
           name: "Peanut Butter Crunchy",
-          calories: { $numberInt: "630" },
+          calories: 630,
           protein: "26g",
           fat: "52g",
           carbs: "11g"
@@ -631,7 +640,7 @@ export const user = {
         {
           id: "5601009112050",
           name: "A Autêntica Bolacha Água e Sal",
-          calories: { $numberInt: "430" },
+          calories: 430,
           protein: "9.2g",
           fat: "10.6g",
           carbs: "72.6g"
@@ -639,7 +648,7 @@ export const user = {
         {
           id: "5010029227062",
           name: "Oreo o's",
-          calories: { $numberInt: "382" },
+          calories: 382,
           protein: "7.5g",
           fat: "2.7g",
           carbs: "80g"
@@ -647,7 +656,7 @@ export const user = {
         {
           id: "4025700001030",
           name: "Milka Noisette",
-          calories: { $numberInt: "557" },
+          calories: 557,
           protein: "7.6g",
           fat: "35g",
           carbs: "51g"
@@ -655,7 +664,7 @@ export const user = {
         {
           id: "7622300441715",
           name: "choco mini stars",
-          calories: { $numberInt: "505" },
+          calories: 505,
           protein: "6.4g",
           fat: "24.5g",
           carbs: "63.5g"
@@ -669,7 +678,7 @@ export const user = {
         {
           id: "7622300617820",
           name: "Milka Oreo",
-          calories: { $numberInt: "564" },
+          calories: 564,
           protein: "4.8g",
           fat: "35g",
           carbs: "56g"
@@ -680,7 +689,7 @@ export const user = {
 };
 
 export const user_with_new_consumed_food_on_new_date = {
-  _id: { $oid: "65e8d6dd03a1f8425615304e" },
+  _id: "65e8d6dd03a1f8425615304e",
   username: "user4",
   email: "user4@gmail.com",
   password: "$2b$10$SyhOUqWCsvK57LpA7EdTzOQKQUuEqFvr8zlyhxKdyhOgGvmKrKVKe",
@@ -700,7 +709,7 @@ export const user_with_new_consumed_food_on_new_date = {
         {
           id: "",
           name: "Oreo Enrobed White",
-          calories: { $numberInt: "532" },
+          calories: 532,
           protein: "4.9g",
           fat: "25g",
           carbs: "70g",
@@ -708,7 +717,7 @@ export const user_with_new_consumed_food_on_new_date = {
         {
           id: "",
           name: "Oreo Enrobed White",
-          calories: { $numberInt: "532" },
+          calories: 532,
           protein: "4.9g",
           fat: "25g",
           carbs: "70g",
@@ -722,7 +731,7 @@ export const user_with_new_consumed_food_on_new_date = {
         {
           id: "3021760403167",
           name: "Pom' potes Pomme Bio",
-          calories: { $numberInt: "61" },
+          calories: 61,
           protein: "0.5g",
           fat: "0.6g",
           carbs: "12g"
@@ -730,7 +739,7 @@ export const user_with_new_consumed_food_on_new_date = {
         {
           id: "3021760403167",
           name: "Pom' potes Pomme Bio",
-          calories: { $numberInt: "61" },
+          calories: 61,
           protein: "0.5g",
           fat: "0.6g",
           carbs: "12g"
@@ -738,7 +747,7 @@ export const user_with_new_consumed_food_on_new_date = {
         {
           id: "5060482840179",
           name: "deliciously Ella apple and raisin oat bars",
-          calories: { $numberInt: "426" },
+          calories: 426,
           protein: "5.6g",
           fat: "17.4g",
           carbs: "59.3g"
@@ -746,7 +755,7 @@ export const user_with_new_consumed_food_on_new_date = {
         {
           id: "3800020456293",
           name: "Kit kat chunky",
-          calories: { $numberInt: "529" },
+          calories: 529,
           protein: "7.7g",
           fat: "28.6g",
           carbs: "59.5g"
@@ -760,7 +769,7 @@ export const user_with_new_consumed_food_on_new_date = {
         {
           id: "5600826202982",
           name: "Peanut Butter",
-          calories: { $numberInt: "630" },
+          calories: 630,
           protein: "26g",
           fat: "52g",
           carbs: "11g"
@@ -775,7 +784,7 @@ export const user_with_new_consumed_food_on_new_date = {
         {
           id: "5601009297993",
           name: "Arroz",
-          calories: { $numberInt: "356" },
+          calories: 356,
           protein: "6.6g",
           fat: "0.8g",
           carbs: "79.3g"
@@ -783,7 +792,7 @@ export const user_with_new_consumed_food_on_new_date = {
         {
           id: "8000500037560",
           name: "Kinder Bueno",
-          calories: { $numberInt: "572" },
+          calories: 572,
           protein: "8.6g",
           fat: "37.3g",
           carbs: "49.5g"
@@ -797,7 +806,7 @@ export const user_with_new_consumed_food_on_new_date = {
         {
           id: "7622210578464",
           name: "Green and Black's Organic 70% Dark Chocolate Bar",
-          calories: { $numberInt: "575" },
+          calories: 575,
           protein: "9.1g",
           fat: "42g",
           carbs: "36g"
@@ -805,7 +814,7 @@ export const user_with_new_consumed_food_on_new_date = {
         {
           id: "3168930170570",
           name: "Ice tea",
-          calories: { $numberInt: "1" },
+          calories: 1,
           protein: null,
           fat: null,
           carbs: null
@@ -819,7 +828,7 @@ export const user_with_new_consumed_food_on_new_date = {
         {
           id: "5600826203613",
           name: "Peanut Butter Crunchy",
-          calories: { $numberInt: "630" },
+          calories: 630,
           protein: "26g",
           fat: "52g",
           carbs: "11g"
@@ -827,7 +836,7 @@ export const user_with_new_consumed_food_on_new_date = {
         {
           id: "5601009112050",
           name: "A Autêntica Bolacha Água e Sal",
-          calories: { $numberInt: "430" },
+          calories: 430,
           protein: "9.2g",
           fat: "10.6g",
           carbs: "72.6g"
@@ -835,7 +844,7 @@ export const user_with_new_consumed_food_on_new_date = {
         {
           id: "5010029227062",
           name: "Oreo o's",
-          calories: { $numberInt: "382" },
+          calories: 382,
           protein: "7.5g",
           fat: "2.7g",
           carbs: "80g"
@@ -843,7 +852,7 @@ export const user_with_new_consumed_food_on_new_date = {
         {
           id: "4025700001030",
           name: "Milka Noisette",
-          calories: { $numberInt: "557" },
+          calories: 557,
           protein: "7.6g",
           fat: "35g",
           carbs: "51g"
@@ -851,7 +860,7 @@ export const user_with_new_consumed_food_on_new_date = {
         {
           id: "7622300441715",
           name: "choco mini stars",
-          calories: { $numberInt: "505" },
+          calories: 505,
           protein: "6.4g",
           fat: "24.5g",
           carbs: "63.5g"
@@ -865,7 +874,7 @@ export const user_with_new_consumed_food_on_new_date = {
         {
           id: "7622300617820",
           name: "Milka Oreo",
-          calories: { $numberInt: "564" },
+          calories: 564,
           protein: "4.8g",
           fat: "35g",
           carbs: "56g"
@@ -890,7 +899,7 @@ export const user_with_new_consumed_food_on_new_date = {
 
 
 export const user_with_new_consumed_food_on_a_certain_date= {
-  _id: { $oid: "65e8d6dd03a1f8425615304e" },
+  _id: "65e8d6dd03a1f8425615304e",
   username: "user4",
   email: "user4@gmail.com",
   password: "$2b$10$SyhOUqWCsvK57LpA7EdTzOQKQUuEqFvr8zlyhxKdyhOgGvmKrKVKe",
@@ -910,7 +919,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
         {
           id: "",
           name: "Oreo Enrobed White",
-          calories: { $numberInt: "532" },
+          calories: 532,
           protein: "4.9g",
           fat: "25g",
           carbs: "70g",
@@ -918,7 +927,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
         {
           id: "",
           name: "Oreo Enrobed White",
-          calories: { $numberInt: "532" },
+          calories: 532,
           protein: "4.9g",
           fat: "25g",
           carbs: "70g",
@@ -932,7 +941,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
         {
           id: "3021760403167",
           name: "Pom' potes Pomme Bio",
-          calories: { $numberInt: "61" },
+          calories: 61,
           protein: "0.5g",
           fat: "0.6g",
           carbs: "12g"
@@ -940,7 +949,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
         {
           id: "3021760403167",
           name: "Pom' potes Pomme Bio",
-          calories: { $numberInt: "61" },
+          calories: 61,
           protein: "0.5g",
           fat: "0.6g",
           carbs: "12g"
@@ -948,7 +957,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
         {
           id: "5060482840179",
           name: "deliciously Ella apple and raisin oat bars",
-          calories: { $numberInt: "426" },
+          calories: 426,
           protein: "5.6g",
           fat: "17.4g",
           carbs: "59.3g"
@@ -956,7 +965,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
         {
           id: "3800020456293",
           name: "Kit kat chunky",
-          calories: { $numberInt: "529" },
+          calories: 529,
           protein: "7.7g",
           fat: "28.6g",
           carbs: "59.5g",
@@ -970,7 +979,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
         {
           id: "5600826202982",
           name: "Peanut Butter",
-          calories: { $numberInt: "630" },
+          calories: 630,
           protein: "26g",
           fat: "52g",
           carbs: "11g",
@@ -985,7 +994,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
         {
           id: "5601009297993",
           name: "Arroz",
-          calories: { $numberInt: "356" },
+          calories: 356,
           protein: "6.6g",
           fat: "0.8g",
           carbs: "79.3g",
@@ -993,7 +1002,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
         {
           id: "8000500037560",
           name: "Kinder Bueno",
-          calories: { $numberInt: "572" },
+          calories: 572,
           protein: "8.6g",
           fat: "37.3g",
           carbs: "49.5g",
@@ -1007,7 +1016,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
         {
           id: "7622210578464",
           name: "Green and Black's Organic 70% Dark Chocolate Bar",
-          calories: { $numberInt: "575" },
+          calories: 575,
           protein: "9.1g",
           fat: "42g",
           carbs: "36g",
@@ -1015,7 +1024,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
         {
           id: "3168930170570",
           name: "Ice tea",
-          calories: { $numberInt: "1" },
+          calories: 1,
           protein: null,
           fat: null,
           carbs: null,
@@ -1029,7 +1038,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
         {
           id: "5600826203613",
           name: "Peanut Butter Crunchy",
-          calories: { $numberInt: "630" },
+          calories: 630,
           protein: "26g",
           fat: "52g",
           carbs: "11g",
@@ -1037,7 +1046,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
         {
           id: "5601009112050",
           name: "A Autêntica Bolacha Água e Sal",
-          calories: { $numberInt: "430" },
+          calories: 430,
           protein: "9.2g",
           fat: "10.6g",
           carbs: "72.6g",
@@ -1045,7 +1054,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
         {
           id: "5010029227062",
           name: "Oreo o's",
-          calories: { $numberInt: "382" },
+          calories: 382,
           protein: "7.5g",
           fat: "2.7g",
           carbs: "80g",
@@ -1053,7 +1062,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
         {
           id: "4025700001030",
           name: "Milka Noisette",
-          calories: { $numberInt: "557" },
+          calories: 557,
           protein: "7.6g",
           fat: "35g",
           carbs: "51g",
@@ -1061,7 +1070,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
         {
           id: "7622300441715",
           name: "choco mini stars",
-          calories: { $numberInt: "505" },
+          calories: 505,
           protein: "6.4g",
           fat: "24.5g",
           carbs: "63.5g",
@@ -1075,7 +1084,7 @@ export const user_with_new_consumed_food_on_a_certain_date= {
         {
           id: "7622300617820",
           name: "Milka Oreo",
-          calories: { $numberInt: "564" },
+          calories: 564,
           protein: "4.8g",
           fat: "35g",
           carbs: "56g",
@@ -1093,11 +1102,31 @@ export const user_with_new_consumed_food_on_a_certain_date= {
   ],
 };
 
-export const consumed_food = [
+export const consumed_food_of_the_day_with_the_added_one = [
+  {
+    id: "7622300617820",
+    name: "Milka Oreo",
+    calories: 564,
+    protein: "4.8g",
+    fat: "35g",
+    carbs: "56g",
+  },
+  {
+    id: "3284230006408",
+    name: "Brioche Tranchée Bio",
+    calories: 349, 
+    carbs: "55g", 
+    fat: "10g", 
+    protein: "8.7g"
+  },
+  consumed_food
+]
+
+export const consumed_food_of_the_day = [
   {
     id: "",
     name: "Oreo Enrobed White",
-    calories: { $numberInt: "532" },
+    calories: 532,
     protein: "4.9g",
     fat: "25g",
     carbs: "70g",
@@ -1105,7 +1134,7 @@ export const consumed_food = [
   {
     id: "",
     name: "Oreo Enrobed White",
-    calories: { $numberInt: "532" },
+    calories: 532,
     protein: "4.9g",
     fat: "25g",
     carbs: "70g",

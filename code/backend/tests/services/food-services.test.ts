@@ -1,6 +1,6 @@
 import express from "express";
 
-import { Food, User } from "../../domain/types.ts";
+import { ConsumedFood, Food, User } from "../../domain/types.ts";
 import { FoodServices } from "../../services/food-services.ts";
 import { FoodData } from "../../data/food-data.ts";
 import { UserData } from "../../data/user-data.ts";
@@ -10,7 +10,7 @@ import {
   api_food_no_name,
   api_food_no_quantity_unit,
   api_food_quantity_on_name,
-  consumed_food,
+  consumed_food_of_the_day,
   food,
   food_no_brand,
   food_no_quantity_to_present,
@@ -19,6 +19,8 @@ import {
   user_with_new_consumed_food_on_new_date,
   date_that_user_has_consumed_food,
   user_with_new_consumed_food_on_a_certain_date,
+  consumed_food,
+  consumed_food_of_the_day_with_the_added_one,
 } from "./mockData/food.ts";
 import { apiFoodToFood } from "../../utils/functions/app/apiFoodToFood.ts";
 import { NotFoundError } from "../../errors/app_errors.ts";
@@ -102,7 +104,7 @@ describe("dailyConsumption", () => {
       "17-4-2024"
     );
 
-    expect(resFood).toEqual(consumed_food);
+    expect(resFood).toEqual(consumed_food_of_the_day);
   });
 
   it("throws unauthorized exception if no user was found", async () => {
@@ -134,12 +136,12 @@ describe("consume", () => {
 
     await foodServices.consume(
       user.token,
-      food.id,
-      food.name,
-      food.calories,
-      food.protein,
-      food.fat,
-      food.carbs
+      consumed_food.id,
+      consumed_food.name,
+      consumed_food.calories,
+      consumed_food.protein,
+      consumed_food.fat,
+      consumed_food.carbs
     );
 
     expect(userData.updateUser).toHaveBeenCalledWith(
@@ -155,12 +157,12 @@ describe("consume", () => {
 
     await foodServices.consume(
       user.token,
-      food.id,
-      food.name,
-      food.calories,
-      food.protein,
-      food.fat,
-      food.carbs
+      consumed_food.id,
+      consumed_food.name,
+      consumed_food.calories,
+      consumed_food.protein,
+      consumed_food.fat,
+      consumed_food.carbs
     ); 
     
 
@@ -178,14 +180,54 @@ describe("consume", () => {
     expect(async () => {
       await foodServices.consume(
         user.token,
-        food.id,
-        food.name,
-        food.calories,
-        food.protein,
-        food.fat,
-        food.carbs
+        consumed_food.id,
+        consumed_food.name,
+        consumed_food.calories,
+        consumed_food.protein,
+        consumed_food.fat,
+        consumed_food.carbs
       ); 
     }).rejects.toThrow("Unauthorized");
+  });
+
+  it("returns correctly when it's the first item of the day", async () => {
+    userData.getUserByToken = jest.fn().mockResolvedValue(userMock);
+    userData.updateUser = jest.fn();
+    jest.spyOn(getDateModule, "default").mockReturnValue(date);
+
+    const returnValue = await foodServices.consume(
+      user.token,
+      consumed_food.id,
+      consumed_food.name,
+      consumed_food.calories,
+      consumed_food.protein,
+      consumed_food.fat,
+      consumed_food.carbs
+    ); 
+    
+    expect(returnValue).toEqual([consumed_food]);
+  });
+
+  it("returns correctly when it's not the first item of the day", async () => {
+    userData.getUserByToken = jest.fn().mockResolvedValue(userMock);
+    userData.updateUser = jest.fn();
+    jest.spyOn(getDateModule, "default").mockReturnValue(date_that_user_has_consumed_food);
+
+    const returnValue = await foodServices.consume(
+      user.token,
+      consumed_food.id,
+      consumed_food.name,
+      consumed_food.calories,
+      consumed_food.protein,
+      consumed_food.fat,
+      consumed_food.carbs
+    ); 
+
+
+
+
+    
+    expect(returnValue).toEqual(consumed_food_of_the_day_with_the_added_one);
   });
 });
 

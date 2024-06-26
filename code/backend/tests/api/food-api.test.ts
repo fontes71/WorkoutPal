@@ -4,6 +4,7 @@ import { FoodData } from "../../data/food-data.ts";
 import { UserData } from "../../data/user-data.ts";
 import {  mock_services_return_value, mock_request_with_query, mock_request_without_query, mock_request_with_query_thats_not_a_string, mock_request_with_barcode_query, parsed_barcode, mock_request_with_body, mock_token } from "./mockData/food.ts";
 import { UnauthorizedError } from "../../errors/app_errors.ts";
+import { consumed_food_of_the_day } from "../services/mockData/food.ts";
 
 const foodData = new FoodData()
 const userData = new UserData()
@@ -128,6 +129,8 @@ describe("/api/food/consume", () => {
     expect(foodServices.consume).toHaveBeenCalledWith(mock_token, id, name, calories, protein, fat, carbs)
 
     expect(mockResponse.status).toHaveBeenCalledWith(201)
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Food item consumed successfully", obj: {}})
+    
   })
 
   it('user token is not associated with a valid user', async () => {
@@ -137,6 +140,17 @@ describe("/api/food/consume", () => {
 
     expect(mockResponse.status).toHaveBeenCalledWith(401)
     expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: Access denied", obj: {}})
+  })
+
+  it('returns consumed food of the day successfully', async () => {
+    foodServices.consume = jest.fn().mockResolvedValue(Promise.resolve(consumed_food_of_the_day))
+
+    await foodApi.consume(mock_request_with_body as any, mockResponse as any);
+
+
+
+    expect(mockResponse.status).toHaveBeenCalledWith(201)
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Food item consumed successfully", obj: consumed_food_of_the_day})
   })
 })
 
