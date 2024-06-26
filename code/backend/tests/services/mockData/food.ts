@@ -1102,6 +1102,17 @@ export const user_with_new_consumed_food_on_a_certain_date= {
   ],
 };
 
+export const consumed_food_of_the_day_without_the_deleted_one = [
+  {
+    id: "3284230006408",
+    name: "Brioche Tranchée Bio",
+    calories: 349, 
+    carbs: "55g", 
+    fat: "10g", 
+    protein: "8.7g"
+  }
+]
+
 export const consumed_food_of_the_day_with_the_added_one = [
   {
     id: "7622300617820",

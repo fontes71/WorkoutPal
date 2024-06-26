@@ -124,9 +124,12 @@ export class FoodServices implements IFoodServices {
 
       const dayIndex = user.days.findIndex((day) => day.date === date);
 
+      if (dayIndex == -1 )
+        throw NoItemToDelete;
+
       const consumedFoodLength = user.days[dayIndex].consumedFood.length
 
-      if (dayIndex == -1 || consumedFoodLength == 0) 
+      if (consumedFoodLength == 0) 
         throw NoItemToDelete;
 
       if (consumedFoodLength <= index || index < 0)

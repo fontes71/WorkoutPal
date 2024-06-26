@@ -21,6 +21,7 @@ import {
   user_with_new_consumed_food_on_a_certain_date,
   consumed_food,
   consumed_food_of_the_day_with_the_added_one,
+  consumed_food_of_the_day_without_the_deleted_one,
 } from "./mockData/food.ts";
 import { apiFoodToFood } from "../../utils/functions/app/apiFoodToFood.ts";
 import { NotFoundError } from "../../errors/app_errors.ts";
@@ -222,14 +223,85 @@ describe("consume", () => {
       consumed_food.fat,
       consumed_food.carbs
     ); 
-
-
-
-
     
     expect(returnValue).toEqual(consumed_food_of_the_day_with_the_added_one);
   });
 });
+
+describe("delete", () => {
+  beforeEach(() => {
+    userMock = {...user }
+  })
+
+  it("calls data function successfully ", async () => {
+    userData.getUserByToken = jest.fn().mockResolvedValue(userMock);
+    userData.updateUser = jest.fn();
+    jest.spyOn(getDateModule, "default").mockReturnValue(date_that_user_has_consumed_food);
+
+    await foodServices.delete(
+      user.token,
+      0
+    );
+
+    expect(userData.updateUser).toHaveBeenCalled();
+
+  });
+
+  it("throws unauthorized if no user with the token passed is found", async () => {
+    userData.getUserByToken = jest.fn().mockResolvedValue(null);
+    userData.updateUser = jest.fn();
+
+
+    expect(async () => {
+      await foodServices.delete(
+        user.token,
+      0
+      ); 
+    }).rejects.toThrow("Unauthorized");
+  });
+
+  it("no item to delete", async () => {
+    userData.getUserByToken = jest.fn().mockResolvedValue(userMock);
+    userData.updateUser = jest.fn();
+    jest.spyOn(getDateModule, "default").mockReturnValue(date);
+
+    expect(async () => {
+      await foodServices.delete(
+        user.token,
+      0
+      ); 
+    }).rejects.toThrow("NoItemToDelete");
+
+  });
+
+  it("invalid index because it is negative", async () => {
+    userData.getUserByToken = jest.fn().mockResolvedValue(userMock);
+    userData.updateUser = jest.fn();
+    jest.spyOn(getDateModule, "default").mockReturnValue(date_that_user_has_consumed_food);
+
+    expect(async () => {
+      await foodServices.delete(
+        user.token,
+      -1
+      ); 
+    }).rejects.toThrow("InvalidConsumedFoodIndex");
+
+  });
+
+  it("invalid index because there's no item with given index", async () => {
+    userData.getUserByToken = jest.fn().mockResolvedValue(userMock);
+    userData.updateUser = jest.fn();
+    jest.spyOn(getDateModule, "default").mockReturnValue(date_that_user_has_consumed_food);
+
+    expect(async () => {
+      await foodServices.delete(
+        user.token,
+      20
+      ); 
+    }).rejects.toThrow("InvalidConsumedFoodIndex");
+
+  });
+})
 
 describe("auxiliar functions", () => {
   it("mapFood returns correct value", () => {

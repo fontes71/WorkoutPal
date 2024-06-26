@@ -64,3 +64,16 @@ export const mock_request_with_body = {
     authorization: `Bearer ${mock_token}`,
   }
 };
+
+export const item_index = 1234
+
+export const mock_request_with_params = {
+  headers: {
+    authorization: `Bearer ${mock_token}`,
+  },
+  params: {
+    itemIndex: "1234",
+  },
+} 
+
+
