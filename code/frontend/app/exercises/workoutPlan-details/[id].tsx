@@ -1,4 +1,4 @@
-import { Alert, FlatList, Image, Pressable, Text, View } from "react-native";
+import { Alert, FlatList, Image, Pressable, Text, TouchableOpacity, View } from "react-native";
 
 import { useLocalSearchParams, Stack, router } from "expo-router";
 import { Button, color } from "@rneui/base";
@@ -26,52 +26,6 @@ const handleExercisePress = async (exercise: Exercise) => {
     });
 }
 
-interface TopSectionProps {
-    workoutPlan: WorkoutPlan;
-  }
-  
-  const TopSection: React.FC<TopSectionProps> = ({ workoutPlan: workoutPlan }) => {
-    const { userContext } = useContext(UserContext)
-    const onSaveHook = async (workoutPlan: WorkoutPlan) => {
-        if (!userContext && userContext === null) {
-          router.push(`/auth/login/`);
-          return;
-        }
-        const response = await fetch(`${localhost}/api/exercises/workoutPlans/log`, {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${userContext.token}`,
-          },
-          body: JSON.stringify({ workoutPlanName: workoutPlan.name}),
-        });
-
-        if (response.status !== 200) {
-            alert("Failed to save workout plan");
-            return;
-        }
-  
-        router.push(`/exercise/`);
-    };
-  
-    return (
-      <Stack.Screen
-        options={{
-          headerTitle: "Log Workout Plan",
-          headerRight: () => (
-            <Pressable onPress={() => onSaveHook(workoutPlan)}>
-              <Image
-                source={require("@/assets/images/save.png")}
-                style={{ marginRight: 0 }}
-              />
-            </Pressable>
-          ),
-          headerTitleAlign: "left",
-        }}
-      />
-    );
-  };
-
 const WorkoutPlanDetailsScreen = () => {
     const { workoutPlanJSON: workoutPlanJSON } = useLocalSearchParams<{ workoutPlanJSON: string }>();
     if(!workoutPlanJSON) {
@@ -81,6 +35,7 @@ const WorkoutPlanDetailsScreen = () => {
     const [exercises, setExercises] = useState<Exercise[]>([]);
     const [token, setToken] = useState<string>("");
     const [loaded, setLoaded] = useState(false);
+    const [log, setLog] = useState(false);
 
     useEffect(() => {
         const fetchExercises = async () => {
@@ -123,6 +78,37 @@ const WorkoutPlanDetailsScreen = () => {
 
         fetchExercises();
     }, []);
+
+    useEffect(() => {
+        const saveWorkoutPlan = async () => {
+            try {
+                const response = await fetch(`${localhost}/api/exercises/workoutPlans/log`, 
+                    {
+                        method: 'POST',
+                        headers: {
+                          'Authorization': `Bearer ${token}`,
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ workoutPlanName: workoutPlan.name })
+                      }
+                )
+                
+                if (response.status !== 200) {
+                    const errorMessage: WorkoutPlanResponse = await response.json()
+                    alert(errorMessage.message);
+                    return;
+                }
+                
+                alert("Workout plan saved successfully");
+            } catch (error) {
+                console.error(`Error saving workout plan ${workoutPlan.name}:`, error);
+            }
+        }
+        if (log) {
+            saveWorkoutPlan();
+            setLog(false);
+        }
+    }, [log]);
 
     const ExerciseResult: React.FC<Exercise> = ({ _id, name, gifUrl, equipment }) => {
         return (
@@ -186,7 +172,6 @@ const WorkoutPlanDetailsScreen = () => {
             <View style={search_exercises_styles.exerciseResultContainer}>
                 {loaded ? 
                     <View style={search_exercises_styles.exerciseResultTextContainer}>
-                        <TopSection workoutPlan={workoutPlan}/>
                         <Text style={search_exercises_styles.topText}>{workoutPlan.name}</Text>
                         <Text style={search_exercises_styles.topText}/>
                         <BottomText str={'Description: ' + workoutPlan.description} />
@@ -203,6 +188,12 @@ const WorkoutPlanDetailsScreen = () => {
                             keyExtractor={(item: Exercise) => item._id}
                             contentContainerStyle={{ paddingBottom: 40 }}
                         />
+                        <TouchableOpacity style={search_exercises_styles.floatingButton} onPress={ () => { setLog(true) }}>
+                            <Image
+                              source={require("@/assets/images/save.png")}
+                              style={{ marginRight: 0 }}
+                            />
+                        </TouchableOpacity>
                     </View> : 
                     <View style={search_exercises_styles.exerciseResultTextContainer}>
                         <Text style={search_exercises_styles.topText}>Loading...</Text>
