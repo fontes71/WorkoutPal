@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { localhost } from "@/constants";
 import search_exercises_styles, { exercise_styles } from "@/assets/styles/exercises";
 import { Button } from "@rneui/base";
-import { getLocalUser } from "@/assets/functions/auth";
+import { getLocalUser } from '@/services/auth';
 import CreateWorkoutPlansModalScreen from "@/app/modals/createWorkoutPlan";
 
 const BottomText = ({ str }: { str: string | null }) => (

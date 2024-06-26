@@ -8,7 +8,7 @@ import { localhost } from '@/constants';
 import { Button } from '@rneui/base';
 import modal_styles from '@/assets/styles/modals';
 import { MaterialIcons } from '@expo/vector-icons';
-import { getLocalUser } from '@/assets/functions/auth';
+import { getLocalUser } from '@/services/auth';
 
 export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { isVisible: boolean, onClose: () => void }) {
   const [name, setName] = useState<string>("");

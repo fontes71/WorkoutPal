@@ -6,7 +6,7 @@ import search_exercises_styles from "@/assets/styles/exercises";
 import { useContext, useEffect, useState } from "react";
 import { localhost } from "@/constants";
 import { UserContext } from "@/assets/components/auth/AuthContext";
-import { getLocalUser } from "@/assets/functions/auth";
+import { getLocalUser } from '@/services/auth';
 
 const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
@@ -21,7 +21,7 @@ const removeParenthesesFromExerciseName = (exercise: Exercise) => {
 
 const handleExercisePress = async (exercise: Exercise) => {
     router.push({
-        pathname: `/exercise/operations/exercise-details/${exercise._id}`,
+        pathname: `/exercise/exercise-details/${exercise._id}`,
         params: { exerciseJSON: JSON.stringify(exercise) }
     });
 }

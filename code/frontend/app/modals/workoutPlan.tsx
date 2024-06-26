@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from 'react';
 import { localhost } from '@/constants';
 import modal_styles from '@/assets/styles/modals';
 import { MaterialIcons } from '@expo/vector-icons';
-import { getLocalUser } from '@/assets/functions/auth';
+import { getLocalUser } from '@/services/auth';
 
 const BottomText = ({ str }: { str: string | null }) => (
   <>{str && <Text style={workoutPlans_styles.bottomText}>{str}</Text>}</>
