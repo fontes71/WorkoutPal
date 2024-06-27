@@ -256,7 +256,5 @@ export class ExerciseData implements IExerciseData {
       await ExerciseModel.deleteMany({});
       await ExerciseModel.insertMany(exercises);
     });
-
-    rewriteFileWithObject("data/local/files/exercises.json", exercises);
   }
 }
