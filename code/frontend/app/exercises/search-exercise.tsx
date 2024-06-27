@@ -21,6 +21,8 @@ export default function SearchExerciseScreen() {
   const [bodyPart, setBodyPart] = useState("");
   const [equipment, setEquipment] = useState("");
   const [target, setTarget] = useState("");
+  const resultsSize = 10;
+  const resultsOffset = 10;
 
   const handleEnter = () => {
     const fetchExercise = async () => {
@@ -62,7 +64,7 @@ export default function SearchExerciseScreen() {
   };
 
   useEffect(() => {
-    setPage(10)
+    setPage(resultsSize)
     if (flatListRef.current) {
       flatListRef.current.scrollToOffset({ animated: false, offset: 0 });
     }
@@ -70,14 +72,14 @@ export default function SearchExerciseScreen() {
  
   
   useEffect(() => {
-    if ((exercises.length < 60 || page == 10) && exerciseName.length > 1) {
+    if ((exercises.length < 60 || page == resultsSize) && exerciseName.length > 1) {
       loadMoreResults();
     }  
   }, [page]);
 
   const handlePageNum = () => {
     if (!isFetching) {
-      setPage(page + 10);
+      setPage(page + resultsOffset);
     }
   }
 
