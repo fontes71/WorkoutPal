@@ -53,7 +53,6 @@ export interface Food {
   id: string;
   name: string;
   brand: string;
-  quantityToPresent: string;
   quantity: string,
   quantityUnit: string;
   imageUrl: string;

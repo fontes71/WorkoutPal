@@ -1,10 +1,5 @@
 import { Food, FoodFactsApiFood } from "../../../domain/types";
 
-const stringIsInTheName = (name: string, string: string) =>
-  name.toLowerCase().split(" ").includes(string.toLowerCase());
-
-const noValueIfPresentInTheName = (name: string, string: string) => name && string && stringIsInTheName(name, string) ? "" : string;
-
 
 const getNutrimentAndUnit = (nutriments: any, nutrimentName: string) => {
   const nutriment = nutriments[`${nutrimentName}_100g`]
@@ -32,14 +27,12 @@ export const apiFoodToFood = (apiFood: FoodFactsApiFood) => {
 
     const brand = brands_tags ? brands_tags[0] : "";
     const customName = product_name || product_name_en;
-    const quantityToPresent = noValueIfPresentInTheName(customName, quantity);
     const quantiyUnit = product_quantity_unit ? product_quantity_unit : 'g'
 
     return {
       id: id,
       name: customName,
       brand: brand,
-      quantityToPresent: quantityToPresent,
       quantity: product_quantity,
       quantityUnit: quantiyUnit,
       imageUrl: image_front_url,

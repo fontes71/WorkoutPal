@@ -507,7 +507,6 @@ export const food = {
   id: "3284230006408",
   name: "Brioche Tranchée Bio",
   brand: "la-boulangere",
-  quantityToPresent: "400g",
   quantity: "400",
   quantityUnit: "g",
   imageUrl:
@@ -530,7 +529,6 @@ export const food_no_brand = {
   id: "3284230006408",
   name: "la-boulangere Brioche Tranchée Bio",
   brand: "",
-  quantityToPresent: "400g",
   quantity: "400",
   quantityUnit: "g",
   imageUrl:
@@ -543,27 +541,6 @@ export const food_no_brand = {
   saturatedFat: "1g",
   salt: "0.9g",
   sodium: "0.36g",
-  sugars: "13g",
-  nutriscoreGrade: "b",
-};
-
-export const food_no_quantity_to_present = {
-  id: "3284230006408",
-  name: "Brioche Tranchée Bio 400g",
-  brand: "la-boulangere",
-  quantityToPresent: "",
-  quantity: "400",
-  quantityUnit: "g",
-  imageUrl:
-    "https://images.openfoodfacts.org/images/products/328/423/000/6408/front_fr.151.400.jpg",
-  calories: 349,
-  protein: "9g",
-  fat: "10g",
-  carbs: "55g",
-  fiber: "2g",
-  saturatedFat: "1g",
-  salt: "1g",
-  sodium: "0g",
   sugars: "13g",
   nutriscoreGrade: "b",
 };
@@ -755,7 +732,6 @@ export const user = {
           id: "3284230006408",
           name: "Peanuts",
           brand: "something",
-          quantityToPresent: "400g",
           quantity: "400",
           quantityUnit: "g",
           imageUrl:
@@ -1005,7 +981,6 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           id: "3284230006408",
           name: "Peanuts",
           brand: "something",
-          quantityToPresent: "400g",
           quantity: "400",
           quantityUnit: "g",
           imageUrl:
@@ -1025,7 +1000,6 @@ export const user_with_new_consumed_food_on_a_certain_date= {
           id: "3284230006408",
           name: "Brioche Tranchée Bio",
           brand: "la-boulangere",
-          quantityToPresent: "400g",
           quantity: "400",
           quantityUnit: "g",
           imageUrl:
@@ -1062,7 +1036,6 @@ export const consumed_food_of_the_day_with_the_added_one = [
     id: "3284230006408",
     name: "Peanuts",
     brand: "something",
-    quantityToPresent: "400g",
     quantity: "400",
     quantityUnit: "g",
     imageUrl:

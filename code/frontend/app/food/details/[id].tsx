@@ -26,8 +26,6 @@ export default function FoodDetailsScreen() {
       return;
     }
 
-
-
     await consumeFood(userContext?.token, food);
 
     router.push(`/food/`);

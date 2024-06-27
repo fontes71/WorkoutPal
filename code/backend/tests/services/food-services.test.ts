@@ -8,7 +8,6 @@ import {
   api_food_quantity_on_name,
   consumed_food_of_the_day,
   food,
-  food_no_quantity_to_present,
   user,
   date,
   user_with_new_consumed_food_on_new_date,
@@ -289,11 +288,6 @@ describe("auxiliar functions", () => {
     expect(resFood).toEqual(food);
   });
 
-
-  it("mapFood returns nothing as the value of the item's quantity property if the quantity is in the name", () => {
-    const resFood = apiFoodToFood(api_food_quantity_on_name);
-    expect(resFood).toEqual(food_no_quantity_to_present);
-  });
 
   it("mapFood returns item with g as the unit if no unit is provided", () => {
     const resFood = apiFoodToFood(api_food_no_quantity_unit);
