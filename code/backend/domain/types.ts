@@ -71,15 +71,6 @@ export interface Food {
 
 export interface Day {
   date: string,
-  consumedFood: ConsumedFood[],
+  consumedFood: Food[],
   workoutPlansDone: string[]
-}
-
-export interface ConsumedFood {
-  id: string,
-  name: string | null;
-  calories: number | null;
-  protein: string | null;
-  fat: string | null;
-  carbs: string | null;
 }

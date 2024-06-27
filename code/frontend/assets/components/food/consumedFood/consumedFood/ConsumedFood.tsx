@@ -3,19 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import { deleteAction, handlePress } from "./utils";
 
-export const deleteAlert = (deleteAction: () => Promise<void>) => (
-   Alert.alert("Delete this item?", "", [
-                {
-                    text: "Yes",
-                    onPress: deleteAction,
-                }, {
-                    text: "No",
-                    onPress: () => { return },
-                },
-            ])
-)
-
-
 const ConsumedFood: React.FC<ConsumedFoodProps> = ({ food, setFood }) => {
   const { userContext } = useContext(UserContext);
 
@@ -38,5 +25,20 @@ const ConsumedFood: React.FC<ConsumedFoodProps> = ({ food, setFood }) => {
   )
 
 }
+
+
+export const deleteAlert = (deleteAction: () => Promise<void>) => (
+   Alert.alert("Delete this item?", "", [
+                {
+                    text: "Yes",
+                    onPress: deleteAction,
+                }, {
+                    text: "No",
+                    onPress: () => { return },
+                },
+            ])
+)
+
+
 
 export default ConsumedFood;

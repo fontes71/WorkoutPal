@@ -430,25 +430,18 @@ export const food = {
   imageUrl:
     "https://images.openfoodfacts.org/images/products/328/423/000/6408/front_fr.151.400.jpg",
   calories: 349,
-  protein: "8.7g",
+  protein: "9g",
   fat: "10g",
   carbs: "55g",
-  fiber: "2.2g",
+  fiber: "2g",
   saturatedFat: "1g",
-  salt: "0.9g",
-  sodium: "0.36g",
+  salt: "1g",
+  sodium: "0g",
   sugars: "13g",
   nutriscoreGrade: "b",
 };
 
-export const consumed_food = {
-  id: "3284230006408",
-  name: "Brioche Tranchée Bio",
-  calories: 349,
-  protein: "8.7g",
-  fat: "10g",
-  carbs: "55g",
-}
+
 
 export const food_no_brand = {
   id: "3284230006408",
@@ -481,13 +474,13 @@ export const food_no_quantity_to_present = {
   imageUrl:
     "https://images.openfoodfacts.org/images/products/328/423/000/6408/front_fr.151.400.jpg",
   calories: 349,
-  protein: "8.7g",
+  protein: "9g",
   fat: "10g",
   carbs: "55g",
-  fiber: "2.2g",
+  fiber: "2g",
   saturatedFat: "1g",
-  salt: "0.9g",
-  sodium: "0.36g",
+  salt: "1g",
+  sodium: "0g",
   sugars: "13g",
   nutriscoreGrade: "b",
 };
@@ -676,16 +669,45 @@ export const user = {
       workoutPlansDone: [],
       consumedFood: [
         {
-          id: "7622300617820",
-          name: "Milka Oreo",
-          calories: 564,
-          protein: "4.8g",
-          fat: "35g",
-          carbs: "56g"
+          id: "3284230006408",
+          name: "Peanuts",
+          brand: "something",
+          quantityToPresent: "400g",
+          quantity: "400",
+          quantityUnit: "g",
+          imageUrl:
+            "https://images.openfoodfacts.org/images/products/328/423/000/6408/front_fr.151.400.jpg",
+          calories: 349,
+          protein: "8.7g",
+          fat: "10g",
+          carbs: "55g",
+          fiber: "2.2g",
+          saturatedFat: "1g",
+          salt: "0.9g",
+          sodium: "0.36g",
+          sugars: "13g",
+          nutriscoreGrade: "b",
         },
       ],
     },
   ],
+};
+
+
+export const user_with_no_nutrition_data = {
+  _id: "65e8d6dd03a1f8425615304e",
+  username: "user4",
+  email: "user4@gmail.com",
+  password: "$2b$10$SyhOUqWCsvK57LpA7EdTzOQKQUuEqFvr8zlyhxKdyhOgGvmKrKVKe",
+  token: "6b8c5f1d-4ce1-4982-83d3-720969912f12",
+  workout_plans: [
+    {
+      name: "WorkoutPlan1",
+      description: "WorkoutPlan1 Description",
+      exercises: ["0006"],
+    },
+  ],
+  days: []
 };
 
 export const user_with_new_consumed_food_on_new_date = {
@@ -703,196 +725,11 @@ export const user_with_new_consumed_food_on_new_date = {
   ],
   days: [
     {
-      date: "17-4-2024",
-      workoutPlansDone: [],
-      consumedFood: [
-        {
-          id: "",
-          name: "Oreo Enrobed White",
-          calories: 532,
-          protein: "4.9g",
-          fat: "25g",
-          carbs: "70g",
-        },
-        {
-          id: "",
-          name: "Oreo Enrobed White",
-          calories: 532,
-          protein: "4.9g",
-          fat: "25g",
-          carbs: "70g",
-        },
-      ],
-    },
-    {
-      date: "30-4-2024",
-      workoutPlansDone: [],
-      consumedFood: [
-        {
-          id: "3021760403167",
-          name: "Pom' potes Pomme Bio",
-          calories: 61,
-          protein: "0.5g",
-          fat: "0.6g",
-          carbs: "12g"
-        },
-        {
-          id: "3021760403167",
-          name: "Pom' potes Pomme Bio",
-          calories: 61,
-          protein: "0.5g",
-          fat: "0.6g",
-          carbs: "12g"
-        },
-        {
-          id: "5060482840179",
-          name: "deliciously Ella apple and raisin oat bars",
-          calories: 426,
-          protein: "5.6g",
-          fat: "17.4g",
-          carbs: "59.3g"
-        },
-        {
-          id: "3800020456293",
-          name: "Kit kat chunky",
-          calories: 529,
-          protein: "7.7g",
-          fat: "28.6g",
-          carbs: "59.5g"
-        },
-      ],
-    },
-    {
-      date: "1-5-2024",
-      workoutPlansDone: [],
-      consumedFood: [
-        {
-          id: "5600826202982",
-          name: "Peanut Butter",
-          calories: 630,
-          protein: "26g",
-          fat: "52g",
-          carbs: "11g"
-        },
-        {
-          id: "3564700301456",
-          name: "Salade iceberg",
-          protein: "1g",
-          fat: "0.5g",
-          carbs: "2.5g"
-        },
-        {
-          id: "5601009297993",
-          name: "Arroz",
-          calories: 356,
-          protein: "6.6g",
-          fat: "0.8g",
-          carbs: "79.3g"
-        },
-        {
-          id: "8000500037560",
-          name: "Kinder Bueno",
-          calories: 572,
-          protein: "8.6g",
-          fat: "37.3g",
-          carbs: "49.5g"
-        },
-      ],
-    },
-    {
-      date: "2-5-2024",
-      workoutPlansDone: [],
-      consumedFood: [
-        {
-          id: "7622210578464",
-          name: "Green and Black's Organic 70% Dark Chocolate Bar",
-          calories: 575,
-          protein: "9.1g",
-          fat: "42g",
-          carbs: "36g"
-        },
-        {
-          id: "3168930170570",
-          name: "Ice tea",
-          calories: 1,
-          protein: null,
-          fat: null,
-          carbs: null
-        },
-      ],
-    },
-    {
-      date: "13-5-2024",
-      workoutPlansDone: [],
-      consumedFood: [
-        {
-          id: "5600826203613",
-          name: "Peanut Butter Crunchy",
-          calories: 630,
-          protein: "26g",
-          fat: "52g",
-          carbs: "11g"
-        },
-        {
-          id: "5601009112050",
-          name: "A Autêntica Bolacha Água e Sal",
-          calories: 430,
-          protein: "9.2g",
-          fat: "10.6g",
-          carbs: "72.6g"
-        },
-        {
-          id: "5010029227062",
-          name: "Oreo o's",
-          calories: 382,
-          protein: "7.5g",
-          fat: "2.7g",
-          carbs: "80g"
-        },
-        {
-          id: "4025700001030",
-          name: "Milka Noisette",
-          calories: 557,
-          protein: "7.6g",
-          fat: "35g",
-          carbs: "51g"
-        },
-        {
-          id: "7622300441715",
-          name: "choco mini stars",
-          calories: 505,
-          protein: "6.4g",
-          fat: "24.5g",
-          carbs: "63.5g"
-        },
-      ],
-    },
-    {
-      date: "14-5-2024",
-      workoutPlansDone: [],
-      consumedFood: [
-        {
-          id: "7622300617820",
-          name: "Milka Oreo",
-          calories: 564,
-          protein: "4.8g",
-          fat: "35g",
-          carbs: "56g"
-        },
-      ],
-    },
-    {
       date: date,
       workoutPlansDone: [],
       consumedFood: [
-        {
-        id: "3284230006408",
-        name: "Brioche Tranchée Bio",
-        calories: 349, 
-        carbs: "55g", 
-        fat: "10g",
-        protein: "8.7g"}
-        ]
+        food
+      ]
       }
   ],
 };
@@ -1082,20 +919,44 @@ export const user_with_new_consumed_food_on_a_certain_date= {
       workoutPlansDone: [],
       consumedFood: [
         {
-          id: "7622300617820",
-          name: "Milka Oreo",
-          calories: 564,
-          protein: "4.8g",
-          fat: "35g",
-          carbs: "56g",
+          id: "3284230006408",
+          name: "Peanuts",
+          brand: "something",
+          quantityToPresent: "400g",
+          quantity: "400",
+          quantityUnit: "g",
+          imageUrl:
+            "https://images.openfoodfacts.org/images/products/328/423/000/6408/front_fr.151.400.jpg",
+          calories: 349,
+          protein: "8.7g",
+          fat: "10g",
+          carbs: "55g",
+          fiber: "2.2g",
+          saturatedFat: "1g",
+          salt: "0.9g",
+          sodium: "0.36g",
+          sugars: "13g",
+          nutriscoreGrade: "b",
         },
         {
           id: "3284230006408",
           name: "Brioche Tranchée Bio",
-          calories: 349, 
-          carbs: "55g", 
-          fat: "10g", 
-          protein: "8.7g"
+          brand: "la-boulangere",
+          quantityToPresent: "400g",
+          quantity: "400",
+          quantityUnit: "g",
+          imageUrl:
+            "https://images.openfoodfacts.org/images/products/328/423/000/6408/front_fr.151.400.jpg",
+          calories: 349,
+          protein: "9g",
+          fat: "10g",
+          carbs: "55g",
+          fiber: "2g",
+          saturatedFat: "1g",
+          salt: "1g",
+          sodium: "0g",
+          sugars: "13g",
+          nutriscoreGrade: "b",
         }
       ],
     }
@@ -1115,22 +976,26 @@ export const consumed_food_of_the_day_without_the_deleted_one = [
 
 export const consumed_food_of_the_day_with_the_added_one = [
   {
-    id: "7622300617820",
-    name: "Milka Oreo",
-    calories: 564,
-    protein: "4.8g",
-    fat: "35g",
-    carbs: "56g",
-  },
-  {
     id: "3284230006408",
-    name: "Brioche Tranchée Bio",
-    calories: 349, 
-    carbs: "55g", 
-    fat: "10g", 
-    protein: "8.7g"
+    name: "Peanuts",
+    brand: "something",
+    quantityToPresent: "400g",
+    quantity: "400",
+    quantityUnit: "g",
+    imageUrl:
+      "https://images.openfoodfacts.org/images/products/328/423/000/6408/front_fr.151.400.jpg",
+    calories: 349,
+    protein: "8.7g",
+    fat: "10g",
+    carbs: "55g",
+    fiber: "2.2g",
+    saturatedFat: "1g",
+    salt: "0.9g",
+    sodium: "0.36g",
+    sugars: "13g",
+    nutriscoreGrade: "b",
   },
-  consumed_food
+  food
 ]
 
 export const consumed_food_of_the_day = [

@@ -13,7 +13,7 @@ const getNutrimentAndUnit = (nutriments: any, nutrimentName: string) => {
 
   const nutrimentUnit = nutriments[`${nutrimentName}_unit`]
 
-  return `${Math.floor(nutriment)}${nutrimentUnit}`
+  return `${Math.round(nutriment)}${nutrimentUnit}`
 }
 
 export const apiFoodToFood = (apiFood: FoodFactsApiFood) => {
@@ -31,15 +31,14 @@ export const apiFoodToFood = (apiFood: FoodFactsApiFood) => {
     } = apiFood;
 
     const brand = brands_tags ? brands_tags[0] : "";
-    const nameString = product_name || product_name_en;
-    const brandString =  noValueIfPresentInTheName(nameString, brand)
-    const quantityToPresent = noValueIfPresentInTheName(nameString, quantity);
+    const customName = product_name || product_name_en;
+    const quantityToPresent = noValueIfPresentInTheName(customName, quantity);
     const quantiyUnit = product_quantity_unit ? product_quantity_unit : 'g'
 
     return {
       id: id,
-      name: nameString,
-      brand: brandString,
+      name: customName,
+      brand: brand,
       quantityToPresent: quantityToPresent,
       quantity: product_quantity,
       quantityUnit: quantiyUnit,

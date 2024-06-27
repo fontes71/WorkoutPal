@@ -1,5 +1,5 @@
 import { AuthInfoUser, UserResponse } from "./api";
-import { Exercise, User, Food, FoodFactsApiFood, WorkoutPlan, ConsumedFood, Day } from "./types";
+import { Exercise, User, Food, FoodFactsApiFood, WorkoutPlan } from "./types";
 import { Request, Response } from "express";
 
 // API
@@ -57,9 +57,9 @@ export interface IExerciseServices {
 export interface IFoodServices {
   searchByName(query: string, page: number): Promise<Array<Food>>;
   searchByBarcode(barcode: number): Promise<Food>;
-  consume(token: string, id: string,name: string | null, calories: number | null, protein: string | null, fat: string | null, carbs: string | null):Promise<ConsumedFood[]>;
-  delete(token: string, idx: number):Promise<ConsumedFood[]>
-  dailyConsumption(token: string, day: string): Promise<ConsumedFood[]>;
+  consume(token: string, foodItem: Food):Promise<Food[]>;
+  delete(token: string, idx: number):Promise<Food[]>
+  dailyConsumption(token: string, day: string): Promise<Food[]>;
 }
 
 export interface IAuthServices {

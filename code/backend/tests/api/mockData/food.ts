@@ -51,15 +51,29 @@ export const mock_request_with_barcode_query_thats_not_a_string = {
 
 export const parsed_barcode = 123;
 
+export const food_item = {
+  id: "3284230006408",
+  name: "Brioche Tranchée Bio",
+  brand: "la-boulangere",
+  quantityToPresent: "400g",
+  quantity: "400",
+  quantityUnit: "g",
+  imageUrl:
+    "https://images.openfoodfacts.org/images/products/328/423/000/6408/front_fr.151.400.jpg",
+  calories: 349,
+  protein: "8.7g",
+  fat: "10g",
+  carbs: "55g",
+  fiber: "2.2g",
+  saturatedFat: "1g",
+  salt: "0.9g",
+  sodium: "0.36g",
+  sugars: "13g",
+  nutriscoreGrade: "b",
+}
+
 export const mock_request_with_body = {
-  body: {
-    id: "3284230006408",
-    name: "Brioche Tranchée Bio",
-    calories: 349,
-    protein: "8.7g",
-    fat: "10g",
-    carbs: "55g",
-  },
+  body: food_item,
   headers: {
     authorization: `Bearer ${mock_token}`,
   }

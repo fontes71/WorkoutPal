@@ -1,6 +1,4 @@
 import {
-  ConsumedFood,
-  Exercise,
   Food,
   FoodFactsApiFood,
   User,
@@ -9,21 +7,16 @@ import {
   InvalidBarcode,
   InvalidConsumedFoodIndex,
   NoItemToDelete,
-  NotFoundError,
   UnauthorizedError,
 } from "../errors/app_errors";
-import cron from "node-cron";
 import {
-  IAuthData,
-  IExerciseData,
-  IExerciseServices,
   IFoodData,
   IFoodServices,
   IUserData,
 } from "../domain/interfaces";
 import { apiFoodToFood } from "../utils/functions/app/apiFoodToFood";
 import getDate from "../utils/functions/app/getDate";
-import { mongodbHandler, transactionHandler } from "../utils/functions/data";
+import { transactionHandler } from "../utils/functions/data";
 import { SEARCH_FOOD_BY_NAME_RES_LIMIT } from "../utils/constants";
 
 export class FoodServices implements IFoodServices {
@@ -47,8 +40,6 @@ export class FoodServices implements IFoodServices {
 
       const food: Food[] = apiFood.map((apiFood) => apiFoodToFood(apiFood)).filter((item) => item.name.length > 0 );
 
-      food.forEach(it => console.log(it.name))
-
       return food;
     });
   };
@@ -71,22 +62,9 @@ export class FoodServices implements IFoodServices {
 
   consume = async (
     token: string,
-    id: string,
-    name: string | null,
-    calories: number | null,
-    protein: string | null,
-    fat: string | null,
-    carbs: string | null
+    foodItem: Food
   ) => {
     return transactionHandler(async () => {
-      const consumedFood: ConsumedFood = {
-        id: id,
-        name: name,
-        calories: calories,
-        protein: protein,
-        fat: fat,
-        carbs: carbs,
-      };
 
       const user: User | null = await this.userData.getUserByToken(token);
 
@@ -96,19 +74,19 @@ export class FoodServices implements IFoodServices {
 
       const dayIndex = user.days.findIndex((day) => day.date === date);
 
-      let consumedFoodRes: ConsumedFood[] = [];
+      let consumedFoodRes: Food[] = [];
 
       if (dayIndex == -1) {
         user.days = [
           ...user.days,
-          { date: date, consumedFood: [consumedFood], workoutPlansDone: [] },
+          { date: date, consumedFood: [foodItem], workoutPlansDone: [] },
         ];
-        consumedFoodRes = [consumedFood]
+        consumedFoodRes = [foodItem]
       } else {
         const day = user.days[dayIndex];
         user.days[dayIndex] = {
           ...day,
-          consumedFood: [...day.consumedFood, consumedFood],
+          consumedFood: [...day.consumedFood, foodItem],
         };
         consumedFoodRes = user.days[dayIndex].consumedFood;
         

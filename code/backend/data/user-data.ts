@@ -1,7 +1,5 @@
-import { IFoodData, IUserData } from "../domain/interfaces";
-import { ConsumedFood, Day, User } from "../domain/types";
-import getDate from "../utils/functions/app/getDate";
-import { mongodbHandler } from "../utils/functions/data";
+import { IUserData } from "../domain/interfaces";
+import { User } from "../domain/types";
 import { UserModel } from "../mongoose/schemas";
 
 export class UserData implements IUserData {

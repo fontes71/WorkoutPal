@@ -44,18 +44,13 @@ export class FoodApi implements IFoodApi {
     await apiErrorHandler(res, async () => {
       const token = getToken(req);
 
-      const { id, name, calories, protein, fat, carbs } = req.body;
+      const foodItem: Food = req.body;
 
   
 
       const food = await this.service.consume(
         token,
-        id,
-        name,
-        calories,
-        protein,
-        fat,
-        carbs
+        foodItem
       );
 
       sendResponse(res, StatusCode.Created, "Food item consumed successfully", food)
