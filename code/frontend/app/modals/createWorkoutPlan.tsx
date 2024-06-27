@@ -2,18 +2,19 @@ import { StatusBar } from 'expo-status-bar';
 import { Modal, Pressable, Platform, TextInput } from "react-native";
 import { View, Text } from 'react-native';
 import { Stack, router, useLocalSearchParams } from "expo-router";
-import workoutPlans_styles from '@/assets/styles/workoutPlans';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { localhost } from '@/constants';
 import { Button } from '@rneui/base';
 import modal_styles from '@/assets/styles/modals';
 import { MaterialIcons } from '@expo/vector-icons';
-import { getLocalUser } from '@/services/auth';
+import { UserContext } from '@/assets/components/auth/AuthContext';
+import workoutPlans_styles from '@/assets/styles/workoutPlans';
 
 export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { isVisible: boolean, onClose: () => void }) {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [userToken, setUserToken] = useState<string>("");
+  const { userContext } = useContext(UserContext);
 
   const handleCreateButtonPress = async (workoutPlanName: string, description: string, token: string) => {
     const response = await fetch(`${localhost}/api/exercises/workoutPlans`, 
@@ -38,13 +39,11 @@ export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { 
 
   useEffect(() => {
     if (userToken == "") {
-      getLocalUser().then((user) => {
-        if (!user) {
-          router.push(`/auth/login/`);
-          return;
-        }
-        setUserToken(user.token);
-      });
+      if (!userContext) {
+        router.push(`/auth/login/`);
+        return;
+      }
+      setUserToken(userContext.token)
     }
   }, []);
 
