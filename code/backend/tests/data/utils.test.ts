@@ -1,3 +1,4 @@
+import { buildFilterQuery } from "../../utils/functions/app/buildFilterQuery";
 import getSearchByBarcodeApiUrl from "../../utils/functions/app/getSearchByBarcodeApiUrl";
 import getSearchByNameApiUrl from "../../utils/functions/app/getSearchByNameApiUrl";
 
@@ -17,4 +18,17 @@ describe("getSearchByBarcodeApiUrl", () => {
        `https://world.openfoodfacts.net/api/v2/product/1234`
     );
     });
+});
+
+describe("buildFilterQuery", () => {
+  it("returns successfully", async () => {
+    const query = buildFilterQuery("name", "bodyPart", "equipment", "target");
+    console.log(query);
+    expect(query).toEqual({
+      name: { $regex: "name" },
+      bodyPart: { $regex: "bodypart" },
+      equipment: { $regex: "equipment" },
+      target: { $regex: "target" },
+    });
   });
+});

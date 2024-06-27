@@ -83,6 +83,19 @@ export const mockSearchBySecondaryMuscleRequest = {
     }
 }
 
+export const mockSearchByNameAndFiltersRequest = {
+    params: {
+        exerciseName: "IrrelevantName"
+    },
+    query: {
+        skip: 0,
+        limit: 10,
+        bodyPart: "IrrelevantBodyPart",
+        equipment: "IrrelevantEquipment",
+        target: "IrrelevantTarget"
+    }
+}
+
 export const mockResponseEmptySearchBody = {
     message: "Search successful",
     obj: []

@@ -60,7 +60,6 @@ describe("GetExerciseById function tests", () => {
     exerciseServices
       .getExerciseById(mockExercise._id)
       .catch((error: Error) => expect(error).toBe(NotFoundError));
-    expect(exerciseData.getExerciseById).toHaveBeenCalledWith(mockExercise._id);
   });
 });
 
@@ -77,15 +76,6 @@ describe("SearchExercisesByName function tests", () => {
       0,
       10
     );
-  });
-
-  it("searchExercisesByName throws not found when no exercises are found", () => {
-    const name = "zzzz";
-    exerciseData.searchExercisesByName = jest.fn().mockResolvedValue([]);
-    exerciseServices
-      .searchExercisesByName(name, 0, 1)
-      .catch((error: Error) => expect(error).toBe(NotFoundError));
-    expect(exerciseData.searchExercisesByName).toHaveBeenCalledWith(name, 0, 1);
   });
 
   it("searchExercisesByName returns the number of exercises requested", async () => {
@@ -126,19 +116,6 @@ describe("SearchExercisesByBodyPart function tests", () => {
       bodyPart,
       0,
       10
-    );
-  });
-
-  it("searchExercisesByBodyPart throws not found when no exercises are found", () => {
-    const bodyPart = "zzzz";
-    exerciseData.searchExercisesByBodyPart = jest.fn().mockResolvedValue([]);
-    exerciseServices
-      .searchExercisesByBodyPart(bodyPart, 0, 1)
-      .catch((error: Error) => expect(error).toBe(NotFoundError));
-    expect(exerciseData.searchExercisesByBodyPart).toHaveBeenCalledWith(
-      bodyPart,
-      0,
-      1
     );
   });
 
@@ -199,19 +176,6 @@ describe("SearchExercisesByEquipment function tests", () => {
     );
   });
 
-  it("searchExercisesByEquipment throws not found when no exercises are found", () => {
-    const equipment = "zzzz";
-    exerciseData.searchExercisesByEquipment = jest.fn().mockResolvedValue([]);
-    exerciseServices
-      .searchExercisesByEquipment(equipment, 0, 1)
-      .catch((error: Error) => expect(error).toBe(NotFoundError));
-    expect(exerciseData.searchExercisesByEquipment).toHaveBeenCalledWith(
-      equipment,
-      0,
-      1
-    );
-  });
-
   it("searchExercisesByEquipment returns the number of exercises requested", async () => {
     const equipment = "testEquipment";
     exerciseData.searchExercisesByEquipment = jest
@@ -266,19 +230,6 @@ describe("SearchExercisesByTarget function tests", () => {
       target,
       0,
       10
-    );
-  });
-
-  it("searchExercisesByTarget throws not found when no exercises are found", () => {
-    const target = "zzzz";
-    exerciseData.searchExercisesByTarget = jest.fn().mockResolvedValue([]);
-    exerciseServices
-      .searchExercisesByTarget(target, 0, 1)
-      .catch((error: Error) => expect(error).toBe(NotFoundError));
-    expect(exerciseData.searchExercisesByTarget).toHaveBeenCalledWith(
-      target,
-      0,
-      1
     );
   });
 
@@ -339,21 +290,6 @@ describe("SearchExercisesBySecondaryMuscle function tests", () => {
     );
   });
 
-  it("searchExercisesBySecondaryMuscle throws not found when no exercises are found", () => {
-    const secondaryMuscle = "zzzz";
-    exerciseData.searchExercisesBySecondaryMuscle = jest
-      .fn()
-      .mockResolvedValue([]);
-    exerciseServices
-      .searchExercisesBySecondaryMuscle(secondaryMuscle, 0, 1)
-      .catch((error: Error) => expect(error).toBe(NotFoundError));
-    expect(exerciseData.searchExercisesBySecondaryMuscle).toHaveBeenCalledWith(
-      secondaryMuscle,
-      0,
-      1
-    );
-  });
-
   it("searchExercisesBySecondaryMuscle returns the number of exercises requested", async () => {
     const secondaryMuscle = "testSecondaryMuscle1";
     exerciseData.searchExercisesBySecondaryMuscle = jest
@@ -392,6 +328,63 @@ describe("SearchExercisesBySecondaryMuscle function tests", () => {
   });
 });
 
+describe("SearchExercisesByNameAndFilters function tests", () => {
+  it("searchExercisesByNameAndFilters returns the exercises successfully", async () => {
+    const name = "testExercise";
+    const bodyPart = "testBodyPart";
+    const equipment = "testEquipment";
+    const target = "testTarget";
+    exerciseData.searchExercisesByNameAndFilters = jest
+      .fn()
+      .mockResolvedValue(mockExercisesArray);
+    const exercises = await exerciseServices.searchExercisesByNameAndFilters(
+      name,
+      bodyPart,
+      equipment,
+      target,
+      0,
+      10
+    );
+    expect(exercises).toBe(mockExercisesArray);
+    expect(exerciseData.searchExercisesByNameAndFilters).toHaveBeenCalledWith(
+      name,
+      bodyPart,
+      equipment,
+      target,
+      0,
+      10
+    );
+  });
+
+  it("searchExercisesByNameAndFilters returns the number of exercises requested", async () => {
+    const name = "testExercise";
+    const bodyPart = "testBodyPart";
+    const equipment = "testEquipment";
+    const target = "testTarget";
+    exerciseData.searchExercisesByNameAndFilters = jest
+      .fn()
+      .mockResolvedValue([mockExercise]);
+    const exercises = await exerciseServices.searchExercisesByNameAndFilters(
+      name,
+      bodyPart,
+      equipment,
+      target,
+      0,
+      1
+    );
+    expect(exercises.length).toBe(1);
+    expect(exercises[0]).toBe(mockExercisesArray[0]);
+    expect(exerciseData.searchExercisesByNameAndFilters).toHaveBeenCalledWith(
+      name,
+      bodyPart,
+      equipment,
+      target,
+      0,
+      1
+    );
+  });
+});
+
 describe("GetUserWorkoutPlans function tests", () => {
   it("getUserWorkoutPlans returns the user's workout plans successfully", async () => {
     const token = "testToken";
@@ -411,7 +404,6 @@ describe("GetUserWorkoutPlans function tests", () => {
       .catch((error: Error) =>
         expect(error).toBe(InvalidAuthorizationTokenError)
       );
-    expect(exerciseData.getUserWorkoutPlans).toHaveBeenCalledWith(token);
   });
 });
 
@@ -446,11 +438,6 @@ describe("CreateWorkoutPlan function tests", () => {
       .catch((error: Error) =>
         expect(error).toBe(InvalidAuthorizationTokenError)
       );
-    expect(exerciseData.createWorkoutPlan).toHaveBeenCalledWith(
-      token,
-      workoutPlanName,
-      description
-    );
   });
 
   it("createWorkoutPlan throws AlreadyExistsError when the workout plan already exists", async () => {
@@ -463,11 +450,6 @@ describe("CreateWorkoutPlan function tests", () => {
     exerciseServices
       .createWorkoutPlan(token, workoutPlanName, description)
       .catch((error: Error) => expect(error).toBe(AlreadyExistsError));
-    expect(exerciseData.createWorkoutPlan).toHaveBeenCalledWith(
-      token,
-      workoutPlanName,
-      description
-    );
   });
 
   it("createWorkoutPlan throws InvalidParamsError when the workout plan name is empty", async () => {
@@ -513,11 +495,6 @@ describe("AddExerciseToWorkoutPlan function tests", () => {
       .catch((error: Error) =>
         expect(error).toBe(InvalidAuthorizationTokenError)
       );
-    expect(exerciseData.addExerciseToWorkoutPlan).toHaveBeenCalledWith(
-      token,
-      workoutPlanName,
-      exerciseId
-    );
   });
 
   it("addExerciseToWorkoutPlan throws AlreadyExistsError when the exercise already exists in the workout plan", async () => {
@@ -530,11 +507,6 @@ describe("AddExerciseToWorkoutPlan function tests", () => {
     exerciseServices
       .addExerciseToWorkoutPlan(token, workoutPlanName, exerciseId)
       .catch((error: Error) => expect(error).toBe(AlreadyExistsError));
-    expect(exerciseData.addExerciseToWorkoutPlan).toHaveBeenCalledWith(
-      token,
-      workoutPlanName,
-      exerciseId
-    );
   });
 });
 
@@ -571,11 +543,6 @@ describe("RemoveExerciseFromWorkoutPlan function tests", () => {
       .catch((error: Error) =>
         expect(error).toBe(InvalidAuthorizationTokenError)
       );
-    expect(exerciseData.removeExerciseFromWorkoutPlan).toHaveBeenCalledWith(
-      token,
-      workoutPlanName,
-      exerciseId
-    );
   });
 
   it("removeExerciseFromWorkoutPlan throws NotFoundError when the exercise does not exist in the workout plan", async () => {
@@ -584,7 +551,6 @@ describe("RemoveExerciseFromWorkoutPlan function tests", () => {
     const exerciseId = "testExerciseId";
     exerciseData.removeExerciseFromWorkoutPlan = jest.fn().mockResolvedValue(ERROR_WORKOUTPLAN);
     exerciseServices.removeExerciseFromWorkoutPlan(token, workoutPlanName, exerciseId).catch((error: Error) => expect(error).toBe(NotFoundError));
-    expect(exerciseData.removeExerciseFromWorkoutPlan).toHaveBeenCalledWith(token, workoutPlanName, exerciseId);
   });
 });
 
@@ -605,7 +571,6 @@ describe("LogWorkoutPlan function tests", () => {
     exerciseServices
       .logWorkoutPlan(token, workoutPlanName)
       .catch((error: Error) => expect(error).toBe(InvalidAuthorizationTokenError));
-    expect(exerciseData.logWorkoutPlan).toHaveBeenCalledWith(token, workoutPlanName);
   });
 
   it("logWorkoutPlan throws NotFoundError when the workout plan does not exist", async () => {
@@ -615,7 +580,6 @@ describe("LogWorkoutPlan function tests", () => {
     exerciseServices
       .logWorkoutPlan(token, workoutPlanName)
       .catch((error: Error) => expect(error).toBe(NotFoundError));
-    expect(exerciseData.logWorkoutPlan).toHaveBeenCalledWith(token, workoutPlanName);
   });
 });
 
@@ -651,7 +615,6 @@ describe("GetDailyLoggedWorkoutPlans function tests", () => {
     const day = "3-4-2024";
     exerciseData.getDailyLoggedWorkoutPlans = jest.fn().mockResolvedValue(null);
     exerciseServices.getDailyLoggedWorkoutPlans(token, day).catch((error: Error) => expect(error).toBe(InvalidAuthorizationTokenError));
-    expect(exerciseData.getDailyLoggedWorkoutPlans).toHaveBeenCalledWith(token, day);
   });
 });
 

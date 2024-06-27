@@ -14,6 +14,7 @@ import {
 import { ExerciseModel, UserModel } from "../mongoose/schemas";
 import { Exercise, ExerciseDB, User, WorkoutPlan } from "../domain/types";
 import getDate from "../utils/functions/app/getDate";
+import { buildFilterQuery } from "../utils/functions/app/buildFilterQuery";
 
 export class ExerciseData implements IExerciseData {
   async getExerciseById(id: string) {
@@ -71,25 +72,6 @@ export class ExerciseData implements IExerciseData {
     return exercises;
   }
 
-  private buildFilterQuery = (name: string, bodyPart: string, equipment: string, target: string) => {
-    const query: any = {};
-
-    if (name !== "") {
-      query.name = { $regex: name.toLowerCase() };
-    }
-    if (bodyPart !== "") {
-        query.bodyPart = { $regex: bodyPart.toLowerCase() };
-    }
-    if (equipment !== "") {
-        query.equipment = { $regex: equipment.toLowerCase() };
-    }
-    if (target !== "") {
-        query.target = { $regex: target.toLowerCase() };
-    }
-
-    return query;
-  }
-
   async searchExercisesByNameAndFilters(
     name: string,
     bodyPart: string,
@@ -98,7 +80,7 @@ export class ExerciseData implements IExerciseData {
     skip: number,
     limit: number
   ) {
-    const query = this.buildFilterQuery(name, bodyPart, equipment, target);
+    const query = buildFilterQuery(name, bodyPart, equipment, target);
     const exercises = await ExerciseModel.find(query).skip(skip).limit(limit);
     return exercises;
   }

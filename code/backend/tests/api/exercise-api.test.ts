@@ -1,7 +1,7 @@
 import { ExerciseData } from "../../data/exercise-data.ts";
 import { ExerciseServices } from "../../services/exercise-services.ts";
 import { ExerciseApi } from "../../api/exercise-api.ts";
-import { mockAddExerciseToWorkoutPlanRequest, mockCreateWorkoutPlanRequest, mockExercise, mockGetDailyLoggedWorkoutPlansRequest, mockGetUserWorkoutPlansRequest, mockLogWorkoutPlanRequest, mockRemoveExerciseFromWorkoutPlanRequest, mockResponseAddExerciseToWorkoutPlanBody, mockResponseCreateWorkoutPlanBody, mockResponseEmptySearchBody, mockResponseGetDailyLoggedWorkoutPlansBody, mockResponseGetUserWorkoutPlansBody, mockResponseLogWorkoutPlanBody, mockResponseRemoveExerciseFromWorkoutPlanBody, mockResponseSearchBody, mockResponseSearchByIdBody, mockSearchByBodyPartRequest, mockSearchByEquipmentRequest, mockSearchByIdRequest, mockSearchByNameRequest, mockSearchBySecondaryMuscleRequest, mockSearchByTargetRequest, mockWorkoutPlan } from "./mockData/exercise.ts";
+import { mockAddExerciseToWorkoutPlanRequest, mockCreateWorkoutPlanRequest, mockExercise, mockGetDailyLoggedWorkoutPlansRequest, mockGetUserWorkoutPlansRequest, mockLogWorkoutPlanRequest, mockRemoveExerciseFromWorkoutPlanRequest, mockResponseAddExerciseToWorkoutPlanBody, mockResponseCreateWorkoutPlanBody, mockResponseEmptySearchBody, mockResponseGetDailyLoggedWorkoutPlansBody, mockResponseGetUserWorkoutPlansBody, mockResponseLogWorkoutPlanBody, mockResponseRemoveExerciseFromWorkoutPlanBody, mockResponseSearchBody, mockResponseSearchByIdBody, mockSearchByBodyPartRequest, mockSearchByEquipmentRequest, mockSearchByIdRequest, mockSearchByNameAndFiltersRequest, mockSearchByNameRequest, mockSearchBySecondaryMuscleRequest, mockSearchByTargetRequest, mockWorkoutPlan } from "./mockData/exercise.ts";
 import { AlreadyExistsError, InvalidAuthorizationTokenError, InvalidParamsError, NotFoundError } from "../../errors/app_errors.ts";
 
 const exerciseData = new ExerciseData()
@@ -187,6 +187,42 @@ describe("Endpoint: /api/exercises/secondaryMuscle/:exerciseSecondaryMuscle", ()
       mockSearchBySecondaryMuscleRequest.params.exerciseSecondaryMuscle, 
       mockSearchBySecondaryMuscleRequest.query.skip, 
       mockSearchBySecondaryMuscleRequest.query.limit
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseEmptySearchBody);
+  });
+});
+
+describe("Endpoint: /api/exercises/name/:exerciseName/filters", () => {
+  it("GET -> Returns the Exercises successfully", async () => {
+    exerciseServices.searchExercisesByNameAndFilters = jest.fn().mockResolvedValue([mockExercise]);
+
+    await exerciseApi.searchExercisesByNameAndFilters(mockSearchByNameAndFiltersRequest as any, mockResponse as any);
+
+    expect(exerciseServices.searchExercisesByNameAndFilters).toHaveBeenCalledWith(
+      mockSearchByNameAndFiltersRequest.params.exerciseName, 
+      mockSearchByNameAndFiltersRequest.query.bodyPart, 
+      mockSearchByNameAndFiltersRequest.query.equipment, 
+      mockSearchByNameAndFiltersRequest.query.target, 
+      mockSearchByNameAndFiltersRequest.query.skip, 
+      mockSearchByNameAndFiltersRequest.query.limit
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseSearchBody);
+  });
+
+  it("GET -> Returns no Exercises successfully", async () => {
+    exerciseServices.searchExercisesByNameAndFilters = jest.fn().mockResolvedValue([]);
+
+    await exerciseApi.searchExercisesByNameAndFilters(mockSearchByNameAndFiltersRequest as any, mockResponse as any);
+
+    expect(exerciseServices.searchExercisesByNameAndFilters).toHaveBeenCalledWith(
+      mockSearchByNameAndFiltersRequest.params.exerciseName, 
+      mockSearchByNameAndFiltersRequest.query.bodyPart, 
+      mockSearchByNameAndFiltersRequest.query.equipment, 
+      mockSearchByNameAndFiltersRequest.query.target, 
+      mockSearchByNameAndFiltersRequest.query.skip, 
+      mockSearchByNameAndFiltersRequest.query.limit
     );
     expect(mockResponse.status).toHaveBeenCalledWith(200);
     expect(mockResponse.json).toHaveBeenCalledWith(mockResponseEmptySearchBody);
