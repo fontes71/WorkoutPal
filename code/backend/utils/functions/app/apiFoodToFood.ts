@@ -13,7 +13,7 @@ const getNutrimentAndUnit = (nutriments: any, nutrimentName: string) => {
 
   const nutrimentUnit = nutriments[`${nutrimentName}_unit`]
 
-  return `${nutriment}${nutrimentUnit}`
+  return `${Math.floor(nutriment)}${nutrimentUnit}`
 }
 
 export const apiFoodToFood = (apiFood: FoodFactsApiFood) => {

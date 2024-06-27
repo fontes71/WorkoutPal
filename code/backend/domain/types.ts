@@ -51,7 +51,7 @@ export interface FoodFactsApiFood {
 // ter quantity e quantity grams é provisório
 export interface Food {
   id: string;
-  name: string | null;
+  name: string;
   brand: string;
   quantityToPresent: string;
   quantity: string,

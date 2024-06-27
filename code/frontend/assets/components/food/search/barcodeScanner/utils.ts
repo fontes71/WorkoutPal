@@ -12,6 +12,8 @@ export const handleBarCodeScanned = (
     const fetchFoodResults = async () => {
       setScanning(false);
       const food: Food = await searchFoodByBarcode(data);
+      if (food == null)
+        return
       router.push(foodItemRoute(food));
     };
     fetchFoodResults();

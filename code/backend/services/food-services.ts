@@ -6,6 +6,7 @@ import {
   User,
 } from "../domain/types";
 import {
+  InvalidBarcode,
   InvalidConsumedFoodIndex,
   NoItemToDelete,
   NotFoundError,
@@ -44,7 +45,9 @@ export class FoodServices implements IFoodServices {
 
       if (!apiFood.length) return [];
 
-      const food: Food[] = apiFood.map((apiFood) => apiFoodToFood(apiFood));
+      const food: Food[] = apiFood.map((apiFood) => apiFoodToFood(apiFood)).filter((item) => item.name.length > 0 );
+
+      food.forEach(it => console.log(it.name))
 
       return food;
     });
@@ -56,9 +59,11 @@ export class FoodServices implements IFoodServices {
         barcode
       );
 
-      if (!apiFood) return {};
+      if (!apiFood) throw InvalidBarcode;
 
       const food: Food = apiFoodToFood(apiFood);
+
+      if (!food.name) throw InvalidBarcode;
 
       return food;
     });

@@ -18,7 +18,6 @@ export default function FoodDetailsScreen() {
   const food = JSON.parse(foodJSON) as Food;
 
 
-
   //simplificar isto
   const { userContext } = useContext(UserContext);
   const onSaveHook = async (food: Food) => {

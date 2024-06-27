@@ -79,14 +79,13 @@ class Result extends PureComponent<ResultProps> {
 }
 
 const FoodResult: React.FC<Food> = React.memo(({ name, imageUrl, brand, calories, quantity }) => {
-  const nameString = name || brand;
   const caloriesString = getCaloriesString(calories, quantity);
   const brandString = getBrandString(name, brand, caloriesString, quantity);
 
   return (
     <View style={styles.container}>
       <FoodCover imageUrl={imageUrl} />
-      <FoodResultText nameString={nameString} brandString={brandString} calorieString={caloriesString} quantity={quantity} />
+      <FoodResultText nameString={name} brandString={brandString} calorieString={caloriesString} quantity={quantity} />
     </View>
   );
 });

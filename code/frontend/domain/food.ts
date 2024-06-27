@@ -1,6 +1,6 @@
 type Food = {
     id: string;
-    name: string | null;
+    name: string;
     brand: string;
     quantityToPresent: string;
     quantity: string,
