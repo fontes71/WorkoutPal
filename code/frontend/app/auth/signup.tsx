@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import PasswordInput from "@/assets/components/auth/PasswordInput";
 import auth_styles from "@/assets/styles/auth";
-import { signup } from "@/assets/functions/auth";
+import { signup } from "@/services/auth";
 import LogoContainer from "@/assets/components/auth/LogoContainer";
 import ErrorContainer from "@/assets/components/auth/ErrorContainer";
 import ConnectWithGoogleContainer from "@/assets/components/auth/ConnectWithGoogleContainerLogin";

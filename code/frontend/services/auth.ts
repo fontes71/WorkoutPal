@@ -47,6 +47,21 @@ export const signup = async (name: string, email: string, password: string, setU
   return response;
 };
 
+export const logout = async () => {
+  const user = await getLocalUser() 
+
+  await fetch(`${localhost}/api/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      'Authorization': `Bearer ${user?.token}`,
+    },
+  });
+
+  // TODO handle status != 200 OK
+  await deleteUser()
+};
+
 const storeUserLocally = async (user: User) => {
   const jsonValue = JSON.stringify(user);
   await AsyncStorage.setItem("user", jsonValue);

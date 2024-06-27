@@ -1,4 +1,3 @@
-import { Button } from "@rneui/base";
 import { StyleSheet } from "react-native";
 
 export const exercise_styles = StyleSheet.create({
@@ -45,6 +44,23 @@ export const search_exercises_styles = StyleSheet.create({
     },
     bottomTextContainer: {
         flexDirection: "row",
+    },
+    floatingButton: {
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
+        width: 60,
+        height: 60,
+        backgroundColor: '#2e78b7',
+        borderRadius: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1,
+    },
+    floatingButtonText: {
+        color: 'white',
+        fontSize: 30,
+        lineHeight: 30,
     },
     topText: {
         fontWeight: "bold",

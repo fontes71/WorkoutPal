@@ -1,4 +1,4 @@
-import { getLocalUser } from "@/assets/functions/auth";
+import { getLocalUser } from '@/services/auth';
 import { createContext, useEffect, useState } from "react";
 
 type UserContextType = {

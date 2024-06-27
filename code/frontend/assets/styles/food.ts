@@ -18,8 +18,6 @@ export const food_styles = StyleSheet.create({
 })
 
 
-
-
 export const food_details_screen = StyleSheet.create({
   container: {
     flex: 1,

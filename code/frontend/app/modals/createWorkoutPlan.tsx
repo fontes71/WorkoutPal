@@ -8,12 +8,12 @@ import { localhost } from '@/constants';
 import { Button } from '@rneui/base';
 import modal_styles from '@/assets/styles/modals';
 import { MaterialIcons } from '@expo/vector-icons';
-import { getLocalUser } from '@/assets/functions/auth';
+import { getLocalUser } from '@/services/auth';
 
 export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { isVisible: boolean, onClose: () => void }) {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  let userToken = "";
+  const [userToken, setUserToken] = useState<string>("");
 
   const handleCreateButtonPress = async (workoutPlanName: string, description: string, token: string) => {
     const response = await fetch(`${localhost}/api/exercises/workoutPlans`, 
@@ -37,13 +37,13 @@ export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { 
   }
 
   useEffect(() => {
-    if (userToken === null) {
+    if (userToken == "") {
       getLocalUser().then((user) => {
         if (!user) {
           router.push(`/auth/login/`);
           return;
         }
-        userToken = user.token;
+        setUserToken(user.token);
       });
     }
   }, []);
