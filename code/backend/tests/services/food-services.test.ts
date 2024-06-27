@@ -16,6 +16,7 @@ import {
   user_with_new_consumed_food_on_a_certain_date,
   consumed_food_of_the_day_with_the_added_one,
   user_with_no_nutrition_data,
+  api_food__with_just_the_eng_name,
 } from "./mockData/food.ts";
 import { apiFoodToFood } from "../../utils/functions/app/apiFoodToFood.ts";
 import { NotFoundError } from "../../errors/app_errors.ts";
@@ -81,18 +82,27 @@ describe("searchByBarcode", () => {
 
     expect(resFood).toEqual(food);
   });
-/*
+
   it("throws error if no result was found", async () => {
     foodData.searchByBarcode = jest.fn().mockResolvedValue(undefined);
 
     expect(async () => {
-      await foodServices.delete(
-        user.token,
+      await foodServices.searchByBarcode(
+      123456789
+      ); 
+    }).rejects.toThrow("InvalidBarcode");
+  })
+
+  it("throws error if the result found has no name value", async () => {
+    foodData.searchByBarcode = jest.fn().mockResolvedValue(api_food_no_name);
+
+    expect(async () => {
+      await foodServices.searchByBarcode(
       123456789
       ); 
     }).rejects.toThrow("InvalidBarcode");
   });
-*/
+
 });
 
 describe("dailyConsumption", () => {
@@ -275,7 +285,7 @@ describe("auxiliar functions", () => {
   });
 
   it("mapFood returns item with its english name if the original is not available", () => {
-    const resFood = apiFoodToFood(api_food_no_name);
+    const resFood = apiFoodToFood(api_food__with_just_the_eng_name);
     expect(resFood).toEqual(food);
   });
 
