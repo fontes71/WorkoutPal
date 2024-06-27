@@ -72,7 +72,7 @@ const targets = [
     { label: 'Upper Back', value: 'upper back' }
 ]
 
-export default function SearchExerciseFilters({ isVisible, onClose, setBodyPart, setEquipment, setTarget }: { isVisible: boolean, onClose: () => void, setBodyPart: (value: string) => void, setEquipment: (value: string) => void, setTarget: (value: string) => void}) {
+export default function SearchExerciseFilters({ isVisible, onClose, bodyPart, setBodyPart, equipment, setEquipment, target, setTarget }: { isVisible: boolean, onClose: () => void, bodyPart: string, setBodyPart: (value: string) => void, equipment: string, setEquipment: (value: string) => void, target: string, setTarget: (value: string) => void}) {
     return (
         <Modal animationType="slide" transparent={false} visible={isVisible}>
             <Stack.Screen options={{ title: "Filters" }}/>
@@ -90,24 +90,27 @@ export default function SearchExerciseFilters({ isVisible, onClose, setBodyPart,
                         <RNPickerSelect
                             onValueChange={(value) => { setBodyPart(value) }}
                             items={bodyParts}
+                            value={bodyPart}
                             style={pickerSelectStyles}
-                            placeholder={{ label: 'Select body part...', value: '', color: '#9EA0A4' }}
+                            placeholder={{ label: 'Select body part...', value: "", color: '#9EA0A4' }}
                         />
                         <View style={workoutPlans_styles.separator} />
                         <Text style={workoutPlans_styles.topText}>Equipment</Text>
                         <RNPickerSelect
                             onValueChange={(value) => { setEquipment(value) }}
                             items={equipments}
+                            value={equipment}
                             style={pickerSelectStyles}
-                            placeholder={{ label: 'Select equipment...', value: '', color: '#9EA0A4' }}
+                            placeholder={{ label: 'Select equipment...', value: "", color: '#9EA0A4' }}
                         />
                         <View style={workoutPlans_styles.separator} />
                         <Text style={workoutPlans_styles.topText}>Target</Text>
                         <RNPickerSelect
                             onValueChange={(value) => { setTarget(value) }}
                             items={targets}
+                            value={target}
                             style={pickerSelectStyles}
-                            placeholder={{ label: 'Select target...', value: '', color: '#9EA0A4' }}
+                            placeholder={{ label: 'Select target...', value: "", color: '#9EA0A4' }}
                         />
                     </View>
                 </View>

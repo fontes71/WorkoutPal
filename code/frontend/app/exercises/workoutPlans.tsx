@@ -95,7 +95,7 @@ export default function WorkoutPlansScreen() {
     }, [modalVisible]);
 
     return (
-        <View>
+        <View style={{flex: 1}}>
             <Stack.Screen options={{ title: "Workout Plans" }}/>
             <View style={search_exercises_styles.workoutPlansResultContainer}>
                 { loaded ?
@@ -116,16 +116,16 @@ export default function WorkoutPlansScreen() {
                                 />
                             }
                         /> 
-                        <TouchableOpacity style={search_exercises_styles.floatingButton} onPress={() => { setModalVisible(true) }}>
-                            <Text style={search_exercises_styles.floatingButtonText}>+</Text>
-                        </TouchableOpacity>
-                        <CreateWorkoutPlansModalScreen isVisible={modalVisible} onClose={() => {setModalVisible(false)}}/>
                     </View> : 
                     <View style={search_exercises_styles.exerciseResultContainer}>
                         <Text style={search_exercises_styles.topText}>Loading your workout plans...</Text>
                     </View>
                 }
             </View>
+            <TouchableOpacity style={search_exercises_styles.floatingButton} onPress={() => { setModalVisible(true) }}>
+                <Text style={search_exercises_styles.floatingButtonText}>+</Text>
+            </TouchableOpacity>
+            <CreateWorkoutPlansModalScreen isVisible={modalVisible} onClose={() => {setModalVisible(false)}}/>
         </View>
     );
 }

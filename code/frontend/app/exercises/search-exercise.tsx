@@ -2,6 +2,7 @@ import {
   Image,
   FlatList,
   Pressable,
+  TouchableOpacity,
 } from "react-native";
 import { Stack, router } from "expo-router";
 import { useState, useEffect, useRef } from "react";
@@ -34,6 +35,22 @@ const ExerciseResult: React.FC<Exercise> = ({ name, gifUrl, equipment, bodyPart,
         <BottomText str={"Target: " + target} />
       </View>
     </View>
+  );
+};
+
+const FilterButton = ({ count, onPress }: {count: number, onPress: () => void}) => {
+  return (
+    <TouchableOpacity style={search_exercises_styles.filtersFloatingButton} onPress={onPress}>
+      <Image
+        source={require("@/assets/images/filters.png")}
+        style={search_exercises_styles.filterIcon}
+      />
+      {count > 0 && (
+        <View style={search_exercises_styles.badge}>
+          <Text style={search_exercises_styles.badgeText}>{count}</Text>
+        </View>
+      )}
+    </TouchableOpacity>
   );
 };
 
@@ -165,8 +182,16 @@ export default function SearchExerciseScreen() {
     setFilterQuery(query);
   }
 
+  const countFilters = () => {
+    let count = 0;
+    if (bodyPart.length > 0) count++;
+    if (equipment.length > 0) count++;
+    if (target.length > 0) count++;
+    return count;
+  };
+
   return (
-    <View>
+    <View style={{flex: 1}}>
       <Stack.Screen options={{ title: "Search exercise" }} />
       <SearchBar
         placeholder="Type Here..."
@@ -175,29 +200,41 @@ export default function SearchExerciseScreen() {
         onChangeText={updateExerciseName}
         value={exerciseName}
       />
-      {exercises.length == 0 && !isFetching  ? (
-        <Text>No results were found</Text>
-      ) :
-      (
-      <FlatList
-        ref={flatListRef}
-        data={exercises}
-        renderItem={({ item }) => (
-          <Pressable
-            onPress={() => {
-              handleExercisePress(item);
-            }}
-          >
-            <ExerciseResult {...item} />
-          </Pressable>
+      <View style={search_exercises_styles.exerciseResultContainer}>
+        {exercises.length == 0 && !isFetching  ? (
+          <Text>No results were found</Text>
+        ) :
+        (
+          <FlatList
+            ref={flatListRef}
+            data={exercises}
+            renderItem={({ item }) => (
+              <Pressable
+                onPress={() => {
+                  handleExercisePress(item);
+                }}
+              >
+                <ExerciseResult {...item} />
+              </Pressable>
+            )}
+            keyExtractor={(item: Exercise) => item._id}
+            onEndReached={handlePageNum}
+            onEndReachedThreshold={0.4}
+            contentContainerStyle={{ paddingBottom: 40 }}
+          /> 
         )}
-        keyExtractor={(item: Exercise) => item._id}
-        onEndReached={handlePageNum}
-        onEndReachedThreshold={0.4}
-        contentContainerStyle={{ paddingBottom: 40 }}
-      /> )}
-      <Button onPress={() => { setFiltersModalVisible(true) }}>Filters</Button>
-      <SearchExerciseFilters isVisible={filtersModalVisible} onClose={() => { setFiltersModalVisible(false); handleFilterQuery(bodyPart, equipment, target) }} setBodyPart={setBodyPart} setEquipment={setEquipment} setTarget={setTarget} />
+      </View>
+      <FilterButton count={countFilters()} onPress={() => { setFiltersModalVisible(true) }} />
+      <SearchExerciseFilters 
+        isVisible={filtersModalVisible} 
+        onClose={() => { setFiltersModalVisible(false); handleFilterQuery(bodyPart, equipment, target) }} 
+        bodyPart={bodyPart}
+        setBodyPart={setBodyPart}
+        equipment={equipment} 
+        setEquipment={setEquipment}
+        target={target} 
+        setTarget={setTarget} 
+      />
     </View>
   );
 }
