@@ -1,5 +1,4 @@
 import { FlatList, Pressable, RefreshControl, TouchableOpacity  } from "react-native";
-
 import { Text, View } from "react-native";
 import { Stack, router } from "expo-router";
 import { useState, useEffect, useContext } from "react";
@@ -7,28 +6,7 @@ import { localhost } from "@/constants";
 import search_exercises_styles from "@/assets/styles/exercises";
 import CreateWorkoutPlansModalScreen from "@/app/modals/createWorkoutPlan";
 import { UserContext } from "@/assets/components/auth/AuthContext";
-
-const BottomText = ({ str }: { str: string | null }) => (
-    <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
-);
-
-const WorkoutPlanResult: React.FC<WorkoutPlan> = ({ name, description }) => {
-    return (
-        <View style={search_exercises_styles.workoutPlansResultContainer}>
-          <View style={search_exercises_styles.exerciseResultTextContainer}>
-            <Text style={search_exercises_styles.topText}>{name}</Text>
-            <BottomText str={'Description: ' + description} />
-          </View>
-        </View>
-    );
-}
-
-const handleWorkoutPlanPress = (workoutPlan: WorkoutPlan) => {
-    router.push({
-        pathname: `/exercises/workoutPlan-details/${workoutPlan.name}`,
-        params: { workoutPlanJSON: JSON.stringify(workoutPlan) }
-    });
-}
+import { WorkoutPlanResult } from "@/assets/components/exercises/WorkoutPlanResult";
 
 export default function WorkoutPlansScreen() {
     const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>([]);
@@ -94,6 +72,13 @@ export default function WorkoutPlansScreen() {
         }
     }, [modalVisible]);
 
+    const handleWorkoutPlanPress = (workoutPlan: WorkoutPlan) => {
+        router.push({
+            pathname: `/exercises/workoutPlan-details/${workoutPlan.name}`,
+            params: { workoutPlanJSON: JSON.stringify(workoutPlan) }
+        });
+    }
+
     return (
         <View style={{flex: 1}}>
             <Stack.Screen options={{ title: "Workout Plans" }}/>
@@ -122,10 +107,17 @@ export default function WorkoutPlansScreen() {
                     </View>
                 }
             </View>
-            <TouchableOpacity style={search_exercises_styles.floatingButton} onPress={() => { setModalVisible(true) }}>
-                <Text style={search_exercises_styles.floatingButtonText}>+</Text>
-            </TouchableOpacity>
-            <CreateWorkoutPlansModalScreen isVisible={modalVisible} onClose={() => {setModalVisible(false)}}/>
+            <View>
+                {loaded ?  
+                <View>
+                    <TouchableOpacity style={search_exercises_styles.floatingButton} onPress={() => { setModalVisible(true) }}>
+                        <Text style={search_exercises_styles.floatingButtonText}>+</Text>
+                    </TouchableOpacity>
+                    <CreateWorkoutPlansModalScreen isVisible={modalVisible} onClose={() => {setModalVisible(false)}}/>
+                </View>
+                : 
+                <Text style={search_exercises_styles.topText}></Text>}
+            </View>
         </View>
     );
 }

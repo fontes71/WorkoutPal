@@ -1,9 +1,4 @@
-import {
-  Image,
-  FlatList,
-  Pressable,
-  TouchableOpacity,
-} from "react-native";
+import { FlatList, Pressable } from "react-native";
 import { Stack, router } from "expo-router";
 import { useState, useEffect, useRef } from "react";
 import { localhost } from "@/constants";
@@ -11,60 +6,9 @@ import search_exercises_styles from "@/assets/styles/exercises";
 import { Text, View } from "react-native";
 import { SearchBar } from "@rneui/themed";
 import SearchExerciseFilters from "../modals/search-exercise-filters";
-import { Button } from "@rneui/base";
-
-const BottomText = ({ str }: { str: string | null }) => (
-  <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
-);
-
-const ExerciseResult: React.FC<Exercise> = ({ name, gifUrl, equipment, bodyPart, target }) => {
-  return (
-    <View style={search_exercises_styles.exerciseResultContainer}>
-      <View style={search_exercises_styles.imageContainer}>
-        {gifUrl && (
-          <Image
-            style={search_exercises_styles.exerciseGifResult}
-            source={{ uri: gifUrl }}
-          />
-        )}
-      </View>
-      <View style={search_exercises_styles.exerciseResultTextContainer}>
-        <Text style={search_exercises_styles.topText}>{name}</Text>
-        <BottomText str={"Body Part: " + bodyPart} />
-        <BottomText str={"Equipment: " + equipment} />
-        <BottomText str={"Target: " + target} />
-      </View>
-    </View>
-  );
-};
-
-const FilterButton = ({ count, onPress }: {count: number, onPress: () => void}) => {
-  return (
-    <TouchableOpacity style={search_exercises_styles.filtersFloatingButton} onPress={onPress}>
-      <Image
-        source={require("@/assets/images/filters.png")}
-        style={search_exercises_styles.filterIcon}
-      />
-      {count > 0 && (
-        <View style={search_exercises_styles.badge}>
-          <Text style={search_exercises_styles.badgeText}>{count}</Text>
-        </View>
-      )}
-    </TouchableOpacity>
-  );
-};
-
-const removeParenthesesFromExerciseName = (exercises: Exercise[]) => {
-  for (let i = 0; i < exercises.length; i++) {
-    if (exercises[i].name.endsWith(")")) {
-      exercises[i].name = exercises[i].name.slice(
-        0,
-        exercises[i].name.lastIndexOf("(")
-      );
-    }
-  }
-  return exercises;
-};
+import { FilterButton } from "@/assets/components/exercises/filterButton";
+import { ExerciseResult } from "@/assets/components/exercises/ExerciseResult";
+import { removeParenthesesFromExerciseNames } from "@/assets/components/exercises/removeParenthesesFromExerciseName";
 
 export default function SearchExerciseScreen() {
   const [exerciseName, setExerciseName] = useState("");
@@ -92,7 +36,7 @@ export default function SearchExerciseScreen() {
         }
   
         const exercises: ExerciseResponse = await response.json();
-        const modifiedExercises: Exercise[] = removeParenthesesFromExerciseName(
+        const modifiedExercises: Exercise[] = removeParenthesesFromExerciseNames(
           exercises.obj
         );
         setExercises(modifiedExercises);
@@ -158,7 +102,7 @@ export default function SearchExerciseScreen() {
       if (exercises.obj.length == 0) {
         return;
       }
-      const newResults: Exercise[] = removeParenthesesFromExerciseName(
+      const newResults: Exercise[] = removeParenthesesFromExerciseNames(
         exercises.obj
       );
 

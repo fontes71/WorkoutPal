@@ -1,29 +1,12 @@
 import { Alert, FlatList, Image, Pressable, Text, TouchableOpacity, View } from "react-native";
-
 import { useLocalSearchParams, Stack, router } from "expo-router";
-import { Button, color } from "@rneui/base";
+import { Button } from "@rneui/base";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { useContext, useEffect, useState } from "react";
 import { localhost } from "@/constants";
 import { UserContext } from "@/assets/components/auth/AuthContext";
-
-const BottomText = ({ str }: { str: string | null }) => (
-    <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
-);
-
-const removeParenthesesFromExerciseName = (exercise: Exercise) => {
-    if (exercise.name.endsWith(")")) {
-        exercise.name = exercise.name.slice(0, exercise.name.lastIndexOf("("));
-    }
-    return exercise;
-}
-
-const handleExercisePress = async (exercise: Exercise) => {
-    router.push({
-        pathname: `/exercise/operations/exercise-details/${exercise._id}`,
-        params: { exerciseJSON: JSON.stringify(exercise) }
-    });
-}
+import { BottomText } from "@/assets/components/exercises/bottomText";
+import { removeParenthesesFromExerciseName } from "@/assets/components/exercises/removeParenthesesFromExerciseName";
 
 const WorkoutPlanDetailsScreen = () => {
     const { workoutPlanJSON: workoutPlanJSON } = useLocalSearchParams<{ workoutPlanJSON: string }>();
@@ -107,6 +90,13 @@ const WorkoutPlanDetailsScreen = () => {
             setLog(false);
         }
     }, [log]);
+
+    const handleExercisePress = async (exercise: Exercise) => {
+        router.push({
+            pathname: `/exercise/operations/exercise-details/${exercise._id}`,
+            params: { exerciseJSON: JSON.stringify(exercise) }
+        });
+    }
 
     const ExerciseResult: React.FC<Exercise> = ({ _id, name, gifUrl, equipment }) => {
         return (

@@ -1,28 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import { Modal, Image, FlatList, StyleSheet, TouchableOpacity, Pressable, Platform, useColorScheme } from "react-native";
+import { Modal, FlatList, Pressable } from "react-native";
 import { View, Text } from 'react-native';
-import { Stack, router, useLocalSearchParams } from "expo-router";
+import { Stack, router } from "expo-router";
 import { useContext, useEffect, useState } from 'react';
 import { localhost } from '@/constants';
 import modal_styles from '@/assets/styles/modals';
 import { MaterialIcons } from '@expo/vector-icons';
 import { UserContext } from '@/assets/components/auth/AuthContext';
 import workoutPlans_styles from '@/assets/styles/workoutPlans';
-
-const BottomText = ({ str }: { str: string | null }) => (
-  <>{str && <Text style={workoutPlans_styles.bottomText}>{str}</Text>}</>
-);
-
-const WorkoutPlanResult: React.FC<any> = ({ name, description }) => {
-  return (
-      <View style={workoutPlans_styles.workoutPlansResultContainer}>
-        <View style={workoutPlans_styles.workoutPlansResultTextContainer}>
-          <Text style={workoutPlans_styles.topText}>{name}</Text>
-          <BottomText str={'Description: ' + description} />
-        </View>
-      </View>
-  );
-}
+import { WorkoutPlanResult } from "@/assets/components/exercises/WorkoutPlanResult";
 
 export default function WorkoutPlansModalScreen({ isVisible, onClose, exerciseId }: { isVisible: boolean, onClose: () => void, exerciseId: string}){
   const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>([]);

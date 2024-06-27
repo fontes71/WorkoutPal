@@ -4,10 +4,7 @@ import { Button } from "@rneui/base";
 import search_exercises_styles from "@/assets/styles/exercises";
 import WorkoutPlansModalScreen from "@modals/workoutPlan";
 import { useState } from "react";
-
-const BottomText = ({ str }: { str: string | null }) => (
-    <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
-);
+import { BottomText } from "@/assets/components/exercises/bottomText";
 
 const ExerciseDetailsScreen = () => {
     const { exerciseJSON } = useLocalSearchParams<{ exerciseJSON: string }>();

@@ -24,9 +24,10 @@ export const search_exercises_styles = StyleSheet.create({
         justifyContent: "space-evenly",
     },
     workoutPlansResultContainer: {
+        flex: 1,
         flexDirection: "column",
         padding: 10,
-        justifyContent: "space-evenly",
+        justifyContent: "flex-start",
     },
     imageContainer: {
         width: 90,
