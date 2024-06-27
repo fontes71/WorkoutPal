@@ -2,12 +2,11 @@ import { FlatList, Pressable, RefreshControl, TouchableOpacity  } from "react-na
 
 import { Text, View } from "react-native";
 import { Stack, router } from "expo-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { localhost } from "@/constants";
-import search_exercises_styles, { exercise_styles } from "@/assets/styles/exercises";
-import { Button } from "@rneui/base";
-import { getLocalUser } from '@/services/auth';
+import search_exercises_styles from "@/assets/styles/exercises";
 import CreateWorkoutPlansModalScreen from "@/app/modals/createWorkoutPlan";
+import { UserContext } from "@/assets/components/auth/AuthContext";
 
 const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
@@ -36,21 +35,21 @@ export default function WorkoutPlansScreen() {
     const [token, setToken] = useState<string>("");
     const [modalVisible, setModalVisible] = useState(false);
     const [loaded, setLoaded] = useState(false);
+    const { userContext } = useContext(UserContext);
 
     useEffect(() => {
         const fetchWorkoutPlans = async () => {
-            const user = await getLocalUser();
-            if (!user) {
+            if (!userContext) {
                 router.push(`/auth/login/`);
                 return;
             }
-            setToken(user.token);
+            setToken(userContext.token);
            
             const response = await fetch(`${localhost}/api/exercises/workoutPlans`, 
                 {
                     method: 'GET',
                     headers: {
-                      'Authorization': `Bearer ${user.token}`,
+                      'Authorization': `Bearer ${userContext.token}`,
                       'Content-Type': 'application/json',
                     },
                 }

@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { Modal, Image, FlatList, StyleSheet, TouchableOpacity, Pressable, Platform } from "react-native";
+import { Modal, Image, FlatList, StyleSheet, TouchableOpacity, Pressable, Platform, useColorScheme } from "react-native";
 import { View, Text } from 'react-native';
 import { Stack, router, useLocalSearchParams } from "expo-router";
-import workoutPlans_styles from '@/assets/styles/workoutPlans';
 import { useContext, useEffect, useState } from 'react';
 import { localhost } from '@/constants';
 import modal_styles from '@/assets/styles/modals';
 import { MaterialIcons } from '@expo/vector-icons';
-import { getLocalUser } from '@/services/auth';
+import { UserContext } from '@/assets/components/auth/AuthContext';
+import workoutPlans_styles from '@/assets/styles/workoutPlans';
 
 const BottomText = ({ str }: { str: string | null }) => (
   <>{str && <Text style={workoutPlans_styles.bottomText}>{str}</Text>}</>
@@ -27,21 +27,21 @@ const WorkoutPlanResult: React.FC<any> = ({ name, description }) => {
 export default function WorkoutPlansModalScreen({ isVisible, onClose, exerciseId }: { isVisible: boolean, onClose: () => void, exerciseId: string}){
   const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>([]);
   const [token, setToken] = useState<string | null>(null);
+  const { userContext } = useContext(UserContext);
 
   useEffect(() => {
     const fetchWorkoutPlans = async () => {
-        const user = await getLocalUser();
-        if (!user) {
+        if (!userContext) {
           router.push(`/auth/login/`);
           return;
         }
-        setToken(user.token);
+        setToken(userContext.token);
 
         const response = await fetch(`${localhost}/api/exercises/workoutPlans`,
             {
                 method: 'GET',
                 headers: {
-                  'Authorization': `Bearer ${user.token}`,
+                  'Authorization': `Bearer ${userContext.token}`,
                   'Content-Type': 'application/json',
                 },
             }
@@ -111,8 +111,6 @@ export default function WorkoutPlansModalScreen({ isVisible, onClose, exerciseId
               contentContainerStyle={{ paddingBottom: 40 }}
             />
           </View>
-          {/* Use a light status bar on iOS to account for the black space above the modal */}
-          <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
         </View>
       </View>
     </Modal>

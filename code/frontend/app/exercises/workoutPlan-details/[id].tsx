@@ -6,7 +6,6 @@ import search_exercises_styles from "@/assets/styles/exercises";
 import { useContext, useEffect, useState } from "react";
 import { localhost } from "@/constants";
 import { UserContext } from "@/assets/components/auth/AuthContext";
-import { getLocalUser } from '@/services/auth';
 
 const BottomText = ({ str }: { str: string | null }) => (
     <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
@@ -21,7 +20,7 @@ const removeParenthesesFromExerciseName = (exercise: Exercise) => {
 
 const handleExercisePress = async (exercise: Exercise) => {
     router.push({
-        pathname: `/exercise/exercise-details/${exercise._id}`,
+        pathname: `/exercise/operations/exercise-details/${exercise._id}`,
         params: { exerciseJSON: JSON.stringify(exercise) }
     });
 }
@@ -36,23 +35,22 @@ const WorkoutPlanDetailsScreen = () => {
     const [token, setToken] = useState<string>("");
     const [loaded, setLoaded] = useState(false);
     const [log, setLog] = useState(false);
+    const { userContext } = useContext(UserContext);
 
     useEffect(() => {
         const fetchExercises = async () => {
-            
             try {
-                const user = await getLocalUser();
-                if (!user) {
+                if (!userContext) {
                     router.push(`/auth/login/`);
                     return;
                 }
-                setToken(user.token);
+                setToken(userContext.token);
 
                 const response = await fetch(`${localhost}/api/exercises/workoutPlans/${workoutPlan.name}`,
                     {
                         method: 'GET',
                         headers: {
-                          'Authorization': `Bearer ${user.token}`,
+                          'Authorization': `Bearer ${userContext.token}`,
                           'Content-Type': 'application/json',
                         },
                     }

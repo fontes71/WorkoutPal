@@ -1,10 +1,10 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, useColorScheme } from "react-native";
 
 const modal_styles = StyleSheet.create({
     modalContent: {
       height: '90%',
       width: '100%',
-      backgroundColor: '#25292e',
+      backgroundColor: 'white',
       borderTopRightRadius: 18,
       borderTopLeftRadius: 18,
       position: 'absolute',
