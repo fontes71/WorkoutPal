@@ -90,6 +90,26 @@ export class ExerciseApi implements IExerciseApi {
     });
   }
 
+  searchExercisesByNameAndFilters = async (req: Request, res: Response) => {
+    const skip = !req.query.skip ? '0' : req.query.skip as string;
+    const limit = !req.query.limit ? '10': req.query.limit as string;
+    await apiErrorHandler(res, async () => {
+      const exerciseName = req.params.exerciseName as string;
+      const bodyPart = !req.query.bodyPart ? "" : req.query.bodyPart as string;
+      const equipment = !req.query.equipment ? "" : req.query.equipment as string;
+      const target = !req.query.target ? "" : req.query.target as string;
+      const exercises: Array<Exercise> = await this.service.searchExercisesByNameAndFilters(
+        exerciseName,
+        bodyPart,
+        equipment,
+        target,
+        parseInt(skip),
+        parseInt(limit)
+      );
+      sendResponse(res, StatusCode.Success, "Search successful", exercises);
+    });
+  }
+
   getUserWorkoutPlans = async (req: Request, res: Response) => {
     await apiErrorHandler(res, async () => {
       const token = (req.headers.authorization as string).replace("Bearer ", "");

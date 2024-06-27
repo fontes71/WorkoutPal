@@ -55,6 +55,7 @@ app.get( "/api/exercises/bodyPart/:exerciseBodyPart", exerciseApi.searchExercise
 app.get( "/api/exercises/equipment/:exerciseEquipment", exerciseApi.searchExercisesByEquipment);
 app.get( "/api/exercises/target/:exerciseTarget", exerciseApi.searchExercisesByTarget);
 app.get( "/api/exercises/secondaryMuscle/:exerciseSecondaryMuscle", exerciseApi.searchExercisesBySecondaryMuscle);
+app.get( "/api/exercises/name/:exerciseName/filters", exerciseApi.searchExercisesByNameAndFilters);
 app.get("/api/exercises/workoutPlans/log/:day", exerciseApi.getDailyLoggedWorkoutPlans);
 app.post("/api/exercises/workoutPlans/log", exerciseApi.logWorkoutPlan);
 app.get("/api/exercises/workoutPlans", exerciseApi.getUserWorkoutPlans);

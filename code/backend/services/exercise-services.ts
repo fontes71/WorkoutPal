@@ -93,6 +93,14 @@ export class ExerciseServices implements IExerciseServices {
     });
   };
 
+  searchExercisesByNameAndFilters = async (name: string, bodyPart: string, equipment: string, target: string, skip: number, limit: number) => {
+    return transactionHandler(async () => {
+      const exercises: Array<Exercise> = await this.data.searchExercisesByNameAndFilters(name, bodyPart, equipment, target, skip, limit);
+      if (exercises.length == 0) return [];
+      return exercises;
+    });
+  }
+
   getUserWorkoutPlans = async (token: string) => {
     return transactionHandler(async () => {
       const workoutPlans: WorkoutPlan[] | null = await this.data.getUserWorkoutPlans(token);

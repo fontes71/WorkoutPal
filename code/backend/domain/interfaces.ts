@@ -10,6 +10,7 @@ export interface IExerciseApi {
   searchExercisesByEquipment(req: Request, res: Response): void;
   searchExercisesByTarget(req: Request, res: Response): void;
   searchExercisesBySecondaryMuscle(req: Request, res: Response): void;
+  searchExercisesByNameAndFilters(req: Request, res: Response): void;
   getUserWorkoutPlans(req: Request, res: Response): void;
   createWorkoutPlan(req: Request, res: Response): void;
   addExerciseToWorkoutPlan(req: Request, res: Response): void;
@@ -44,6 +45,7 @@ export interface IExerciseServices {
   searchExercisesByEquipment(equipment: string, skip: number, limit: number): Promise<Array<Exercise>>;
   searchExercisesByTarget(target: string, skip: number, limit: number): Promise<Array<Exercise>>;
   searchExercisesBySecondaryMuscle(secondaryMuscle: string, skip: number, limit: number): Promise<Array<Exercise>>;
+  searchExercisesByNameAndFilters(name: string, bodyPart: string, equipment: string, target: string, skip: number, limit: number): Promise<Array<Exercise>>;
   getUserWorkoutPlans(token: string): Promise<Array<WorkoutPlan>>;
   createWorkoutPlan(token: string, workoutPlanName: string, description: string): Promise<WorkoutPlan>;
   addExerciseToWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan>;
@@ -76,6 +78,7 @@ export interface IExerciseData {
   searchExercisesByEquipment(equipment: string,skip: number,limit: number): Promise<any>;
   searchExercisesByTarget(target: string,skip: number,limit: number): Promise<any>;
   searchExercisesBySecondaryMuscle(secondaryMuscle: string,skip: number,limit: number): Promise<any>;
+  searchExercisesByNameAndFilters(name: string, bodyPart: string, equipment: string, target: string, skip: number, limit: number): Promise<any>;
   getUserWorkoutPlans(token: string): Promise<any>;
   createWorkoutPlan(token: string, workoutPlanName: string, description: string): Promise<any>;
   addExerciseToWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<any>;

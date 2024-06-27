@@ -9,12 +9,14 @@ import { localhost } from "@/constants";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { Text, View } from "react-native";
 import { SearchBar } from "@rneui/themed";
+import SearchExerciseFilters from "../modals/search-exercise-filters";
+import { Button } from "@rneui/base";
 
 const BottomText = ({ str }: { str: string | null }) => (
   <>{str && <Text style={search_exercises_styles.bottomText}>{str}</Text>}</>
 );
 
-const ExerciseResult: React.FC<Exercise> = ({ name, gifUrl, equipment }) => {
+const ExerciseResult: React.FC<Exercise> = ({ name, gifUrl, equipment, bodyPart, target }) => {
   return (
     <View style={search_exercises_styles.exerciseResultContainer}>
       <View style={search_exercises_styles.imageContainer}>
@@ -27,7 +29,9 @@ const ExerciseResult: React.FC<Exercise> = ({ name, gifUrl, equipment }) => {
       </View>
       <View style={search_exercises_styles.exerciseResultTextContainer}>
         <Text style={search_exercises_styles.topText}>{name}</Text>
+        <BottomText str={"Body Part: " + bodyPart} />
         <BottomText str={"Equipment: " + equipment} />
+        <BottomText str={"Target: " + target} />
       </View>
     </View>
   );
@@ -51,12 +55,17 @@ export default function SearchExerciseScreen() {
   const [isFetching, setIsFetching] = useState(true);
   const [page, setPage] = useState(10);
   const flatListRef = useRef<FlatList | null>(null);
+  const [filtersModalVisible, setFiltersModalVisible] = useState(false);
+  const [filtersQuery, setFilterQuery] = useState("");
+  const [bodyPart, setBodyPart] = useState("");
+  const [equipment, setEquipment] = useState("");
+  const [target, setTarget] = useState("");
 
   const handleEnter = () => {
     const fetchExercise = async () => {
       try {
         const response = await fetch(
-          `${localhost}/api/exercises/name/${exerciseName}`
+          `${localhost}/api/exercises/name/${exerciseName}/filters?${filtersQuery.slice(1)}`
         );
   
         if (response.status !== 200) {
@@ -119,7 +128,7 @@ export default function SearchExerciseScreen() {
   ) => {
     try {
       const response = await fetch(
-        `${localhost}/api/exercises/name/${exerciseName}?skip=${page}`
+        `${localhost}/api/exercises/name/${exerciseName}/filters?skip=${page}${filtersQuery}`
       );
 
       if (response.status !== 200) {
@@ -146,6 +155,14 @@ export default function SearchExerciseScreen() {
     setIsFetching(true);
     await fetchResults(setExercises, page);
     setIsFetching(false);
+  }
+
+  const handleFilterQuery = (bodyPart: string, equipment: string, target: string) => {
+    let query = "";
+    if(bodyPart.length > 0) query += `&bodyPart=${bodyPart}`;
+    if(equipment.length > 0) query += `&equipment=${equipment}`;
+    if(target.length > 0) query += `&target=${target}`;
+    setFilterQuery(query);
   }
 
   return (
@@ -179,6 +196,8 @@ export default function SearchExerciseScreen() {
         onEndReachedThreshold={0.4}
         contentContainerStyle={{ paddingBottom: 40 }}
       /> )}
+      <Button onPress={() => { setFiltersModalVisible(true) }}>Filters</Button>
+      <SearchExerciseFilters isVisible={filtersModalVisible} onClose={() => { setFiltersModalVisible(false); handleFilterQuery(bodyPart, equipment, target) }} setBodyPart={setBodyPart} setEquipment={setEquipment} setTarget={setTarget} />
     </View>
   );
 }
