@@ -1,5 +1,5 @@
 import FoodCover from "@/assets/components/FoodCover";
-import {  capitalizeWords, fetchResults, getBrandString, getCaloriesString, handleFoodPress } from "./utils";
+import {  capitalizeWords, fetchResults, handleFoodPress } from "./utils";
 import styles from "./styles";
 import { FlatList, Pressable, Text, View  } from "react-native";
 import { PureComponent, useEffect, useRef, useState } from "react";
@@ -72,28 +72,27 @@ class Result extends PureComponent<ResultProps> {
           handleFoodPress(item);
         }}
       >
-        <FoodResult key={item.id} {...item} />
+        <FoodResult key={item.id} name={item.name} imageUrl={item.imageUrl} brand={item.brand} calories={item.mainNutrients.calories} quantity={item.quantity}/>
       </Pressable>
     );
   }
 }
 
-const FoodResult: React.FC<Food> = React.memo(({ name, imageUrl, brand, calories, quantity }) => {
-  const caloriesString = getCaloriesString(calories, quantity);
-  const brandString = getBrandString(name, brand, caloriesString, quantity);
 
-  return (
+const FoodResult: React.FC<FoodResultProps> = ({ name, imageUrl, brand, calories, quantity }) =>  (
+  <>
     <View style={styles.container}>
       <FoodCover imageUrl={imageUrl} />
-      <FoodResultText nameString={name} brandString={brandString} calorieString={caloriesString} quantity={quantity} />
+      <FoodResultText nameString={name} brandString={brand} calories={calories} quantity={quantity} />
     </View>
-  );
-});
+    </>
+  )
 
-const FoodResultText: React.FC<FoodResultTextProps> = ({ nameString, brandString, calorieString, quantity }) => (
+
+const FoodResultText: React.FC<FoodResultTextProps> = ({ nameString, brandString, calories, quantity }) => (
   <View style={styles.textContainer}>
     <Text style={styles.topText}>{capitalizeWords(nameString)}</Text>
-    <BottomText str={capitalizeWords(brandString) + calorieString + quantity} />
+    <BottomText str={`${capitalizeWords(brandString)}, ` + `${calories} cal, ` + quantity.value + quantity.unit} />
   </View>
 );
 

@@ -37,6 +37,10 @@ export interface IAuthApi {
   userToAuthInfoUser(user: User): AuthInfoUser;
 }
 
+export interface IProgressApi {
+  updateWeight(req: Request, res: Response): void;
+}
+
 // SERVICES
 export interface IExerciseServices {
   getExerciseById(id: string): Promise<Exercise>;
@@ -70,6 +74,10 @@ export interface IAuthServices {
   logout(token: string): Promise<void>;
 }
 
+export interface IProgressServices {
+  updateWeight(newWeight: number, day: string, token: string): Promise<void>
+}
+
 // DATA
 export interface IExerciseData {
   getExerciseById(id: string): Promise<any>;
@@ -100,6 +108,9 @@ export interface IAuthData {
   getUserAndUpdateToken(email: string, token: string): Promise<User | null>;
   getUserByEmail(email: string): Promise<User | null>;
   tryClearUserToken(token: string): Promise<User | null>;
+}
+
+export interface IProgressData {
 }
 
 export interface IUserData {

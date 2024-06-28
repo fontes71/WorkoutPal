@@ -20,16 +20,6 @@ export const handleFoodPress = async (food: Food) => {
   router.push(foodItemRoute(food));
 };
 
-export const getBrandString = (name: string | null, brand: string, caloriesString: string, quantity: string) => {
-  const brandString = name && brand ? brand : ``;
-  return addCommaIfNeeded(!(brandString && (caloriesString || quantity)), brandString);
-}
-
-export const getCaloriesString = (calories: number | null, quantity: string) => {
-  const caloriesString = calories ? `${calories} cal ` : ``;
-  return addCommaIfNeeded( !(caloriesString && quantity), caloriesString);
-}
-
 const newSearchOrAppend = (res: Food[], newResults: Food[], page: number) => page == 1 ? newResults : [...res, ...newResults]
 
 export const fetchResults = async (

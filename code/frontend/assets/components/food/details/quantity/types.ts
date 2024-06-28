@@ -1,4 +1,4 @@
 type QuantityProps = {
-    quantity: string;
+    quantity: number;
     quantityUnit: string;
   }
