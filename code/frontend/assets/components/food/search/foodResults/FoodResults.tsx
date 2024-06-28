@@ -72,13 +72,14 @@ class Result extends PureComponent<ResultProps> {
           handleFoodPress(item);
         }}
       >
-        <FoodResult key={item.id} {...item} />
+        <FoodResult key={item.id} name={item.name} imageUrl={item.imageUrl} brand={item.brand} calories={item.mainNutrients.calories} quantity={item.quantity}/>
       </Pressable>
     );
   }
 }
 
-const FoodResult: React.FC<Food> = React.memo(({ name, imageUrl, brand, calories, quantity }) => {
+
+const FoodResult: React.FC<FoodResultProps> = React.memo(({ name, imageUrl, brand, calories, quantity }) => {
   const caloriesString = getCaloriesString(calories, quantity);
   const brandString = getBrandString(name, brand, caloriesString, quantity);
 

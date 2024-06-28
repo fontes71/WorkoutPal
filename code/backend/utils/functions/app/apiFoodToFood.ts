@@ -41,15 +41,19 @@ export const apiFoodToFood = (apiFood: FoodFactsApiFood) => {
       brand: brand,
       quantity: customQuantity,
       imageUrl: image_front_url,
-      calories: nutriments["energy-kcal"],
-      protein: getNutrient(nutriments, "proteins"),
-      fat: getNutrient(nutriments, "fat"),
-      carbs: getNutrient(nutriments, "carbohydrates"),
-      fiber: getNutrient(nutriments, "fiber"),
-      saturatedFat: getNutrient(nutriments, "saturated-fat"),
-      salt: getNutrient(nutriments, "salt"),
-      sodium: getNutrient(nutriments, "sodium"),
-      sugars: getNutrient(nutriments, "sugars"),
+      mainNutrients: {
+        calories: nutriments["energy-kcal"],
+        protein: getNutrient(nutriments, "proteins"),
+        fat: getNutrient(nutriments, "fat"),
+        carbs: getNutrient(nutriments, "carbohydrates"),
+      },
+      secondaryNutrients: {
+        fiber: getNutrient(nutriments, "fiber"),
+        saturatedFat: getNutrient(nutriments, "saturated-fat"),
+        salt: getNutrient(nutriments, "salt"),
+        sodium: getNutrient(nutriments, "sodium"),
+        sugars: getNutrient(nutriments, "sugars"),
+      },
       nutriscoreGrade: nutriscore_grade
     };
   };

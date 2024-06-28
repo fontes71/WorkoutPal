@@ -5,3 +5,4 @@ export type InfoProps = {
     quantityConsumed: QuantityConsumed,
     setQuantityConsumed: React.Dispatch<React.SetStateAction<QuantityConsumed>>
   }
+

@@ -53,6 +53,22 @@ export interface ValueAndUnit {
   unit: string 
 }
 
+export interface MainNutrients {
+  calories: number;
+  protein: ValueAndUnit | null;
+  fat: ValueAndUnit | null;
+  carbs: ValueAndUnit | null;
+}
+
+export interface SecondaryNutrients {
+  fiber: ValueAndUnit | null;
+  saturatedFat: ValueAndUnit | null;
+  salt: ValueAndUnit | null;
+  sodium: ValueAndUnit | null;
+  sugars: ValueAndUnit | null;
+
+}
+
 
 export interface Food {
   id: string;
@@ -60,15 +76,8 @@ export interface Food {
   brand: string;
   quantity: ValueAndUnit
   imageUrl: string;
-  calories: number;
-  protein: ValueAndUnit | null;
-  fat: ValueAndUnit | null;
-  carbs: ValueAndUnit | null;
-  fiber: ValueAndUnit | null;
-  saturatedFat: ValueAndUnit | null;
-  salt: ValueAndUnit | null;
-  sodium: ValueAndUnit | null;
-  sugars: ValueAndUnit | null;
+  mainNutrients: MainNutrients,
+  secondaryNutrients: SecondaryNutrients,
   nutriscoreGrade: string | null;
 }
 
