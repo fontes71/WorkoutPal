@@ -1,16 +1,11 @@
 import { View } from "react-native"
-import OverviewText from "../mainNutrientsDisplay/MainNutrientsDisplay"
 import FoodCover from "@/assets/components/FoodCover"
 import Quantity from "../quantity/Quantity"
-import More from "../SecondaryNutrientsAndScoreDisplay/SecondaryNutrientsAndScoreDisplay"
 import React, { useState } from "react"
 import { styles } from "./styles"
 import { InfoProps } from "./types"
 import MainNutrientsDisplay from "../mainNutrientsDisplay/MainNutrientsDisplay"
-import SecondaryNutrientsDisplay from "../SecondaryNutrientsAndScoreDisplay/SecondaryNutrientsAndScoreDisplay"
 import SecondaryNutrientsAndScoreDisplay from "../SecondaryNutrientsAndScoreDisplay/SecondaryNutrientsAndScoreDisplay"
-
-
 
 
 const Overview: React.FC<InfoProps> = ({ food, quantityConsumed, setQuantityConsumed }) => {

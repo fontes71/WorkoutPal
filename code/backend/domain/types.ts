@@ -55,9 +55,9 @@ export interface ValueAndUnit {
 
 export interface MainNutrients {
   calories: number;
-  protein: ValueAndUnit | null;
-  fat: ValueAndUnit | null;
-  carbs: ValueAndUnit | null;
+  protein: ValueAndUnit;
+  fat: ValueAndUnit;
+  carbs: ValueAndUnit;
 }
 
 export interface SecondaryNutrients {

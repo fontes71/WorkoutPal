@@ -8,19 +8,6 @@ import { router } from "expo-router";
 import { consumeFood } from "@/services/food";
 import Overview from "@/assets/components/food/details/overview/Overview";
 
-export type QuantityConsumed = {
-  value: number,
-  unit: string
-}
-
-const getFood = () => {
-  const { foodJSON } = useLocalSearchParams<{ foodJSON: string }>();
-  if (!foodJSON)
-     return null
-  return JSON.parse(foodJSON) as Food;
-  
-}
-
 export default function FoodDetailsScreen() {
   const { userContext } = useContext(UserContext);
   const food = getFood()
@@ -28,10 +15,7 @@ export default function FoodDetailsScreen() {
     return<Text>Error</Text>;
 
   
-  const [quantityConsumed, setQuantityConsumed] = useState<QuantityConsumed>({
-    value: food.quantity.value,
-    unit: food.quantity.unit
-  });
+  const [quantityConsumed, setQuantityConsumed] = useState<ValueAndUnit>(food.quantity);
 
   const onSaveHook = async (token: string | undefined, food: Food) => {
     await consumeFood(token, food);
@@ -50,4 +34,12 @@ export default function FoodDetailsScreen() {
       </Pressable>
     </View>
   );
+}
+
+const getFood = () => {
+  const { foodJSON } = useLocalSearchParams<{ foodJSON: string }>();
+  if (!foodJSON)
+     return null
+  return JSON.parse(foodJSON) as Food;
+  
 }
