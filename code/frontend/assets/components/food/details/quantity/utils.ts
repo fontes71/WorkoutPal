@@ -1,2 +1,2 @@
-export const display = (value: string) => (value ? `${value}` : "-");
+export const display = (value: number) => (value ? `${value}` : "-");
 

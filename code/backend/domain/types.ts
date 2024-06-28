@@ -46,25 +46,29 @@ export interface FoodFactsApiFood {
   image_front_url: string;
   nutriments: any;
   nutriscore_grade: string;
+} 
+
+export interface ValueAndUnit {
+  value: number,
+  unit: string 
 }
 
-// ter quantity e quantity grams é provisório
+
 export interface Food {
   id: string;
   name: string;
   brand: string;
-  quantity: string,
-  quantityUnit: string;
+  quantity: ValueAndUnit
   imageUrl: string;
   calories: number;
-  protein: string | null;
-  fat: string | null;
-  carbs: string | null;
-  fiber: string | null;
-  saturatedFat: string | null;
-  salt: string | null;
-  sodium: string | null;
-  sugars: string | null;
+  protein: ValueAndUnit | null;
+  fat: ValueAndUnit | null;
+  carbs: ValueAndUnit | null;
+  fiber: ValueAndUnit | null;
+  saturatedFat: ValueAndUnit | null;
+  salt: ValueAndUnit | null;
+  sodium: ValueAndUnit | null;
+  sugars: ValueAndUnit | null;
   nutriscoreGrade: string | null;
 }
 

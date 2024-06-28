@@ -93,7 +93,7 @@ const FoodResult: React.FC<Food> = React.memo(({ name, imageUrl, brand, calories
 const FoodResultText: React.FC<FoodResultTextProps> = ({ nameString, brandString, calorieString, quantity }) => (
   <View style={styles.textContainer}>
     <Text style={styles.topText}>{capitalizeWords(nameString)}</Text>
-    <BottomText str={capitalizeWords(brandString) + calorieString + quantity} />
+    <BottomText str={capitalizeWords(brandString) + calorieString + quantity.value + quantity.unit} />
   </View>
 );
 

@@ -1,9 +1,9 @@
-type MoreProps = {
-    fiber: string | null;
-    saturatedFats: string | null;
-    salt: string | null;
-    sodium: string | null;
-    sugars: string | null;
+type SecondaryNutrientsProps = {
+    fiber: ValueAndUnit | null;
+    saturatedFats:  ValueAndUnit | null;
+    salt:  ValueAndUnit | null;
+    sodium:  ValueAndUnit | null;
+    sugars:  ValueAndUnit | null;
     nutriscoreGrade: string | null;
   };
 

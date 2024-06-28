@@ -2,7 +2,7 @@ import { TouchableOpacity, Image, Text, View  } from "react-native";
 import {  useState } from "react";
 import styles from "./styles";
 
-const More: React.FC<MoreProps> = ({
+const SecondaryNutrients: React.FC<SecondaryNutrientsProps> = ({
   fiber,
   saturatedFats,
   salt,
@@ -48,7 +48,7 @@ const MoreButton: React.FC<MoreButtonProps> = ({
   </TouchableOpacity>
 );
 
-const MoreInfo: React.FC<MoreProps> = ({
+const MoreInfo: React.FC<SecondaryNutrientsProps> = ({
   fiber,
   saturatedFats,
   salt,
@@ -57,11 +57,11 @@ const MoreInfo: React.FC<MoreProps> = ({
   nutriscoreGrade,
 }) => (
   <View style={styles.moreInfoContainer}>
-    <InfoText label="Fiber" value={fiber} />
-    <InfoText label="Saturated Fats" value={saturatedFats} />
-    <InfoText label="Salt" value={salt} />
-    <InfoText label="Sodium" value={sodium} />
-    <InfoText label="Sugars" value={sugars} />
+    <InfoText label="Fiber" value={fiber?.value} />
+    <InfoText label="Saturated Fats" value={saturatedFats?.value} />
+    <InfoText label="Salt" value={salt?.value} />
+    <InfoText label="Sodium" value={sodium?.value} />
+    <InfoText label="Sugars" value={sugars?.value} />
     <InfoText label="Nutriscore Grade" value={nutriscoreGrade} />
   </View>
 );
@@ -72,4 +72,4 @@ const InfoText: React.FC<InfoTextProps> = ({ label, value }) => (
   </Text>
 );
 
-export default More;
+export default SecondaryNutrients;

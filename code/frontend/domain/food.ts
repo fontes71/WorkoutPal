@@ -1,18 +1,23 @@
+type ValueAndUnit = {
+    value: number,
+    unit: string 
+  }
+  
+
 type Food = {
     id: string;
     name: string;
     brand: string;
-    quantity: string,
-    quantityUnit: string;
+    quantity: ValueAndUnit
     imageUrl: string;
-    calories: number | null;
-    protein: string | null;
-    fat: string | null;
-    carbs: string | null; 
-    fiber: string | null;
-    saturatedFat: string | null;
-    salt: string | null;
-    sodium: string | null;
-    sugars: string | null;
+    calories: number;
+    protein: ValueAndUnit | null;
+    fat: ValueAndUnit | null;
+    carbs: ValueAndUnit | null;
+    fiber: ValueAndUnit | null;
+    saturatedFat: ValueAndUnit | null;
+    salt: ValueAndUnit | null;
+    sodium: ValueAndUnit | null;
+    sugars: ValueAndUnit | null;
     nutriscoreGrade: string | null;
-}
+  }
