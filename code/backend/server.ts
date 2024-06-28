@@ -14,6 +14,9 @@ import cors from "cors";
 import { UserData } from "./data/user-data.ts";
 import mongoose from "mongoose";
 import { WORKOUTPAL_MONGO_URI } from "./utils/constants.ts";
+import { ProgressData } from "./data/progress_data.ts";
+import { ProgressServices } from "./services/progress_services.ts";
+import { ProgressApi } from "./api/progress_api.ts";
 // AUTH
 const authData = new AuthData();
 const authServices = new AuthServices(authData);
@@ -27,9 +30,16 @@ const exerciseData = new ExerciseData();
 const exerciseServices = new ExerciseServices(exerciseData);
 const exerciseApi = new ExerciseApi(exerciseServices, exerciseData);
 
+// FOOD
 const foodData = new FoodData();
 const foodServices = new FoodServices(foodData, userData);
 const foodApi = new FoodApi(foodServices);
+
+// PROGRESS
+const progressData = new ProgressData()
+const progressServices = new ProgressServices(progressData, userData)
+const progressApi = new ProgressApi(progressServices)
+
 
 const port = 8080;
 
@@ -60,8 +70,8 @@ app.get("/api/exercises/workoutPlans/log/:day", exerciseApi.getDailyLoggedWorkou
 app.post("/api/exercises/workoutPlans/log", exerciseApi.logWorkoutPlan);
 app.get("/api/exercises/workoutPlans", exerciseApi.getUserWorkoutPlans);
 app.post("/api/exercises/workoutPlans", exerciseApi.createWorkoutPlan);
-app.post( "/api/exercises/workoutPlans/:workoutPlanName", exerciseApi.addExerciseToWorkoutPlan);
-app.delete( "/api/exercises/workoutPlans/:workoutPlanName/exercise/:exerciseId", exerciseApi.removeExerciseFromWorkoutPlan);
+app.post("/api/exercises/workoutPlans/:workoutPlanName", exerciseApi.addExerciseToWorkoutPlan);
+app.delete("/api/exercises/workoutPlans/:workoutPlanName/exercise/:exerciseId", exerciseApi.removeExerciseFromWorkoutPlan);
 app.get("/api/exercises/workoutPlans/:workoutPlanName", exerciseApi.getExercisesFromWorkoutPlan);
 app.get("/api/cloneDatabase", exerciseApi.cloneExerciseDB);
 
@@ -71,6 +81,9 @@ app.get("/api/food/search/barcode", foodApi.searchByBarcode);
 app.post("/api/food/consume", foodApi.consume);
 app.delete("/api/food/delete/:itemIndex", foodApi.delete);
 app.get("/api/food/dailyConsumption", foodApi.dailyConsumption);
+
+// Progress
+app.put("/api/progress/updateWeight", progressApi.updateWeight)
 
 function cleanup() {
   mongoose.connection

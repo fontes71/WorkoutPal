@@ -10,14 +10,14 @@ type ChartOptions = {
 }
 
 type DotInfo = {
-    pressedValue: number | null,
-    selectedDotIndex: number | null
+    pressedValue?: number,
+    selectedDotIndex?: number
 }
 
 const styles = progress_styles.chart_styles
 
 export default function Chart({title, data}: ChartOptions) {
-    const [dotInfo, setDotInfo] = useState<DotInfo>({pressedValue: null, selectedDotIndex: null})
+    const [dotInfo, setDotInfo] = useState<DotInfo>({})
 
     const screenWidth = Dimensions.get("window").width / 100 * 90 ;
     /*const data = {
