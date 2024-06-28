@@ -34,46 +34,6 @@ export class ProgressServices implements IProgressServices {
 
             await this.userData.updateUser(token, user);
         })
-    }
-    
-    /*
-    consume = async (
-      token: string,
-      foodItem: Food
-    ) => {
-      return transactionHandler(async () => {
-  
-        const user: User | null = await this.userData.getUserByToken(token);
-  
-        const date = getDate();
-  
-        if (!user) throw UnauthorizedError;
-  
-        const dayIndex = user.days.findIndex((day) => day.date === date);
-  
-        let consumedFoodRes: Food[] = [];
-  
-        if (dayIndex == -1) {
-          user.days = [
-            ...user.days,
-            { date: date, consumedFood: [foodItem], workoutPlansDone: [] },
-          ];
-          consumedFoodRes = [foodItem]
-        } else {
-          const day = user.days[dayIndex];
-          user.days[dayIndex] = {
-            ...day,
-            consumedFood: [...day.consumedFood, foodItem],
-          };
-          consumedFoodRes = user.days[dayIndex].consumedFood;
-          
-        }
-  
-        await this.userData.updateUser(token, user);
-        return consumedFoodRes
-      });
-    };*/
-  
-   
+    } 
   }
   
