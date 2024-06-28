@@ -9,26 +9,27 @@ import SearchExerciseFilters from "../modals/search-exercise-filters";
 import { FilterButton } from "@/assets/components/exercises/filterButton";
 import { ExerciseResult } from "@/assets/components/exercises/ExerciseResult";
 import { removeParenthesesFromExerciseNames } from "@/assets/components/exercises/removeParenthesesFromExerciseName";
+import { FiltersInfo } from "@/assets/components/exercises/FiltersInfo";
+import { ExerciseInfo } from "@/assets/components/exercises/ExerciseInfo";
+
+const RESULTS_SIZE = 10;
+const RESULTS_OFFSET = 10;
 
 export default function SearchExerciseScreen() {
-  const [exerciseName, setExerciseName] = useState("");
-  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [exerciseInfo, setExerciseInfo] = useState<ExerciseInfo>({ exerciseName: "", exercises: [] });
   const [isFetching, setIsFetching] = useState(true);
-  const [page, setPage] = useState(10);
-  const flatListRef = useRef<FlatList | null>(null);
+
+  const [filtersInfo, setFiltersInfo] = useState<FiltersInfo>({ bodyPart: "", equipment: "", target: "", query: ""});
   const [filtersModalVisible, setFiltersModalVisible] = useState(false);
-  const [filtersQuery, setFilterQuery] = useState("");
-  const [bodyPart, setBodyPart] = useState("");
-  const [equipment, setEquipment] = useState("");
-  const [target, setTarget] = useState("");
-  const resultsSize = 10;
-  const resultsOffset = 10;
+
+  const [page, setPage] = useState(RESULTS_SIZE);
+  const flatListRef = useRef<FlatList | null>(null);
 
   const handleEnter = () => {
     const fetchExercise = async () => {
       try {
         const response = await fetch(
-          `${localhost}/api/exercises/name/${exerciseName}/filters?${filtersQuery.slice(1)}`
+          `${localhost}/api/exercises/name/${exerciseInfo.exerciseName}/filters?${filtersInfo.query.slice(1)}`
         );
   
         if (response.status !== 200) {
@@ -41,19 +42,19 @@ export default function SearchExerciseScreen() {
         const modifiedExercises: Exercise[] = removeParenthesesFromExerciseNames(
           exercises.obj
         );
-        setExercises(modifiedExercises);
+        setExerciseInfo({ ...exerciseInfo, exercises: modifiedExercises });
       } catch (error) {
         console.error("handleEnter ERROR -> ", error);
       }
     };
 
     setIsFetching(true);
-    if (exerciseName.length > 1) fetchExercise();
+    if (exerciseInfo.exerciseName.length > 1) fetchExercise();
     setIsFetching(false);
   };
 
   const updateExerciseName = (value: string) => {
-    setExerciseName(value);
+    setExerciseInfo({ ...exerciseInfo, exerciseName: value });
   };
 
   const handleExercisePress = async (exercise: Exercise) => {
@@ -64,34 +65,38 @@ export default function SearchExerciseScreen() {
   };
 
   useEffect(() => {
-    setPage(resultsSize)
+    setPage(RESULTS_SIZE)
     if (flatListRef.current) {
       flatListRef.current.scrollToOffset({ animated: false, offset: 0 });
+      if (exerciseInfo.exerciseName.length == 0) {
+        setExerciseInfo({ exerciseName: "", exercises: [] });
+        setIsFetching(true);
+      }
     }
-  }, [exerciseName])
+  }, [exerciseInfo.exerciseName])
  
   
   useEffect(() => {
-    if ((exercises.length < 60 || page == resultsSize) && exerciseName.length > 1) {
+    if ((exerciseInfo.exercises.length < 60 || page == RESULTS_SIZE) && exerciseInfo.exerciseName.length > 1) {
       loadMoreResults();
     }  
   }, [page]);
 
   const handlePageNum = () => {
     if (!isFetching) {
-      setPage(page + resultsOffset);
+      setPage(page + RESULTS_OFFSET);
     }
   }
 
-  const newSearchOrAppend = (res: Exercise[], newResults: Exercise[], page: number) => page == 10 ? newResults : [...res, ...newResults]
+  const newSearchOrAppend = (res: ExerciseInfo, newResults: Exercise[], page: number) => page == 10 ? { ...res, exercises: newResults } : {...res, exercises: [...res.exercises, ...newResults] }
 
   const fetchResults = async (
-    setResults: React.Dispatch<React.SetStateAction<Exercise[]>>,
+    setResults: React.Dispatch<React.SetStateAction<ExerciseInfo>>,
     page: number
   ) => {
     try {
       const response = await fetch(
-        `${localhost}/api/exercises/name/${exerciseName}/filters?skip=${page}${filtersQuery}`
+        `${localhost}/api/exercises/name/${exerciseInfo.exerciseName}/filters?skip=${page}${filtersInfo.query}`
       );
 
       if (response.status !== 200) {
@@ -104,11 +109,11 @@ export default function SearchExerciseScreen() {
       if (exercises.obj.length == 0) {
         return;
       }
-      const newResults: Exercise[] = removeParenthesesFromExerciseNames(
+      const modifiedExercises: Exercise[] = removeParenthesesFromExerciseNames(
         exercises.obj
       );
 
-      setResults((res) =>  newSearchOrAppend(res, newResults, page));
+      setResults((res) => newSearchOrAppend(res, modifiedExercises, page));
     } catch (error) {
       console.error("fetchResults ERROR -> ", error);
     }
@@ -116,7 +121,7 @@ export default function SearchExerciseScreen() {
   
   async function loadMoreResults() {
     setIsFetching(true);
-    await fetchResults(setExercises, page);
+    await fetchResults(setExerciseInfo, page);
     setIsFetching(false);
   }
 
@@ -125,14 +130,14 @@ export default function SearchExerciseScreen() {
     if(bodyPart.length > 0) query += `&bodyPart=${bodyPart}`;
     if(equipment.length > 0) query += `&equipment=${equipment}`;
     if(target.length > 0) query += `&target=${target}`;
-    setFilterQuery(query);
+    setFiltersInfo({ bodyPart, equipment, target, query });
   }
 
   const countFilters = () => {
     let count = 0;
-    if (bodyPart.length > 0) count++;
-    if (equipment.length > 0) count++;
-    if (target.length > 0) count++;
+    if (filtersInfo.bodyPart.length > 0) count++;
+    if (filtersInfo.equipment.length > 0) count++;
+    if (filtersInfo.target.length > 0) count++;
     return count;
   };
 
@@ -144,16 +149,16 @@ export default function SearchExerciseScreen() {
         onSubmitEditing={handleEnter}
         returnKeyType="search"
         onChangeText={updateExerciseName}
-        value={exerciseName}
+        value={exerciseInfo.exerciseName}
       />
       <View style={search_exercises_styles.exerciseResultContainer}>
-        {exercises.length == 0 && !isFetching  ? (
+        {exerciseInfo.exercises.length == 0 && !isFetching  ? (
           <Text>No results were found</Text>
         ) :
         (
           <FlatList
             ref={flatListRef}
-            data={exercises}
+            data={exerciseInfo.exercises}
             renderItem={({ item }) => (
               <Pressable
                 onPress={() => {
@@ -173,13 +178,9 @@ export default function SearchExerciseScreen() {
       <FilterButton count={countFilters()} onPress={() => { setFiltersModalVisible(true) }} />
       <SearchExerciseFilters 
         isVisible={filtersModalVisible} 
-        onClose={() => { setFiltersModalVisible(false); handleFilterQuery(bodyPart, equipment, target) }} 
-        bodyPart={bodyPart}
-        setBodyPart={setBodyPart}
-        equipment={equipment} 
-        setEquipment={setEquipment}
-        target={target} 
-        setTarget={setTarget} 
+        onClose={() => { setFiltersModalVisible(false); handleFilterQuery(filtersInfo.bodyPart, filtersInfo.equipment, filtersInfo.target)}} 
+        filters={filtersInfo}
+        setFilters={setFiltersInfo} 
       />
     </View>
   );
