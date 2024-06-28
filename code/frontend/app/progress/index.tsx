@@ -2,6 +2,8 @@ import Chart from "@/assets/components/progress/Chart";
 import { ScrollView, TouchableOpacity, Text, View } from "react-native";
 import progress_styles from "@/assets/styles/progress";
 import { Colors } from "@/constants";
+import UpdateWeight from "@/assets/components/progress/UpdateWeight";
+import NoBottomCutView from "@/assets/components/views/NoBottomCutView";
 
 const styles = progress_styles.main_styles
 
@@ -17,18 +19,12 @@ export default function ProgressScreen() {
 
     return (
         <ScrollView style={styles.main_container}>
-            <Chart title="Weight" data={data}/>
-            <View style={{width: "100%", alignItems: "center"}}>
-                <TouchableOpacity style={{height: 50, width: "50%", marginBottom: 10}}>
-                    <Text style={{backgroundColor: Colors.lightBlue, width: "100%", alignSelf: "center", textAlign: "center", height: 50, textAlignVertical: "center", borderRadius: 12}}>
-                        Update weight
-                    </Text>
-                </TouchableOpacity>
-            </View>
-            
-            <Chart title="Workouts" data={data}/>
-            <Chart title="Calories" data={data}/>
-            
+            <NoBottomCutView>
+                <Chart title="Weight" data={data}/>
+                <UpdateWeight />
+                <Chart title="Workouts" data={data}/>
+                <Chart title="Calories" data={data}/>
+            </NoBottomCutView>
         </ScrollView>
     )
 }
