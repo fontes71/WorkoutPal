@@ -38,7 +38,7 @@ export class FoodServices implements IFoodServices {
 
       if (!apiFood.length) return [];
 
-      const food: Food[] = apiFood.map((apiFood) => apiFoodToFood(apiFood)).filter((item) => item.name.length > 0 );
+      const food = apiFood.map((apiFood) => apiFoodToFood(apiFood)).filter(res => res != null)
 
       return food;
     });
@@ -52,9 +52,9 @@ export class FoodServices implements IFoodServices {
 
       if (!apiFood) throw InvalidBarcode;
 
-      const food: Food = apiFoodToFood(apiFood);
+      const food = apiFoodToFood(apiFood);
 
-      if (!food.name) throw InvalidBarcode;
+      if (!food) throw InvalidBarcode;
 
       return food;
     });

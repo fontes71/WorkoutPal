@@ -10,7 +10,7 @@ type FoodResultProps = {
 type FoodResultTextProps = {
   nameString: string;
   brandString: string;
-  calorieString: string;
+  calories: number;
   quantity: ValueAndUnit;
 };
 

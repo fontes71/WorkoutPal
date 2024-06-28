@@ -50,7 +50,7 @@ const SecondaryNutrientsAndScore: React.FC<SecondaryNutrientsAndScoreDisplayProp
 const SecondaryNutrient: React.FC<SecondaryNutrientProps> = ({ label, nutrient }) => (
   nutrient !== null && (
     <Text>
-      {label}: {nutrient.value} {nutrient.unit}
+      {label}: {nutrient.value}{nutrient.unit}
     </Text>
   ) 
 );
