@@ -1,5 +1,5 @@
 import { AuthInfoUser, UserResponse } from "./api";
-import { Exercise, User, Food, FoodFactsApiFood, WorkoutPlan } from "./types";
+import { Exercise, User, Food, FoodFactsApiFood, WorkoutPlan, Day, DayStats } from "./types";
 import { Request, Response } from "express";
 
 // API
@@ -39,6 +39,7 @@ export interface IAuthApi {
 
 export interface IProgressApi {
   updateWeight(req: Request, res: Response): void;
+  getDays(req: Request, res: Response): void;
 }
 
 // SERVICES
@@ -76,6 +77,7 @@ export interface IAuthServices {
 
 export interface IProgressServices {
   updateWeight(newWeight: number, day: string, token: string): Promise<void>
+  getDays(period: string, token: string): Promise<Array<DayStats>>
 }
 
 // DATA
@@ -111,7 +113,6 @@ export interface IAuthData {
 }
 
 export interface IProgressData {
-  
 }
 
 export interface IUserData {

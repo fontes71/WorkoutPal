@@ -84,6 +84,7 @@ app.get("/api/food/dailyConsumption", foodApi.dailyConsumption);
 
 // Progress
 app.put("/api/progress/updateWeight", progressApi.updateWeight)
+app.get("/api/progress/getDays", progressApi.getDays)
 
 function cleanup() {
   mongoose.connection
