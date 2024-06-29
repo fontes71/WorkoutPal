@@ -81,7 +81,7 @@ export default function WorkoutPlansScreen() {
     }
 
     return (
-        <NoBottomCutView>
+        <NoBottomCutView marginBottom={5}>
             <View style={{flex: 1}}>
                 <Stack.Screen options={{ title: "Workout Plans" }}/>
                 <View style={search_exercises_styles.workoutPlansResultContainer}>
