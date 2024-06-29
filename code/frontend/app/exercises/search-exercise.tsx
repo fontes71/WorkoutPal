@@ -11,6 +11,7 @@ import { ExerciseResult } from "@/assets/components/exercises/ExerciseResult";
 import { removeParenthesesFromExerciseNames } from "@/assets/components/exercises/removeParenthesesFromExerciseName";
 import { FiltersInfo } from "@/assets/components/exercises/FiltersInfo";
 import { ExerciseInfo } from "@/assets/components/exercises/ExerciseInfo";
+import NoBottomCutView from "@/assets/components/views/NoBottomCutView";
 
 const RESULTS_SIZE = 10;
 const RESULTS_OFFSET = 10;
@@ -142,46 +143,48 @@ export default function SearchExerciseScreen() {
   };
 
   return (
-    <View style={{flex: 1}}>
-      <Stack.Screen options={{ title: "Search exercise" }} />
-      <SearchBar
-        placeholder="Type Here..."
-        onSubmitEditing={handleEnter}
-        returnKeyType="search"
-        onChangeText={updateExerciseName}
-        value={exerciseInfo.exerciseName}
-      />
-      <View style={search_exercises_styles.exerciseResultContainer}>
-        {exerciseInfo.exercises.length == 0 && !isFetching  ? (
-          <Text>No results were found</Text>
-        ) :
-        (
-          <FlatList
-            ref={flatListRef}
-            data={exerciseInfo.exercises}
-            renderItem={({ item }) => (
-              <Pressable
-                onPress={() => {
-                  handleExercisePress(item);
-                }}
-              >
-                <ExerciseResult {...item} />
-              </Pressable>
+    <NoBottomCutView>
+        <View style={{flex: 1}}>
+          <Stack.Screen options={{ title: "Search exercise" }} />
+          <SearchBar
+            placeholder="Type Here..."
+            onSubmitEditing={handleEnter}
+            returnKeyType="search"
+            onChangeText={updateExerciseName}
+            value={exerciseInfo.exerciseName}
+          />
+          <View style={search_exercises_styles.exerciseResultContainer}>
+            {exerciseInfo.exercises.length == 0 && !isFetching  ? (
+              <Text>No results were found</Text>
+            ) :
+            (
+              <FlatList
+                ref={flatListRef}
+                data={exerciseInfo.exercises}
+                renderItem={({ item }) => (
+                  <Pressable
+                    onPress={() => {
+                      handleExercisePress(item);
+                    }}
+                  >
+                    <ExerciseResult {...item} />
+                  </Pressable>
+                )}
+                keyExtractor={(item: Exercise) => item._id}
+                onEndReached={handlePageNum}
+                onEndReachedThreshold={0.4}
+                contentContainerStyle={{ paddingBottom: 40 }}
+              /> 
             )}
-            keyExtractor={(item: Exercise) => item._id}
-            onEndReached={handlePageNum}
-            onEndReachedThreshold={0.4}
-            contentContainerStyle={{ paddingBottom: 40 }}
-          /> 
-        )}
-      </View>
-      <FilterButton count={countFilters()} onPress={() => { setFiltersModalVisible(true) }} />
-      <SearchExerciseFilters 
-        isVisible={filtersModalVisible} 
-        onClose={() => { setFiltersModalVisible(false); handleFilterQuery(filtersInfo.bodyPart, filtersInfo.equipment, filtersInfo.target)}} 
-        filters={filtersInfo}
-        setFilters={setFiltersInfo} 
-      />
-    </View>
+          </View>
+        </View>
+        <FilterButton count={countFilters()} onPress={() => { setFiltersModalVisible(true) }} />
+        <SearchExerciseFilters 
+          isVisible={filtersModalVisible} 
+          onClose={() => { setFiltersModalVisible(false); handleFilterQuery(filtersInfo.bodyPart, filtersInfo.equipment, filtersInfo.target)}} 
+          filters={filtersInfo}
+          setFilters={setFiltersInfo} 
+        />
+    </NoBottomCutView>
   );
 }

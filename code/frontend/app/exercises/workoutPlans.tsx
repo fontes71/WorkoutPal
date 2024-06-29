@@ -7,6 +7,7 @@ import search_exercises_styles from "@/assets/styles/exercises";
 import CreateWorkoutPlansModalScreen from "@/app/modals/createWorkoutPlan";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import { WorkoutPlanResult } from "@/assets/components/exercises/WorkoutPlanResult";
+import NoBottomCutView from "@/assets/components/views/NoBottomCutView";
 
 export default function WorkoutPlansScreen() {
     const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>([]);
@@ -80,44 +81,46 @@ export default function WorkoutPlansScreen() {
     }
 
     return (
-        <View style={{flex: 1}}>
-            <Stack.Screen options={{ title: "Workout Plans" }}/>
-            <View style={search_exercises_styles.workoutPlansResultContainer}>
-                { loaded ?
-                    <View>
-                        <FlatList
-                            data={workoutPlans}
-                            renderItem={({ item }) => 
-                                <Pressable onPress={() => {handleWorkoutPlanPress(item)}}>
-                                    <WorkoutPlanResult {...item} />
-                                </Pressable>
-                            }
-                            keyExtractor={(item: WorkoutPlan) => item.name}
-                            contentContainerStyle={{ paddingBottom: 40 }}
-                            refreshControl={
-                                <RefreshControl
-                                    refreshing={false}
-                                    onRefresh={() => handleReload(token)}
-                                />
-                            }
-                        /> 
-                    </View> : 
-                    <View style={search_exercises_styles.exerciseResultContainer}>
-                        <Text style={search_exercises_styles.topText}>Loading your workout plans...</Text>
-                    </View>
-                }
-            </View>
-            <View>
-                {loaded ?  
-                <View>
-                    <TouchableOpacity style={search_exercises_styles.floatingButton} onPress={() => { setModalVisible(true) }}>
-                        <Text style={search_exercises_styles.floatingButtonText}>+</Text>
-                    </TouchableOpacity>
-                    <CreateWorkoutPlansModalScreen isVisible={modalVisible} onClose={() => {setModalVisible(false)}}/>
+        <NoBottomCutView>
+            <View style={{flex: 1}}>
+                <Stack.Screen options={{ title: "Workout Plans" }}/>
+                <View style={search_exercises_styles.workoutPlansResultContainer}>
+                    { loaded ?
+                        <View>
+                            <FlatList
+                                data={workoutPlans}
+                                renderItem={({ item }) => 
+                                    <Pressable onPress={() => {handleWorkoutPlanPress(item)}}>
+                                        <WorkoutPlanResult {...item} />
+                                    </Pressable>
+                                }
+                                keyExtractor={(item: WorkoutPlan) => item.name}
+                                contentContainerStyle={{ paddingBottom: 40 }}
+                                refreshControl={
+                                    <RefreshControl
+                                        refreshing={false}
+                                        onRefresh={() => handleReload(token)}
+                                    />
+                                }
+                            /> 
+                        </View> : 
+                        <View style={search_exercises_styles.exerciseResultContainer}>
+                            <Text style={search_exercises_styles.topText}>Loading your workout plans...</Text>
+                        </View>
+                    }
                 </View>
-                : 
-                <Text style={search_exercises_styles.topText}></Text>}
+                <View>
+                    {loaded ?  
+                    <View>
+                        <TouchableOpacity style={search_exercises_styles.floatingButton} onPress={() => { setModalVisible(true) }}>
+                            <Text style={search_exercises_styles.floatingButtonText}>+</Text>
+                        </TouchableOpacity>
+                        <CreateWorkoutPlansModalScreen isVisible={modalVisible} onClose={() => {setModalVisible(false)}}/>
+                    </View>
+                    : 
+                    <Text style={search_exercises_styles.topText}></Text>}
+                </View>
             </View>
-        </View>
+        </NoBottomCutView>
     );
 }
