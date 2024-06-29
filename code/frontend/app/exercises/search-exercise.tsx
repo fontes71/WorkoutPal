@@ -143,7 +143,7 @@ export default function SearchExerciseScreen() {
   };
 
   return (
-    <NoBottomCutView>
+    <NoBottomCutView marginBottom={20}>
         <View style={{flex: 1}}>
           <Stack.Screen options={{ title: "Search exercise" }} />
           <SearchBar

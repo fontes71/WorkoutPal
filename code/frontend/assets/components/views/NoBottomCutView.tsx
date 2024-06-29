@@ -1,10 +1,19 @@
+import { ReactNode } from "react";
 import { View } from "react-native";
 
-export default function NoBottomCutView({children}: any) {
+type ViewOptions = {
+    readonly marginBottom?: number,
+    readonly children: ReactNode
+}
+
+export default function NoBottomCutView({marginBottom, children}: ViewOptions) {
     return (
         <>
             {children}
-            <View style={{height: 40}}></View>
+            {marginBottom 
+                ? <View style={{height: marginBottom}}></View>
+                : <View style={{height: 40}}></View>
+            } 
         </>
     )
 }

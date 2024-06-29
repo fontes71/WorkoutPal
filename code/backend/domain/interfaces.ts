@@ -111,6 +111,7 @@ export interface IAuthData {
 }
 
 export interface IProgressData {
+  
 }
 
 export interface IUserData {
