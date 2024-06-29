@@ -8,9 +8,8 @@ import MainNutrientsDisplay from "../mainNutrientsDisplay/MainNutrientsDisplay"
 import SecondaryNutrientsAndScoreDisplay from "../SecondaryNutrientsAndScoreDisplay/SecondaryNutrientsAndScoreDisplay"
 
 
-const Overview: React.FC<InfoProps> = ({ food, quantityConsumed, setQuantityConsumed }) => {
-  const [mainNutrients, setMainNutrients] = useState<MainNutrients>(food.mainNutrients)
-  const [secondaryNutrients, setSecondaryNutrients] = useState<SecondaryNutrients>(food.secondaryNutrients)
+const Overview: React.FC<InfoProps> = ({ food, quantity, setQuantity, mainNutrients, setMainNutrients, secondaryNutrients, setSecondaryNutrients }) => {
+
 
 
     return (
@@ -19,7 +18,7 @@ const Overview: React.FC<InfoProps> = ({ food, quantityConsumed, setQuantityCons
         <FoodCover imageUrl={food.imageUrl} />
         <MainNutrientsDisplay mainNutrients={mainNutrients} />
       </View>
-      <Quantity quantity={quantityConsumed.value} quantityUnit={quantityConsumed.unit} />
+      <Quantity quantity={quantity} setQuantity={setQuantity} />
       <SecondaryNutrientsAndScoreDisplay
         secondaryNutrients={secondaryNutrients}
         nutriscore={food.nutriscoreGrade}

@@ -2,6 +2,7 @@ import { Food, FoodFactsApiFood, ValueAndUnit } from "../../../domain/types";
 
 
 export const apiFoodToFood = (apiFood: FoodFactsApiFood) => {
+
     const {
       brands_tags,
       product_quantity,
@@ -13,16 +14,27 @@ export const apiFoodToFood = (apiFood: FoodFactsApiFood) => {
       nutriments,
       nutriscore_grade
     } = apiFood;
+    console.log("apiFood => ",    brands_tags,
+      product_quantity,
+      product_quantity_unit,
+      product_name,
+      product_name_en,
+      id,
+      image_front_url,
+      nutriments,
+      nutriscore_grade)
+    
 
     const mainNutrients = getMainNutrients(nutriments)
     const secondaryNutrients = getSecondaryNutrients(nutriments)
     const name = product_name || product_name_en
-    const brand = brands_tags[0]
+    const brand = brands_tags && brands_tags.length > 0 ? brands_tags[0] : null
+
 
    const requiredFields = [name, brands_tags, product_quantity, product_quantity_unit, image_front_url, mainNutrients.calories, mainNutrients.carbs, mainNutrients.protein, mainNutrients.fat];
    if (requiredFields.some(field => !field)) return null;
 
-
+    
     const customQuantity: ValueAndUnit = {
       value: parseInt(product_quantity),
       unit: product_quantity_unit
@@ -36,11 +48,13 @@ export const apiFoodToFood = (apiFood: FoodFactsApiFood) => {
       imageUrl: image_front_url,
       mainNutrients: mainNutrients,
       secondaryNutrients: secondaryNutrients,
-      nutriscoreGrade: nutriscore_grade
+      nutriscoreGrade: gradeOrNull(nutriscore_grade)
     };
   };
 
-  export const capitalizeWords = (str: string | null) => {
+const gradeOrNull = (grade: string) => grade == "uknown" ? null : grade
+
+  const capitalizeWords = (str: string | null) => {
     if (str === null) {
       return null;
     }

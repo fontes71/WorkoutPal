@@ -21,4 +21,4 @@ export const TEST_MONGO_URI: string | undefined = process.env.TEST_MONGO_URI;
 
 export const ERROR_WORKOUTPLAN: WorkoutPlan = { name: "", description: "", exercises: [] };
 export const ERROR_EXERCISE: Exercise = { _id: "", name: "", bodyPart: "", equipment: "", gifUrl: "", target: "", secondaryMuscles: [], instructions: [] };
-export const SEARCH_FOOD_BY_NAME_RES_LIMIT = 20
+export const SEARCH_FOOD_BY_NAME_RES_LIMIT = 30

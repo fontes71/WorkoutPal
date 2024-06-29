@@ -21,10 +21,9 @@ const FoodResults: React.FC<FoodResultsProps> = ({ name }) => {
  
   
   useEffect(() => {
-  
     if (results.length < 60 || page == 1)  
         loadMoreResults();  
-  }, [page]);
+  }, [page, name]);
 
   const handlePageNum = () => {
     if (!isFetching)
@@ -32,7 +31,7 @@ const FoodResults: React.FC<FoodResultsProps> = ({ name }) => {
   }
   
   async function loadMoreResults() {
- 
+   
     setIsFetching(true);
     await fetchResults(name, setResults, page);
     setIsFetching(false);
@@ -48,7 +47,7 @@ const FoodResults: React.FC<FoodResultsProps> = ({ name }) => {
           ref={flatListRef}
           data={results}
           onEndReached={handlePageNum}
-          onEndReachedThreshold={0.4}
+          onEndReachedThreshold={1}
           keyExtractor={(_, index) => String(index)}
           windowSize={20}
           maxToRenderPerBatch={20}
@@ -79,14 +78,14 @@ class Result extends PureComponent<ResultProps> {
 }
 
 
-const FoodResult: React.FC<FoodResultProps> = ({ name, imageUrl, brand, calories, quantity }) =>  (
+const FoodResult: React.FC<FoodResultProps> = React.memo(({ name, imageUrl, brand, calories, quantity }) =>  (
   <>
     <View style={styles.container}>
       <FoodCover imageUrl={imageUrl} />
       <FoodResultText nameString={name} brandString={brand} calories={calories} quantity={quantity} />
     </View>
     </>
-  )
+  ))
 
 
 const FoodResultText: React.FC<FoodResultTextProps> = ({ nameString, brandString, calories, quantity }) => (

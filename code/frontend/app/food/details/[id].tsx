@@ -10,12 +10,17 @@ import Overview from "@/assets/components/food/details/overview/Overview";
 
 export default function FoodDetailsScreen() {
   const { userContext } = useContext(UserContext);
-  const food = getFood()
-  if (!food)
-    return<Text>Error</Text>;
+  const food = getFood();
+  if (!food) return <Text>Error</Text>;
 
-  
-  const [quantityConsumed, setQuantityConsumed] = useState<ValueAndUnit>(food.quantity);
+  const [quantity, setQuantity] = useState<ValueAndUnit>(
+    food.quantity
+  );
+  const [mainNutrients, setMainNutrients] = useState<MainNutrients>(
+    food.mainNutrients
+  );
+  const [secondaryNutrients, setSecondaryNutrients] =
+    useState<SecondaryNutrients>(food.secondaryNutrients);
 
   const onSaveHook = async (token: string | undefined, food: Food) => {
     await consumeFood(token, food);
@@ -25,7 +30,15 @@ export default function FoodDetailsScreen() {
   return (
     <View style={food_details_screen.container}>
       <Text style={food_details_screen.title}> {food.name}</Text>
-      <Overview food={food} quantityConsumed={quantityConsumed} setQuantityConsumed={setQuantityConsumed}/>
+      <Overview
+        food={food}
+        quantity={quantity}
+        setQuantity={setQuantity}
+        mainNutrients={mainNutrients}
+        setMainNutrients={setMainNutrients}
+        secondaryNutrients={secondaryNutrients}
+        setSecondaryNutrients={setSecondaryNutrients}
+      />
       <Pressable onPress={() => onSaveHook(userContext?.token, food)}>
         <Image
           source={require("@/assets/images/save.png")}
@@ -38,8 +51,6 @@ export default function FoodDetailsScreen() {
 
 const getFood = () => {
   const { foodJSON } = useLocalSearchParams<{ foodJSON: string }>();
-  if (!foodJSON)
-     return null
+  if (!foodJSON) return null;
   return JSON.parse(foodJSON) as Food;
-  
-}
+};

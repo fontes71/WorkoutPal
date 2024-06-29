@@ -14,7 +14,7 @@ const MainNutrientsDisplay: React.FC<MainNutrientsDisplayProps> = ({ mainNutrien
 );
 
 const MainNutrient: React.FC<MainNutrientProps> = ({ nutrient }) => (
-  <Text style={styles.text_small}> {nutrient?.value} {nutrient?.unit} </Text>
+  <Text style={styles.text_small}> {nutrient?.value}{nutrient?.unit} </Text>
 );
 
 export default MainNutrientsDisplay;

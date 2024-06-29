@@ -1,8 +1,10 @@
-import { QuantityConsumed } from "@/app/food/details/[id]"
-
 export type InfoProps = {
     food: Food,
-    quantityConsumed: QuantityConsumed,
-    setQuantityConsumed: React.Dispatch<React.SetStateAction<QuantityConsumed>>
+    quantity: ValueAndUnit,
+    setQuantity: React.Dispatch<React.SetStateAction<ValueAndUnit>>,
+    mainNutrients: MainNutrients,
+    setMainNutrients: React.Dispatch<React.SetStateAction<MainNutrients>>,
+    secondaryNutrients: SecondaryNutrients,
+    setSecondaryNutrients: React.Dispatch<React.SetStateAction<SecondaryNutrients>>
   }
 
