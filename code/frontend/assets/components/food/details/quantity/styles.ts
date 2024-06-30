@@ -22,13 +22,31 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   input: {
-    height: 40,
     borderColor: 'gray',
     borderRadius: 5,
     borderWidth: 1,
     padding: 10,
-    marginBottom: 20,
+
   },
+  inputsWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  buttonsWrapper: {
+    flexDirection: 'row',
+  },
+  exitButton: {
+    elevation: 8,
+    backgroundColor: 'red',
+    paddingVertical: 10,
+    paddingHorizontal: 12
+  },
+  saveButton: {
+    elevation: 8,
+    backgroundColor: '#009688',
+    paddingVertical: 10,
+    paddingHorizontal: 12
+  }
 })
 
 export default styles

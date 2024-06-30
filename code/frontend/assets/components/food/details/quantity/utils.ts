@@ -1,5 +1,3 @@
-export const display = (value: number) => (value ? `${value}` : "-");
-
 export const onClose = (closeModal: () => void, setCurrentQuantity: React.Dispatch<React.SetStateAction<CurrentQuantity>>, quantity: ValueAndUnit) => {
     closeModal()
     setCurrentQuantity(quantity)
@@ -19,6 +17,18 @@ export const setUnit = (unit: string, setCurrentQuantity: React.Dispatch<React.S
     unit
   }));
 };
+
+export const handleSubmit = (currentQuantity: CurrentQuantity, setQuantity: React.Dispatch<React.SetStateAction<ValueAndUnit>>, closeModal: () => void) => {
+  if( currentQuantity.value != null) {
+    const updatedValueAndUnit: ValueAndUnit = {
+      value: currentQuantity.value as number, 
+      unit: currentQuantity.unit
+    };
+
+    setQuantity(updatedValueAndUnit);
+  }
+  closeModal()
+}
   
 export const UNIT_VALUES = [
   { label: "kg", value: "kg" },
