@@ -1,7 +1,11 @@
-import { User } from "../domain/types";;
+import { Day, DayStats, User } from "../domain/types";;
 import { IProgressData, IProgressServices, IUserData} from "../domain/interfaces";
 import { transactionHandler } from "../utils/functions/data";
-import { UnauthorizedError } from "../errors/app_errors";
+import { InvalidParamsError, UnauthorizedError } from "../errors/app_errors";
+import { dayToDayStats, getConsumedNutrients, getFormattedDate, getStartOfPeriod, isValidPeriod } from "../utils/functions/progress";
+import getDate from "../utils/functions/app/getDate";
+import { format } from "path";
+import { formatDate, eachDayOfInterval, subMonths, isWithinInterval } from "date-fns";
   
 export class ProgressServices implements IProgressServices {
     private progressData: IProgressData;
@@ -34,6 +38,20 @@ export class ProgressServices implements IProgressServices {
 
             await this.userData.updateUser(token, user);
         })
-    } 
+    }
+    
+    async getDays(period: string, token: string): Promise<DayStats[]> {
+        return transactionHandler(async () => {
+            if (!isValidPeriod(period)) throw InvalidParamsError
+            const user: User | null = await this.userData.getUserByToken(token);
+            if (!user) throw UnauthorizedError;
+
+            const days = user.days
+            const currDate = new Date
+            const startDate = getStartOfPeriod(currDate, period)
+            const daysInInterval = days.filter((d) => isWithinInterval(getFormattedDate(d.date), { start: startDate, end: currDate }))
+            return dayToDayStats(daysInInterval)
+        })
+    }
   }
   

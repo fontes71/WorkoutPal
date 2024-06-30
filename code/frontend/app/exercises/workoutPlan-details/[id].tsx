@@ -7,6 +7,7 @@ import { localhost } from "@/constants";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import { BottomText } from "@/assets/components/exercises/bottomText";
 import { removeParenthesesFromExerciseName } from "@/assets/components/exercises/removeParenthesesFromExerciseName";
+import NoBottomCutView from "@/assets/components/views/NoBottomCutView";
 
 const WorkoutPlanDetailsScreen = () => {
     const { workoutPlanJSON: workoutPlanJSON } = useLocalSearchParams<{ workoutPlanJSON: string }>();
@@ -155,40 +156,49 @@ const WorkoutPlanDetailsScreen = () => {
     }
 
     return (
-        <View>
-            <Stack.Screen options={{ title: "Details" }}/>
-            <View style={search_exercises_styles.exerciseResultContainer}>
-                {loaded ? 
-                    <View style={search_exercises_styles.exerciseResultTextContainer}>
-                        <Text style={search_exercises_styles.topText}>{workoutPlan.name}</Text>
-                        <Text style={search_exercises_styles.topText}/>
-                        <BottomText str={'Description: ' + workoutPlan.description} />
-                        <Text style={search_exercises_styles.topText}></Text>
-                        <Text style={search_exercises_styles.topText}>Exercises:</Text>
-                        {exercises.length === 0 && <Text style={search_exercises_styles.bottomText}>No exercises added yet</Text>}
-                        <FlatList
-                            data={exercises}
-                            renderItem={({ item }) => 
-                                <Pressable onPress={() => {handleExercisePress(item)}}>
-                                    <ExerciseResult {...item} />
-                                </Pressable>
-                            }
-                            keyExtractor={(item: Exercise) => item._id}
-                            contentContainerStyle={{ paddingBottom: 40 }}
-                        />
-                        <TouchableOpacity style={search_exercises_styles.floatingButton} onPress={ () => { setLog(true) }}>
-                            <Image
-                              source={require("@/assets/images/save.png")}
-                              style={{ marginRight: 0 }}
+        <NoBottomCutView marginBottom={10}>
+            <View style={{ flex: 1 }}>
+                <Stack.Screen options={{ title: "Details" }}/>
+                <View style={search_exercises_styles.workoutPlansResultContainer}>
+                    {loaded ? 
+                        <View style={search_exercises_styles.exerciseResultTextContainer}>
+                            <Text style={search_exercises_styles.topText}>{workoutPlan.name}</Text>
+                            <Text style={search_exercises_styles.topText}/>
+                            <BottomText str={'Description: ' + workoutPlan.description} />
+                            <Text style={search_exercises_styles.topText}></Text>
+                            <Text style={search_exercises_styles.topText}>Exercises:</Text>
+                            {exercises.length === 0 && <Text style={search_exercises_styles.bottomText}>No exercises added yet</Text>}
+                            <FlatList
+                                data={exercises}
+                                renderItem={({ item }) => 
+                                    <Pressable onPress={() => {handleExercisePress(item)}}>
+                                        <ExerciseResult {...item} />
+                                    </Pressable>
+                                }
+                                keyExtractor={(item: Exercise) => item._id}
+                                contentContainerStyle={{ paddingBottom: 40 }}
+                                onEndReachedThreshold={0.4}
                             />
-                        </TouchableOpacity>
-                    </View> : 
-                    <View style={search_exercises_styles.exerciseResultTextContainer}>
-                        <Text style={search_exercises_styles.topText}>Loading...</Text>
-                    </View>
+                        </View> : 
+                        <View style={search_exercises_styles.exerciseResultTextContainer}>
+                            <Text style={search_exercises_styles.topText}>Loading...</Text>
+                        </View>
+                    }
+                </View>
+            </View>
+            <View>
+                { loaded ? 
+                    <TouchableOpacity style={search_exercises_styles.floatingButton} onPress={ () => { setLog(true) }}>
+                        <Image
+                          source={require("@/assets/images/save.png")}
+                          style={{ marginRight: 0 }}
+                        />
+                    </TouchableOpacity> 
+                    : 
+                    <Text style={search_exercises_styles.topText}></Text>
                 }
             </View>
-        </View>
+        </NoBottomCutView>
     );
 }
 

@@ -69,7 +69,6 @@ export interface SecondaryNutrients {
 
 }
 
-
 export interface Food {
   id: string;
   name: string;
@@ -86,4 +85,18 @@ export interface Day {
   consumedFood: Food[],
   workoutPlansDone: string[],
   weight?: number
+}
+
+export type ConsumedNutrients = {
+  calories: number;
+  protein: number;
+  fat: number;
+  carbs: number;
+}
+
+export type DayStats = {
+  date: string,
+  mainNutrients: ConsumedNutrients,
+  workoutPlansDone: number | null,
+  weight: number | null
 }
