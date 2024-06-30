@@ -14,3 +14,20 @@ export const updateWeight = async (newWeight: number, token: string) => {
       })
     });
 };
+
+export const getDays = async (period: string, token: string) => {
+  const response = await fetch(`${localhost}/api/progress/getDays?period=${period}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      'Authorization': `Bearer ${token}`,
+    }
+  });
+
+  if (response.ok) {
+    const body: FetchDaysResponse = await response.json();
+    return body.obj
+  }
+
+  return []
+}
