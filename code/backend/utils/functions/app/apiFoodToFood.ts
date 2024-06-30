@@ -14,15 +14,6 @@ export const apiFoodToFood = (apiFood: FoodFactsApiFood) => {
       nutriments,
       nutriscore_grade
     } = apiFood;
-    console.log("apiFood => ",    brands_tags,
-      product_quantity,
-      product_quantity_unit,
-      product_name,
-      product_name_en,
-      id,
-      image_front_url,
-      nutriments,
-      nutriscore_grade)
     
 
     const mainNutrients = getMainNutrients(nutriments)

@@ -1,12 +1,12 @@
 import { Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
-import { display } from "./utils";
+import { UNIT_VALUES, display, getInputValue, inputOnChange, onClose } from "./utils";
 import styles from "./styles";
-import { useState } from "react";
+import React, { useState } from "react";
+import { Dropdown } from 'react-native-element-dropdown';
 
 import PopupModal from "@/assets/components/common/popupModal/PopupModal";
 import { StyleSheet } from "react-native";
-
-
+import DropdownMenu from "@/assets/components/common/dropdownMenu/DropdownMenu";
 
 
 const Quantity: React.FC<QuantityProps> = ({ quantity, setQuantity }) => {
@@ -20,39 +20,33 @@ const Quantity: React.FC<QuantityProps> = ({ quantity, setQuantity }) => {
 );
 }
 
-const inputOnChange = (value:string, currentQuantity: CurrentQuantity, setCurrentQuantity: React.Dispatch<React.SetStateAction<CurrentQuantity>> ) => {
-  const newValue = value && value.length > 0 ? parseInt(value) : null
-
-  setCurrentQuantity({ ...currentQuantity, value: newValue })
-
-}
-
-const getInputValue = (value: number | null) => value != null ? `${value}` : ``
-
-
 const QuantityModal: React.FC<QuantityModalProps> = ({ modalOpen, closeModal, quantity, setQuantity }) => {
   const [currentQuantity, setCurrentQuantity] = useState<CurrentQuantity>(quantity)
+
+  const setUnit = (unit: string) => {
+    setCurrentQuantity((prev) => ({ ...prev, unit }));
+  };
 
 return (
   <PopupModal
   visible={modalOpen}
   transparent={true}
-  closeModal={closeModal}
+  closeModal={() => onClose(closeModal, setCurrentQuantity, quantity)}
   margin={"15%"}
  >
   <View style={styles.modalContent}>
-  <TextInput
-          style={styles.input}
-          placeholder={ `${quantity.value}`}
-          value={getInputValue(currentQuantity.value)}
-          keyboardType="numeric"
-          onChangeText={value => inputOnChange(value, currentQuantity, setCurrentQuantity)}
-        />
+    <TextInput
+            style={styles.input}
+            value={getInputValue(currentQuantity.value)}
+            keyboardType="numeric"
+            onChangeText={value => inputOnChange(value, currentQuantity, setCurrentQuantity)}
+          />
+         <DropdownMenu data={UNIT_VALUES} value={currentQuantity.unit} setValue={setUnit}/>
+
   </View>
  </PopupModal>
 )
 }
- 
 
 const QuantityDisplay: React.FC<QuantityDisplayProps> = ({ quantity, openModal }) => (
   <View style={styles.quantityContainer}>
