@@ -1,6 +1,7 @@
 import { TouchableOpacity, Image, Text, View  } from "react-native";
 import {  useState } from "react";
 import styles from "./styles";
+import round from "@/assets/functions/round";
 
 const SecondaryNutrientsAndScoreDisplay: React.FC<SecondaryNutrientsAndScoreDisplayProps> = ({ secondaryNutrients, nutriscore }) => {
   const [buttonClicked, setButtonClicked] = useState(false);
@@ -50,7 +51,7 @@ const SecondaryNutrientsAndScore: React.FC<SecondaryNutrientsAndScoreDisplayProp
 const SecondaryNutrient: React.FC<SecondaryNutrientProps> = ({ label, nutrient }) => (
   nutrient !== null && (
     <Text>
-      {label}: {nutrient.value}{nutrient.unit}
+      {label}: {round(nutrient.value)}{nutrient.unit}
     </Text>
   ) 
 );

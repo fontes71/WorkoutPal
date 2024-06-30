@@ -1,9 +1,9 @@
-import { MainNutrients } from "../overview/types";
 
-export type MainNutrientsDisplayProps = {
+
+type MainNutrientsDisplayProps = {
     mainNutrients: MainNutrients
   }
 
- export  type MainNutrientProps = {
-    nutrient: ValueAndUnit | null;
+type MainNutrientProps = {
+    nutrient: ValueAndUnit;
   }

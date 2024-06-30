@@ -1,12 +1,14 @@
 import { food_details_screen } from "@/assets/styles/food";
 import { Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import { Image, Pressable } from "react-native";
 import { router } from "expo-router";
 import { consumeFood } from "@/services/food";
 import Overview from "@/assets/components/food/details/overview/Overview";
+import { getFood, updateNutrients } from "@/assets/components/food/details/utils/utils";
+
 
 export default function FoodDetailsScreen() {
   const { userContext } = useContext(UserContext);
@@ -22,10 +24,15 @@ export default function FoodDetailsScreen() {
   const [secondaryNutrients, setSecondaryNutrients] =
     useState<SecondaryNutrients>(food.secondaryNutrients);
 
-  const onSaveHook = async (token: string | undefined, food: Food) => {
+  const onSave = async (token: string | undefined, food: Food) => {
     await consumeFood(token, food);
     router.push(`/food/`);
   };
+
+ const updateQuantity = (newQuantity: ValueAndUnit) => {
+  setQuantity(newQuantity)
+  updateNutrients(quantity, newQuantity, setMainNutrients, setSecondaryNutrients)
+ }
 
   return (
     <View style={food_details_screen.container}>
@@ -33,13 +40,11 @@ export default function FoodDetailsScreen() {
       <Overview
         food={food}
         quantity={quantity}
-        setQuantity={setQuantity}
+        updateQuantity={updateQuantity}
         mainNutrients={mainNutrients}
-        setMainNutrients={setMainNutrients}
         secondaryNutrients={secondaryNutrients}
-        setSecondaryNutrients={setSecondaryNutrients}
       />
-      <Pressable onPress={() => onSaveHook(userContext?.token, food)}>
+      <Pressable onPress={() => onSave(userContext?.token, food)}>
         <Image
           source={require("@/assets/images/save.png")}
           style={{ marginRight: 0 }}
@@ -49,8 +54,3 @@ export default function FoodDetailsScreen() {
   );
 }
 
-const getFood = () => {
-  const { foodJSON } = useLocalSearchParams<{ foodJSON: string }>();
-  if (!foodJSON) return null;
-  return JSON.parse(foodJSON) as Food;
-};

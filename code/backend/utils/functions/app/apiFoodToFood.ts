@@ -1,4 +1,6 @@
-import { Food, FoodFactsApiFood, ValueAndUnit } from "../../../domain/types";
+import { Food, FoodFactsApiFood, MainNutrients, MainNutrientsBeforeNullCheck, ValueAndUnit } from "../../../domain/types";
+
+
 
 
 export const apiFoodToFood = (apiFood: FoodFactsApiFood) => {
@@ -20,10 +22,11 @@ export const apiFoodToFood = (apiFood: FoodFactsApiFood) => {
     const secondaryNutrients = getSecondaryNutrients(nutriments)
     const name = product_name || product_name_en
     const brand = brands_tags && brands_tags.length > 0 ? brands_tags[0] : null
+    const quantity = product_quantity != null ? parseInt(product_quantity) : null
 
-
-   const requiredFields = [name, brands_tags, product_quantity, product_quantity_unit, image_front_url, mainNutrients.calories, mainNutrients.carbs, mainNutrients.protein, mainNutrients.fat];
-   if (requiredFields.some(field => !field)) return null;
+    if (invalidFoodItem(name, brand, quantity, product_quantity_unit, image_front_url, mainNutrients))
+      return null
+ 
 
     
     const customQuantity: ValueAndUnit = {
@@ -42,6 +45,18 @@ export const apiFoodToFood = (apiFood: FoodFactsApiFood) => {
       nutriscoreGrade: gradeOrNull(nutriscore_grade)
     };
   };
+
+  const VALID_UNITS = [ "kg", "g", "mg", "µg", "l", "ml" ];
+
+  const invalidFoodItem = (name: string | null, brand: string | null, quantity: number | null, quantityUnit: string | null, image: string | null, mainNutrients: MainNutrientsBeforeNullCheck) => {
+    const requiredFields = [name, brand, quantity, quantityUnit, quantityUnit, image, mainNutrients?.calories, mainNutrients?.carbs, mainNutrients?.protein, mainNutrients?.fat];
+    if (requiredFields.some(field => !field)) return true;
+  
+    if (!VALID_UNITS.includes(quantityUnit as string))
+      return true
+  
+    return false 
+  }
 
 const gradeOrNull = (grade: string) => grade == "uknown" ? null : grade
 
@@ -82,7 +97,7 @@ const gradeOrNull = (grade: string) => grade == "uknown" ? null : grade
       return null
   
     return {
-      value: Math.round(nutrient),
+      value: nutrient,
       unit: nutrientUnit
     }
   }

@@ -1,6 +1,6 @@
 type QuantityProps = {
     quantity: ValueAndUnit;
-    setQuantity: React.Dispatch<React.SetStateAction<ValueAndUnit>>
+    updateQuantity: (newQuantity: ValueAndUnit) => void
   }
 
   type QuantityDisplayProps = {
@@ -12,7 +12,7 @@ type QuantityProps = {
     modalOpen: boolean,
     closeModal: () => void,
     quantity: ValueAndUnit;
-    setQuantity: React.Dispatch<React.SetStateAction<ValueAndUnit>>
+    updateQuantity: (newQuantity: ValueAndUnit) => void
   }
 
   type CurrentQuantity = {

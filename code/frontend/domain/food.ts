@@ -6,9 +6,9 @@ type ValueAndUnit = {
 
 type MainNutrients = {
     calories: number;
-    protein: ValueAndUnit | null;
-    fat: ValueAndUnit | null;
-    carbs: ValueAndUnit | null;
+    protein: ValueAndUnit;
+    fat: ValueAndUnit;
+    carbs: ValueAndUnit;
   }
   
 type SecondaryNutrients = {

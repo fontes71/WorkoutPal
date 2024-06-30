@@ -18,26 +18,16 @@ export const setUnit = (unit: string, setCurrentQuantity: React.Dispatch<React.S
   }));
 };
 
-export const handleSubmit = (currentQuantity: CurrentQuantity, setQuantity: React.Dispatch<React.SetStateAction<ValueAndUnit>>, closeModal: () => void) => {
+export const handleSubmit = (currentQuantity: CurrentQuantity, updateQuantity: (newQuantity: ValueAndUnit) => void, closeModal: () => void) => {
   if( currentQuantity.value != null) {
     const updatedValueAndUnit: ValueAndUnit = {
       value: currentQuantity.value as number, 
       unit: currentQuantity.unit
     };
 
-    setQuantity(updatedValueAndUnit);
+    updateQuantity(updatedValueAndUnit);
   }
   closeModal()
 }
   
-export const UNIT_VALUES = [
-  { label: "kg", value: "kg" },
-  { label: "g", value: "g" },
-  { label: "mg", value: "mg" },
-  { label: "µg", value: "µg" },
-  { label: "oz", value: "oz" },
-  { label: "l", value: "l" },
-  { label: "dl", value: "dl" },
-  { label: "cl", value: "cl" },
-  { label: "ml", value: "ml" }
-];
+

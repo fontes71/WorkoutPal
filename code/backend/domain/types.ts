@@ -53,6 +53,14 @@ export interface ValueAndUnit {
   unit: string 
 }
 
+export interface MainNutrientsBeforeNullCheck {
+  calories: number | null;
+  protein: ValueAndUnit | null;
+  fat: ValueAndUnit | null;
+  carbs: ValueAndUnit | null;
+}
+
+
 export interface MainNutrients {
   calories: number;
   protein: ValueAndUnit;
