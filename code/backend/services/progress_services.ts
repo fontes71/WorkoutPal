@@ -2,7 +2,7 @@ import { Day, DayStats, User } from "../domain/types";;
 import { IProgressData, IProgressServices, IUserData} from "../domain/interfaces";
 import { transactionHandler } from "../utils/functions/data";
 import { InvalidParamsError, UnauthorizedError } from "../errors/app_errors";
-import { dayToDayStats, getConsumedNutrients, getFormattedDate, getStartOfPeriod, isValidPeriod } from "../utils/functions/progress";
+import { dayToDayStats, getConsumedNutrients, getStartOfPeriod, isValidPeriod } from "../utils/functions/app/progress";
 import getDate from "../utils/functions/app/getDate";
 import { format } from "path";
 import { formatDate, eachDayOfInterval, subMonths, isWithinInterval } from "date-fns";
@@ -49,7 +49,7 @@ export class ProgressServices implements IProgressServices {
             const days = user.days
             const currDate = new Date
             const startDate = getStartOfPeriod(currDate, period)
-            const daysInInterval = days.filter((d) => isWithinInterval(getFormattedDate(d.date), { start: startDate, end: currDate }))
+            const daysInInterval = days.filter((d) => isWithinInterval(d.date, { start: startDate, end: currDate }))
             return dayToDayStats(daysInInterval)
         })
     }

@@ -1,15 +1,10 @@
 import { subMonths, subWeeks, subYears } from "date-fns"
-import { ConsumedNutrients, Day, DayStats, Food, MainNutrients } from "../../domain/types"
+import { ConsumedNutrients, Day, DayStats, Food } from "../../../domain/types"
 
 const validPeriods = ["week", "month", "year"]
 
 export function isValidPeriod(period: string): boolean {
     return validPeriods.includes(period)
-}
-
-export function getFormattedDate(date: string): Date {
-    const splitDate = date.split("-")
-    return new Date(splitDate[2] + "-" + splitDate[1] + "-" + splitDate[0])
 }
 
 export function getStartOfPeriod(currDate: Date, period: string): Date {

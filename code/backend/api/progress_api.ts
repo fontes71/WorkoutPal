@@ -2,9 +2,6 @@ import { Request, Response } from "express";
 import { IProgressApi, IProgressServices } from "../domain/interfaces";
 import { apiErrorHandler, getToken, sendResponse } from "../utils/functions/api";
 import { StatusCode } from "../domain/api";
-import { ParamsDictionary } from "express-serve-static-core";
-import { ParsedQs } from "qs";
-import { InvalidParamsError } from "../errors/app_errors";
 
 export class ProgressApi implements IProgressApi {
   private service: IProgressServices;
