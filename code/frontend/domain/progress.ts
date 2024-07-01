@@ -1,9 +1,11 @@
 type FetchDaysResponse = {
     message: string,
-    obj: Array<Stats>
+    obj: {
+        days: Array<DayStats>
+    }
 }
 
-type Stats = {
+type DayStats = {
     date: string
     consumedNutrients: ConsumedNutrients
     workoutPlansDone: number
@@ -16,3 +18,11 @@ type ConsumedNutrients = {
     fat: number,
     carbs: number
 }
+
+type Stats = {
+    days: string[],
+    calories: number[],
+    workoutPlansDone: number[],
+    weights: number[]
+}
+

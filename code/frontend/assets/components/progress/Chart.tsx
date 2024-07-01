@@ -6,19 +6,20 @@ import progress_styles from "@/assets/styles/progress"
 
 type ChartOptions = {
     readonly title: string,
-    readonly labels: any,
-    readonly dataset: any,
-    readonly suffix: string
+    readonly labels: any, // maybe string[]
+    readonly dataset: any, // maybe number[]
+    readonly suffix: string,
+    readonly days: string[]
 }
 
 type DotInfo = {
     pressedValue?: number,
-    selectedDotIndex?: number
+    selectedDotIndex: number
 }
 
 const styles = progress_styles.chart_styles
 
-export default function Chart({title, dataset, labels, suffix}: ChartOptions) {
+export default function Chart({title, dataset, labels, suffix, days}: ChartOptions) {
     const [dotInfo, setDotInfo] = useState<DotInfo>({selectedDotIndex: 0})
     /*const data = {
         labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"] as any,
@@ -39,7 +40,7 @@ export default function Chart({title, dataset, labels, suffix}: ChartOptions) {
                 data: dataset,
             }
         ],
-        legend: [`${title} ${dotInfo.pressedValue ? `${dotInfo.pressedValue} ${suffix}` : ""}`],
+        legend: [`${title} | (${days.at(dotInfo.selectedDotIndex)}) ${dotInfo.pressedValue ? `${dotInfo.pressedValue} ${suffix}` : ""}`],
     }
 
     const chartConfig = {
@@ -48,7 +49,7 @@ export default function Chart({title, dataset, labels, suffix}: ChartOptions) {
         backgroundGradientTo: Colors.black,
         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
 
-        decimalPlaces: 1,
+        decimalPlaces: 0,
         strokeWidth: 2,
         useShadowColorFromDataset: false, 
         
@@ -66,17 +67,10 @@ export default function Chart({title, dataset, labels, suffix}: ChartOptions) {
     };
 
     const getDotColor = (dataPoint: number, dataPointIndex: number) => {
-        if (dotInfo?.selectedDotIndex == dataPointIndex) return Colors.green;
+        if (dotInfo.selectedDotIndex == dataPointIndex) return Colors.green;
         else return Colors.white
     };
-
-    /*
-    {dotInfo?.pressedValue && 
-                <Text style={styles.chart_info}>
-                    {`${title} ${dotInfo?.pressedValue} kg`}
-                </Text>
-            }
-    */
+    
     return(
         <View style={styles.chart_container}>
             <LineChart

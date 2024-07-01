@@ -38,7 +38,7 @@ export function dayToDayStats(days: Day[]): DayStats[] {
     return days.map((d) => {
         return {
             "date": d.date, 
-            "mainNutrients": getConsumedNutrients(d.consumedFood),
+            "consumedNutrients": getConsumedNutrients(d.consumedFood),
             "workoutPlansDone": d.workoutPlansDone.length,
             "weight": d.weight ? d.weight : null
         }

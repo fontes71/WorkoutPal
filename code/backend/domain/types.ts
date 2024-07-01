@@ -104,7 +104,7 @@ export type ConsumedNutrients = {
 
 export type DayStats = {
   date: string,
-  mainNutrients: ConsumedNutrients,
+  consumedNutrients: ConsumedNutrients,
   workoutPlansDone: number | null,
   weight: number | null
 }

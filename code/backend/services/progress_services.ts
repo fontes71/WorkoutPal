@@ -47,9 +47,10 @@ export class ProgressServices implements IProgressServices {
             if (!user) throw UnauthorizedError;
 
             const days = user.days
-            const currDate = new Date
+            const currDate = new Date()
+            currDate.setDate(currDate.getDate() + 1)
             const startDate = getStartOfPeriod(currDate, period)
-            const daysInInterval = days.filter((d) => isWithinInterval(d.date, { start: startDate, end: currDate }))
+            const daysInInterval = days.filter((d) => isWithinInterval(d.date, { start: startDate, end: currDate}))
             return dayToDayStats(daysInInterval)
         })
     }
