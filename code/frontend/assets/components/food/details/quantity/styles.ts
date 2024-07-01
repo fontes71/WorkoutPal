@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
   },
   buttonsWrapper: {
     flexDirection: 'row',
+    marginTop: 10
   },
   exitButton: {
     elevation: 8,

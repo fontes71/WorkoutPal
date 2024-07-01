@@ -7,10 +7,10 @@ const NutrientsOverview: React.FC<NutrientsOverviewProps> = ({ food }) => {
 
   return (
     <View style={styles.nutrients}>
-      <Text>Calories:{calories}</Text>
-      <Text>Protein:{protein}</Text>
-      <Text>Carbs;{carbs}</Text>
-      <Text>Fat:{fat}</Text>
+      <Text>Calories:{Math.round(calories)}</Text>
+      <Text>Protein:{Math.round(protein)}</Text>
+      <Text>Carbs;{Math.round(carbs)}</Text>
+      <Text>Fat:{Math.round(fat)}</Text>
     </View>
   );
 };

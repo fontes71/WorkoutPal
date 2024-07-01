@@ -3,10 +3,10 @@ const getNutrients = (food: Food[] | null) => {
 
   return food?.reduce(
     (acc, it) => {
-      acc.calories += it.calories ? it.calories : 0;
-      acc.protein += it.protein ? parseInt(it.protein) : 0;
-      acc.carbs += it.carbs ? parseInt(it.carbs) : 0;
-      acc.fat += it.fat ? parseInt(it.fat) : 0;
+      acc.calories += it.mainNutrients.calories;
+      acc.protein += it.mainNutrients.protein.value ;
+      acc.carbs += it.mainNutrients.carbs.value ;
+      acc.fat += it.mainNutrients.fat.value 
       return acc;
     },
     { calories: 0, protein: 0, carbs: 0, fat: 0 }

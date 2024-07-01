@@ -1,5 +1,6 @@
 import UNIT_VALUES from "@/assets/contants/unitValues"
-import { useLocalSearchParams } from "expo-router"
+import { logFood } from "@/services/food";
+import { router, useLocalSearchParams } from "expo-router"
 
 export const getFood = () => {
   const { foodJSON } = useLocalSearchParams<{ foodJSON: string }>();
@@ -44,13 +45,36 @@ const getQuantityInBaseUnit = (quantity: ValueAndUnit) => {
   return quantity.value * conversionValue
 }
 
-
-
 const updateSecondaryNutrient = (nutrient: ValueAndUnit | null, proportion: number) => {
   if (!nutrient)
     return null
   return  { ...nutrient, value: nutrient.value * proportion }
 }
+
+const getUpdatedFood = (food: Food, quantity: ValueAndUnit, mainNutrients: MainNutrients, secondaryNutrients: SecondaryNutrients): Food => {
+  return {
+    ...food,
+    quantity,
+    mainNutrients,
+    secondaryNutrients
+  };
+}
+
+export const onSave = async (token: string | undefined, food: Food, quantity: ValueAndUnit, mainNutrients: MainNutrients, secondaryNutrients: SecondaryNutrients) => {
+  const updatedFood = getUpdatedFood(food, quantity, mainNutrients, secondaryNutrients)
+  await logFood(token, updatedFood);
+  router.push(`/food/`);
+};
+
+export const resetIfQuantityValueWasZero = (quantity: ValueAndUnit, baseQuantity: ValueAndUnit, baseMainNutrients: MainNutrients, baseSecondaryNutrients: SecondaryNutrients, setMainNutrients: React.Dispatch<React.SetStateAction<MainNutrients>>, setSecondaryNutrients: React.Dispatch<React.SetStateAction<SecondaryNutrients>>) => {
+  if (quantity.value == 0) {
+    setMainNutrients(baseMainNutrients);
+    setSecondaryNutrients(baseSecondaryNutrients);
+    return baseQuantity
+  }
+  return quantity
+}
+
 
   
 const updateMainNutrient = (nutrient: ValueAndUnit, proportion: number) => ({ ...nutrient, value: nutrient.value * proportion })
