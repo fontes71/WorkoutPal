@@ -1,12 +1,13 @@
 import styles from "./styles";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { useContext, useState } from "react";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import { Image, Pressable } from "react-native";
 import Overview from "@/assets/components/food/details/overview/Overview";
 import { getFood, onSave, resetIfQuantityValueWasZero, updateNutrients } from "./utils";
+import { DetailsProps } from "./types";
 
-const Details = () => {
+const Details: React.FC<DetailsProps> = ({ button: Button }) => {
   const { userContext } = useContext(UserContext);
   const food = getFood();
   if (!food) throw Error;
@@ -32,12 +33,7 @@ const Details = () => {
         mainNutrients={mainNutrients}
         secondaryNutrients={secondaryNutrients}
       />
-      <Pressable onPress={() => onSave(userContext?.token, food, quantity, mainNutrients, secondaryNutrients)}>
-        <Image
-          source={require("@/assets/images/save.png")}
-          style={{ marginRight: 0 }}
-        />
-      </Pressable>
+      <Button token={userContext?.token} food={food} quantity={quantity} mainNutrients={mainNutrients} secondaryNutrients={secondaryNutrients} />
     </View>
   );
 };
