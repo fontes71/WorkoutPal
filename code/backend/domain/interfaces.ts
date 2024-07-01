@@ -24,7 +24,7 @@ export interface IExerciseApi {
 export interface IFoodApi {
   searchByName(req: Request, res: Response): void;
   searchByBarcode(req: Request, res: Response): void;
-  consume(req: Request, res: Response): void;
+  log(req: Request, res: Response): void;
   delete(req: Request, res: Response): void;
   dailyConsumption(req: Request, res: Response): void;
 
@@ -64,7 +64,7 @@ export interface IExerciseServices {
 export interface IFoodServices {
   searchByName(query: string, page: number): Promise<Array<Food>>;
   searchByBarcode(barcode: number): Promise<Food>;
-  consume(token: string, foodItem: Food):Promise<Food[]>;
+  log(token: string, foodItem: Food):Promise<Food[]>;
   delete(token: string, idx: number):Promise<Food[]>
   dailyConsumption(token: string, day: string): Promise<Food[]>;
 }

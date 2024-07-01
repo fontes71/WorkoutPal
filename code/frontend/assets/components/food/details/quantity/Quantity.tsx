@@ -18,6 +18,15 @@ const Quantity: React.FC<QuantityProps> = ({ quantity, updateQuantity }) => {
 );
 }
 
+const QuantityDisplay: React.FC<QuantityDisplayProps> = ({ quantity, openModal }) => (
+  <View style={styles.quantityContainer}>
+    <TouchableOpacity onPress={openModal}>
+      <Text style={styles.text_small}>{quantity.value}{quantity.unit}</Text>
+    </TouchableOpacity>
+  </View>
+);
+
+
 const QuantityModal: React.FC<QuantityModalProps> = ({ modalOpen, closeModal, quantity, updateQuantity }) => {
   const [currentQuantity, setCurrentQuantity] = useState<CurrentQuantity>(quantity)
 
@@ -29,8 +38,8 @@ return (
   margin={"15%"}
  >
   <View style={styles.modalContent}>
-  <Inputs currentQuantity={currentQuantity} setCurrentQuantity={setCurrentQuantity} />
-  <Buttons closeModal={closeModal} handleSubmit={() => handleSubmit(currentQuantity, updateQuantity, closeModal)}/>
+    <Inputs currentQuantity={currentQuantity} setCurrentQuantity={setCurrentQuantity} />
+    <Buttons closeModal={closeModal} handleSubmit={() => handleSubmit(currentQuantity, updateQuantity, closeModal)}/>
   </View>
  </PopupModal>
 )
@@ -65,13 +74,5 @@ const Buttons: React.FC<ButtonsProps> = ({ closeModal, handleSubmit }) => (
        </TouchableOpacity>
   </View>
 )
-
-const QuantityDisplay: React.FC<QuantityDisplayProps> = ({ quantity, openModal }) => (
-  <View style={styles.quantityContainer}>
-    <TouchableOpacity onPress={openModal}>
-      <Text style={styles.text_small}>{quantity.value}{quantity.unit}</Text>
-    </TouchableOpacity>
-  </View>
-);
 
 export default Quantity;

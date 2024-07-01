@@ -1,5 +1,6 @@
 import { Colors } from "@/constants";
 import { View } from "react-native";
+
 import Spinner from 'react-native-loading-spinner-overlay';
 
 export default function Fetching() {

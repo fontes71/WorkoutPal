@@ -14,20 +14,12 @@ export const updateNutrients = (oldQuantity: ValueAndUnit, newQuantity: ValueAnd
  setSecondaryNutrients((secondaryNutrients) => updatedSecondaryNutrients(secondaryNutrients, proportion))
 }
 
-
-const getProportion = (oldQuantity: ValueAndUnit, newQuantity: ValueAndUnit) => {
-  const oldQuantityInBaseUnit = getQuantityInBaseUnit(oldQuantity)
-  const newQuantityInBaseUnit = getQuantityInBaseUnit(newQuantity)
-
-  return oldQuantityInBaseUnit / newQuantityInBaseUnit;
-}
-
-const getQuantityInBaseUnit = (quantity: ValueAndUnit) => {
-  const conversionValue = UNIT_VALUES.find((item) => item.value === quantity.unit)?.conversionValue;
-  if (!conversionValue )
-    throw Error
-  return quantity.value * conversionValue
-}
+const updatedMainNutrients = (nutrients: MainNutrients, proportion: number) => ({
+  calories: nutrients.calories * proportion,
+  protein: updateMainNutrient(nutrients.protein, proportion),
+  fat: updateMainNutrient(nutrients.fat, proportion),
+  carbs: updateMainNutrient(nutrients.carbs, proportion),
+})
 
 const updatedSecondaryNutrients = (nutrients: SecondaryNutrients, proportion: number) => ({
   fiber: updateSecondaryNutrient(nutrients.fiber, proportion),
@@ -37,20 +29,28 @@ const updatedSecondaryNutrients = (nutrients: SecondaryNutrients, proportion: nu
   sugars: updateSecondaryNutrient(nutrients.sugars, proportion),
 })
 
+
+const getProportion = (oldQuantity: ValueAndUnit, newQuantity: ValueAndUnit) => {
+  const oldQuantityInBaseUnit = getQuantityInBaseUnit(oldQuantity)
+  const newQuantityInBaseUnit = getQuantityInBaseUnit(newQuantity)
+
+  return newQuantityInBaseUnit / oldQuantityInBaseUnit;
+}
+
+const getQuantityInBaseUnit = (quantity: ValueAndUnit) => {
+  const conversionValue = UNIT_VALUES.find((item) => item.value === quantity.unit)?.conversionValue;
+  if (!conversionValue )
+    throw Error
+  return quantity.value * conversionValue
+}
+
+
+
 const updateSecondaryNutrient = (nutrient: ValueAndUnit | null, proportion: number) => {
   if (!nutrient)
     return null
   return  { ...nutrient, value: nutrient.value * proportion }
 }
-
-const updatedMainNutrients = (nutrients: MainNutrients, proportion: number) => ({
-  calories: nutrients.calories * proportion,
-  protein: updateMainNutrient(nutrients.protein, proportion),
-  fat: updateMainNutrient(nutrients.fat, proportion),
-  carbs: updateMainNutrient(nutrients.carbs, proportion),
-})
-
-
 
   
 const updateMainNutrient = (nutrient: ValueAndUnit, proportion: number) => ({ ...nutrient, value: nutrient.value * proportion })

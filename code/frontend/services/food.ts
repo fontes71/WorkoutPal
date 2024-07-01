@@ -8,7 +8,7 @@ export const searchFoodByName = async (query: string, page: number) =>
 export const searchFoodByBarcode = async (barcode: string) =>
   customFetch(`${localhost}/api/food/search/barcode?barcode=${barcode}`);
 
-export const consumeFood = async (userToken: string | undefined, food: Food) => 
+export const logFood = async (userToken: string | undefined, food: Food) => 
   customFetch(`${localhost}/api/food/consume`, {
     method: "POST",
     headers: {

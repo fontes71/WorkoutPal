@@ -78,7 +78,7 @@ app.get("/api/cloneDatabase", exerciseApi.cloneExerciseDB);
 // Food
 app.get("/api/food/search/name", foodApi.searchByName);
 app.get("/api/food/search/barcode", foodApi.searchByBarcode);
-app.post("/api/food/consume", foodApi.consume);
+app.post("/api/food/log", foodApi.log);
 app.delete("/api/food/delete/:itemIndex", foodApi.delete);
 app.get("/api/food/dailyConsumption", foodApi.dailyConsumption);
 

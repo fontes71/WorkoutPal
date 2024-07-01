@@ -40,7 +40,7 @@ export class FoodApi implements IFoodApi {
     });
   };
 
-  consume = async (req: Request, res: Response) => {
+  log = async (req: Request, res: Response) => {
     await apiErrorHandler(res, async () => {
       const token = getToken(req);
 
@@ -48,12 +48,12 @@ export class FoodApi implements IFoodApi {
 
   
 
-      const food = await this.service.consume(
+      const food = await this.service.log(
         token,
         foodItem
       );
 
-      sendResponse(res, StatusCode.Created, "Food item consumed successfully", food)
+      sendResponse(res, StatusCode.Created, "Food item logged successfully", food)
     });
   };
 

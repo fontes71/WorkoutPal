@@ -60,7 +60,7 @@ export class FoodServices implements IFoodServices {
     });
   };
 
-  consume = async (
+  log = async (
     token: string,
     foodItem: Food
   ) => {

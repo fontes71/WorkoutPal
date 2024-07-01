@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import { Image, Pressable } from "react-native";
 import { router } from "expo-router";
-import { consumeFood } from "@/services/food";
+import { logFood } from "@/services/food";
 import Overview from "@/assets/components/food/details/overview/Overview";
 import { getFood, updateNutrients } from "@/assets/components/food/details/utils/utils";
 
@@ -25,13 +25,21 @@ export default function FoodDetailsScreen() {
     useState<SecondaryNutrients>(food.secondaryNutrients);
 
   const onSave = async (token: string | undefined, food: Food) => {
-    await consumeFood(token, food);
+    await logFood(token, food);
     router.push(`/food/`);
   };
 
  const updateQuantity = (newQuantity: ValueAndUnit) => {
+  let quant = quantity
+  if (quant.value == 0) {
+    quant = food.quantity
+    setMainNutrients(food.mainNutrients)
+    setSecondaryNutrients(food.secondaryNutrients)
+
+  }
+  
+  updateNutrients(quant, newQuantity, setMainNutrients, setSecondaryNutrients)
   setQuantity(newQuantity)
-  updateNutrients(quantity, newQuantity, setMainNutrients, setSecondaryNutrients)
  }
 
   return (
