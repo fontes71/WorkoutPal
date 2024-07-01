@@ -3,8 +3,6 @@ import { InvalidAuthorizationTokenError, NonExistentAuthorizationTokenError } fr
 import { HttpError, mapAppErrorToHttpError } from "../../errors/http_errors";
 import { Request, Response } from "express";
 
-
-
 export async function apiErrorHandler(res: Response, action: () => Promise<void>) {
     try {
         await action() 

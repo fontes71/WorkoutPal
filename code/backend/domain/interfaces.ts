@@ -113,10 +113,11 @@ export interface IAuthData {
 }
 
 export interface IProgressData {
+  updateWeight(newWeight: number, day: string, token: string): Promise<User | null>
 }
 
 export interface IUserData {
-  getUserByToken(token: string): Promise<User | null>;
+  getUserByToken(token: string): Promise<User | null>
   updateUser(token: string, user: User): Promise<User | null>
 }
 

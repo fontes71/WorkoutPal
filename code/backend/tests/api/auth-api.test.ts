@@ -28,7 +28,7 @@ const mockResponse = {
 
 beforeEach(() => {
   authServices = new AuthServices(authData)
-  authApi = new AuthApi(authServices, authData)
+  authApi = new AuthApi(authServices)
 })
 
 afterEach(() => {
@@ -62,7 +62,7 @@ describe("api/signup", () => {
     await authApi.signup(mockExistentEmailSignupRequest as any, mockResponse as any);
 
     expect(mockResponse.status).toHaveBeenCalledWith(409)
-    expect(mockResponse.json).toHaveBeenCalledWith({ error_message: 'There is already an account with the inserted email' })
+    expect(mockResponse.json).toHaveBeenCalledWith({ message: 'Error: There is already an account with the inserted email', obj: {} })
   
     expect(authServices.signup).toHaveBeenCalledWith(
       mockExistentEmailSignupRequest.body.username,
@@ -82,7 +82,7 @@ describe("api/signup", () => {
     await authApi.signup(mockInvalidSignupRequest as any, mockResponse as any);
 
     expect(mockResponse.status).toHaveBeenCalledWith(400)
-    expect(mockResponse.json).toHaveBeenCalledWith({ error_message: 'Missing or invalid parameters' })
+    expect(mockResponse.json).toHaveBeenCalledWith({ message: 'Error: Missing or invalid parameters', obj: {} })
   
     expect(authServices.signup).toHaveBeenCalledWith(
       mockInvalidSignupRequest.body.username,
@@ -113,7 +113,7 @@ describe("api/login", () => {
     await authApi.login(mockLoginRequest as any, mockResponse as any);
 
     expect(mockResponse.status).toHaveBeenCalledWith(404)
-    expect(mockResponse.json).toHaveBeenCalledWith({error_message: "No user associated with the inserted email"})
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: No user associated with the inserted email", obj: {} })
   
     expect(authServices.login).toHaveBeenCalledWith(
       mockLoginRequest.body.email,
@@ -127,7 +127,7 @@ describe("api/login", () => {
     await authApi.login(mockInvalidLoginRequest as any, mockResponse as any);
 
     expect(mockResponse.status).toHaveBeenCalledWith(400)
-    expect(mockResponse.json).toHaveBeenCalledWith({error_message: "Missing or invalid parameters"})
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: Missing or invalid parameters", obj: {} })
   
     expect(authServices.login).toHaveBeenCalledWith(
       mockInvalidLoginRequest.body.email,
@@ -141,7 +141,7 @@ describe("api/login", () => {
     await authApi.login(mockIncorrectPasswordLoginRequest as any, mockResponse as any);
 
     expect(mockResponse.status).toHaveBeenCalledWith(400)
-    expect(mockResponse.json).toHaveBeenCalledWith({error_message: "Password is incorrect"})
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: Password is incorrect", obj: {} })
   
     expect(authServices.login).toHaveBeenCalledWith(
       mockIncorrectPasswordLoginRequest.body.email,
@@ -168,7 +168,7 @@ describe("api/logout", () => {
     await authApi.logout(mockUnauthorizedLogoutRequest as any, mockResponse as any);
 
     expect(mockResponse.status).toHaveBeenCalledWith(401)
-    expect(mockResponse.json).toHaveBeenCalledWith({error_message: "Access denied"})
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: Access denied", obj: {} })
   
     expect(authServices.logout).toHaveBeenCalledWith(mockUnauthorizedToken)
   })
@@ -177,13 +177,13 @@ describe("api/logout", () => {
     await authApi.logout(mockNoTokenLogoutRequest as any, mockResponse as any);
 
     expect(mockResponse.status).toHaveBeenCalledWith(400)
-    expect(mockResponse.json).toHaveBeenCalledWith({error_message: "No authorization token provided"})
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: No authorization token provided", obj: {} })
   })
 
   it('trying to log out an user with an invalid type of token', async () => {
     await authApi.logout(mockNotBearerTokenLogoutRequest as any, mockResponse as any);
 
     expect(mockResponse.status).toHaveBeenCalledWith(400)
-    expect(mockResponse.json).toHaveBeenCalledWith({error_message: "Authorization token needs to be bearer"})
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: Authorization token needs to be bearer", obj: {} })
   })
 })

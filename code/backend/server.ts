@@ -20,7 +20,7 @@ import { ProgressApi } from "./api/progress_api.ts";
 // AUTH
 const authData = new AuthData();
 const authServices = new AuthServices(authData);
-const authApi = new AuthApi(authServices, authData);
+const authApi = new AuthApi(authServices);
 
 // USER
 const userData = new UserData();
@@ -36,7 +36,7 @@ const foodServices = new FoodServices(foodData, userData);
 const foodApi = new FoodApi(foodServices);
 
 // PROGRESS
-const progressData = new ProgressData()
+const progressData = new ProgressData(userData)
 const progressServices = new ProgressServices(progressData, userData)
 const progressApi = new ProgressApi(progressServices)
 

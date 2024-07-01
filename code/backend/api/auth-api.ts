@@ -1,28 +1,15 @@
 import { Request, Response } from "express";
-import passport from 'passport';
-import passport_http_bearer from 'passport-http-bearer';
+
 import { User } from "../domain/types.ts";
-import { IAuthApi, IAuthData, IAuthServices } from "../domain/interfaces.ts";
+import { IAuthApi, IAuthServices } from "../domain/interfaces.ts";
 import { apiErrorHandler, getToken, sendResponse } from "../utils/functions/api.ts";
 import { AuthInfoUser, StatusCode, UserResponse } from "../domain/api.ts";
 
-const BearerStrategy = passport_http_bearer.Strategy
-
 export class AuthApi implements IAuthApi {
-  private services: IAuthServices;
-  private data: IAuthData;
+  private services: IAuthServices
 
-  constructor(services: IAuthServices, data: IAuthData) {
-    this.services = services;
-    this.data = data;
-
-    // prob not going to need it
-    passport.use(new BearerStrategy(async (token, done) => {
-        const user = await this.data.getUserByToken(token)
-        if (!user) { return done(null, false); }
-        return done(null, user, { scope: 'all' })
-      }
-    ))
+  constructor(services: IAuthServices) {
+    this.services = services
   }
 
   signup = async (req: Request, res: Response) => {

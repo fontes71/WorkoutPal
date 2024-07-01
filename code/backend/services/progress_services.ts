@@ -1,11 +1,9 @@
-import { Day, DayStats, User } from "../domain/types";;
+import { DayStats, User } from "../domain/types";;
 import { IProgressData, IProgressServices, IUserData} from "../domain/interfaces";
 import { transactionHandler } from "../utils/functions/data";
-import { InvalidParamsError, UnauthorizedError } from "../errors/app_errors";
-import { dayToDayStats, getConsumedNutrients, getStartOfPeriod, isValidPeriod } from "../utils/functions/app/progress";
-import getDate from "../utils/functions/app/getDate";
-import { format } from "path";
-import { formatDate, eachDayOfInterval, subMonths, isWithinInterval } from "date-fns";
+import { InvalidDateError, InvalidParamsError, UnauthorizedError } from "../errors/app_errors";
+import { dayToDayStats, getStartOfPeriod, isValidPeriod } from "../utils/functions/app/progress";
+import { isWithinInterval, isBefore } from "date-fns";
   
 export class ProgressServices implements IProgressServices {
     private progressData: IProgressData;
@@ -18,25 +16,11 @@ export class ProgressServices implements IProgressServices {
 
     async updateWeight(newWeight: number, day: string, token: string): Promise<void> {
         return transactionHandler( async () => {
-            const user: User | null = await this.userData.getUserByToken(token);
-            if (!user) throw UnauthorizedError;
-            
-            const dayIndex = user.days.findIndex((d) => d.date === day);
-
-            if (dayIndex == -1) {
-                user.days = [
-                    ...user.days,
-                    { date: day, consumedFood: [], workoutPlansDone: [], weight: newWeight}
-                ];
-            } else {
-                const d = user.days[dayIndex];
-                user.days[dayIndex] = {
-                    ...d,
-                    weight: newWeight,
-                };
-            } 
-
-            await this.userData.updateUser(token, user);
+            const providedDate = new Date(day)
+            const currDate = new Date()
+            if (!isBefore(providedDate, currDate)) throw InvalidDateError
+            const user: User | null = await this.progressData.updateWeight(newWeight, day, token)
+            if (!user) throw UnauthorizedError
         })
     }
     
