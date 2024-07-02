@@ -1,6 +1,7 @@
 import {
   AlreadyExistsError,
   InvalidAuthorizationTokenError,
+  InvalidDateError,
   InvalidParamsError,
   NotFoundError,
 } from "../../errors/app_errors.ts";
@@ -606,7 +607,7 @@ describe("GetDailyLoggedWorkoutPlans function tests", () => {
     const token = "testToken";
     const day = "invalidDate";
     exerciseData.getDailyLoggedWorkoutPlans = jest.fn().mockResolvedValue(null);
-    exerciseServices.getDailyLoggedWorkoutPlans(token, day).catch((error: Error) => expect(error).toBe(InvalidParamsError));
+    exerciseServices.getDailyLoggedWorkoutPlans(token, day).catch((error: Error) => expect(error).toBe(InvalidDateError));
     expect(exerciseData.getDailyLoggedWorkoutPlans).not.toHaveBeenCalledWith(token, day);
   });
 

@@ -1,5 +1,5 @@
 import { Exercise, WorkoutPlan } from "../domain/types";
-import { NotFoundError, AlreadyExistsError, InvalidAuthorizationTokenError, InvalidParamsError } from "../errors/app_errors";
+import { NotFoundError, AlreadyExistsError, InvalidAuthorizationTokenError, InvalidParamsError, InvalidDateError } from "../errors/app_errors";
 import cron from "node-cron";
 import { IExerciseData, IExerciseServices } from "../domain/interfaces";
 import { ERROR_EXERCISE, ERROR_WORKOUTPLAN } from "../utils/constants";
@@ -152,7 +152,7 @@ export class ExerciseServices implements IExerciseServices {
     return transactionHandler(async () => {
       const date = parse(day, "yyyy-MM-dd", new Date());
       if(!isValid(date)) {
-        throw InvalidParamsError;
+        throw InvalidDateError;
       };
       const workoutPlans: string[] | null = await this.data.getDailyLoggedWorkoutPlans(token, day);
       if (workoutPlans == null) throw InvalidAuthorizationTokenError;
