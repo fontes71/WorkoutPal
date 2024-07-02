@@ -4,9 +4,9 @@ import {
   User,
 } from "../domain/types";
 import {
-  InvalidBarcode,
-  InvalidConsumedFoodIndex,
-  NoItemToDelete,
+  InvalidBarcodeError,
+  InvalidLoggedFoodIndexError,
+  NoItemToDeleteError,
   UnauthorizedError,
 } from "../errors/app_errors";
 import {
@@ -50,11 +50,11 @@ export class FoodServices implements IFoodServices {
         barcode
       );
 
-      if (!apiFood) throw InvalidBarcode;
+      if (!apiFood) throw InvalidBarcodeError;
 
       const food = apiFoodToFood(apiFood);
 
-      if (!food) throw InvalidBarcode;
+      if (!food) throw InvalidBarcodeError;
 
       return food;
     });
@@ -108,15 +108,15 @@ export class FoodServices implements IFoodServices {
       const dayIndex = user.days.findIndex((day) => day.date === date);
 
       if (dayIndex == -1 )
-        throw NoItemToDelete;
+        throw NoItemToDeleteError;
 
       const consumedFoodLength = user.days[dayIndex].consumedFood.length
 
       if (consumedFoodLength == 0) 
-        throw NoItemToDelete;
+        throw NoItemToDeleteError;
 
       if (consumedFoodLength <= index || index < 0)
-        throw InvalidConsumedFoodIndex;
+        throw InvalidLoggedFoodIndexError;
 
       user.days[dayIndex].consumedFood.splice(index, 1);
 

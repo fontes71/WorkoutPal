@@ -10,9 +10,9 @@ export interface HttpError {
 const errorsMap: Record<string, HttpError> = {
   'NotFoundError': { code: 404, status: 'NOT_FOUND', message: 'The resource was not found' },
   'AlreadyExistsError': { code: 409, status: 'CONFLICT', message: 'The resource already exists' },
-  'NoItemToDelete': { code: 400, status: 'BAD_REQUEST', message: 'No item to delete' },
-  'InvalidConsumedFoodIndex': { code: 400, status: 'BAD_REQUEST', message: 'Invalid consumed food index' },
-  'InvalidBarcode': { code: 400, status: 'BAD_REQUEST', message: 'Invalid barcode value' },
+  'NoItemToDeleteError': { code: 400, status: 'BAD_REQUEST', message: 'No item to delete' },
+  'InvalidLoggedFoodIndexError': { code: 400, status: 'BAD_REQUEST', message: 'Invalid logged food index' },
+  'InvalidBarcodeError': { code: 400, status: 'BAD_REQUEST', message: 'Invalid barcode value' },
   'InvalidParamsError': { code: 400, status: 'BAD_REQUEST', message: 'Missing or invalid parameters' },
   'InvalidCredentialsError': { code: 400, status: 'BAD_REQUEST', message: 'Invalid Credentials' },
   'IncorrectPasswordError': { code: 400, status: 'BAD_REQUEST', message: 'Password is incorrect' },

@@ -3,7 +3,6 @@ import { NotFoundError, AlreadyExistsError, InvalidAuthorizationTokenError, Inva
 import cron from "node-cron";
 import { IExerciseData, IExerciseServices } from "../domain/interfaces";
 import { ERROR_EXERCISE, ERROR_WORKOUTPLAN } from "../utils/constants";
-import { isValidDate } from "../utils/functions/app/isValidDate";
 import { transactionHandler } from "../utils/functions/data";
 import { isValid, parse } from "date-fns";
 

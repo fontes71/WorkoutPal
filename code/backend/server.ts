@@ -81,7 +81,7 @@ app.get("/api/food/search/name", foodApi.searchByName);
 app.get("/api/food/search/barcode", foodApi.searchByBarcode);
 app.post("/api/food/log", foodApi.log);
 app.delete("/api/food/delete/:itemIndex", foodApi.delete);
-app.get("/api/food/dailyConsumption", foodApi.dailyConsumption);
+app.get("/api/food/dailyConsumption/:date", foodApi.dailyConsumption);
 
 // Progress
 app.put("/api/progress/updateWeight", progressApi.updateWeight)

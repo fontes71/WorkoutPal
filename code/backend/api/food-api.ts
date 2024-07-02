@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import { Exercise, Food } from "../domain/types";
 import { IFoodApi, IFoodData, IFoodServices } from "../domain/interfaces";
-import { InvalidParamsError } from "../errors/app_errors";
+import { InvalidDateError, InvalidParamsError } from "../errors/app_errors";
 import { apiErrorHandler, getToken, sendResponse } from "../utils/functions/api";
 import { StatusCode } from "../domain/api";
+import { isValid } from "date-fns";
+import isValidDate from "../utils/functions/app/isValidDate";
 
 export class FoodApi implements IFoodApi {
   private service: IFoodServices;
@@ -46,8 +48,10 @@ export class FoodApi implements IFoodApi {
 
       const foodItem: Food = req.body.food;
       const date: string = req.body.date;
+      console.log(date)
 
-  
+      if (!isValidDate(date))
+        throw InvalidDateError
 
       const food = await this.service.log(
         token,
@@ -73,12 +77,16 @@ export class FoodApi implements IFoodApi {
   dailyConsumption = async (req: Request, res: Response) => {
     await apiErrorHandler(res, async () => {
       const token = getToken(req);
+      console.log(req.params)
 
-      const { query } = req.query;
+      const { date } = req.params;
 
-      if (!query || typeof query != "string") throw InvalidParamsError;
+      if (!isValidDate(date))
+        throw InvalidDateError
 
-      const food = await this.service.dailyConsumption(token, query);
+      if (!date || typeof date != "string") throw InvalidParamsError;
+
+      const food = await this.service.dailyConsumption(token, date);
 
       sendResponse(res, StatusCode.Success, "Daily consumption fetch successful", food)
     });
