@@ -3,6 +3,8 @@ import { ProgressData } from "../../data/progress_data";
 import { UserData } from "../../data/user-data";
 import { ProgressServices } from "../../services/progress_services";
 import { 
+  emptyFoodArr,
+  foodArr,
   mockDate, mockDayStats, mockInvalidDate, mockInvalidPeriod,
   mockInvalidToken, mockPeriod, mockToken, mockUser, mockWeight 
 } from "./mockData/progress";
@@ -142,37 +144,6 @@ describe("auxiliary functions (getStartOfPeriod)", () => {
 })
 
 describe("auxiliary functions (getConsumedNutrients)", () => {
-  const createSecondaryNutrients = (): SecondaryNutrients => {
-    return {"fiber": null, "saturatedFat": null, "salt": null, "sodium": null, "sugars": null}
-  }
-
-  const createValueAndUnit = (value: number): ValueAndUnit => {
-    return {"value": value, "unit": "irrelevant"}
-  }
-
-  const createMainNutrients = (calories: number, protein: number, fat: number, carbs: number): MainNutrients => {
-    return {"calories": calories, "protein": createValueAndUnit(protein), "fat": createValueAndUnit(fat), "carbs": createValueAndUnit(carbs)}
-  }
-
-  const createFoodItem = (calories: number, protein: number, fat: number, carbs: number): Food => {
-    return {
-      "id": "irrelevant",
-      "name": "irrelevant",
-      "brand": "irrelevant",
-      "quantity": createValueAndUnit(0),
-      "imageUrl": "irrelevant",
-      "mainNutrients": createMainNutrients(calories, protein, fat, carbs),
-      "secondaryNutrients": createSecondaryNutrients(),
-      "nutriscoreGrade": "irrelevant"
-    }
-  }
-
-  const foodArr: Food[] = [
-    createFoodItem(250, 15, 8.6, 12),
-    createFoodItem(463, 29, 12, 18),
-    createFoodItem(362, 26, 25, 19)
-  ]
-
   it("returns the sum of the main consumed nutrients based on each food item in the array", async () => {
     const expectedConsumedNutrients: ConsumedNutrients = {"calories": 1075, "protein": 70, "fat": 45.6, "carbs": 49}
 
@@ -182,7 +153,7 @@ describe("auxiliary functions (getConsumedNutrients)", () => {
   it("returns a ConsumedNutrients object with every nutrient with the value 0 if parameter is an empty array", async () => {
     const expectedConsumedNutrients: ConsumedNutrients = {"calories": 0, "protein": 0, "fat": 0, "carbs": 0}
 
-    expect(getConsumedNutrients([] as Food[])).toStrictEqual(expectedConsumedNutrients)
+    expect(getConsumedNutrients(emptyFoodArr)).toStrictEqual(expectedConsumedNutrients)
   })
 })
 
