@@ -64,7 +64,7 @@ export interface IExerciseServices {
 export interface IFoodServices {
   searchByName(query: string, page: number): Promise<Array<Food>>;
   searchByBarcode(barcode: number): Promise<Food>;
-  log(token: string, foodItem: Food):Promise<Food[]>;
+  log(token: string, foodItem: Food, date: string):Promise<Food[]>;
   delete(token: string, idx: number):Promise<Food[]>
   dailyConsumption(token: string, day: string): Promise<Food[]>;
 }

@@ -8,7 +8,7 @@ export const searchFoodByName = async (query: string, page: number) =>
 export const searchFoodByBarcode = async (barcode: string) =>
   customFetch(`${localhost}/api/food/search/barcode?barcode=${barcode}`);
 
-export const logFood = async (userToken: string | undefined, food: Food) => 
+export const logFood = async (userToken: string | undefined, food: Food, date: string) => 
   customFetch(`${localhost}/api/food/log`, {
     method: "POST",
     headers: {
@@ -16,7 +16,7 @@ export const logFood = async (userToken: string | undefined, food: Food) =>
       "Content-Type": "application/json",
       Authorization: `Bearer ${userToken}`,
     },
-    body: JSON.stringify(food),
+    body: JSON.stringify({food: food, date: date}),
   });
 
 

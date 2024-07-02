@@ -62,13 +62,13 @@ export class FoodServices implements IFoodServices {
 
   log = async (
     token: string,
-    foodItem: Food
+    foodItem: Food,
+    date: string
   ) => {
     return transactionHandler(async () => {
 
       const user: User | null = await this.userData.getUserByToken(token);
 
-      const date = getDate();
 
       if (!user) throw UnauthorizedError;
 

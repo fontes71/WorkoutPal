@@ -1,4 +1,5 @@
 import UNIT_VALUES from "@/assets/contants/unitValues"
+import getDate from "@/assets/functions/getDate";
 import { logFood } from "@/services/food";
 import { router, useLocalSearchParams } from "expo-router"
 
@@ -62,7 +63,8 @@ const getUpdatedFood = (food: Food, quantity: ValueAndUnit, mainNutrients: MainN
 
 export const onSave = async (token: string | undefined, food: Food, quantity: ValueAndUnit, mainNutrients: MainNutrients, secondaryNutrients: SecondaryNutrients) => {
   const updatedFood = getUpdatedFood(food, quantity, mainNutrients, secondaryNutrients)
-  await logFood(token, updatedFood);
+  const date = getDate()
+  await logFood(token, updatedFood, date);
   router.push(`/food/`);
 };
 
