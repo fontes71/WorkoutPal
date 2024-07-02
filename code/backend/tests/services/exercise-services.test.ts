@@ -15,7 +15,6 @@ import {
   mockWorkoutPlan,
 } from "./mockData/exercise.ts";
 import { ERROR_EXERCISE, ERROR_WORKOUTPLAN } from "../../utils/constants.ts";
-import { isValidDate } from "../../utils/functions/app/isValidDate.ts";
 
 jest.mock("mongoose", () => ({
   connect: jest.fn(),
