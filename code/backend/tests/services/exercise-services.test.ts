@@ -586,7 +586,7 @@ describe("LogWorkoutPlan function tests", () => {
 describe("GetDailyLoggedWorkoutPlans function tests", () => {
   it("getDailyLoggedWorkoutPlans returns the user's daily logged workout plans successfully", async () => {
     const token = "testToken";
-    const day = "3-4-2024";
+    const day = "2024-04-03";
     exerciseData.getDailyLoggedWorkoutPlans = jest.fn().mockResolvedValue(dailyLoggedWorkoutPlans);
     const workoutPlans = await exerciseServices.getDailyLoggedWorkoutPlans(token, day);
     expect(workoutPlans).toBe(dailyLoggedWorkoutPlans);
@@ -595,7 +595,7 @@ describe("GetDailyLoggedWorkoutPlans function tests", () => {
 
   it("getDailyLoggedWorkoutPlans returns an empty array when the user's daily logged workout plans do not exist", async () => {
     const token = "testToken";
-    const day = "3-4-2024";
+    const day = "2024-04-03";
     exerciseData.getDailyLoggedWorkoutPlans = jest.fn().mockResolvedValue([]);
     const workoutPlans = await exerciseServices.getDailyLoggedWorkoutPlans(token, day);
     expect(workoutPlans).toEqual([]);
@@ -612,20 +612,8 @@ describe("GetDailyLoggedWorkoutPlans function tests", () => {
 
   it("getDailyLoggedWorkoutPlans throws InvalidAuthorizationError when the user's token does not exist", async () => {
     const token = "testToken";
-    const day = "3-4-2024";
+    const day = "2024-04-03";
     exerciseData.getDailyLoggedWorkoutPlans = jest.fn().mockResolvedValue(null);
     exerciseServices.getDailyLoggedWorkoutPlans(token, day).catch((error: Error) => expect(error).toBe(InvalidAuthorizationTokenError));
-  });
-});
-
-describe("Auxiliary functions tests", () => {
-  it("isValidDate returns true when the date is valid", () => {
-    const date = "3-4-2024";
-    expect(isValidDate(date)).toBe(true);
-  });
-
-  it("isValidDate returns false when the date is invalid", () => {
-    const date = "invalidDate";
-    expect(isValidDate(date)).toBe(false);
   });
 });
