@@ -125,7 +125,7 @@ const WorkoutPlanDetailsScreen = () => {
                 {
                     text: "Yes",
                     onPress: async () => { 
-                        const response = await fetch(`${localhost}/api/exercises/workoutPLans/${workoutPlanName}/exercise/${exerciseId}`,
+                        const response = await fetch(`${localhost}/api/exercises/workoutPlans/${workoutPlanName}/exercise/${exerciseId}`,
                             {
                                 method: 'DELETE',
                                 headers: {

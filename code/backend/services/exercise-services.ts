@@ -4,7 +4,7 @@ import cron from "node-cron";
 import { IExerciseData, IExerciseServices } from "../domain/interfaces";
 import { ERROR_EXERCISE, ERROR_WORKOUTPLAN } from "../utils/constants";
 import { transactionHandler } from "../utils/functions/data";
-import { isValid, parse } from "date-fns";
+import isValidDate from "../utils/functions/app/isValidDate";
 
 // try catch need on services cuz sometimes data throws error and the app stop inside services
 export class ExerciseServices implements IExerciseServices {
@@ -120,6 +120,15 @@ export class ExerciseServices implements IExerciseServices {
     });
   }
 
+  removeWorkoutPlan = async (token: string, workoutPlanName: string) => {
+    return transactionHandler(async () => {
+      const workoutPlan: WorkoutPlan | null = await this.data.removeWorkoutPlan(token, workoutPlanName);
+      if (workoutPlan == null) throw InvalidAuthorizationTokenError;
+      if (workoutPlan == ERROR_WORKOUTPLAN) throw NotFoundError;
+      return workoutPlan;
+    });
+  }
+
   addExerciseToWorkoutPlan = async (token: string, workoutPlanName: string, exerciseId: string) => {
     return transactionHandler(async () => {
       const workoutPlan: WorkoutPlan | null = await this.data.addExerciseToWorkoutPlan(token, workoutPlanName, exerciseId);
@@ -149,8 +158,7 @@ export class ExerciseServices implements IExerciseServices {
 
   getDailyLoggedWorkoutPlans = async (token: string, day: string): Promise<Array<string>> => {
     return transactionHandler(async () => {
-      const date = parse(day, "yyyy-MM-dd", new Date());
-      if(!isValid(date)) {
+      if(!isValidDate(day)) {
         throw InvalidDateError;
       };
       const workoutPlans: string[] | null = await this.data.getDailyLoggedWorkoutPlans(token, day);
