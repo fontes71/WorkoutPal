@@ -5,7 +5,6 @@ import { apiErrorHandler, sendResponse } from "../utils/functions/api";
 import { ParamsDictionary } from "express-serve-static-core";
 import { ParsedQs } from "qs";
 import { StatusCode } from "../domain/api";
-import { send } from "process";
 
 export class ExerciseApi implements IExerciseApi {
   private service: IExerciseServices;

@@ -8,8 +8,7 @@ import { IExerciseData } from "../domain/interfaces";
 import {
   convertExerciseDBToExercise,
   fetchData,
-  mongodbHandler,
-  rewriteFileWithObject,
+  mongodbHandler
 } from "../utils/functions/data";
 import { ExerciseModel, UserModel } from "../mongoose/schemas";
 import { Exercise, ExerciseDB, User, WorkoutPlan } from "../domain/types";
