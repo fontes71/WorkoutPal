@@ -74,7 +74,6 @@ export interface SecondaryNutrients {
   salt: ValueAndUnit | null;
   sodium: ValueAndUnit | null;
   sugars: ValueAndUnit | null;
-
 }
 
 export interface Food {
