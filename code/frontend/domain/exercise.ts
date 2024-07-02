@@ -9,7 +9,7 @@ type Exercise = {
     instructions: Array<string>;
 }
 
-type  WorkoutPlan = {
+type WorkoutPlan = {
     name: string;
     description: string;
     exercises: Array<string>;
@@ -28,5 +28,10 @@ type ExerciseResponse = {
 type WorkoutPlanResponse = {
     message: string;
     obj: WorkoutPlan[];
+}
+
+type RemmoveWorkoutPlanResposne = {
+    message: string;
+    obj: WorkoutPlan;
 }
   

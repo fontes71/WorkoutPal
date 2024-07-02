@@ -1,7 +1,7 @@
 import { ExerciseData } from "../../data/exercise-data.ts";
 import { ExerciseServices } from "../../services/exercise-services.ts";
 import { ExerciseApi } from "../../api/exercise-api.ts";
-import { mockAddExerciseToWorkoutPlanRequest, mockCreateWorkoutPlanRequest, mockExercise, mockGetDailyLoggedWorkoutPlansRequest, mockGetUserWorkoutPlansRequest, mockLogWorkoutPlanRequest, mockRemoveExerciseFromWorkoutPlanRequest, mockResponseAddExerciseToWorkoutPlanBody, mockResponseCreateWorkoutPlanBody, mockResponseEmptySearchBody, mockResponseGetDailyLoggedWorkoutPlansBody, mockResponseGetUserWorkoutPlansBody, mockResponseLogWorkoutPlanBody, mockResponseRemoveExerciseFromWorkoutPlanBody, mockResponseSearchBody, mockResponseSearchByIdBody, mockSearchByBodyPartRequest, mockSearchByEquipmentRequest, mockSearchByIdRequest, mockSearchByNameAndFiltersRequest, mockSearchByNameRequest, mockSearchBySecondaryMuscleRequest, mockSearchByTargetRequest, mockWorkoutPlan } from "./mockData/exercise.ts";
+import { mockAddExerciseToWorkoutPlanRequest, mockCreateWorkoutPlanRequest, mockExercise, mockGetDailyLoggedWorkoutPlansRequest, mockGetExercisesFromWorkoutPlanRequest, mockGetUserWorkoutPlansRequest, mockLogWorkoutPlanRequest, mockRemoveExerciseFromWorkoutPlanRequest, mockRemoveWorkoutPlanRequest, mockResponseAddExerciseToWorkoutPlanBody, mockResponseCreateWorkoutPlanBody, mockResponseEmptySearchBody, mockResponseGetDailyLoggedWorkoutPlansBody, mockResponseGetExercisesFromWorkoutPlanBody, mockResponseGetUserWorkoutPlansBody, mockResponseLogWorkoutPlanBody, mockResponseRemoveExerciseFromWorkoutPlanBody, mockResponseRemoveWorkoutPlanBody, mockResponseSearchBody, mockResponseSearchByIdBody, mockSearchByBodyPartRequest, mockSearchByEquipmentRequest, mockSearchByIdRequest, mockSearchByNameAndFiltersRequest, mockSearchByNameRequest, mockSearchBySecondaryMuscleRequest, mockSearchByTargetRequest, mockWorkoutPlan } from "./mockData/exercise.ts";
 import { AlreadyExistsError, InvalidAuthorizationTokenError, InvalidParamsError, NotFoundError } from "../../errors/app_errors.ts";
 
 const exerciseData = new ExerciseData()
@@ -300,6 +300,43 @@ describe("Endpoint: /api/exercises/workoutPlans", () => {
 });
 
 describe("Endpoint: /api/exercises/workoutPlans/:workoutPlanName", () => {
+  it("DELETE -> Removes a WorkoutPlan successfully", async () => {
+    exerciseServices.removeWorkoutPlan = jest.fn().mockResolvedValue(mockWorkoutPlan);
+
+    await exerciseApi.removeWorkoutPlan(mockRemoveWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.removeWorkoutPlan).toHaveBeenCalledWith(
+      mockRemoveWorkoutPlanRequest.headers.authorization, 
+      mockRemoveWorkoutPlanRequest.params.workoutPlanName
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseRemoveWorkoutPlanBody);
+  });
+
+  it("DELETE -> Returns InvalidAuthorizationTokenError", async () => {
+    exerciseServices.removeWorkoutPlan = jest.fn().mockRejectedValue(InvalidAuthorizationTokenError);
+
+    await exerciseApi.removeWorkoutPlan(mockRemoveWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.removeWorkoutPlan).toHaveBeenCalledWith(
+      mockRemoveWorkoutPlanRequest.headers.authorization, 
+      mockRemoveWorkoutPlanRequest.params.workoutPlanName
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(400);
+  });
+
+  it("DELETE -> Returns NotFoundError", async () => {
+    exerciseServices.removeWorkoutPlan = jest.fn().mockRejectedValue(NotFoundError);
+
+    await exerciseApi.removeWorkoutPlan(mockRemoveWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.removeWorkoutPlan).toHaveBeenCalledWith(
+      mockRemoveWorkoutPlanRequest.headers.authorization, 
+      mockRemoveWorkoutPlanRequest.params.workoutPlanName
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(404);
+  });
+
   it("POST -> Adds an Exercise to a WorkoutPlan successfully", async () => {
     exerciseServices.addExerciseToWorkoutPlan = jest.fn().mockResolvedValue(mockWorkoutPlan);
 
@@ -455,5 +492,44 @@ describe("Endpoint: /api/exercises/workoutPlans/log/:day", () => {
 
     expect(exerciseServices.getDailyLoggedWorkoutPlans).not.toHaveBeenCalledWith();
     expect(mockResponse.status).toHaveBeenCalledWith(400);
+  });
+});
+
+describe("/api/exercises/workoutPlans/:workoutPlanName", () => {
+  it("GET -> Returns the Exercises from a WorkoutPlan successfully", async () => {
+    exerciseServices.getExercisesFromWorkoutPlan = jest.fn().mockResolvedValue([mockExercise]);
+
+    await exerciseApi.getExercisesFromWorkoutPlan(mockGetExercisesFromWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.getExercisesFromWorkoutPlan).toHaveBeenCalledWith(
+      mockGetExercisesFromWorkoutPlanRequest.headers.authorization, 
+      mockGetExercisesFromWorkoutPlanRequest.params.workoutPlanName
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith(mockResponseGetExercisesFromWorkoutPlanBody);
+  });
+
+  it("GET -> Returns InvalidAuthorizationTokenError", async () => {
+    exerciseServices.getExercisesFromWorkoutPlan = jest.fn().mockRejectedValue(InvalidAuthorizationTokenError);
+
+    await exerciseApi.getExercisesFromWorkoutPlan(mockGetExercisesFromWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.getExercisesFromWorkoutPlan).toHaveBeenCalledWith(
+      mockGetExercisesFromWorkoutPlanRequest.headers.authorization, 
+      mockGetExercisesFromWorkoutPlanRequest.params.workoutPlanName
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(400);
+  });
+
+  it("GET -> Returns NotFoundError", async () => {
+    exerciseServices.getExercisesFromWorkoutPlan = jest.fn().mockRejectedValue(NotFoundError);
+
+    await exerciseApi.getExercisesFromWorkoutPlan(mockGetExercisesFromWorkoutPlanRequest as any, mockResponse as any);
+
+    expect(exerciseServices.getExercisesFromWorkoutPlan).toHaveBeenCalledWith(
+      mockGetExercisesFromWorkoutPlanRequest.headers.authorization, 
+      mockGetExercisesFromWorkoutPlanRequest.params.workoutPlanName
+    );
+    expect(mockResponse.status).toHaveBeenCalledWith(404);
   });
 });

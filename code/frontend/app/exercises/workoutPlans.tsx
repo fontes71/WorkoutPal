@@ -1,4 +1,4 @@
-import { FlatList, Pressable, RefreshControl, TouchableOpacity  } from "react-native";
+import { Alert, FlatList, Pressable, RefreshControl, TouchableOpacity  } from "react-native";
 import { Text, View } from "react-native";
 import { Stack, router } from "expo-router";
 import { useState, useEffect, useContext } from "react";
@@ -6,8 +6,10 @@ import { localhost } from "@/constants";
 import search_exercises_styles from "@/assets/styles/exercises";
 import CreateWorkoutPlansModalScreen from "@/app/modals/createWorkoutPlan";
 import { UserContext } from "@/assets/components/auth/AuthContext";
-import { WorkoutPlanResult } from "@/assets/components/exercises/WorkoutPlanResult";
 import NoBottomCutView from "@/assets/components/views/NoBottomCutView";
+import workoutPlans_styles from "@/assets/styles/workoutPlans";
+import { BottomText } from "@/assets/components/exercises/bottomText";
+import { Button } from "@rneui/base";
 
 export default function WorkoutPlansScreen() {
     const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>([]);
@@ -78,6 +80,54 @@ export default function WorkoutPlansScreen() {
             pathname: `/exercises/workoutPlan-details/${workoutPlan.name}`,
             params: { workoutPlanJSON: JSON.stringify(workoutPlan) }
         });
+    }
+
+    const WorkoutPlanResult: React.FC<any> = ({ name, description }) => {
+        return (
+            <View style={workoutPlans_styles.workoutPlansResultContainer}>
+              <View style={workoutPlans_styles.workoutPlansResultTextContainer}>
+                <Text style={workoutPlans_styles.topText}>{name}</Text>
+                <BottomText str={'Description: ' + description} />
+                <Button color={"error"} onPress={() => {handleDeletePress(name, token)}} style={{marginTop:5}}>Delete</Button>
+              </View>
+            </View>
+        );
+    }
+
+    const handleDeletePress = async (workoutPlanName:string, token: string) => {
+        try {
+            Alert.alert("Delete Workout Plan", "Are you sure you want to delete this workout plan?", [
+                {
+                    text: "Yes",
+                    onPress: async () => { 
+                        const response = await fetch(`${localhost}/api/exercises/workoutPlans/${workoutPlanName}`,
+                            {
+                                method: 'DELETE',
+                                headers: {
+                                    'Authorization': `Bearer ${token}`,
+                                    'Content-Type': 'application/json',
+                                }
+                            }
+                        )
+                        
+                        if (response.status !== 200) {
+                            const errorMessage: RemmoveWorkoutPlanResposne = await response.json()
+                            alert(errorMessage.message);
+                            return;
+                        }
+                        
+                        workoutPlans.splice(workoutPlans.findIndex(workoutPlan => workoutPlan.name === workoutPlanName), 1);
+                        setWorkoutPlans([...workoutPlans]);
+                     },
+                },
+                {
+                    text: "No",
+                    onPress: () => { return },
+                },
+            ]);
+        } catch (error) {
+            console.error(`Error deleting workout plan ${workoutPlanName}:`, error);
+        }
     }
 
     return (

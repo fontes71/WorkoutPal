@@ -127,6 +127,15 @@ export class ExerciseApi implements IExerciseApi {
     });
   }
 
+  removeWorkoutPlan = async (req: Request, res: Response) => {
+      await apiErrorHandler(res, async () => {
+        const token = (req.headers.authorization as string).replace("Bearer ", "");
+        const workoutPlanName = req.params.workoutPlanName;
+        const workoutPlan = await this.service.removeWorkoutPlan(token, workoutPlanName);
+        sendResponse(res, StatusCode.Success, "Workout plan removed", workoutPlan);
+      });
+  }
+
   addExerciseToWorkoutPlan = async (req: Request, res: Response) => {
     await apiErrorHandler(res, async () => {
       const token = (req.headers.authorization as string).replace("Bearer ", "");

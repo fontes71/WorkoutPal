@@ -13,6 +13,7 @@ export interface IExerciseApi {
   searchExercisesByNameAndFilters(req: Request, res: Response): void;
   getUserWorkoutPlans(req: Request, res: Response): void;
   createWorkoutPlan(req: Request, res: Response): void;
+  removeWorkoutPlan(req: Request, res: Response): void;
   addExerciseToWorkoutPlan(req: Request, res: Response): void;
   removeExerciseFromWorkoutPlan(req: Request, res: Response): void;
   logWorkoutPlan(req: Request, res: Response): void;
@@ -53,6 +54,7 @@ export interface IExerciseServices {
   searchExercisesByNameAndFilters(name: string, bodyPart: string, equipment: string, target: string, skip: number, limit: number): Promise<Array<Exercise>>;
   getUserWorkoutPlans(token: string): Promise<Array<WorkoutPlan>>;
   createWorkoutPlan(token: string, workoutPlanName: string, description: string): Promise<WorkoutPlan>;
+  removeWorkoutPlan(token: string, workoutPlanName: string): Promise<WorkoutPlan>;
   addExerciseToWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan>;
   removeExerciseFromWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<WorkoutPlan>;
   logWorkoutPlan(token: string, workoutPlan: string): Promise<WorkoutPlan>;
@@ -91,6 +93,7 @@ export interface IExerciseData {
   searchExercisesByNameAndFilters(name: string, bodyPart: string, equipment: string, target: string, skip: number, limit: number): Promise<any>;
   getUserWorkoutPlans(token: string): Promise<any>;
   createWorkoutPlan(token: string, workoutPlanName: string, description: string): Promise<any>;
+  removeWorkoutPlan(token: string, workoutPlanName: string): Promise<any>;
   addExerciseToWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<any>;
   removeExerciseFromWorkoutPlan(token: string, workoutPlanName: string, exerciseId: string): Promise<any>;
   logWorkoutPlan(token: string, workoutPlan: string): Promise<any>;

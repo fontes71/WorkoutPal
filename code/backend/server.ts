@@ -70,6 +70,7 @@ app.get("/api/exercises/workoutPlans/log/:day", exerciseApi.getDailyLoggedWorkou
 app.post("/api/exercises/workoutPlans/log", exerciseApi.logWorkoutPlan);
 app.get("/api/exercises/workoutPlans", exerciseApi.getUserWorkoutPlans);
 app.post("/api/exercises/workoutPlans", exerciseApi.createWorkoutPlan);
+app.delete("/api/exercises/workoutPlans/:workoutPlanName", exerciseApi.removeWorkoutPlan);
 app.post("/api/exercises/workoutPlans/:workoutPlanName", exerciseApi.addExerciseToWorkoutPlan);
 app.delete("/api/exercises/workoutPlans/:workoutPlanName/exercise/:exerciseId", exerciseApi.removeExerciseFromWorkoutPlan);
 app.get("/api/exercises/workoutPlans/:workoutPlanName", exerciseApi.getExercisesFromWorkoutPlan);

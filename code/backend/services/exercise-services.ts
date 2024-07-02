@@ -121,6 +121,15 @@ export class ExerciseServices implements IExerciseServices {
     });
   }
 
+  removeWorkoutPlan = async (token: string, workoutPlanName: string) => {
+    return transactionHandler(async () => {
+      const workoutPlan: WorkoutPlan | null = await this.data.removeWorkoutPlan(token, workoutPlanName);
+      if (workoutPlan == null) throw InvalidAuthorizationTokenError;
+      if (workoutPlan == ERROR_WORKOUTPLAN) throw NotFoundError;
+      return workoutPlan;
+    });
+  }
+
   addExerciseToWorkoutPlan = async (token: string, workoutPlanName: string, exerciseId: string) => {
     return transactionHandler(async () => {
       const workoutPlan: WorkoutPlan | null = await this.data.addExerciseToWorkoutPlan(token, workoutPlanName, exerciseId);

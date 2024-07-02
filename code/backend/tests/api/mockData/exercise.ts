@@ -135,6 +135,20 @@ export const mockResponseCreateWorkoutPlanBody = {
     obj: mockWorkoutPlan
 }
 
+export const mockRemoveWorkoutPlanRequest = {
+    params: {
+        workoutPlanName: "IrrelevantName"
+    },
+    headers: {
+        authorization: mockToken,
+    }
+}
+
+export const mockResponseRemoveWorkoutPlanBody = {
+    message: "Workout plan removed",
+    obj: mockWorkoutPlan
+}
+
 export const mockAddExerciseToWorkoutPlanRequest = {
     params: {
         workoutPlanName: "IrrelevantName"
@@ -193,4 +207,18 @@ export const mockGetDailyLoggedWorkoutPlansRequest = {
 export const mockResponseGetDailyLoggedWorkoutPlansBody = {
     message: "Daily logged workout plans fetched successfully",
     obj: [mockWorkoutPlan]
+}
+
+export const mockGetExercisesFromWorkoutPlanRequest = {
+    params: {
+        workoutPlanName: "IrrelevantName"
+    },
+    headers: {
+        authorization: mockToken,
+    }
+}
+
+export const mockResponseGetExercisesFromWorkoutPlanBody = {
+    message: "Exercises fetched successfully",
+    obj: [mockExercise]
 }

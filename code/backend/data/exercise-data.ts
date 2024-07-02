@@ -120,6 +120,24 @@ export class ExerciseData implements IExerciseData {
     return newWorkoutPlan;
   }
 
+  async removeWorkoutPlan(token: string, workoutPlanName: string) {
+    const user: User | null = await UserModel.findOne({ token });
+    let workoutPlanResult: WorkoutPlan | null = ERROR_WORKOUTPLAN;
+
+    if (user === null) {
+      return null;
+    }
+
+    user.workout_plans.forEach((workoutPlan, index) => {
+      if (workoutPlan.name === workoutPlanName) {
+        workoutPlanResult = user.workout_plans.splice(index, 1)[0];
+      }
+    });
+
+    await UserModel.updateOne({ token }, user);
+    return workoutPlanResult;
+  }
+
   async addExerciseToWorkoutPlan(
     token: string,
     workoutPlanName: string,
