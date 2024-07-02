@@ -5,6 +5,7 @@ import { IExerciseData, IExerciseServices } from "../domain/interfaces";
 import { ERROR_EXERCISE, ERROR_WORKOUTPLAN } from "../utils/constants";
 import { isValidDate } from "../utils/functions/app/isValidDate";
 import { transactionHandler } from "../utils/functions/data";
+import { isValid, parse } from "date-fns";
 
 // try catch need on services cuz sometimes data throws error and the app stop inside services
 export class ExerciseServices implements IExerciseServices {
@@ -149,7 +150,8 @@ export class ExerciseServices implements IExerciseServices {
 
   getDailyLoggedWorkoutPlans = async (token: string, day: string): Promise<Array<string>> => {
     return transactionHandler(async () => {
-      if(!isValidDate(day)) {
+      const date = parse(day, "yyyy-MM-dd", new Date());
+      if(!isValid(date)) {
         throw InvalidParamsError;
       };
       const workoutPlans: string[] | null = await this.data.getDailyLoggedWorkoutPlans(token, day);
