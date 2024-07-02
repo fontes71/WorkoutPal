@@ -1,5 +1,15 @@
-import { LogButtonProps } from "../../main/logButton/types"
 
 export type DetailsProps = {
-    button: React.ComponentType<LogButtonProps>
+  user: User,
+  food: Food
+    hook: any
+  }
+
+  export enum FoodDetailsHookType {
+    Log = "Log",
+    Update = "Update"
+  }
+
+  export type ButtonProps = {
+    hook: () => void
   }

@@ -19,8 +19,19 @@ export const logFood = async (userToken: string | undefined, food: Food, date: s
     body: JSON.stringify({food: food, date: date}),
   });
 
+  export const updateLog = async (userToken: string | undefined, food: Food, date: string, logIndex: number) => 
+    customFetch(`${localhost}/api/food/updateLog`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userToken}`,
+      },
+      body: JSON.stringify({food: food, date: date, logIndex: logIndex}),
+    });
 
-export const deleteFood = async (userToken: string | undefined, index: number) =>  customFetch(`${localhost}/api/food/delete/${index}`, {
+
+export const deleteLog = async (userToken: string | undefined, logIndex: number, date: string) =>  customFetch(`${localhost}/api/food/deleteLog/${logIndex}?date=${date}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${userToken}`,
@@ -32,7 +43,7 @@ export const consumedFoodOfTheDay = async (
   userToken: string | undefined,
   date: string
 ) =>
-  customFetch(`${localhost}/api/food/dailyConsumption?query=${date}`, {
+  customFetch(`${localhost}/api/food/dailyConsumption/${date}`, {
     headers: {
       Authorization: `Bearer ${userToken}`,
     },

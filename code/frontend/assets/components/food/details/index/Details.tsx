@@ -2,16 +2,14 @@ import styles from "./styles";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useContext, useState } from "react";
 import { UserContext } from "@/assets/components/auth/AuthContext";
-import { Image, Pressable } from "react-native";
 import Overview from "@/assets/components/food/details/overview/Overview";
-import { getFood, onSave, resetIfQuantityValueWasZero, updateNutrients } from "./utils";
-import { DetailsProps } from "./types";
+import { resetIfQuantityValueWasZero, updateNutrients } from "./utils";
+import { ButtonProps, DetailsProps } from "./types";
+import { Image } from "react-native";
+import React from "react";
 
-const Details: React.FC<DetailsProps> = ({ button: Button }) => {
-  const { userContext } = useContext(UserContext);
-  const food = getFood();
-  if (!food) throw Error;
 
+const Details: React.FC<DetailsProps> = ({ user, food, hook }) => {
   const [quantity, setQuantity] = useState<ValueAndUnit>(food.quantity);
   const [mainNutrients, setMainNutrients] = useState<MainNutrients>(food.mainNutrients);
   const [secondaryNutrients, setSecondaryNutrients] = useState<SecondaryNutrients>(food.secondaryNutrients);
@@ -33,9 +31,21 @@ const Details: React.FC<DetailsProps> = ({ button: Button }) => {
         mainNutrients={mainNutrients}
         secondaryNutrients={secondaryNutrients}
       />
-      <Button token={userContext?.token} food={food} quantity={quantity} mainNutrients={mainNutrients} secondaryNutrients={secondaryNutrients} />
+      <Button hook={() => hook(user.token, food, quantity, mainNutrients, secondaryNutrients)}/>
     </View>
   );
 };
+
+
+
+const Button: React.FC<ButtonProps> = ({ hook }) => (
+  <TouchableOpacity onPress={hook}>
+  <Image
+    source={require("@/assets/images/save.png")}
+    style={{ marginRight: 0 }}
+  />
+</TouchableOpacity>
+
+)
 
 export default Details;

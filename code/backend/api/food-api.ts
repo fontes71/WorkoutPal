@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Exercise, Food } from "../domain/types";
 import { IFoodApi, IFoodData, IFoodServices } from "../domain/interfaces";
-import { InvalidDateError, InvalidParamsError } from "../errors/app_errors";
+import { InvalidDateError, InvalidLogIndexError, InvalidParamsError } from "../errors/app_errors";
 import { apiErrorHandler, getToken, sendResponse } from "../utils/functions/api";
 import { StatusCode } from "../domain/api";
 import { isValid } from "date-fns";
@@ -48,7 +48,6 @@ export class FoodApi implements IFoodApi {
 
       const foodItem: Food = req.body.food;
       const date: string = req.body.date;
-      console.log(date)
 
       if (!isValidDate(date))
         throw InvalidDateError
@@ -63,21 +62,59 @@ export class FoodApi implements IFoodApi {
     });
   };
 
-  
-  delete = async (req: Request, res: Response) => {
+  updateLog = async (req: Request, res: Response) => {
     await apiErrorHandler(res, async () => {
       const token = getToken(req);
 
-      const food = await this.service.delete(token, parseInt(req.params.itemIndex));
+      console.log("updating")
 
-      sendResponse(res, StatusCode.Success, "Food item deleted successfully", food)
+      const foodItem: Food = req.body.food;
+      const date: string = req.body.date;
+      const logIndex = parseInt(req.body.logIndex);
+
+      if (logIndex < 0)
+        throw InvalidLogIndexError
+
+
+      if (!isValidDate(date))
+        throw InvalidDateError
+
+      const food = await this.service.updateLog(
+        token,
+        foodItem,
+        date,
+        logIndex
+      );
+
+      sendResponse(res, StatusCode.Created, "Food item log updated successfully", food)
+    });
+  };
+
+  
+  deleteLog = async (req: Request, res: Response) => {
+    await apiErrorHandler(res, async () => {
+      const token = getToken(req);
+
+      
+      const { date } = req.query;
+      if (!date || typeof date != "string") throw InvalidParamsError;
+
+      if (!isValidDate(date))
+        throw InvalidDateError
+
+      const logIndex = parseInt(req.params.itemIndex)
+      if (logIndex < 0)
+        throw InvalidLogIndexError
+
+      const food = await this.service.deleteLog(token, logIndex, date);
+
+      sendResponse(res, StatusCode.Success, "Food item log deleted successfully", food)
     });
   };
 
   dailyConsumption = async (req: Request, res: Response) => {
     await apiErrorHandler(res, async () => {
       const token = getToken(req);
-      console.log(req.params)
 
       const { date } = req.params;
 

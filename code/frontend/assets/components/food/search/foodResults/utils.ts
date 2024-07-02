@@ -1,6 +1,7 @@
 import foodItemRoute from "@/assets/functions/foodItemRoute";
 import { searchFoodByName } from "@/services/food";
 import { router } from "expo-router";
+import { FoodDetailsHookType } from "../../details/index/types";
 
 export const addCommaIfNeeded = (noComma: boolean, str: string) =>
   noComma ? str : `${str}, `;
@@ -17,7 +18,7 @@ export const capitalizeWords = (str: string | null) => {
 };
 
 export const handleFoodPress = async (food: Food) => {
-  router.push(foodItemRoute(food));
+  router.push(foodItemRoute(food, FoodDetailsHookType.Log));
 };
 
 const newSearchOrAppend = (res: Food[], newResults: Food[], page: number) => page == 1 ? newResults : [...res, ...newResults]

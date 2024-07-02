@@ -5,6 +5,8 @@ import {
 } from "../domain/types";
 import {
   InvalidBarcodeError,
+  InvalidDateError,
+  InvalidLogIndexError,
   InvalidLoggedFoodIndexError,
   NoItemToDeleteError,
   UnauthorizedError,
@@ -72,56 +74,81 @@ export class FoodServices implements IFoodServices {
 
       if (!user) throw UnauthorizedError;
 
+      console.log("1")
+
       const dayIndex = user.days.findIndex((day) => day.date === date);
 
-      let consumedFoodRes: Food[] = [];
+ 
+
+      let loggedFoodRes: Food[] = [];
 
       if (dayIndex == -1) {
         user.days = [
           ...user.days,
-          { date: date, consumedFood: [foodItem], workoutPlansDone: [] },
+          { date: date, loggedFood: [foodItem], workoutPlansDone: [] },
         ];
-        consumedFoodRes = [foodItem]
+        loggedFoodRes = [foodItem]
       } else {
         const day = user.days[dayIndex];
         user.days[dayIndex] = {
           ...day,
-          consumedFood: [...day.consumedFood, foodItem],
+          loggedFood: [...day.loggedFood, foodItem],
         };
-        consumedFoodRes = user.days[dayIndex].consumedFood;
+        loggedFoodRes = user.days[dayIndex].loggedFood;
         
       }
-
+      console.log("2")
       await this.userData.updateUser(token, user);
-      return consumedFoodRes
+      return loggedFoodRes
     });
   };
 
-  delete = async (token: string, index: number) => {
+  updateLog = async (
+    token: string,
+    foodItem: Food,
+    date: string,
+    logIndex: number
+  ) => {
+    return transactionHandler(async () => {
+
+      const user: User | null = await this.userData.getUserByToken(token);
+      if (!user) throw UnauthorizedError;
+
+      const dayIndex = user.days.findIndex((day) => day.date === date);
+
+      if (dayIndex == -1)
+        throw InvalidDateError
+
+      user.days[dayIndex].loggedFood[logIndex] = foodItem;
+
+      await this.userData.updateUser(token, user);
+      return user.days[dayIndex].loggedFood
+    });
+  };
+
+  deleteLog = async (token: string, logIndex: number, date: string) => {
     return transactionHandler(async () => {
       const user: User | null = await this.userData.getUserByToken(token);
-
-      const date = getDate();
 
       if (!user) throw UnauthorizedError;
 
       const dayIndex = user.days.findIndex((day) => day.date === date);
 
-      if (dayIndex == -1 )
+      if (dayIndex == -1)
+        throw InvalidDateError;
+
+      const loggedFoodLength = user.days[dayIndex].loggedFood.length
+
+      if (loggedFoodLength == 0) 
         throw NoItemToDeleteError;
 
-      const consumedFoodLength = user.days[dayIndex].consumedFood.length
+      if (loggedFoodLength <= logIndex)
+        throw InvalidLogIndexError;
 
-      if (consumedFoodLength == 0) 
-        throw NoItemToDeleteError;
-
-      if (consumedFoodLength <= index || index < 0)
-        throw InvalidLoggedFoodIndexError;
-
-      user.days[dayIndex].consumedFood.splice(index, 1);
+      user.days[dayIndex].loggedFood.splice(logIndex, 1);
 
       await this.userData.updateUser(token, user);
-      return user.days[dayIndex].consumedFood
+      return user.days[dayIndex].loggedFood
     });
   };
 
@@ -135,7 +162,7 @@ export class FoodServices implements IFoodServices {
 
       if (!day) return [];
 
-      return day.consumedFood;
+      return day.loggedFood;
     });
   };
 }

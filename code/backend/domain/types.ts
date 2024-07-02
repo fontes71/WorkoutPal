@@ -89,12 +89,12 @@ export interface Food {
 
 export interface Day {
   date: string,
-  consumedFood: Food[],
+  loggedFood: Food[],
   workoutPlansDone: string[],
   weight?: number
 }
 
-export type ConsumedNutrients = {
+export type LoggedNutrients = {
   calories: number;
   protein: number;
   fat: number;
@@ -103,7 +103,7 @@ export type ConsumedNutrients = {
 
 export type DayStats = {
   date: string,
-  consumedNutrients: ConsumedNutrients,
+  loggedNutrients: LoggedNutrients,
   workoutPlansDone: number | null,
   weight: number | null
 }

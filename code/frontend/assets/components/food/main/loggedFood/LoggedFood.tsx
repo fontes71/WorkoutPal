@@ -15,7 +15,7 @@ const LoggedFood: React.FC<ConsumedFoodProps> = ({ food, setFood }) => {
     {food && (
       <View>
         {food.map((item, index) => (
-          <TouchableWithoutFeedback onPress={() => handlePress(item)} key={index} onLongPress={() => handleLongPress(userContext?.token, index, setFood)}> 
+          <TouchableWithoutFeedback onPress={() => handlePress(item, index)} key={index} onLongPress={() => handleLongPress(userContext?.token, index, setFood)}> 
             <Text>{item.name}</Text>
           </TouchableWithoutFeedback>
         ))}

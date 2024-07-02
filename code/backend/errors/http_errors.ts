@@ -21,7 +21,8 @@ const errorsMap: Record<string, HttpError> = {
   'InvalidAuthorizationTokenError': { code: 400, status: 'BAD_REQUEST', message: 'Authorization token needs to be bearer' },
   'NonExistentAuthorizationTokenError': { code: 400, status: 'BAD_REQUEST', message: 'No authorization token provided' },
   'UnauthorizedError': { code: 401, status: 'UNAUTHORIZED', message: 'Access denied' },
-  'InvalidDateError': { code: 400, status: 'BAD_REQUEST', message: 'Provided date is invalid' }
+  'InvalidDateError': { code: 400, status: 'BAD_REQUEST', message: 'Provided date is invalid' },
+  'InvalidLogIndexError': { code: 400, status: 'BAD_REQUEST', message: 'Provided log index is invalid' }
 }
 
 export function mapAppErrorToHttpError(error: Error): HttpError {

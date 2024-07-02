@@ -7,12 +7,12 @@ type FetchDaysResponse = {
 
 type DayStats = {
     date: string
-    consumedNutrients: ConsumedNutrients
+    loggedNutrients: LoggedNutrients
     workoutPlansDone: number
     weight: number
 }
 
-type ConsumedNutrients = {
+type LoggedNutrients = {
     calories: number,
     protein: number,
     fat: number,

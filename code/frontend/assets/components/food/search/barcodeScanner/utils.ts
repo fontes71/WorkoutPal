@@ -2,6 +2,7 @@ import { router } from "expo-router";
 import { searchFoodByBarcode } from "@/services/food";
 import foodItemRoute from "@/assets/functions/foodItemRoute";
 import { Camera } from "expo-camera";
+import { FoodDetailsHookType } from "../../details/index/types";
 
 export const handleBarCodeScanned = (
   hasCameraPermission: boolean | null,
@@ -14,7 +15,7 @@ export const handleBarCodeScanned = (
       const food: Food = await searchFoodByBarcode(data);
       if (food == null)
         return
-      router.push(foodItemRoute(food));
+      router.push(foodItemRoute(food, FoodDetailsHookType.Log));
     };
     fetchFoodResults();
   }

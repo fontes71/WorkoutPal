@@ -17,7 +17,7 @@ export class ProgressData implements IProgressData {
         if (dayIndex == -1) {
             user.days = [
                 ...user.days,
-                { date: day, consumedFood: [], workoutPlansDone: [], weight: newWeight }
+                { date: day, loggedFood: [], workoutPlansDone: [], weight: newWeight }
             ]
         } else {
             const d = user.days[dayIndex];

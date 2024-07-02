@@ -192,7 +192,7 @@ export class ExerciseData implements IExerciseData {
     if (dayIndex == -1) {
       user.days = [
         ...user.days,
-        { date: date, consumedFood: [], workoutPlansDone: [workoutPlanName] },
+        { date: date, loggedFood: [], workoutPlansDone: [workoutPlanName] },
       ];
     } else {
       const day = user.days[dayIndex];

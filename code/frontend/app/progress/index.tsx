@@ -55,7 +55,7 @@ export default function ProgressScreen() {
                             }
                             { isArrayValid(stats.calories) 
                                 ? <Chart title="Calories" days={stats.days} dataset={stats.calories} labels={monthLabels} suffix="cal"/>
-                                : <InvalidChart message="Add at least 1 consumed element to have access to nutrients related statistics"/>
+                                : <InvalidChart message="Add at least 1 logged element to have access to nutrients related statistics"/>
                             }
                         </NoBottomCutView>
                     </ScrollView>

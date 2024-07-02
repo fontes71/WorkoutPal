@@ -41,7 +41,7 @@ export const getStatsForMonth = (daysStats: DayStats[]): Stats => {
 
   daysStats.forEach((v) => {
     const idx = days.indexOf(v.date)
-    calories[idx] = v.consumedNutrients.calories
+    calories[idx] = v.loggedNutrients.calories
     workoutPlansDone[idx] = v.workoutPlansDone
     weights[idx] = v.weight
   })

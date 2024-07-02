@@ -1,13 +1,38 @@
 import UNIT_VALUES from "@/assets/contants/unitValues"
 import getDate from "@/assets/functions/getDate";
-import { logFood } from "@/services/food";
+import { logFood, updateLog } from "@/services/food";
 import { router, useLocalSearchParams } from "expo-router"
+import { FoodDetailsHookType } from "./types";
 
 export const getFood = () => {
   const { foodJSON } = useLocalSearchParams<{ foodJSON: string }>();
   if (!foodJSON) return null;
   return JSON.parse(foodJSON) as Food;
 };
+
+export const getHookType = () => {
+  const { hookType } = useLocalSearchParams<{ hookType: string }>();
+  if (!hookType) return null;
+  return hookType 
+} 
+
+export const logHook = async (token: string | undefined, food: Food, quantity: ValueAndUnit, mainNutrients: MainNutrients, secondaryNutrients: SecondaryNutrients) => {
+  const updatedFood = getUpdatedFood(food, quantity, mainNutrients, secondaryNutrients)
+  const date = getDate()
+  await logFood(token, updatedFood, date);
+  router.push(`/food/`);
+};
+
+
+export const updateHook = async (token: string | undefined, food: Food, quantity: ValueAndUnit, mainNutrients: MainNutrients, secondaryNutrients: SecondaryNutrients, logIndex: string) => {
+
+  const updatedFood = getUpdatedFood(food, quantity, mainNutrients, secondaryNutrients)
+  const date = getDate()
+
+  await updateLog(token, updatedFood, date, parseInt(logIndex));
+
+  router.push(`/food/`);
+}
 
 export const updateNutrients = (oldQuantity: ValueAndUnit, newQuantity: ValueAndUnit, setMainNutrients: React.Dispatch<React.SetStateAction<MainNutrients>>, setSecondaryNutrients: React.Dispatch<React.SetStateAction<SecondaryNutrients>>) => {
   const proportion = getProportion(oldQuantity, newQuantity)
@@ -60,14 +85,6 @@ const getUpdatedFood = (food: Food, quantity: ValueAndUnit, mainNutrients: MainN
     secondaryNutrients
   };
 }
-
-export const onSave = async (token: string | undefined, food: Food, quantity: ValueAndUnit, mainNutrients: MainNutrients, secondaryNutrients: SecondaryNutrients) => {
-  const updatedFood = getUpdatedFood(food, quantity, mainNutrients, secondaryNutrients)
-  const date = getDate()
-  await logFood(token, updatedFood, date);
-  router.push(`/food/`);
-};
-
 export const resetIfQuantityValueWasZero = (quantity: ValueAndUnit, baseQuantity: ValueAndUnit, baseMainNutrients: MainNutrients, baseSecondaryNutrients: SecondaryNutrients, setMainNutrients: React.Dispatch<React.SetStateAction<MainNutrients>>, setSecondaryNutrients: React.Dispatch<React.SetStateAction<SecondaryNutrients>>) => {
   if (quantity.value == 0) {
     setMainNutrients(baseMainNutrients);
