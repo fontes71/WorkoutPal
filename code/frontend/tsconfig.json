@@ -3,17 +3,16 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ],
+      "@/*": ["./*"],
       "@images/*": ["./assets/images/*"],
-      "@modals/*": ["./app/modals/*"]
+      "@modals/*": ["assets/components/modals/*"]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-, "app/(tabs)/food1/details/[id].tsx"  ]
+    "expo-env.d.ts",
+    "app/(tabs)/food1/details/[id].tsx"
+  ]
 }

@@ -22,7 +22,7 @@ export default function MainHeader({isMainScreen}: HeaderOptions) {
                 }
             </View>
             <View style={styles.menu_button_container}>
-                <TouchableOpacity style={styles.menu_button} onPress={() => router.push("modals/menu")}> 
+                <TouchableOpacity style={styles.menu_button} onPress={() => router.push("/menu/menu")}> 
                     <Image style={styles.menu_icon} source={require("@images/menu.png")}/>
                 </TouchableOpacity>
             </View>

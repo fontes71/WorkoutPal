@@ -5,7 +5,7 @@ import { localhost } from "@/constants";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { Text, View } from "react-native";
 import { SearchBar } from "@rneui/themed";
-import SearchExerciseFilters from "../modals/search-exercise-filters";
+import SearchExerciseFilters from "../../assets/components/modals/search-exercise-filters";
 import { FilterButton } from "@/assets/components/exercises/filterButton";
 import { ExerciseResult } from "@/assets/components/exercises/ExerciseResult";
 import { removeParenthesesFromExerciseNames } from "@/assets/components/exercises/removeParenthesesFromExerciseName";
@@ -17,10 +17,18 @@ const RESULTS_SIZE = 10;
 const RESULTS_OFFSET = 10;
 
 export default function SearchExerciseScreen() {
-  const [exerciseInfo, setExerciseInfo] = useState<ExerciseInfo>({ exerciseName: "", exercises: [] });
+  const [exerciseInfo, setExerciseInfo] = useState<ExerciseInfo>({
+    exerciseName: "",
+    exercises: [],
+  });
   const [isFetching, setIsFetching] = useState(true);
 
-  const [filtersInfo, setFiltersInfo] = useState<FiltersInfo>({ bodyPart: "", equipment: "", target: "", query: ""});
+  const [filtersInfo, setFiltersInfo] = useState<FiltersInfo>({
+    bodyPart: "",
+    equipment: "",
+    target: "",
+    query: "",
+  });
   const [filtersModalVisible, setFiltersModalVisible] = useState(false);
 
   const [page, setPage] = useState(RESULTS_SIZE);
@@ -32,17 +40,16 @@ export default function SearchExerciseScreen() {
         const response = await fetch(
           `${localhost}/api/exercises/name/${exerciseInfo.exerciseName}/filters?${filtersInfo.query.slice(1)}`
         );
-  
+
         if (response.status !== 200) {
           const errorMessage: ExerciseResponse = await response.json();
           alert(errorMessage.message);
           return;
         }
-  
+
         const exercises: ExerciseResponse = await response.json();
-        const modifiedExercises: Exercise[] = removeParenthesesFromExerciseNames(
-          exercises.obj
-        );
+        const modifiedExercises: Exercise[] =
+          removeParenthesesFromExerciseNames(exercises.obj);
         setExerciseInfo({ ...exerciseInfo, exercises: modifiedExercises });
       } catch (error) {
         console.error("handleEnter ERROR -> ", error);
@@ -66,7 +73,7 @@ export default function SearchExerciseScreen() {
   };
 
   useEffect(() => {
-    setPage(RESULTS_SIZE)
+    setPage(RESULTS_SIZE);
     if (flatListRef.current) {
       flatListRef.current.scrollToOffset({ animated: false, offset: 0 });
       if (exerciseInfo.exerciseName.length == 0) {
@@ -74,22 +81,31 @@ export default function SearchExerciseScreen() {
         setIsFetching(true);
       }
     }
-  }, [exerciseInfo.exerciseName])
- 
-  
+  }, [exerciseInfo.exerciseName]);
+
   useEffect(() => {
-    if ((exerciseInfo.exercises.length < 60 || page == RESULTS_SIZE) && exerciseInfo.exerciseName.length > 1) {
+    if (
+      (exerciseInfo.exercises.length < 60 || page == RESULTS_SIZE) &&
+      exerciseInfo.exerciseName.length > 1
+    ) {
       loadMoreResults();
-    }  
+    }
   }, [page]);
 
   const handlePageNum = () => {
     if (!isFetching) {
       setPage(page + RESULTS_OFFSET);
     }
-  }
+  };
 
-  const newSearchOrAppend = (res: ExerciseInfo, newResults: Exercise[], page: number) => page == 10 ? { ...res, exercises: newResults } : {...res, exercises: [...res.exercises, ...newResults] }
+  const newSearchOrAppend = (
+    res: ExerciseInfo,
+    newResults: Exercise[],
+    page: number
+  ) =>
+    page == 10
+      ? { ...res, exercises: newResults }
+      : { ...res, exercises: [...res.exercises, ...newResults] };
 
   const fetchResults = async (
     setResults: React.Dispatch<React.SetStateAction<ExerciseInfo>>,
@@ -119,20 +135,24 @@ export default function SearchExerciseScreen() {
       console.error("fetchResults ERROR -> ", error);
     }
   };
-  
+
   async function loadMoreResults() {
     setIsFetching(true);
     await fetchResults(setExerciseInfo, page);
     setIsFetching(false);
   }
 
-  const handleFilterQuery = (bodyPart: string, equipment: string, target: string) => {
+  const handleFilterQuery = (
+    bodyPart: string,
+    equipment: string,
+    target: string
+  ) => {
     let query = "";
-    if(bodyPart.length > 0) query += `&bodyPart=${bodyPart}`;
-    if(equipment.length > 0) query += `&equipment=${equipment}`;
-    if(target.length > 0) query += `&target=${target}`;
+    if (bodyPart.length > 0) query += `&bodyPart=${bodyPart}`;
+    if (equipment.length > 0) query += `&equipment=${equipment}`;
+    if (target.length > 0) query += `&target=${target}`;
     setFiltersInfo({ bodyPart, equipment, target, query });
-  }
+  };
 
   const countFilters = () => {
     let count = 0;
@@ -144,47 +164,58 @@ export default function SearchExerciseScreen() {
 
   return (
     <NoBottomCutView marginBottom={20}>
-        <View style={{flex: 1}}>
-          <Stack.Screen options={{ title: "Search exercise" }} />
-          <SearchBar
-            placeholder="Type Here..."
-            onSubmitEditing={handleEnter}
-            returnKeyType="search"
-            onChangeText={updateExerciseName}
-            value={exerciseInfo.exerciseName}
-          />
-          <View style={search_exercises_styles.exerciseResultContainer}>
-            {exerciseInfo.exercises.length == 0 && !isFetching  ? (
-              <Text>No results were found</Text>
-            ) :
-            (
-              <FlatList
-                ref={flatListRef}
-                data={exerciseInfo.exercises}
-                renderItem={({ item }) => (
-                  <Pressable
-                    onPress={() => {
-                      handleExercisePress(item);
-                    }}
-                  >
-                    <ExerciseResult {...item} />
-                  </Pressable>
-                )}
-                keyExtractor={(item: Exercise) => item._id}
-                onEndReached={handlePageNum}
-                onEndReachedThreshold={0.4}
-                contentContainerStyle={{ paddingBottom: 40 }}
-              /> 
-            )}
-          </View>
-        </View>
-        <FilterButton count={countFilters()} onPress={() => { setFiltersModalVisible(true) }} />
-        <SearchExerciseFilters 
-          isVisible={filtersModalVisible} 
-          onClose={() => { setFiltersModalVisible(false); handleFilterQuery(filtersInfo.bodyPart, filtersInfo.equipment, filtersInfo.target)}} 
-          filters={filtersInfo}
-          setFilters={setFiltersInfo} 
+      <View style={{ flex: 1 }}>
+        <Stack.Screen options={{ title: "Search exercise" }} />
+        <SearchBar
+          placeholder="Type Here..."
+          onSubmitEditing={handleEnter}
+          returnKeyType="search"
+          onChangeText={updateExerciseName}
+          value={exerciseInfo.exerciseName}
         />
+        <View style={search_exercises_styles.exerciseResultContainer}>
+          {exerciseInfo.exercises.length == 0 && !isFetching ? (
+            <Text>No results were found</Text>
+          ) : (
+            <FlatList
+              ref={flatListRef}
+              data={exerciseInfo.exercises}
+              renderItem={({ item }) => (
+                <Pressable
+                  onPress={() => {
+                    handleExercisePress(item);
+                  }}
+                >
+                  <ExerciseResult {...item} />
+                </Pressable>
+              )}
+              keyExtractor={(item: Exercise) => item._id}
+              onEndReached={handlePageNum}
+              onEndReachedThreshold={0.4}
+              contentContainerStyle={{ paddingBottom: 40 }}
+            />
+          )}
+        </View>
+      </View>
+      <FilterButton
+        count={countFilters()}
+        onPress={() => {
+          setFiltersModalVisible(true);
+        }}
+      />
+      <SearchExerciseFilters
+        isVisible={filtersModalVisible}
+        onClose={() => {
+          setFiltersModalVisible(false);
+          handleFilterQuery(
+            filtersInfo.bodyPart,
+            filtersInfo.equipment,
+            filtersInfo.target
+          );
+        }}
+        filters={filtersInfo}
+        setFilters={setFiltersInfo}
+      />
     </NoBottomCutView>
   );
 }
