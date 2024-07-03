@@ -49,6 +49,8 @@ export class FoodApi implements IFoodApi {
       const foodItem: Food = req.body.food;
       const date: string = req.body.date;
 
+      if (!date || typeof date != "string") throw InvalidParamsError;
+
       if (!isValidDate(date))
         throw InvalidDateError
 
@@ -65,8 +67,6 @@ export class FoodApi implements IFoodApi {
   updateLog = async (req: Request, res: Response) => {
     await apiErrorHandler(res, async () => {
       const token = getToken(req);
-
-      console.log("updating")
 
       const foodItem: Food = req.body.food;
       const date: string = req.body.date;
@@ -117,6 +117,8 @@ export class FoodApi implements IFoodApi {
       const token = getToken(req);
 
       const { date } = req.params;
+
+      if (!date || typeof date != "string") throw InvalidParamsError;
 
       if (!isValidDate(date))
         throw InvalidDateError

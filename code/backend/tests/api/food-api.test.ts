@@ -2,9 +2,8 @@ import { FoodServices } from "../../services/food-services.ts";
 import { FoodApi } from "../../api/food-api.ts";
 import { FoodData } from "../../data/food-data.ts";
 import { UserData } from "../../data/user-data.ts";
-import {  mock_services_return_value, mock_request_with_query, mock_request_without_query, mock_request_with_query_thats_not_a_string, mock_request_with_barcode_query, parsed_barcode, mock_request_with_body, mock_token, mock_request_with_params, item_index, food_item } from "./mockData/food.ts";
+import {  mock_services_return_value, mock_request_with_params, mock_request_without_query, mock_request_with_query_thats_not_a_string, mock_request_with_barcode_query, parsed_barcode, mock_request_with_body, mock_token, mock_request_with_query_and_params, item_index, food, date, mock_request_with_query, mock_request_without_params, mock_request_with_params_thats_not_a_string, mock_request_with_body_with_invalid_date, mock_request_with_query_and_params_with_invalid_date, mock_request_with_params_with_invalid_date } from "./mockData/food.ts";
 import { UnauthorizedError } from "../../errors/app_errors.ts";
-import { consumed_food_of_the_day } from "../services/mockData/food.ts";
 
 const foodData = new FoodData()
 const userData = new UserData()
@@ -118,105 +117,124 @@ describe("/api/food/search/barcode", () => {
 
 })
 
-describe("/api/food/consume", () => {
-  it('item is consumed successfully', async () => {
-    foodServices.consume = jest.fn()
+describe("/api/food/log", () => {
+  it('item is logged successfully', async () => {
+    foodServices.log = jest.fn()
 
-    await foodApi.consume(mock_request_with_body as any, mockResponse as any);
+    await foodApi.log(mock_request_with_body as any, mockResponse as any);
 
   
 
-    expect(foodServices.consume).toHaveBeenCalledWith(mock_token, food_item)
+    expect(foodServices.log).toHaveBeenCalledWith(mock_token, food, date)
 
     expect(mockResponse.status).toHaveBeenCalledWith(201)
-    expect(mockResponse.json).toHaveBeenCalledWith({message: "Food item consumed successfully"})
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Food item logged successfully"})
     
   })
 
   it('user token is not associated with a valid user', async () => {
-    foodServices.consume = jest.fn().mockRejectedValue(UnauthorizedError)
+    foodServices.log = jest.fn().mockRejectedValue(UnauthorizedError)
 
-    await foodApi.consume(mock_request_with_body as any, mockResponse as any);
+    await foodApi.log(mock_request_with_body as any, mockResponse as any);
 
     expect(mockResponse.status).toHaveBeenCalledWith(401)
     expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: Access denied", obj: {}})
   })
 
-  it('returns consumed food of the day successfully', async () => {
-    foodServices.consume = jest.fn().mockResolvedValue(Promise.resolve(consumed_food_of_the_day))
+  it('returns logged food of the day successfully', async () => {
+    foodServices.log = jest.fn().mockResolvedValue(Promise.resolve(food))
 
-    await foodApi.consume(mock_request_with_body as any, mockResponse as any);
-
+    await foodApi.log(mock_request_with_body as any, mockResponse as any);
 
 
     expect(mockResponse.status).toHaveBeenCalledWith(201)
-    expect(mockResponse.json).toHaveBeenCalledWith({message: "Food item consumed successfully", obj: consumed_food_of_the_day})
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Food item logged successfully", obj: food})
   })
+
+  it('date is invalid', async () => {
+    foodServices.log = jest.fn().mockRejectedValue(UnauthorizedError)
+
+    await foodApi.log(mock_request_with_body_with_invalid_date as any, mockResponse as any);
+
+    expect(mockResponse.status).toHaveBeenCalledWith(400)
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: Provided date is invalid", obj: {}})
+  })
+    
 })
 
 
-describe("/api/food/delete", () => {
+describe("/api/food/deleteLog", () => {
   it('item is deleted successfully', async () => {
-    foodServices.delete = jest.fn()
+    foodServices.deleteLog = jest.fn()
 
-    const returnObj = await foodApi.delete(mock_request_with_params as any, mockResponse as any);
+    const returnObj = await foodApi.deleteLog(mock_request_with_query_and_params as any, mockResponse as any);
 
-    expect(foodServices.delete).toHaveBeenCalledWith(mock_token, item_index)
+    expect(foodServices.deleteLog).toHaveBeenCalledWith(mock_token, item_index, date)
 
     expect(mockResponse.status).toHaveBeenCalledWith(200)
-    expect(mockResponse.json).toHaveBeenCalledWith({message: "Food item deleted successfully", obj: returnObj})
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Food item log deleted successfully", obj: returnObj})
     
   })
 
   it('user token is not associated with a valid user', async () => {
-    foodServices.delete = jest.fn().mockRejectedValue(UnauthorizedError)
+    foodServices.deleteLog = jest.fn().mockRejectedValue(UnauthorizedError)
 
-    await foodApi.delete(mock_request_with_params as any, mockResponse as any);
+    await foodApi.deleteLog(mock_request_with_query_and_params as any, mockResponse as any);
 
     expect(mockResponse.status).toHaveBeenCalledWith(401)
     expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: Access denied", obj: {}})
   })
+
+  it('date is invalid', async () => {
+    foodServices.deleteLog = jest.fn().mockRejectedValue(UnauthorizedError)
+
+    await foodApi.deleteLog(mock_request_with_query_and_params_with_invalid_date as any, mockResponse as any);
+
+    expect(mockResponse.status).toHaveBeenCalledWith(400)
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: Provided date is invalid", obj: {}})
+  })
+ 
 })
 
 describe("/api/food/dailyConsumption", () => {
   it('daily consumption is returned successfully', async () => {
     foodServices.dailyConsumption = jest.fn().mockResolvedValue(Promise.resolve(mock_services_return_value))
 
-    await foodApi.dailyConsumption(mock_request_with_query as any, mockResponse as any);
+    await foodApi.dailyConsumption(mock_request_with_params as any, mockResponse as any);
 
-    expect(foodServices.dailyConsumption).toHaveBeenCalledWith(mock_token, mock_request_with_query.query.query)
+    expect(foodServices.dailyConsumption).toHaveBeenCalledWith(mock_token, date)
 
     expect(mockResponse.status).toHaveBeenCalledWith(200)
     expect(mockResponse.json).toHaveBeenCalledWith({message: "Daily consumption fetch successful", obj: mock_services_return_value} )
   })
 
-  
+
   it('returns no items successfully', async () => {
     foodServices.dailyConsumption = jest.fn().mockResolvedValue(Promise.resolve([]))
 
-    await foodApi.dailyConsumption(mock_request_with_query as any, mockResponse as any);
+    await foodApi.dailyConsumption(mock_request_with_params as any, mockResponse as any);
 
-    expect(foodServices.dailyConsumption).toHaveBeenCalledWith(mock_token, mock_request_with_query.query.query)
+    expect(foodServices.dailyConsumption).toHaveBeenCalledWith(mock_token, date)
 
     expect(mockResponse.status).toHaveBeenCalledWith(200)
     expect(mockResponse.json).toHaveBeenCalledWith({message: "Daily consumption fetch successful", obj: []})
   })
 
   
-  it('returns an error when no query value is given', async () => {
+  it('returns an error when no date is given', async () => {
     foodServices.dailyConsumption = jest.fn().mockResolvedValue(Promise.resolve([]))
 
-    await foodApi.dailyConsumption(mock_request_without_query as any, mockResponse as any);
+    await foodApi.dailyConsumption(mock_request_without_params as any, mockResponse as any);
 
     expect(mockResponse.status).toHaveBeenCalledWith(400)
 
     expect(foodServices.dailyConsumption).not.toHaveBeenCalled()
   })
 
-  it('returns an error when the query value given is not a string', async () => {
+  it('returns an error when the params value given is not a string', async () => {
     foodServices.dailyConsumption = jest.fn().mockResolvedValue(Promise.resolve([]))
 
-    await foodApi.dailyConsumption(mock_request_with_query_thats_not_a_string as any, mockResponse as any);
+    await foodApi.dailyConsumption(mock_request_with_params_thats_not_a_string as any, mockResponse as any);
 
     expect(mockResponse.status).toHaveBeenCalledWith(400)
 
@@ -226,9 +244,18 @@ describe("/api/food/dailyConsumption", () => {
   it('user token is not associated with a valid user', async () => {
     foodServices.dailyConsumption = jest.fn().mockRejectedValue(UnauthorizedError)
 
-    await foodApi.dailyConsumption(mock_request_with_query as any, mockResponse as any);
+    await foodApi.dailyConsumption(mock_request_with_params as any, mockResponse as any);
 
     expect(mockResponse.status).toHaveBeenCalledWith(401)
     expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: Access denied", obj: {}})
+  })
+
+  it('date is invalid', async () => {
+    foodServices.dailyConsumption = jest.fn().mockRejectedValue(UnauthorizedError)
+
+    await foodApi.dailyConsumption(mock_request_with_params_with_invalid_date as any, mockResponse as any);
+
+    expect(mockResponse.status).toHaveBeenCalledWith(400)
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: Provided date is invalid", obj: {}})
   })
 })

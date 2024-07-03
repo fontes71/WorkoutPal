@@ -68,17 +68,12 @@ export class FoodServices implements IFoodServices {
     date: string
   ) => {
     return transactionHandler(async () => {
-
       const user: User | null = await this.userData.getUserByToken(token);
-
 
       if (!user) throw UnauthorizedError;
 
-      console.log("1")
-
       const dayIndex = user.days.findIndex((day) => day.date === date);
 
- 
 
       let loggedFoodRes: Food[] = [];
 
@@ -97,7 +92,7 @@ export class FoodServices implements IFoodServices {
         loggedFoodRes = user.days[dayIndex].loggedFood;
         
       }
-      console.log("2")
+      
       await this.userData.updateUser(token, user);
       return loggedFoodRes
     });

@@ -39,12 +39,14 @@ const Details: React.FC<DetailsProps> = ({ user, food, hook }) => {
 
 
 const Button: React.FC<ButtonProps> = ({ hook }) => (
-  <TouchableOpacity onPress={hook}>
+  <View style={styles.buttonWrapper}>
+  <TouchableOpacity style={styles.button} onPress={hook}>
   <Image
     source={require("@/assets/images/save.png")}
     style={{ marginRight: 0 }}
   />
 </TouchableOpacity>
+</View>
 
 )
 

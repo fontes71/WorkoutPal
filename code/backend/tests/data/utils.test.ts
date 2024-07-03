@@ -6,7 +6,7 @@ describe("getSearchByNameApiUrl", () => {
   it("returns successfully", async () => {
     const url = getSearchByNameApiUrl("something", 0, 0);
     expect(url).toBe(
-      "https://world.openfoodfacts.org/cgi/search.pl?search_terms=something&fields=id,product_name,product_name_en,image_front_url,quantity,product_quantity,product_quantity_unit,brands_tags,nutriscore_grade,nutriments&page=0&page_size=0&json=1"
+      "https://world.openfoodfacts.org/cgi/search.pl?search_terms=something&fields=id,product_name,product_name_en,image_front_url,product_quantity,product_quantity_unit,brands_tags,nutriscore_grade,nutriments&page=0&page_size=0&json=1"
     );
   });
 });

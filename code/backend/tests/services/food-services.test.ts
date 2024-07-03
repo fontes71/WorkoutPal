@@ -4,21 +4,16 @@ import { UserData } from "../../data/user-data.ts";
 import {
   api_food,
   api_food_no_name,
-  api_food_no_quantity_unit,
-  api_food_quantity_on_name,
-  consumed_food_of_the_day,
   food,
   user,
-  date,
-  user_with_new_consumed_food_on_new_date,
-  date_that_user_has_consumed_food,
-  user_with_new_consumed_food_on_a_certain_date,
-  consumed_food_of_the_day_with_the_added_one,
+  user_with_new_logged_food_on_new_date,
+  date_that_user_has_logged_food,
+  user_with_new_logged_food_on_a_certain_date,
   user_with_no_nutrition_data,
   api_food__with_just_the_eng_name,
+  food2,
 } from "./mockData/food.ts";
 import { apiFoodToFood } from "../../utils/functions/app/apiFoodToFood.ts";
-import { NotFoundError } from "../../errors/app_errors.ts";
 import * as getDateModule from "../../utils/functions/app/getDate.ts";
 
 let foodServices: FoodServices;
@@ -110,10 +105,10 @@ describe("dailyConsumption", () => {
 
     const resFood = await foodServices.dailyConsumption(
       user.token,
-      "17-4-2024"
+      date_that_user_has_logged_food
     );
 
-    expect(resFood).toEqual(consumed_food_of_the_day);
+    expect(resFood).toEqual([food]);
   });
 
   it("throws unauthorized exception if no user was found", async () => {
@@ -134,44 +129,47 @@ describe("dailyConsumption", () => {
   });
 });
 
-describe("consume", () => {
+describe("log", () => {
   beforeEach(() => {
     jest.clearAllMocks()
     userMock = {...user }
   })
-  it("updates the user with a new consumed food as the first of the day", async () => {
+  it("updates the user with a new logged food as the first of the day", async () => {
     userData.getUserByToken = jest.fn().mockResolvedValue(userNoNutriDataMock);
     userData.updateUser = jest.fn();
-    jest.spyOn(getDateModule, "default").mockReturnValue(date);
+    
 
-    await foodServices.consume(
+    const returnValue = await foodServices.log(
       user.token,
-      food
+      food,
+      date_that_user_has_logged_food
     );
 
     expect(userData.updateUser).toHaveBeenCalledWith(
       user.token,
-      user_with_new_consumed_food_on_new_date
+      user_with_new_logged_food_on_new_date
     );
+
+    expect(returnValue).toEqual([food]);
   });
 
-  it("updates the user with a new consumed food on a day when they had already consumed food", async () => {
+  it("updates the user with a new logged food on a day when they had already logged food", async () => {
     userData.getUserByToken = jest.fn().mockResolvedValue(userMock);
     userData.updateUser = jest.fn();
-    jest.spyOn(getDateModule, "default").mockReturnValue(date_that_user_has_consumed_food);
 
-    const returnValue = await foodServices.consume(
+    const returnValue = await foodServices.log(
       user.token,
-      food
+      food2,
+      date_that_user_has_logged_food
     ); 
     
 
     expect(userData.updateUser).toHaveBeenCalledWith(
       user.token,
-      user_with_new_consumed_food_on_a_certain_date
+      user_with_new_logged_food_on_a_certain_date
     );
 
-    expect(returnValue).toEqual(consumed_food_of_the_day_with_the_added_one);
+    expect(returnValue).toEqual([ food, food2]);
   });
 
   it("throws unauthorized if no user with the token passed is found", async () => {
@@ -180,26 +178,13 @@ describe("consume", () => {
 
 
     expect(async () => {
-      await foodServices.consume(
+      await foodServices.log(
         user.token,
-        food
+        food,
+        date_that_user_has_logged_food
       ); 
     }).rejects.toThrow("Unauthorized");
   });
-
-  it("returns correctly when it's the first item of the day", async () => {
-    userData.getUserByToken = jest.fn().mockResolvedValue(userMock);
-    userData.updateUser = jest.fn();
-    jest.spyOn(getDateModule, "default").mockReturnValue(date);
-
-    const returnValue = await foodServices.consume(
-      user.token,
-      food
-    ); 
-    
-    expect(returnValue).toEqual([food]);
-  });
-
 });
 
 describe("delete", () => {
@@ -210,11 +195,11 @@ describe("delete", () => {
   it("calls data function successfully ", async () => {
     userData.getUserByToken = jest.fn().mockResolvedValue(userMock);
     userData.updateUser = jest.fn();
-    jest.spyOn(getDateModule, "default").mockReturnValue(date_that_user_has_consumed_food);
 
-    await foodServices.delete(
+    await foodServices.deleteLog(
       user.token,
-      0
+      0,
+      date_that_user_has_logged_food
     );
 
     expect(userData.updateUser).toHaveBeenCalled();
@@ -227,79 +212,51 @@ describe("delete", () => {
 
 
     expect(async () => {
-      await foodServices.delete(
+      await foodServices.deleteLog(
         user.token,
-      0
+      0,
+      date_that_user_has_logged_food
       ); 
-    }).rejects.toThrow("Unauthorized");
+    }).rejects.toThrow("UnauthorizedError");
   });
 
-  it("no item to delete", async () => {
-    userData.getUserByToken = jest.fn().mockResolvedValue(userMock);
-    userData.updateUser = jest.fn();
-    jest.spyOn(getDateModule, "default").mockReturnValue(date);
-
-    expect(async () => {
-      await foodServices.delete(
-        user.token,
-      0
-      ); 
-    }).rejects.toThrow("NoItemToDelete");
-
-  });
-
-  it("invalid index because it is negative", async () => {
-    userData.getUserByToken = jest.fn().mockResolvedValue(userMock);
-    userData.updateUser = jest.fn();
-    jest.spyOn(getDateModule, "default").mockReturnValue(date_that_user_has_consumed_food);
-
-    expect(async () => {
-      await foodServices.delete(
-        user.token,
-      -1
-      ); 
-    }).rejects.toThrow("InvalidConsumedFoodIndex");
-
-  });
 
   it("invalid index because there's no item with given index", async () => {
     userData.getUserByToken = jest.fn().mockResolvedValue(userMock);
     userData.updateUser = jest.fn();
-    jest.spyOn(getDateModule, "default").mockReturnValue(date_that_user_has_consumed_food);
 
     expect(async () => {
-      await foodServices.delete(
+      await foodServices.deleteLog(
         user.token,
-      20
+      20,
+      date_that_user_has_logged_food
       ); 
-    }).rejects.toThrow("InvalidConsumedFoodIndex");
+    }).rejects.toThrow("InvalidLogIndexError");
 
   });
+  
 })
 
+
 describe("auxiliar functions", () => {
-  it("mapFood returns correct value", () => {
+  it("apiFoodToFood returns correct value", () => {
     const resFood = apiFoodToFood(api_food);
     expect(resFood).toEqual(food);
   });
 
-  it("mapFood returns item with its english name if the original is not available", () => {
+  it("apiFoodToFood returns item with its english name if the original is not available", () => {
     const resFood = apiFoodToFood(api_food__with_just_the_eng_name);
     expect(resFood).toEqual(food);
   });
 
 
-  it("mapFood returns item with g as the unit if no unit is provided", () => {
-    const resFood = apiFoodToFood(api_food_no_quantity_unit);
-    expect(resFood).toEqual(food);
-  });
 
   it("getDate returns the correct string", () => {
-    const mockDate = new Date(2024, 4, 25); 
+    const mockDate = new Date(2024, 3, 25); 
     global.Date = jest.fn(() => mockDate) as any;
 
     const date = getDateModule.getDate();
-    expect(date).toBe('25-5-2024');
+    expect(date).toBe('2024-04-25');
   });
 });
 
