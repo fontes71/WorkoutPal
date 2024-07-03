@@ -2,6 +2,8 @@ export const mock_token = 'mockToken'
 
 export const date = "2024-05-05"
 
+export const log_index = 1
+
 export const mock_services_return_value = {
   value: "notImportantToTheTest",
 };
@@ -105,7 +107,14 @@ export const food = {
     }
 
 export const mock_request_with_body = {
-  body: {food: food, date: date},
+  body: {food: food, date: date, logIndex: log_index},
+  headers: {
+    authorization: `Bearer ${mock_token}`,
+  }
+};
+
+export const mock_request_with_body_with_negative_log_index = {
+  body: {food: food, date: date, logIndex: -1},
   headers: {
     authorization: `Bearer ${mock_token}`,
   }
@@ -118,7 +127,8 @@ export const mock_request_with_body_with_invalid_date = {
   }
 };
 
-export const item_index = 1234
+
+
 
 export const mock_request_with_query_and_params = {
   query: {
@@ -128,7 +138,7 @@ export const mock_request_with_query_and_params = {
     authorization: `Bearer ${mock_token}`,
   },
   params: {
-    itemIndex: "1234",
+    logIndex: "1",
   },
 } 
 export const mock_request_with_query_and_params_with_invalid_date = {
@@ -139,7 +149,7 @@ export const mock_request_with_query_and_params_with_invalid_date = {
     authorization: `Bearer ${mock_token}`,
   },
   params: {
-    itemIndex: "1234",
+    logIndex: "1",
   },
 } 
 

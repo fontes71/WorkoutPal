@@ -1,4 +1,5 @@
 export const date_that_user_has_logged_food = "14-5-2024"
+export const date_that_user_hasnt_logged_food = "14-10-2020"
 
 export const api_food = {
   brands_tags: ["la-boulangere"],

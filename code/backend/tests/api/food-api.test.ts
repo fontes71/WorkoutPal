@@ -2,7 +2,7 @@ import { FoodServices } from "../../services/food-services.ts";
 import { FoodApi } from "../../api/food-api.ts";
 import { FoodData } from "../../data/food-data.ts";
 import { UserData } from "../../data/user-data.ts";
-import {  mock_services_return_value, mock_request_with_params, mock_request_without_query, mock_request_with_query_thats_not_a_string, mock_request_with_barcode_query, parsed_barcode, mock_request_with_body, mock_token, mock_request_with_query_and_params, item_index, food, date, mock_request_with_query, mock_request_without_params, mock_request_with_params_thats_not_a_string, mock_request_with_body_with_invalid_date, mock_request_with_query_and_params_with_invalid_date, mock_request_with_params_with_invalid_date } from "./mockData/food.ts";
+import {  mock_services_return_value, mock_request_with_params, mock_request_without_query, mock_request_with_query_thats_not_a_string, mock_request_with_barcode_query, parsed_barcode, mock_request_with_body, mock_token, mock_request_with_query_and_params, log_index, food, date, mock_request_with_query, mock_request_without_params, mock_request_with_params_thats_not_a_string, mock_request_with_body_with_invalid_date, mock_request_with_query_and_params_with_invalid_date, mock_request_with_params_with_invalid_date, mock_request_with_body_with_negative_log_index } from "./mockData/food.ts";
 import { UnauthorizedError } from "../../errors/app_errors.ts";
 
 const foodData = new FoodData()
@@ -169,7 +169,7 @@ describe("/api/food/deleteLog", () => {
 
     const returnObj = await foodApi.deleteLog(mock_request_with_query_and_params as any, mockResponse as any);
 
-    expect(foodServices.deleteLog).toHaveBeenCalledWith(mock_token, item_index, date)
+    expect(foodServices.deleteLog).toHaveBeenCalledWith(mock_token, log_index, date)
 
     expect(mockResponse.status).toHaveBeenCalledWith(200)
     expect(mockResponse.json).toHaveBeenCalledWith({message: "Food item log deleted successfully", obj: returnObj})
@@ -196,6 +196,40 @@ describe("/api/food/deleteLog", () => {
  
 })
 
+describe("/api/food/updateLog", () => {
+  it('item is updated successfully', async () => {
+    foodServices.updateLog = jest.fn()
+
+    const returnObj = await foodApi.updateLog(mock_request_with_body as any, mockResponse as any);
+
+    expect(foodServices.updateLog).toHaveBeenCalledWith(mock_token, food, date, log_index)
+
+    expect(mockResponse.status).toHaveBeenCalledWith(200)
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Food item log updated successfully", obj: returnObj})
+    
+  })
+
+  it('log index is negative', async () => {
+    foodServices.updateLog = jest.fn()
+
+    await foodApi.updateLog(mock_request_with_body_with_negative_log_index as any, mockResponse as any);
+
+    expect(mockResponse.status).toHaveBeenCalledWith(400)
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: Provided log index is invalid", obj: {}})
+    
+  })
+
+  it('date is invalid', async () => {
+    foodServices.updateLog = jest.fn().mockRejectedValue(UnauthorizedError)
+
+    await foodApi.updateLog(mock_request_with_body_with_invalid_date as any, mockResponse as any);
+
+    expect(mockResponse.status).toHaveBeenCalledWith(400)
+    expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: Provided date is invalid", obj: {}})
+  })
+})
+
+
 describe("/api/food/dailyConsumption", () => {
   it('daily consumption is returned successfully', async () => {
     foodServices.dailyConsumption = jest.fn().mockResolvedValue(Promise.resolve(mock_services_return_value))
@@ -207,7 +241,6 @@ describe("/api/food/dailyConsumption", () => {
     expect(mockResponse.status).toHaveBeenCalledWith(200)
     expect(mockResponse.json).toHaveBeenCalledWith({message: "Daily consumption fetch successful", obj: mock_services_return_value} )
   })
-
 
   it('returns no items successfully', async () => {
     foodServices.dailyConsumption = jest.fn().mockResolvedValue(Promise.resolve([]))
@@ -259,3 +292,4 @@ describe("/api/food/dailyConsumption", () => {
     expect(mockResponse.json).toHaveBeenCalledWith({message: "Error: Provided date is invalid", obj: {}})
   })
 })
+

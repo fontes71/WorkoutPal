@@ -12,6 +12,7 @@ import {
   user_with_no_nutrition_data,
   api_food__with_just_the_eng_name,
   food2,
+  date_that_user_hasnt_logged_food,
 } from "./mockData/food.ts";
 import { apiFoodToFood } from "../../utils/functions/app/apiFoodToFood.ts";
 import * as getDateModule from "../../utils/functions/app/getDate.ts";
@@ -187,7 +188,7 @@ describe("log", () => {
   });
 });
 
-describe("delete", () => {
+describe("deleteLog", () => {
   beforeEach(() => {
     userMock = {...user }
   })
@@ -235,6 +236,55 @@ describe("delete", () => {
 
   });
   
+})
+
+describe("updateLog", () => {
+  beforeEach(() => {
+    userMock = {...user }
+  })
+  it("calls data function successfully ", async () => {
+    userData.getUserByToken = jest.fn().mockResolvedValue(userMock);
+    userData.updateUser = jest.fn();
+
+    await foodServices.updateLog(
+      user.token,
+      food,
+      date_that_user_has_logged_food,
+      0
+    );
+
+    expect(userData.updateUser).toHaveBeenCalled();
+  });
+
+  it("throws unauthorized if no user with the token passed is found", async () => {
+    userData.getUserByToken = jest.fn().mockResolvedValue(null);
+    userData.updateUser = jest.fn();
+
+
+    expect(async () => {
+      await foodServices.updateLog(
+        user.token,
+        food,
+        date_that_user_has_logged_food,
+        0
+      ); 
+    }).rejects.toThrow("UnauthorizedError");
+  });
+
+  it("no logs in the date given", async () => {
+    userData.getUserByToken = jest.fn().mockResolvedValue(null);
+    userData.updateUser = jest.fn();
+
+
+    expect(async () => {
+      await foodServices.updateLog(
+        user.token,
+        food,
+        date_that_user_hasnt_logged_food,
+        0
+      ); 
+    }).rejects.toThrow("UnauthorizedError");
+  });
 })
 
 

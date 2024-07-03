@@ -86,7 +86,7 @@ export class FoodApi implements IFoodApi {
         logIndex
       );
 
-      sendResponse(res, StatusCode.Created, "Food item log updated successfully", food)
+      sendResponse(res, StatusCode.Success, "Food item log updated successfully", food)
     });
   };
 
@@ -102,7 +102,7 @@ export class FoodApi implements IFoodApi {
       if (!isValidDate(date))
         throw InvalidDateError
 
-      const logIndex = parseInt(req.params.itemIndex)
+      const logIndex = parseInt(req.params.logIndex)
       if (logIndex < 0)
         throw InvalidLogIndexError
 
