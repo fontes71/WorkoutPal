@@ -5,7 +5,7 @@
     "paths": {
       "@/*": ["./*"],
       "@images/*": ["./assets/images/*"],
-      "@modals/*": ["assets/components/modals/*"]
+      "@modals/*": ["./assets/components/modals/*"]
     }
   },
   "include": [
