@@ -1,4 +1,4 @@
-import { AuthInfoUser, UserResponse } from "./api";
+import { AuthInfoUser } from "./api";
 import { Exercise, User, Food, FoodFactsApiFood, WorkoutPlan, Day, DayStats } from "./types";
 import { Request, Response } from "express";
 

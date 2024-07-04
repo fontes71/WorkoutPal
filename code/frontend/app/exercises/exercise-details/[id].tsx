@@ -1,5 +1,5 @@
 import { Image, Text, View } from "react-native";
-import { useLocalSearchParams, Stack, router } from "expo-router";
+import { useLocalSearchParams, Stack } from "expo-router";
 import { Button } from "@rneui/base";
 import search_exercises_styles from "@/assets/styles/exercises";
 import WorkoutPlansModalScreen from "@/assets/components/modals/workoutPlan";

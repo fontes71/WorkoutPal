@@ -1,4 +1,4 @@
-import { StyleSheet, useColorScheme } from "react-native";
+import { StyleSheet } from "react-native";
 
 const modal_styles = StyleSheet.create({
     modalContent: {

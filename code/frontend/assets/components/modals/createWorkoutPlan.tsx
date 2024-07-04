@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { Modal, Pressable, Platform, TextInput } from "react-native";
 import { View, Text } from 'react-native';
-import { Stack, router, useLocalSearchParams } from "expo-router";
+import { Stack, router } from "expo-router";
 import { useContext, useEffect, useState } from 'react';
 import { localhost } from '@/constants';
 import { Button } from '@rneui/base';
