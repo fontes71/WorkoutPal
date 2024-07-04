@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
-import { Exercise, Food } from "../domain/types";
-import { IFoodApi, IFoodData, IFoodServices } from "../domain/interfaces";
+import { Food } from "../domain/types";
+import { IFoodApi, IFoodServices } from "../domain/interfaces";
 import { InvalidDateError, InvalidLogIndexError, InvalidParamsError } from "../errors/app_errors";
 import { apiErrorHandler, getToken, sendResponse } from "../utils/functions/api";
 import { StatusCode } from "../domain/api";
-import { isValid } from "date-fns";
 import isValidDate from "../utils/functions/app/isValidDate";
 
 export class FoodApi implements IFoodApi {

@@ -5,14 +5,6 @@ import getSearchByBarcodeApiUrl from "../utils/functions/app/getSearchByBarcodeA
 export class FoodData implements IFoodData {
   async searchByName(query: string, page: number, limit: number) {
     const res = await fetch(getSearchByNameApiUrl(query, page, limit));
-
-
-    const contentType = res.headers.get('content-type');
-
-    if (contentType && contentType.indexOf('application/json') === -1) 
-      throw Error
-   
-  
     const { products } = await res.json();
     return products;
   }

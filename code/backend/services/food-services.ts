@@ -7,7 +7,6 @@ import {
   InvalidBarcodeError,
   InvalidDateError,
   InvalidLogIndexError,
-  InvalidLoggedFoodIndexError,
   NoItemToDeleteError,
   UnauthorizedError,
 } from "../errors/app_errors";
@@ -17,7 +16,6 @@ import {
   IUserData,
 } from "../domain/interfaces";
 import { apiFoodToFood } from "../utils/functions/app/apiFoodToFood";
-import getDate from "../utils/functions/app/getDate";
 import { transactionHandler } from "../utils/functions/data";
 import { SEARCH_FOOD_BY_NAME_RES_LIMIT } from "../utils/constants";
 
