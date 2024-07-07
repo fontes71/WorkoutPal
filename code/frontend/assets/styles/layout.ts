@@ -9,7 +9,7 @@ const generic_styles = StyleSheet.create({
 
 const footer_styles = StyleSheet.create({
     footer_container: {
-        height: "8%",
+        height: "9%",
         backgroundColor: Colors.gray, 
         borderTopLeftRadius: 20, 
         borderTopRightRadius: 20,
@@ -23,17 +23,19 @@ const footer_styles = StyleSheet.create({
     },
     button_container: {
         width: "50%", 
-        height: "60%"
+        height: "55%"
     },
     button: {
         alignItems: "center"
     },
     button_icon: {
-        width: 20, 
-        height: 20
+        width: 25, 
+        height: 25
     },
     button_text: {
-        color: "black"
+        color: "black",
+        fontWeight: "500",
+        fontSize: 15
     },
     link: {
         color: "blue",
@@ -62,26 +64,29 @@ const header_styles = StyleSheet.create({
     menu_button_container: {
         width: "50%", 
         alignItems: "flex-end",
-        justifyContent: "center"
+        justifyContent: "center",
+        paddingRight: 8
     },
     menu_button: {
         width: "35%", 
         alignItems: "center"
     }, 
     menu_icon: {
-        width: 20,
-        height: 25
+        width: 23,
+        height: 28
     },
     back_button_container: {
         width: "50%", 
-        justifyContent: "center"
+        alignItems: "center",
+        flexDirection: "row",
+        paddingLeft: 26
     },
     back_button: {
-        width: "26%", 
-        alignItems: "center"
+        width: "25%"
     },
     back_icon: {
-        fontSize: 26,
+        width: 21,
+        height: 17
     }
 })
 

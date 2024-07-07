@@ -72,7 +72,6 @@ export class FoodServices implements IFoodServices {
 
       const dayIndex = user.days.findIndex((day) => day.date === date);
 
-
       let loggedFoodRes: Food[] = [];
 
       if (dayIndex == -1) {

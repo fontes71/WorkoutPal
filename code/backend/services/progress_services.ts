@@ -3,7 +3,7 @@ import { IProgressData, IProgressServices, IUserData} from "../domain/interfaces
 import { transactionHandler } from "../utils/functions/data";
 import { InvalidDateError, InvalidParamsError, UnauthorizedError } from "../errors/app_errors";
 import { dayToDayStats, getStartOfPeriod, isValidPeriod } from "../utils/functions/app/progress";
-import { isWithinInterval, isBefore } from "date-fns";
+import { isWithinInterval, isBefore, isValid, parse } from "date-fns";
   
 export class ProgressServices implements IProgressServices {
     private progressData: IProgressData;
@@ -35,6 +35,7 @@ export class ProgressServices implements IProgressServices {
             currDate.setDate(currDate.getDate() + 1)
             const startDate = getStartOfPeriod(currDate, period)
             const daysInInterval = days.filter((d) => isWithinInterval(d.date, { start: startDate, end: currDate}))
+            
             return dayToDayStats(daysInInterval)
         })
     }

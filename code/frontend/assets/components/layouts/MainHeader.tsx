@@ -5,10 +5,11 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Colors } from "@/constants";
 
 type HeaderOptions = {
-    readonly isMainScreen: boolean
+    readonly isMainScreen: boolean,
+    readonly screenName: string
 }
 
-export default function MainHeader({isMainScreen}: HeaderOptions) {
+function MainHeader({isMainScreen}: HeaderOptions) {
     const router = useRouter()
     const styles = layout_styles.header_styles
 
@@ -30,23 +31,23 @@ export default function MainHeader({isMainScreen}: HeaderOptions) {
     );
 }
 
-function MainHeaderDarkModeTest({isMainScreen}: HeaderOptions) {
+export default function MainHeaderDarkModeTest({isMainScreen, screenName}: HeaderOptions) {
     const router = useRouter()
     const styles = layout_styles.header_styles
 
     return (
         <View style={styles.header_container_dark_mode}>
-            <View style={styles.back_button_container}>
+            <View style={[styles.back_button_container]}>
                 { !isMainScreen &&
                     <TouchableOpacity style={styles.back_button} onPress={router.back}>
-                        <FontAwesome style={styles.back_icon} name="angle-left" />
+                        <Image style={styles.back_icon} source={require("@images/arrow_blue.png")}/>
                     </TouchableOpacity>
                 }
-                <Text style={{color: Colors.blue, paddingLeft: 26, fontSize: 22, fontWeight: "bold"}} >Exercise</Text>
+                <Text style={{color: Colors.white, fontSize: 22, fontWeight: "bold", paddingLeft: 5}} >{screenName}</Text>
             </View>
             <View style={styles.menu_button_container}>
-                <TouchableOpacity style={styles.menu_button} onPress={() => router.push("modals/menu")}> 
-                    <Image style={styles.menu_icon} source={require("@images/menu.png")}/>
+                <TouchableOpacity style={styles.menu_button} onPress={() => router.push("menu/menu")}> 
+                    <Image style={styles.menu_icon} source={require("@images/menu_blue.png")}/>
                 </TouchableOpacity>
             </View>
         </View>

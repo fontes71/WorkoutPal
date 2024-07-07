@@ -23,7 +23,7 @@ export class ProgressData implements IProgressData {
             const d = user.days[dayIndex];
             user.days[dayIndex] = {
                 ...d,
-                weight: newWeight,
+                weight: newWeight
             }
         } 
 

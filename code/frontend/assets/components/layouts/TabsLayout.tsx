@@ -4,17 +4,22 @@ import { Slot } from "expo-router";
 import layout_styles from "@/assets/styles/layout";
 import Footer from "./MainFooter";
 import Header from "./MainHeader";
+import { Colors } from "@/constants";
 
-export default function TabsLayout() {
+type TabsLayoutOptions = {
+    readonly screenName: string
+}
+
+export default function TabsLayout({screenName}: TabsLayoutOptions) {
     const styles = layout_styles.generic_styles
     return (
-        <>
-            <StatusBar barStyle="dark-content"/>
-            <Header isMainScreen={false} ></Header>
+        <View style={{flex: 1, backgroundColor: Colors.black}}>
+            <StatusBar backgroundColor={Colors.lightBlack}/>
+            <Header isMainScreen={false} screenName={screenName}></Header>
             <View style={styles.children_slot}>
                 <Slot />
             </View>
             <Footer />
-        </>
+        </View>
     );
 };

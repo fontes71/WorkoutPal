@@ -5,22 +5,26 @@ import Footer from "./MainFooter";
 import Header from "./MainHeader";
 import { Colors } from "@/constants";
 
-export default function MainTabsLayout() {
+type TabsLayoutOptions = {
+  readonly screenName: string
+}
+
+function MainTabsLayout({screenName}: TabsLayoutOptions) {
   return (
     <>
       <StatusBar barStyle="dark-content"/>
-      <Header isMainScreen={true} ></Header>
+      <Header isMainScreen={true} screenName={screenName}></Header>
       <Slot></Slot>
       <Footer></Footer>
     </>
   );
 };
 
-function MainTabsLayoutDarkModeTest() {
+export default function MainTabsLayoutDarkModeTest({screenName}: TabsLayoutOptions) {
   return (
     <View style={{flex: 1, backgroundColor: Colors.black}}>
       <StatusBar backgroundColor={Colors.lightBlack}/>
-      <Header isMainScreen={true} ></Header>
+      <Header isMainScreen={true} screenName={screenName}></Header>
       <Slot></Slot>
       <Footer></Footer>
     </View>

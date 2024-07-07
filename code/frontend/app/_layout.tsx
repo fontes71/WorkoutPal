@@ -1,6 +1,6 @@
 import UserProvider from "@/assets/components/auth/AuthContext";
-import { Slot, usePathname } from "expo-router";
-import { StatusBar, View } from "react-native";
+import { usePathname } from "expo-router";
+import { StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AuthLayout from "@/assets/components/layouts/AuthLayout";
 import MainTabsLayout from "@/assets/components/layouts/MainTabsLayout";
@@ -21,17 +21,37 @@ const Layout = () => {
 };
 
 function getLayout(path: string) {
-  const pathArray = path.split("/").slice(1)
-  if (pathArray[0] == "auth") return (
+  const screenName = getScreenName(path)
+  if (screenName == "Auth") return (
     <AuthLayout />
   ) 
-  if (pathArray.length == 1) return (
-    <MainTabsLayout />
+  if (screenName == "Exercises" || screenName == "Nutrition") return (
+    <MainTabsLayout screenName={screenName}/>
   ) 
-  
   return (
-    <TabsLayout />
+    <TabsLayout screenName={screenName}/>
   )
+}
+
+function getScreenName(path: string): string {
+  const name = path.split("/").slice(1)[0]
+  let screenName = ""
+  switch (name) {
+    case "auth": 
+      screenName = "Auth"
+      break
+    case "food":
+      screenName = "Nutrition"
+      break
+    case "exercises": 
+      screenName = "Exercises"
+      break
+    case "progress":
+      screenName = "Progress"
+      break
+  }
+
+  return screenName
 }
 
 export default Layout;
