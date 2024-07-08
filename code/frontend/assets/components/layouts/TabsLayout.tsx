@@ -1,10 +1,12 @@
 import React from "react";
-import { View, StatusBar } from "react-native";
+import { View} from "react-native";
 import { Slot } from "expo-router";
 import layout_styles from "@/assets/styles/layout";
 import Footer from "./MainFooter";
 import Header from "./MainHeader";
 import { Colors } from "@/assets/constants";
+import { StatusBar } from "expo-status-bar";
+//import { StatusBar } from "react-native";
 
 type TabsLayoutOptions = {
     readonly screenName: string
