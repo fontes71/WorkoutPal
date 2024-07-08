@@ -1,5 +1,5 @@
-import { Alert, Text, Touchable, TouchableWithoutFeedback, View } from "react-native";
-import { useContext, useEffect, useState } from "react";
+import { Alert, Text, TouchableWithoutFeedback, View } from "react-native";
+import { useContext } from "react";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import { deleteAction, handlePress } from "./utils";
 

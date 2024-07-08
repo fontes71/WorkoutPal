@@ -1,4 +1,4 @@
-import { Colors } from "@/constants"
+import { Colors } from "@/assets/constants"
 import { View, Text } from "react-native"
 
 type InvalidChartOptions = {

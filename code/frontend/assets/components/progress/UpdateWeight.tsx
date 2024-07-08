@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, TextInput } from "react-native"
-import { Colors } from "@/constants"
+import { Colors } from "@/assets/constants"
 import { useContext, useState } from "react"
 import { UserContext } from "../auth/AuthContext";
 import { updateWeight } from "@/services/progress";

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native"
-import { Colors } from "@/constants"
+import { Colors } from "@/assets/constants"
 
 const generic_styles = StyleSheet.create({
     children_slot: {

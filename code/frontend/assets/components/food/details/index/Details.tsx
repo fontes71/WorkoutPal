@@ -1,7 +1,6 @@
 import styles from "./styles";
 import { Text, TouchableOpacity, View } from "react-native";
-import { useContext, useState } from "react";
-import { UserContext } from "@/assets/components/auth/AuthContext";
+import { useState } from "react";
 import Overview from "@/assets/components/food/details/overview/Overview";
 import { resetIfQuantityValueWasZero, updateNutrients } from "./utils";
 import { ButtonProps, DetailsProps } from "./types";

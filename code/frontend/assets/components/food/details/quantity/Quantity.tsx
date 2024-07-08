@@ -1,10 +1,10 @@
-import { Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { getInputValue, handleSubmit, inputOnChange, onClose } from "./utils";
 import styles from "./styles";
 import React, { useState } from "react";
 import PopupModal from "@/assets/components/common/popupModal/PopupModal";
 import DropdownMenu from "@/assets/components/common/dropdownMenu/DropdownMenu";
-import UNIT_VALUES  from "@/assets/contants/unitValues";
+import { UNIT_VALUES }  from "@/assets/constants";
 
 
 const Quantity: React.FC<QuantityProps> = ({ quantity, updateQuantity }) => {

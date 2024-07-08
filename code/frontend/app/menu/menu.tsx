@@ -1,4 +1,4 @@
-import { Colors } from "@/constants";
+import { Colors } from "@/assets/constants";
 import { Text, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import { logout } from "@/services/auth";

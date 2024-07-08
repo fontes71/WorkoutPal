@@ -3,7 +3,7 @@ import { Modal, Pressable, Platform, TextInput } from "react-native";
 import { View, Text } from 'react-native';
 import { Stack, router } from "expo-router";
 import { useContext, useEffect, useState } from 'react';
-import { localhost } from '@/constants';
+import { localhost } from '@/assets/constants';
 import { Button } from '@rneui/base';
 import modal_styles from '@/assets/styles/modals';
 import { MaterialIcons } from '@expo/vector-icons';

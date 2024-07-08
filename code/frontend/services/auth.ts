@@ -1,4 +1,4 @@
-import { localhost } from "@/constants";
+import { localhost } from "@/assets/constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // the response status is checked here and inside loginAction (LoginScreen), there should be a way to be checked only once

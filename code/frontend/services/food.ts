@@ -1,5 +1,5 @@
 import customFetch from "@/assets/functions/customFetch";
-import { localhost } from "@/constants";
+import { localhost } from "@/assets/constants";
 
 
 export const searchFoodByName = async (query: string, page: number) =>

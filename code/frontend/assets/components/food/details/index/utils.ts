@@ -1,4 +1,4 @@
-import UNIT_VALUES from "@/assets/contants/unitValues"
+import { UNIT_VALUES } from "@/assets/constants"
 import getDate from "@/assets/functions/getDate";
 import { logFood, updateLog } from "@/services/food";
 import { router, useLocalSearchParams } from "expo-router"

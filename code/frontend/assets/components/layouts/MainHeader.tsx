@@ -2,7 +2,7 @@ import { TouchableOpacity, View, Image, Text } from "react-native";
 import layout_styles from "@/assets/styles/layout";
 import { useRouter } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
-import { Colors } from "@/constants";
+import { Colors } from "@/assets/constants";
 
 type HeaderOptions = {
     readonly isMainScreen: boolean,

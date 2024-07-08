@@ -1,11 +1,11 @@
 import { View } from "react-native"
-import FoodCover from "@/assets/components/FoodCover"
 import Quantity from "../quantity/Quantity"
-import React, { useState } from "react"
+import React from "react"
 import { styles } from "./styles"
 import { InfoProps } from "./types"
 import MainNutrientsDisplay from "../mainNutrientsDisplay/MainNutrientsDisplay"
 import SecondaryNutrientsAndScoreDisplay from "../SecondaryNutrientsAndScoreDisplay/SecondaryNutrientsAndScoreDisplay"
+import FoodCover from "../../common/FoodCover"
 
 
 const Overview: React.FC<InfoProps> = ({ food, quantity, updateQuantity, mainNutrients, secondaryNutrients }) => (

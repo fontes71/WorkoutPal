@@ -1,9 +1,9 @@
-import FoodCover from "@/assets/components/FoodCover";
-import {  capitalizeWords, fetchResults, handleFoodPress } from "./utils";
+import { capitalizeWords, fetchResults, handleFoodPress } from "./utils";
 import styles from "./styles";
 import { FlatList, Pressable, Text, View  } from "react-native";
 import { PureComponent, useEffect, useRef, useState } from "react";
 import React from "react";
+import FoodCover from "../../common/FoodCover";
 
 const FoodResults: React.FC<FoodResultsProps> = ({ name }) => {
   const [results, setResults] = useState<Food[]>([])

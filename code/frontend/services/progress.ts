@@ -1,5 +1,5 @@
 import getDate from "@/assets/functions/getDate";
-import { localhost } from "@/constants";
+import { localhost } from "@/assets/constants";
 import { eachDayOfInterval, format, getDaysInMonth, subMonths } from "date-fns";
 
 export const updateWeight = async (newWeight: number, token: string) => {

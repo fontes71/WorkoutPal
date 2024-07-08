@@ -1,9 +1,8 @@
-
 import { useState } from "react";
 import FoodResults from "@/assets/components/food/search/foodResults/FoodResults";
 import FoodSearchBar from "@/assets/components/food/search/foodSearchBar/FoodSearchBar";
 
-// Rate limiting
+
 const SearchByName = () => {
     const [name, setName] = useState("");
 

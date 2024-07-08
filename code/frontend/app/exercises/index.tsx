@@ -2,7 +2,7 @@ import { Link } from "expo-router";
 import { exercise_styles } from "@/assets/styles/exercises";
 import React from "react";
 import { View } from "react-native";
-import { Colors } from "@/constants";
+import { Colors } from "@/assets/constants";
 
 export default function ExerciseScreen() {
   return (

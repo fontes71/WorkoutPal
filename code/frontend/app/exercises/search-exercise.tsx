@@ -1,7 +1,7 @@
 import { FlatList, Pressable } from "react-native";
 import { Stack, router } from "expo-router";
 import { useState, useEffect, useRef } from "react";
-import { localhost } from "@/constants";
+import { localhost } from "@/assets/constants";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { Text, View } from "react-native";
 import { SearchBar } from "@rneui/themed";
@@ -11,7 +11,7 @@ import { ExerciseResult } from "@/assets/components/exercises/ExerciseResult";
 import { removeParenthesesFromExerciseNames } from "@/assets/components/exercises/removeParenthesesFromExerciseName";
 import { FiltersInfo } from "@/assets/components/exercises/FiltersInfo";
 import { ExerciseInfo } from "@/assets/components/exercises/ExerciseInfo";
-import NoBottomCutView from "@/assets/components/views/NoBottomCutView";
+import NoBottomCutView from "@/assets/components/food/common/NoBottomCutView";
 
 const RESULTS_SIZE = 10;
 const RESULTS_OFFSET = 10;
