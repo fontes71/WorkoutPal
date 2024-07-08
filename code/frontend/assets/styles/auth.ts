@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { Colors } from '../constants'
 
-// hardcoded dimensions
 const auth_styles = StyleSheet.create({
     main_container: {
         marginTop: 0
@@ -29,7 +28,7 @@ const auth_styles = StyleSheet.create({
     logo_container: {
         paddingTop: 50,
         backgroundColor: Colors.white,
-        marginBottom: 40
+        paddingBottom: 40
     },
     logo_image_login: {
         marginTop: 30,

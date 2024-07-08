@@ -10,7 +10,7 @@ const generic_styles = StyleSheet.create({
 const footer_styles = StyleSheet.create({
     footer_container: {
         height: "9%",
-        backgroundColor: Colors.gray, 
+        backgroundColor: Colors.white, 
         borderTopLeftRadius: 20, 
         borderTopRightRadius: 20,
         alignItems: "center",
