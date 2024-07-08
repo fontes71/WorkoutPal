@@ -22,13 +22,12 @@ const Layout = () => {
 };
 
 function getLayout(path: string) {
-  const splitPath = path.split("/")
-  console.log(splitPath)
+  const splitPath = path.split("/").slice(1)
   const screenName = getScreenName(path)
   if (screenName == "Auth") return (
     <AuthLayout />
   ) 
-  if (screenName == "Exercises" || screenName == "Nutrition") return (
+  if (splitPath.length == 1 && (screenName == "Exercises" || screenName == "Nutrition")) return (
     <MainTabsLayout screenName={screenName}/>
   ) 
   return (

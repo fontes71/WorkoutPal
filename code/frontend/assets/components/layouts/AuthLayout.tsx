@@ -6,7 +6,7 @@ import { Slot } from "expo-router";
 export default function AuthLayout() {
   return (
     <>
-        <StatusBar barStyle="dark-content"/>
+        <StatusBar barStyle="light-content"/>
         <Header />
         <Slot />
     </>
