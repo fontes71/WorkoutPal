@@ -253,7 +253,7 @@ const WorkoutPlanDetailsScreen = () => {
             }}
           >
             <Image
-              source={require("@/assets/images/save.png")}
+              source={require("@/assets/images/save_white.png")}
               style={{ marginRight: 0 }}
             />
           </TouchableOpacity>

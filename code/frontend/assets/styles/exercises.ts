@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { Colors } from "../constants";
 
 export const exercise_styles = StyleSheet.create({
     container: {
@@ -12,7 +13,7 @@ export const exercise_styles = StyleSheet.create({
     link: {
       marginTop: 20,
       fontSize: 35,
-      color: '#2e78b7'
+      color: Colors.blue
     },
   });
 
@@ -53,7 +54,7 @@ export const search_exercises_styles = StyleSheet.create({
         right: 20,
         width: 60,
         height: 60,
-        backgroundColor: '#2e78b7',
+        backgroundColor: Colors.blue,
         borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center',
@@ -70,7 +71,7 @@ export const search_exercises_styles = StyleSheet.create({
         right: 20,
         width: 60,
         height: 60,
-        backgroundColor: '#2e78b7',
+        backgroundColor: Colors.blue,
         borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center',
@@ -84,7 +85,7 @@ export const search_exercises_styles = StyleSheet.create({
         position: 'absolute',
         top: -5,
         right: -5,
-        backgroundColor: 'blue',
+        backgroundColor: Colors.midBlue,
         borderRadius: 15,
         width: 25,
         height: 25,

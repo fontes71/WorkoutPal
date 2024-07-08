@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
+import { Colors } from "../constants";
 
 const modal_styles = StyleSheet.create({
     modalContent: {
       height: '90%',
       width: '100%',
-      backgroundColor: 'white',
+      backgroundColor: Colors.black,
       borderTopRightRadius: 18,
       borderTopLeftRadius: 18,
       position: 'absolute',
@@ -12,7 +13,7 @@ const modal_styles = StyleSheet.create({
     },
     titleContainer: {
       height: '5%',
-      backgroundColor: '#464C55',
+      backgroundColor: Colors.gray,
       borderTopRightRadius: 10,
       borderTopLeftRadius: 10,
       paddingHorizontal: 20,
@@ -21,7 +22,7 @@ const modal_styles = StyleSheet.create({
       justifyContent: 'space-between',
     },
     title: {
-      color: '#fff',
+      color: Colors.white,
       fontSize: 16,
     },
 });

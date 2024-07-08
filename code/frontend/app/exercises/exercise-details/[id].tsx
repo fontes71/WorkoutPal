@@ -5,6 +5,7 @@ import search_exercises_styles from "@/assets/styles/exercises";
 import WorkoutPlansModalScreen from "@/assets/components/modals/workoutPlan";
 import { useState } from "react";
 import { BottomText } from "@/assets/components/exercises/bottomText";
+import { Colors } from "@/assets/constants";
 
 const ExerciseDetailsScreen = () => {
   const { exerciseJSON } = useLocalSearchParams<{ exerciseJSON: string }>();
@@ -46,6 +47,7 @@ const ExerciseDetailsScreen = () => {
             onPress={() => {
               setModalVisible(true);
             }}
+            color={Colors.blue}
           >
             Add To Workout Plan
           </Button>
