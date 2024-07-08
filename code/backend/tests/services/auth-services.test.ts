@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import {
   ExistentEmailError,
   IncorrectPasswordError,
+  InvalidCredentialsError,
   NonExistentEmailError,
   UnauthorizedError,
 } from "../../errors/app_errors";
@@ -57,7 +58,13 @@ describe("Auth Signup Service", () => {
       mockUser.email
     );
 
-    expect(result).toBe(mockToken);
+    expect(result).toStrictEqual({
+      "days": [], 
+      "email": mockUser.email, 
+      "password": "hashedPassword", 
+      "token": mockToken, "username": mockUser.username, 
+      "workout_plans": []}
+    );
     expect(authData.getUserByEmail).toHaveBeenCalledWith(mockUser.email);
     expect(authData.createUser).toHaveBeenCalledWith(
       mockUser.username,
@@ -100,7 +107,7 @@ describe("Auth Login Service", () => {
 
     await authServices
       .login(mockUser.email, mockUser.password)
-      .catch((err) => expect(err).toBe(NonExistentEmailError));
+      .catch((err) => expect(err).toBe(InvalidCredentialsError));
 
     expect(authData.getUserAndUpdateToken).toHaveBeenCalledWith(
       mockUser.email,
@@ -114,7 +121,7 @@ describe("Auth Login Service", () => {
 
     await authServices
       .login(mockUser.email, mockUser.password)
-      .catch((err) => expect(err).toBe(IncorrectPasswordError));
+      .catch((err) => expect(err).toBe(InvalidCredentialsError));
 
     expect(authData.getUserAndUpdateToken).toHaveBeenCalledWith(
       mockUser.email,

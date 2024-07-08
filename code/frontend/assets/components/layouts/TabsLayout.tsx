@@ -16,7 +16,7 @@ export default function TabsLayout({screenName}: TabsLayoutOptions) {
     const styles = layout_styles.generic_styles
     return (
         <View style={{flex: 1, backgroundColor: Colors.black}}>
-            <StatusBar backgroundColor={Colors.lightBlack}/>
+            <StatusBar style="light" backgroundColor={Colors.lightBlack}/>
             <Header isMainScreen={false} screenName={screenName}></Header>
             <View style={styles.children_slot}>
                 <Slot />

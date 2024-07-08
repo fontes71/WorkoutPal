@@ -22,6 +22,8 @@ const Layout = () => {
 };
 
 function getLayout(path: string) {
+  const splitPath = path.split("/")
+  console.log(splitPath)
   const screenName = getScreenName(path)
   if (screenName == "Auth") return (
     <AuthLayout />

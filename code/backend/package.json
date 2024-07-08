@@ -8,7 +8,7 @@
     "test": "jest ",
     "testProgressApi": "jest ./tests/api/progress-api.test.ts",
     "testProgressServices": "jest ./tests/services/progress-services.test.ts",
-    "testAuth": "jest ./tests/api/auth-api.test.ts",
+    "testAuthApi": "jest ./tests/api/auth-api.test.ts",
     "testAuthServices": "jest ./tests/services/auth-services.test.ts",
     "testFoodApi": "jest ./tests/api/food-api.test.ts",
     "testFoodServices": "jest ./tests/services/food-services.test.ts",

@@ -9,7 +9,7 @@ import {
   mockInvalidToken, mockPeriod, mockToken, mockUser, mockWeight 
 } from "./mockData/progress";
 import { getConsumedNutrients, getStartOfPeriod, isValidPeriod } from "../../utils/functions/app/progress";
-import { ConsumedNutrients, Food, MainNutrients, SecondaryNutrients, ValueAndUnit } from "../../domain/types";
+import { LoggedNutrients, Food, MainNutrients, SecondaryNutrients, ValueAndUnit } from "../../domain/types";
 
 jest.mock("mongoose", () => ({
   connect: jest.fn(),
@@ -145,13 +145,13 @@ describe("auxiliary functions (getStartOfPeriod)", () => {
 
 describe("auxiliary functions (getConsumedNutrients)", () => {
   it("returns the sum of the main consumed nutrients based on each food item in the array", async () => {
-    const expectedConsumedNutrients: ConsumedNutrients = {"calories": 1075, "protein": 70, "fat": 45.6, "carbs": 49}
+    const expectedConsumedNutrients: LoggedNutrients = {"calories": 1075, "protein": 70, "fat": 45.6, "carbs": 49}
 
     expect(getConsumedNutrients(foodArr)).toStrictEqual(expectedConsumedNutrients)
   })
 
   it("returns a ConsumedNutrients object with every nutrient with the value 0 if parameter is an empty array", async () => {
-    const expectedConsumedNutrients: ConsumedNutrients = {"calories": 0, "protein": 0, "fat": 0, "carbs": 0}
+    const expectedConsumedNutrients: LoggedNutrients = {"calories": 0, "protein": 0, "fat": 0, "carbs": 0}
 
     expect(getConsumedNutrients(emptyFoodArr)).toStrictEqual(expectedConsumedNutrients)
   })

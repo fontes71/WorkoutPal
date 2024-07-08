@@ -1,4 +1,4 @@
-import { ConsumedNutrients, Day, DayStats, Food, MainNutrients, SecondaryNutrients, User, ValueAndUnit, WorkoutPlan } from "../../../domain/types";
+import { LoggedNutrients, Day, DayStats, Food, MainNutrients, SecondaryNutrients, User, ValueAndUnit, WorkoutPlan } from "../../../domain/types";
 
 export const mockWeight = 70.2
 export const mockDate = "2024-06-20"
@@ -8,7 +8,7 @@ export const mockInvalidToken = "mockInvalidToken"
 export const mockPeriod = "month"
 export const mockInvalidPeriod = "invalidPeriod"
 
-const mockConsumedNutrients: ConsumedNutrients = {
+const mockConsumedNutrients: LoggedNutrients = {
     calories: 0,
     protein: 0,
     fat: 0,
@@ -18,7 +18,7 @@ const mockConsumedNutrients: ConsumedNutrients = {
 export const mockDayStats: Array<DayStats> = [
     {
         date: mockDate,
-        consumedNutrients: mockConsumedNutrients,
+        loggedNutrients: mockConsumedNutrients,
         workoutPlansDone: 0,
         weight: mockWeight
     }
@@ -26,7 +26,7 @@ export const mockDayStats: Array<DayStats> = [
 
 const mockDay: Day = {
     date: mockDate,
-    consumedFood: [],
+    loggedFood: [],
     workoutPlansDone: [],
     weight: mockWeight
 }
