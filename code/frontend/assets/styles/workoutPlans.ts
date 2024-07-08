@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { Colors } from "../constants";
 
 const workoutPlans_styles = StyleSheet.create({
     workoutPlansContainer: {
@@ -48,11 +49,13 @@ const workoutPlans_styles = StyleSheet.create({
     topText: {
         fontWeight: "bold",
         paddingBottom: 5,
-        fontSize: 18
+        fontSize: 18,
+        color: Colors.white
     },
     bottomText: {
         marginRight: 10,
-        fontSize: 14
+        fontSize: 14,
+        color: Colors.white
     },
 });
 

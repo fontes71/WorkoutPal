@@ -1,9 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
-import { Modal, Pressable, Platform, TextInput } from "react-native";
+import { Modal, Pressable, TextInput, StatusBar } from "react-native";
 import { View, Text } from 'react-native';
 import { Stack, router } from "expo-router";
 import { useContext, useEffect, useState } from 'react';
-import { localhost } from '@/assets/constants';
+import { Colors, localhost } from '@/assets/constants';
 import { Button } from '@rneui/base';
 import modal_styles from '@/assets/styles/modals';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -49,6 +48,7 @@ export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { 
 
   return (
     <Modal animationType="slide" transparent={false} visible={isVisible}>
+      <StatusBar barStyle="light-content" backgroundColor={Colors.lightBlack} />
       <Stack.Screen options={{ title: "Create Workout Plan" }}/>
       <View style={modal_styles.modalContent}>
         <View style={modal_styles.titleContainer}>
@@ -76,9 +76,6 @@ export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { 
             <Button onPress={() => {handleCreateButtonPress(name, description, userToken)}}>Create</Button>
            </View>
           </View>
-
-          {/* Use a light status bar on iOS to account for the black space above the modal */}
-          <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
         </View>
       </View>
     </Modal>

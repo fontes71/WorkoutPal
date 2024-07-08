@@ -30,6 +30,11 @@ export const search_exercises_styles = StyleSheet.create({
         padding: 10,
         justifyContent: "flex-start",
     },
+    separator: {
+      marginVertical: 30,
+      height: 1,
+      width: '80%',
+    },
     imageContainer: {
         width: 90,
         height: 90,
@@ -44,6 +49,7 @@ export const search_exercises_styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "space-evenly",
+        marginBottom: 20,
     },
     bottomTextContainer: {
         flexDirection: "row",
@@ -99,11 +105,13 @@ export const search_exercises_styles = StyleSheet.create({
     topText: {
         fontWeight: "bold",
         paddingBottom: 5,
-        fontSize: 18
+        fontSize: 18,
+        color: Colors.white
     },
     bottomText: {
         marginRight: 10,
-        fontSize: 14
+        fontSize: 14,
+        color: Colors.white
     },
     detailsContainer: {
         alignItems: "center",

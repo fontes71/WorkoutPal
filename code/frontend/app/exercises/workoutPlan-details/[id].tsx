@@ -11,7 +11,7 @@ import { useLocalSearchParams, Stack, router } from "expo-router";
 import { Button } from "@rneui/base";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { useContext, useEffect, useState } from "react";
-import { localhost } from "@/assets/constants";
+import { Colors, localhost } from "@/assets/constants";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import { BottomText } from "@/assets/components/exercises/bottomText";
 import { removeParenthesesFromExerciseName } from "@/assets/components/exercises/removeParenthesesFromExerciseName";
@@ -124,7 +124,7 @@ const WorkoutPlanDetailsScreen = () => {
     equipment,
   }) => {
     return (
-      <View>
+      <View style={search_exercises_styles.exerciseResultTextContainer}>
         <View style={search_exercises_styles.imageContainer}>
           {gifUrl && (
             <Image
@@ -133,10 +133,8 @@ const WorkoutPlanDetailsScreen = () => {
             />
           )}
         </View>
-        <View style={search_exercises_styles.exerciseResultTextContainer}>
-          <Text style={search_exercises_styles.bottomText}>{name}</Text>
-          <BottomText str={"Equipment: " + equipment} />
-        </View>
+        <Text style={search_exercises_styles.bottomText}>{name}</Text>
+        <BottomText str={"Equipment: " + equipment} />
         <Button
           color={"error"}
           onPress={() => {
@@ -204,7 +202,7 @@ const WorkoutPlanDetailsScreen = () => {
 
   return (
     <NoBottomCutView marginBottom={10}>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1}}>
         <Stack.Screen options={{ title: "Details" }} />
         <View style={search_exercises_styles.workoutPlansResultContainer}>
           {loaded ? (

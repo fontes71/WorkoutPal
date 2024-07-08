@@ -13,7 +13,7 @@ const modal_styles = StyleSheet.create({
     },
     titleContainer: {
       height: '5%',
-      backgroundColor: Colors.gray,
+      backgroundColor: Colors.lightBlack,
       borderTopRightRadius: 10,
       borderTopLeftRadius: 10,
       paddingHorizontal: 20,
