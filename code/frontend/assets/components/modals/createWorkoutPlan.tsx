@@ -47,7 +47,7 @@ export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { 
   }, []);
 
   return (
-    <Modal animationType="slide" transparent={false} visible={isVisible}>
+    <Modal animationType="slide" transparent={true} visible={isVisible}>
       <StatusBar barStyle="light-content" backgroundColor={Colors.lightBlack} />
       <Stack.Screen options={{ title: "Create Workout Plan" }}/>
       <View style={modal_styles.modalContent}>

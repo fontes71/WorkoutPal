@@ -10,7 +10,7 @@ import RNPickerSelect from 'react-native-picker-select';
 
 export default function SearchExerciseFilters({ isVisible, onClose, filters, setFilters }: { isVisible: boolean, onClose: () => void, filters: FiltersInfo, setFilters: (value: FiltersInfo) => void}) {
     return (
-        <Modal animationType="slide" transparent={false} visible={isVisible}>
+        <Modal animationType="slide" transparent={true} visible={isVisible}>
             <Stack.Screen options={{ title: "Filters" }}/>
             <View style={modal_styles.modalContent}>
                 <View style={modal_styles.titleContainer}>
