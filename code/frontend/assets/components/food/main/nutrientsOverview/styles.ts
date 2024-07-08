@@ -1,9 +1,24 @@
+import { Colors } from "@/assets/constants";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   nutrients: {
     flexDirection: "row",
-    paddingBottom: 20,
+    justifyContent: 'space-around',
+    padding: 20,
+    borderBottomWidth: 0.2,
+    borderBottomColor: Colors.darkGray,
+    
+  },
+  nutrientWrapper: {
+    alignItems: 'center'
+  },
+  nutrientValue: {
+    color:Colors.white
+  },
+  nutrient: {
+    color: Colors.darkGray
+    
   },
 });
 

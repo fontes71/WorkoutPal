@@ -1,7 +1,8 @@
-import { Alert, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Alert, Pressable, Text, TouchableWithoutFeedback, View } from "react-native";
 import { useContext } from "react";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import { deleteAction, handlePress } from "./utils";
+import styles from "./styles";
 
 const LoggedFood: React.FC<ConsumedFoodProps> = ({ food, setFood }) => {
   const { userContext } = useContext(UserContext);
@@ -15,15 +16,29 @@ const LoggedFood: React.FC<ConsumedFoodProps> = ({ food, setFood }) => {
     {food && (
       <View>
         {food.map((item, index) => (
-          <TouchableWithoutFeedback onPress={() => handlePress(item, index)} key={index} onLongPress={() => handleLongPress(userContext?.token, index, setFood)}> 
-            <Text>{item.name}</Text>
-          </TouchableWithoutFeedback>
+          <Pressable onPress={() => handlePress(item, index)} key={index} onLongPress={() => handleLongPress(userContext?.token, index, setFood)}> 
+            <FoodLog log={item} />
+          </Pressable>
         ))}
       </View>
     )}
   </>
   )
 }
+
+
+
+const FoodLog: React.FC<FoodLogProps> = ({ log }) => (
+  <View style={styles.logContainer}>
+    <View>
+      <Text style={styles.logName}>{log.name}</Text>
+      <Text style={styles.logQuantity} >{log.quantity.value.toString() + log.quantity.unit}</Text>
+    </View>
+    <View>
+      <Text style={styles.logCalories}>{log.mainNutrients.calories}</Text>
+    </View>
+  </View>
+)
 
 
 export const deleteAlert = (deleteAction: () => Promise<void>) => (
