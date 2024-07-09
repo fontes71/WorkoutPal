@@ -1,4 +1,4 @@
-import { Button } from "react-native";
+import { Image, TouchableOpacity, Text } from "react-native";
 import styles from "./styles";
 import { CameraView } from "expo-camera";
 import { useState } from "react";
@@ -21,7 +21,13 @@ const BarcodeScanner = () => {
           style={styles.absoluteFill}
         />
       )}
-      <Button title={"Scan Barcode"} onPress={() => scanBarCode(hasCameraPermission, setHasCameraPermission, scanning, setScanning)} />
+      <TouchableOpacity style={styles.button} onPress={() => scanBarCode(hasCameraPermission, setHasCameraPermission, scanning, setScanning)}>
+        <Text style={styles.buttonText}>Scan Barcode</Text>
+        <Image
+            source={require("@/assets/images/barcode.png")}
+            style={styles.barcodeImg}
+          />
+      </TouchableOpacity>
     </>
   );
 };

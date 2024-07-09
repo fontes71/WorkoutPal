@@ -1,9 +1,7 @@
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { Image } from "expo-image";
+import styles from "./styles";
 
-interface FoodCoverProps {
-  imageUrl: string | null;
-}
 
 const FoodCover: React.FC<FoodCoverProps> = ({ imageUrl }) => (
   <View style={styles.foodResultImgContainer}>
@@ -11,15 +9,5 @@ const FoodCover: React.FC<FoodCoverProps> = ({ imageUrl }) => (
   </View>
 );
 
-const styles = StyleSheet.create({
-  foodResultImgContainer: {
-    width: 90,
-    height: 90,
-    marginRight: 10,
-  },
-  foodResultImg: {
-    flex: 1,
-  },
-});
 
 export default FoodCover;

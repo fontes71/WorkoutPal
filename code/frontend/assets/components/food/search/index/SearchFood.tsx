@@ -1,15 +1,19 @@
 import { View } from "react-native";
 import { Stack } from "expo-router";
 import BarcodeScanner from "@/assets/components/food/search/barcodeScanner/BarcodeScanner";
-import SearchByName from "@/assets/components/food/search/searchByName/SearchByName";
+import { useState } from "react";
+import FoodSearchBar from "../foodSearchBar/FoodSearchBar";
+import FoodResults from "../foodResults/FoodResults";
 
 const SearchFood = () => {
-
+  const [name, setName] = useState("");
+  
   return (
     <View>
       <Stack.Screen options={{ title: "Search food" }} />
+      <FoodSearchBar searchSubmit={setName} />
       <BarcodeScanner />
-      <SearchByName />
+      {name && <FoodResults name={name}/>}
     </View>
   );
 }

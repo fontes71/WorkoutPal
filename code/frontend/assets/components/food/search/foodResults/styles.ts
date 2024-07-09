@@ -1,11 +1,12 @@
+import { Colors } from "@/assets/constants";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     borderBottomWidth: 1,
-    borderBottomColor: "#dadada",
-    padding: 10,
+    borderBottomColor: Colors.darkGray,
+    padding: 25,
   },
   textContainer: {
     flex: 1,
@@ -15,10 +16,11 @@ const styles = StyleSheet.create({
   topText: {
     fontWeight: "bold",
     paddingBottom: 5,
-    fontSize: 16,
+
+    color: Colors.white
   },
   bottomText: {
-    fontSize: 14,
+    color: Colors.darkGray
   },
 });
 
