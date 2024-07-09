@@ -4,7 +4,7 @@ import { Slot } from "expo-router";
 import layout_styles from "@/assets/styles/layout";
 import Footer from "./MainFooter";
 import Header from "./MainHeader";
-import { Colors } from "@/assets/constants";
+import { Colors } from "@/assets/styles/common";
 
 type TabsLayoutOptions = {
     readonly screenName: string

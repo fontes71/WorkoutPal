@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import AuthLayout from "@/assets/components/layouts/AuthLayout";
 import MainTabsLayout from "@/assets/components/layouts/MainTabsLayout";
 import TabsLayout from "@/assets/components/layouts/TabsLayout";
-import { Colors } from "@/assets/constants";
+import { Colors } from "@/assets/styles/common";
 
 const Layout = () => {
   const path = usePathname()

@@ -11,11 +11,12 @@ import { useLocalSearchParams, Stack, router } from "expo-router";
 import { Button } from "@rneui/base";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { useContext, useEffect, useState } from "react";
-import { Colors, localhost } from "@/assets/constants";
+import {  localhost } from "@/assets/constants";
+import { Colors } from "@/assets/styles/common";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import { BottomText } from "@/assets/components/exercises/bottomText";
 import { removeParenthesesFromExerciseName } from "@/assets/components/exercises/removeParenthesesFromExerciseName";
-import NoBottomCutView from "@/assets/components/food/common/NoBottomCutView";
+import NoBottomCutView from "@/assets/components/common/NoBottomCutView";
 
 const WorkoutPlanDetailsScreen = () => {
   const { workoutPlanJSON: workoutPlanJSON } = useLocalSearchParams<{

@@ -3,7 +3,7 @@ import { StatusBar, View } from "react-native";
 import { Slot } from "expo-router";
 import Footer from "./MainFooter";
 import Header from "./MainHeader";
-import { Colors } from "@/assets/constants";
+import { Colors } from "@/assets/styles/common";
 import layout_styles from "@/assets/styles/layout";
 
 type TabsLayoutOptions = {

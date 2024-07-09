@@ -2,8 +2,8 @@ import { Link } from "expo-router";
 import { exercise_styles } from "@/assets/styles/exercises";
 import React from "react";
 import { View, Text } from "react-native";
-import { Colors } from "@/assets/constants";
-import NoBottomCutView from "@/assets/components/food/common/NoBottomCutView";
+import { Colors } from "@/assets/styles/common";
+import NoBottomCutView from "@/assets/components/common/NoBottomCutView";
 export default function ExerciseScreen() {
   return (
     <NoBottomCutView marginBottom={40}>

@@ -2,13 +2,14 @@ import { Modal, FlatList, Pressable } from "react-native";
 import { View, Text } from "react-native";
 import { Stack, router } from "expo-router";
 import { useContext, useEffect, useState } from "react";
-import { Colors, localhost } from "@/assets/constants";
+import {  localhost } from "@/assets/constants";
+import { Colors } from "@/assets/styles/common";
 import modal_styles from "@/assets/styles/modals";
 import { MaterialIcons } from "@expo/vector-icons";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import workoutPlans_styles from "@/assets/styles/workoutPlans";
 import { WorkoutPlanResult } from "@/assets/components/exercises/WorkoutPlanResult";
-import NoBottomCutView from "@/assets/components/food/common/NoBottomCutView";
+import NoBottomCutView from "@/assets/components/common/NoBottomCutView";
 
 export default function WorkoutPlansModalScreen({
   isVisible,
