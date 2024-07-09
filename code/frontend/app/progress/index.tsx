@@ -1,9 +1,8 @@
 import Chart from "@/assets/components/progress/Chart";
 import { ScrollView, TouchableOpacity, Text, View } from "react-native";
-import progress_styles from "@/assets/styles/progress";
-import { Colors } from "@/constants";
+import progress_styles from "@/assets/styles/progress";;
 import UpdateWeight from "@/assets/components/progress/UpdateWeight";
-import NoBottomCutView from "@/assets/components/food/common/NoBottomCutView";
+import NoBottomCutView from "@/assets/components/common/NoBottomCutView";
 import { useContext, useEffect, useState } from "react";
 import Fetching from "@/assets/components/common/Fetching";
 import { getDays, getStatsForMonth, isArrayValid } from "@/services/progress";

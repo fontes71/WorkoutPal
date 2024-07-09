@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Colors } from "../constants";
+import { Colors } from "@/assets/styles/common";
 
 const workoutPlans_styles = StyleSheet.create({
     workoutPlansContainer: {

@@ -5,7 +5,7 @@ import search_exercises_styles from "@/assets/styles/exercises";
 import WorkoutPlansModalScreen from "@/assets/components/modals/workoutPlan";
 import { useState } from "react";
 import { BottomText } from "@/assets/components/exercises/bottomText";
-import { Colors } from "@/assets/constants";
+import { Colors } from "@/assets/styles/common";
 
 const ExerciseDetailsScreen = () => {
   const { exerciseJSON } = useLocalSearchParams<{ exerciseJSON: string }>();

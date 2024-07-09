@@ -1,4 +1,4 @@
-import { Colors } from "@/assets/constants"
+import { Colors } from "@/assets/styles/common";
 import { useState } from "react"
 import { View, Text, Dimensions } from "react-native"
 import { LineChart } from "react-native-chart-kit"

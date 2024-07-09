@@ -11,7 +11,7 @@ import { ExerciseResult } from "@/assets/components/exercises/ExerciseResult";
 import { removeParenthesesFromExerciseNames } from "@/assets/components/exercises/removeParenthesesFromExerciseName";
 import { FiltersInfo } from "@/assets/components/exercises/FiltersInfo";
 import { ExerciseInfo } from "@/assets/components/exercises/ExerciseInfo";
-import NoBottomCutView from "@/assets/components/food/common/NoBottomCutView";
+import NoBottomCutView from "@/assets/components/common/NoBottomCutView";
 
 const RESULTS_SIZE = 10;
 const RESULTS_OFFSET = 10;

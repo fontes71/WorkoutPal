@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Colors } from "../constants";
+import { Colors } from "@/assets/styles/common";
 
 export const exercise_styles = StyleSheet.create({
     container: {
