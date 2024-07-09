@@ -39,8 +39,8 @@ function getScreenName(path: string): string {
   const name = path.split("/").slice(1)[0]
   let screenName = ""
   switch (name) {
-    case "auth": 
-      screenName = "Auth"
+    case "menu": 
+      screenName = "Menu"
       break
     case "food":
       screenName = "Nutrition"
@@ -50,6 +50,9 @@ function getScreenName(path: string): string {
       break
     case "progress":
       screenName = "Progress"
+      break
+    case "auth": 
+      screenName = "Auth"
       break
   }
 
