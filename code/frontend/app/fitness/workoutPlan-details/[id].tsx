@@ -112,7 +112,7 @@ const WorkoutPlanDetailsScreen = () => {
 
   const handleExercisePress = async (exercise: Exercise) => {
     router.push({
-      pathname: `/exercises/exercise-details/${exercise._id}`,
+      pathname: `/fitness/exercise-details/${exercise._id}`,
       params: { exerciseJSON: JSON.stringify(exercise) },
     });
   };

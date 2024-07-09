@@ -35,9 +35,9 @@ const workoutPlans_styles = StyleSheet.create({
       height: '100%',
     },
     input: {
-      backgroundColor: 'white',
+      backgroundColor: Colors.white,
       height: 43,
-      borderColor: 'gray',
+      borderColor: Colors.gray,
       borderWidth: 1,
       paddingHorizontal: 20,
       marginBottom: 15,

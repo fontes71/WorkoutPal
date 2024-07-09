@@ -2,7 +2,7 @@ import { Modal, FlatList, Pressable } from "react-native";
 import { View, Text } from "react-native";
 import { Stack, router } from "expo-router";
 import { useContext, useEffect, useState } from "react";
-import { localhost } from "@/assets/constants";
+import { Colors, localhost } from "@/assets/constants";
 import modal_styles from "@/assets/styles/modals";
 import { MaterialIcons } from "@expo/vector-icons";
 import { UserContext } from "@/assets/components/auth/AuthContext";
@@ -86,7 +86,7 @@ export default function WorkoutPlansModalScreen({
           <View style={modal_styles.titleContainer}>
             <Text style={modal_styles.title}>Select a Workout Plan</Text>
             <Pressable onPress={onClose}>
-              <MaterialIcons name="close" color="#fff" size={22} />
+              <MaterialIcons name="close" color={Colors.white} size={22} />
             </Pressable>
           </View>
           <View style={workoutPlans_styles.workoutPlansContainer}>

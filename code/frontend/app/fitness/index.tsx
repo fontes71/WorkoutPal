@@ -7,10 +7,10 @@ import { Colors } from "@/assets/constants";
 export default function ExerciseScreen() {
   return (
     <View style={exercise_styles.container}>
-      <Link style={exercise_styles.link} href="/exercises/search-exercise">
+      <Link style={exercise_styles.link} href="/fitness/search-exercise">
         Search Exercises
       </Link>
-      <Link style={exercise_styles.link} href="/exercises/workoutPlans">
+      <Link style={exercise_styles.link} href="/fitness/workoutPlans">
         Workout Plans
       </Link>
     </View>

@@ -79,7 +79,7 @@ export default function WorkoutPlansScreen() {
 
   const handleWorkoutPlanPress = (workoutPlan: WorkoutPlan) => {
     router.push({
-      pathname: `/exercises/workoutPlan-details/${workoutPlan.name}`,
+      pathname: `/fitness/workoutPlan-details/${workoutPlan.name}`,
       params: { workoutPlanJSON: JSON.stringify(workoutPlan) },
     });
   };

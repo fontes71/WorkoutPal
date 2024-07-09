@@ -16,7 +16,7 @@ export default function MainFooter() {
 
   return (
       <View style={styles.footer_container}>
-        <Item name="Exercise" path="exercises" imageSource={dumbbellSource} />
+        <Item name="Fitness" path="fitness" imageSource={dumbbellSource} />
         <View style={styles.vertical_line} />
         <Item name="Nutrition" path="food" imageSource={nutritionSource} />
       </View>

@@ -45,7 +45,7 @@ function getScreenName(path: string): string {
     case "food":
       screenName = "Nutrition"
       break
-    case "exercises": 
+    case "fitness": 
       screenName = "Fitness"
       break
     case "progress":

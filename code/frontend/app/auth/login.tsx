@@ -36,7 +36,7 @@ function LoginScreen() {
 
   return (
     <>
-      { user ? <Redirect href="exercises"/> : 
+      { user ? <Redirect href="fitness"/> : 
         <View style={styles.main_container}>
           <LogoContainer imageStyle={styles.logo_image_login} />
           <LoginContainer />
@@ -121,7 +121,7 @@ function LoginButton({ setResponseError, email, password }: ButtonInfo) {
     setFetching(false);
 
     if (response.ok) {
-      router.push("/exercises");
+      router.push("/fitness");
     } else {
       const body: ResponseError = await response.json();
       setResponseError(body);

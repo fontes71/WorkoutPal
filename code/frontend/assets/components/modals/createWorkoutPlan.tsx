@@ -54,7 +54,7 @@ export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { 
         <View style={modal_styles.titleContainer}>
           <Text style={modal_styles.title}>Create Workout Plan</Text>
           <Pressable onPress={onClose}>
-            <MaterialIcons name="close" size={24} color="#fff" />
+            <MaterialIcons name="close" size={24} color={Colors.white} />
           </Pressable>
         </View>
         <View>
@@ -63,12 +63,14 @@ export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { 
            <TextInput 
               style={workoutPlans_styles.input}
               placeholder="Name"
+              placeholderTextColor={Colors.darkGray}
               value={name}
               onChangeText={setName}
             />
            <TextInput 
               style={workoutPlans_styles.input} 
-              placeholder="Descritpion (Optional)"
+              placeholder={"Description"}
+              placeholderTextColor={Colors.darkGray}
               value={description}
               onChangeText={setDescription}
            />
