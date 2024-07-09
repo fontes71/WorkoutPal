@@ -1,38 +1,14 @@
 import { TouchableOpacity, View, Image, Text } from "react-native";
 import layout_styles from "@/assets/styles/layout";
-import { useRouter } from "expo-router";
-import { FontAwesome } from "@expo/vector-icons";
+import { useRouter, usePathname } from "expo-router";
 import { Colors } from "@/assets/constants";
-import { usePathname } from "expo-router";
 
 type HeaderOptions = {
     readonly isMainScreen: boolean,
     readonly screenName: string
 }
 
-function MainHeader({isMainScreen, screenName}: HeaderOptions) {
-    const router = useRouter()
-    const styles = layout_styles.header_styles
-
-    return (
-        <View style={styles.header_container}>
-            <View style={styles.back_button_container}>
-                { !isMainScreen &&
-                    <TouchableOpacity style={styles.back_button} onPress={router.back}>
-                        <FontAwesome style={styles.back_icon} name="angle-left" />
-                    </TouchableOpacity>
-                }
-            </View>
-            <View style={styles.menu_button_container}>
-                <TouchableOpacity style={styles.menu_button} onPress={() => router.push("/menu/menu")}> 
-                    <Image style={styles.menu_icon} source={require("@images/menu.png")}/>
-                </TouchableOpacity>
-            </View>
-        </View>
-    );
-}
-
-export default function MainHeaderDarkModeTest({isMainScreen, screenName}: HeaderOptions) {
+export default function MainHeader({isMainScreen, screenName}: HeaderOptions) {
     const router = useRouter()
     const path = usePathname()
     const styles = layout_styles.header_styles

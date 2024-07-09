@@ -10,7 +10,7 @@ const generic_styles = StyleSheet.create({
 const footer_styles = StyleSheet.create({
     footer_container: {
         height: "9%",
-        backgroundColor: Colors.white, 
+        backgroundColor: Colors.lightBlack, 
         borderTopLeftRadius: 20, 
         borderTopRightRadius: 20,
         alignItems: "center",
@@ -19,7 +19,7 @@ const footer_styles = StyleSheet.create({
     vertical_line: { 
         width: 1,
         height: '74%', 
-        backgroundColor: 'black' 
+        backgroundColor: Colors.white 
     },
     button_container: {
         width: "50%", 
@@ -33,7 +33,7 @@ const footer_styles = StyleSheet.create({
         height: 25
     },
     button_text: {
-        color: "black",
+        color: Colors.white,
         fontWeight: "500",
         fontSize: 15
     },

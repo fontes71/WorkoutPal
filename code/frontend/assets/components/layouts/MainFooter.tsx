@@ -13,12 +13,14 @@ const styles = layout_styles.footer_styles
 export default function MainFooter() {
   const dumbbellSource = require("@images/dumbbell.png")
   const nutritionSource = require("@images/nutrition.png")
+  const dumbbellWhiteIcon = require("@images/dumbbell_white.png")
+  const nutritionWhiteIcon = require("@images/nutrition_white.png")
 
   return (
       <View style={styles.footer_container}>
-        <Item name="Fitness" path="fitness" imageSource={dumbbellSource} />
+        <Item name="Fitness" path="fitness" imageSource={dumbbellWhiteIcon} />
         <View style={styles.vertical_line} />
-        <Item name="Nutrition" path="food" imageSource={nutritionSource} />
+        <Item name="Nutrition" path="food" imageSource={nutritionWhiteIcon} />
       </View>
   );
 };
