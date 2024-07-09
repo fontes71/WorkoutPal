@@ -1,6 +1,7 @@
-import { router } from "expo-router";
+import { router, usePathname } from "expo-router";
 import { View, Image, Text, TouchableOpacity, ImageSourcePropType } from "react-native";
 import layout_styles from "@/assets/styles/layout";
+import { isMainFitnessScreen, isMainNutritionScreen, splitPath } from "@/assets/functions/layout";
 
 type ItemOptions = {
   readonly name: string,
@@ -11,16 +12,20 @@ type ItemOptions = {
 const styles = layout_styles.footer_styles
 
 export default function MainFooter() {
-  const dumbbellSource = require("@images/dumbbell.png")
-  const nutritionSource = require("@images/nutrition.png")
   const dumbbellWhiteIcon = require("@images/dumbbell_white.png")
   const nutritionWhiteIcon = require("@images/nutrition_white.png")
+  const dumbbellBlueIcon = require("@images/dumbbell_blue.png")
+  const nutritionBlueIcon = require("@images/nutrition_blue.png")
+
+  const path = usePathname()
+  const sp = splitPath(path)
+  const mainScreen = sp[0]
 
   return (
       <View style={styles.footer_container}>
-        <Item name="Fitness" path="fitness" imageSource={dumbbellWhiteIcon} />
+        <Item name="Fitness" path="fitness" imageSource={isMainFitnessScreen(mainScreen) ? dumbbellBlueIcon : dumbbellWhiteIcon} />
         <View style={styles.vertical_line} />
-        <Item name="Nutrition" path="food" imageSource={nutritionWhiteIcon} />
+        <Item name="Nutrition" path="food" imageSource={isMainNutritionScreen(mainScreen) ? nutritionBlueIcon : nutritionWhiteIcon} />
       </View>
   );
 };
