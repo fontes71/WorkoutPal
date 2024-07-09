@@ -182,7 +182,7 @@ export default function WorkoutPlansScreen() {
               />
             </View>
           ) : (
-            <View style={search_exercises_styles.exerciseResultContainer}>
+            <View style={search_exercises_styles.exercisesResultContainer}>
               <Text style={search_exercises_styles.topText}>
                 Loading your workout plans...
               </Text>

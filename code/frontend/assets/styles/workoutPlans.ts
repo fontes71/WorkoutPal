@@ -18,7 +18,13 @@ const workoutPlans_styles = StyleSheet.create({
     },
     workoutPlansResultContainer: {
       flexDirection: "row",
+      padding: 10
+    },
+    workoutPlanResultContainer: {
+      flexDirection: "row",
       padding: 10,
+      borderBottomWidth: 0.2,
+      borderBottomColor: Colors.darkGray,
     },
     workoutPlansResultTextContainer: {
       flex: 1,

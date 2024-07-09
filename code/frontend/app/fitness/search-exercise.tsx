@@ -173,7 +173,7 @@ export default function SearchExerciseScreen() {
           onChangeText={updateExerciseName}
           value={exerciseInfo.exerciseName}
         />
-        <View style={search_exercises_styles.exerciseResultContainer}>
+        <View>
           {exerciseInfo.exercises.length == 0 && !isFetching ? (
             <Text>No results were found</Text>
           ) : (

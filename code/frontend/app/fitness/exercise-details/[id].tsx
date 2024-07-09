@@ -19,7 +19,7 @@ const ExerciseDetailsScreen = () => {
   return (
     <View>
       <Stack.Screen options={{ title: "Details" }} />
-      <View style={search_exercises_styles.exerciseResultContainer}>
+      <View style={search_exercises_styles.exercisesResultContainer}>
         <View style={search_exercises_styles.exerciseResultTextContainer}>
           <Text style={search_exercises_styles.topText}>{exercise.name}</Text>
           <View style={search_exercises_styles.imageContainer}>

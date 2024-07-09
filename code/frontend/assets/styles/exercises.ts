@@ -5,6 +5,7 @@ export const exercise_styles = StyleSheet.create({
     container: {
       flex: 1,
       alignItems: "center",
+      justifyContent: "center",
     },
     title: {
       fontSize: 20,
@@ -13,22 +14,31 @@ export const exercise_styles = StyleSheet.create({
     link: {
       marginTop: 20,
       fontSize: 35,
-      color: Colors.blue
-    },
+      color: Colors.blue,
+      fontWeight: "bold",
+    }
   });
 
 export const search_exercises_styles = StyleSheet.create({
+    exercisesResultContainer: {
+      flexDirection: "row",
+      padding: 10,
+      alignItems: "center",
+      justifyContent: "space-evenly"
+    },
     exerciseResultContainer: {
-        flexDirection: "row",
-        padding: 10,
-        alignItems: "center",
-        justifyContent: "space-evenly",
+      flexDirection: "row",
+      padding: 10,
+      alignItems: "center",
+      justifyContent: "space-evenly",
+      borderBottomWidth: 0.2,
+      borderBottomColor: Colors.darkGray,
     },
     workoutPlansResultContainer: {
-        flex: 1,
-        flexDirection: "column",
-        padding: 10,
-        justifyContent: "flex-start",
+      flex: 1,
+      flexDirection: "column",
+      padding: 10,
+      justifyContent: "flex-start"
     },
     separator: {
       marginVertical: 30,

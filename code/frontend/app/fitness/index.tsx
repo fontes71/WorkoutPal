@@ -1,19 +1,21 @@
 import { Link } from "expo-router";
 import { exercise_styles } from "@/assets/styles/exercises";
 import React from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { Colors } from "@/assets/constants";
-
+import NoBottomCutView from "@/assets/components/food/common/NoBottomCutView";
 export default function ExerciseScreen() {
   return (
-    <View style={exercise_styles.container}>
-      <Link style={exercise_styles.link} href="/fitness/search-exercise">
-        Search Exercises
-      </Link>
-      <Link style={exercise_styles.link} href="/fitness/workoutPlans">
-        Workout Plans
-      </Link>
-    </View>
+    <NoBottomCutView marginBottom={40}>
+      <View style={exercise_styles.container}>
+        <Link style={exercise_styles.link} href="/fitness/search-exercise">
+          Search Exercises
+        </Link>
+        <Link style={exercise_styles.link} href="/fitness/workoutPlans">
+          Workout Plans
+        </Link>
+      </View>
+    </NoBottomCutView>
   )
 }
 
