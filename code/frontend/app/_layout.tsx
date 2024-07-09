@@ -27,7 +27,7 @@ function getLayout(path: string) {
   if (screenName == "Auth") return (
     <AuthLayout />
   ) 
-  if (splitPath.length == 1 && (screenName == "Exercises" || screenName == "Nutrition")) return (
+  if (splitPath.length == 1 && (screenName == "Fitness" || screenName == "Nutrition")) return (
     <MainTabsLayout screenName={screenName}/>
   ) 
   return (
@@ -46,7 +46,7 @@ function getScreenName(path: string): string {
       screenName = "Nutrition"
       break
     case "exercises": 
-      screenName = "Exercises"
+      screenName = "Fitness"
       break
     case "progress":
       screenName = "Progress"
