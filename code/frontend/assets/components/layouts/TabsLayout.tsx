@@ -19,7 +19,7 @@ export default function TabsLayout({screenName}: TabsLayoutOptions) {
             <View style={styles.children_slot}>
                 <Slot />
             </View>
-            <Footer />
+
         </View>
     );
 };
