@@ -95,10 +95,10 @@ export default function WorkoutPlansScreen() {
             onPress={() => {
               handleDeletePress(name, token);
             }}
-            style={{ marginTop: 5 }}
-          >
-            Delete
-          </Button>
+            style={{ marginTop: 5, width: 70, height: 35 }}
+            titleStyle={{ fontSize: 16, alignItems: "center"}}
+            title={"Delete"}
+          />
         </View>
       </View>
     );

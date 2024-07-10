@@ -211,7 +211,7 @@ const WorkoutPlanDetailsScreen = () => {
                 {workoutPlan.name}
               </Text>
               <Text style={search_exercises_styles.topText} />
-              <BottomText str={"Description: " + workoutPlan.description} />
+              <Text style={search_exercises_styles.topText}>{"Description: " + workoutPlan.description}</Text>
               <Text style={search_exercises_styles.topText}></Text>
               <Text style={search_exercises_styles.topText}>Exercises:</Text>
               {exercises.length === 0 && (

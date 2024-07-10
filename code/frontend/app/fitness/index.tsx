@@ -3,19 +3,21 @@ import { exercise_styles } from "@/assets/styles/exercises";
 import React from "react";
 import { View, Text } from "react-native";
 import { Colors } from "@/assets/styles/common";
-import NoBottomCutView from "@/assets/components/common/NoBottomCutView";
+import WorkoutPlansScreen from "./workoutPlans";
 export default function ExerciseScreen() {
   return (
-    <NoBottomCutView marginBottom={40}>
-      <View style={exercise_styles.container}>
+    <View style={exercise_styles.container}>
+      <View style={exercise_styles.linksContainer}>
         <Link style={exercise_styles.link} href="/fitness/search-exercise">
           Search Exercises
         </Link>
-        <Link style={exercise_styles.link} href="/fitness/workoutPlans">
-          Workout Plans
-        </Link>
       </View>
-    </NoBottomCutView>
+      <Text style={exercise_styles.separator}></Text>
+      <View style={exercise_styles.workoutPlansContainer}>
+        <Text style={exercise_styles.title}>Workout Plans</Text> 
+        <WorkoutPlansScreen />
+      </View>
+    </View>
   )
 }
 

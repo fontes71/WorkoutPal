@@ -4,18 +4,37 @@ import { Colors } from "@/assets/styles/common";
 export const exercise_styles = StyleSheet.create({
     container: {
       flex: 1,
+    },
+    linksContainer: {
       alignItems: "center",
-      justifyContent: "center",
+      paddingBottom: 10,
+      justifyContent: "space-evenly",
     },
     title: {
       fontSize: 20,
       fontWeight: "bold",
+      color: Colors.white,
+      textAlign: "center",
+      marginBottom: 10,
+      marginTop: 10,
     },
     link: {
       marginTop: 20,
       fontSize: 35,
       color: Colors.blue,
       fontWeight: "bold",
+    },
+    separator: {
+      marginVertical: 5,
+      height: 1,
+      width: '80%',
+    },
+    workoutPlansContainer: {
+      flex: 1,
+      margin: 15,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: Colors.white,
     }
   });
 
@@ -126,7 +145,7 @@ export const search_exercises_styles = StyleSheet.create({
     detailsContainer: {
         alignItems: "center",
         justifyContent: "space-evenly",
-    },
+    }
 });
 
 export default search_exercises_styles;
