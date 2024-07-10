@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, StyleProp } from 'react-native';
+import { View, Image, StyleProp, KeyboardAvoidingView } from 'react-native';
 import useKeyboardVisibility from '@/assets/functions/useKeyboardVisibility';
 import { ImageStyle } from 'expo-image';
 import styles from '@/assets/styles/auth';

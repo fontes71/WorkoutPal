@@ -45,8 +45,8 @@ export default function Chart({title, dataset, labels, suffix, days}: ChartOptio
 
     const chartConfig = {
         legend: true,
-        backgroundGradientFrom: Colors.lightBlack,
-        backgroundGradientTo: Colors.black,
+        backgroundGradientFrom: Colors.black,
+        backgroundGradientTo: Colors.lightBlack,
         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
 
         decimalPlaces: 0,

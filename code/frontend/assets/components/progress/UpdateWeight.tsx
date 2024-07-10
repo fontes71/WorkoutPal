@@ -35,7 +35,7 @@ export default function UpdateWeight() {
                 />
             </View>
             <View style={{width: "40%", alignItems: "flex-end", justifyContent: "center"}}>
-                <TouchableOpacity disabled={fetching} onPress={updateWeightAction} style={{marginRight: 20, borderRadius: 10, width: "60%", height: 35, paddingHorizontal: 10, backgroundColor: Colors.lightBlue, justifyContent: "center", alignItems: "center"}}>
+                <TouchableOpacity disabled={fetching} onPress={updateWeightAction} style={{marginRight: 20, borderRadius: 10, width: "60%", height: 35, paddingHorizontal: 10, backgroundColor: Colors.blue, justifyContent: "center", alignItems: "center"}}>
                     <Text style={{fontSize: 18, color: Colors.white}}>{!fetching ? "Update" : "..."}</Text>
                 </TouchableOpacity>
             </View>

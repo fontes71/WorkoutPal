@@ -7,8 +7,8 @@ type InvalidChartOptions = {
 
 export default function InvalidChart({message}: InvalidChartOptions) {
     return (
-        <View style={{width: "100%", alignItems: "center", justifyContent: "center", marginBottom: 20}}>
-            <Text style={{fontSize: 20, width: "90%", borderWidth: 2, borderColor: Colors.black, padding: 20}}>{message}</Text>
+        <View style={{width: "100%", alignItems: "center", justifyContent: "center", marginVertical: 20}}>
+            <Text style={{color: Colors.white, fontSize: 20, width: "90%", borderWidth: 2, borderColor: Colors.blue, padding: 20, borderRadius: 10, backgroundColor: Colors.lightBlack}}>{message}</Text>
         </View>
     )
 }
