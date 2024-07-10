@@ -12,7 +12,6 @@ import { Button } from "@rneui/base";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { useContext, useEffect, useState } from "react";
 import {  localhost } from "@/assets/constants";
-import { Colors } from "@/assets/styles/common";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import { BottomText } from "@/assets/components/exercises/bottomText";
 import { removeParenthesesFromExerciseName } from "@/assets/components/exercises/removeParenthesesFromExerciseName";

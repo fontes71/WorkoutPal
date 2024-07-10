@@ -1,6 +1,6 @@
 import { FiltersInfo } from "@/assets/components/exercises/FiltersInfo";
 import { bodyParts, equipments, targets } from "@/assets/components/exercises/filterOptions";
-import { Colors } from "@/assets/constants";
+import { Colors } from "@/assets/styles/common";
 import modal_styles from "@/assets/styles/modals";
 import pickerSelectStyles from "@/assets/styles/pickerSelect";
 import workoutPlans_styles from "@/assets/styles/workoutPlans";

@@ -2,12 +2,13 @@ import { Modal, Pressable, TextInput, StatusBar } from "react-native";
 import { View, Text } from 'react-native';
 import { Stack, router } from "expo-router";
 import { useContext, useEffect, useState } from 'react';
-import { Colors, localhost } from '@/assets/constants';
+import { localhost } from '@/assets/constants';
 import { Button } from '@rneui/base';
 import modal_styles from '@/assets/styles/modals';
 import { MaterialIcons } from '@expo/vector-icons';
 import { UserContext } from '@/assets/components/auth/AuthContext';
 import workoutPlans_styles from '@/assets/styles/workoutPlans';
+import { Colors } from "@/assets/styles/common";
 
 export default function CreateWorkoutPlansModalScreen({ isVisible, onClose }: { isVisible: boolean, onClose: () => void }) {
   const [name, setName] = useState<string>("");
