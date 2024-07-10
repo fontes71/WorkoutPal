@@ -16,12 +16,16 @@ import NoBottomCutView from "@/assets/components/common/NoBottomCutView";
 import workoutPlans_styles from "@/assets/styles/workoutPlans";
 import { BottomText } from "@/assets/components/exercises/bottomText";
 import { Button } from "@rneui/base";
+import { set } from "date-fns";
 
 export default function WorkoutPlansScreen() {
   const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>([]);
   const [token, setToken] = useState<string>("");
+
   const [modalVisible, setModalVisible] = useState(false);
+  const [reload, setReload] = useState(false);
   const [loaded, setLoaded] = useState(false);
+
   const { userContext } = useContext(UserContext);
 
   useEffect(() => {
@@ -72,10 +76,11 @@ export default function WorkoutPlansScreen() {
   };
 
   useEffect(() => {
-    if (modalVisible == false) {
+    if (reload == true) {
+      setReload(false);
       handleReload(token);
     }
-  }, [modalVisible]);
+  }, [reload]);
 
   const handleWorkoutPlanPress = (workoutPlan: WorkoutPlan) => {
     router.push({
@@ -205,7 +210,7 @@ export default function WorkoutPlansScreen() {
               <CreateWorkoutPlansModalScreen
                 isVisible={modalVisible}
                 onClose={() => {
-                  setModalVisible(false);
+                  setModalVisible(false); setReload(true);
                 }}
               />
             </View>
