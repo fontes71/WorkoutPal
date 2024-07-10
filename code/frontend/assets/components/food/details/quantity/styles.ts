@@ -1,16 +1,17 @@
+import { Colors } from "@/assets/styles/common";
 import { StyleSheet } from "react-native";
-
 const styles = StyleSheet.create({
   quantityContainer: {
     height: 90,
     alignItems: "center",
     justifyContent: "center",
     borderBottomWidth: 1,
-    borderColor: "#dadada",
+    borderColor: Colors.darkGray,
     flexDirection: "row",
   },
   text_small: {
     fontSize: 16,
+    color: Colors.blue
   },
   modalContent: {
     justifyContent: "center",

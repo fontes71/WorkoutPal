@@ -9,17 +9,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.2,
     borderBottomColor: Colors.darkGray,
     
-  },
-  nutrientWrapper: {
-    alignItems: 'center'
-  },
-  nutrientValue: {
-    color:Colors.white
-  },
-  nutrient: {
-    color: Colors.darkGray
-    
-  },
+  }
 });
 
 export default styles;

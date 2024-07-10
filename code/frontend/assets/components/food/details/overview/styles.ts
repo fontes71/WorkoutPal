@@ -1,3 +1,4 @@
+import { Colors } from "@/assets/styles/common";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -6,7 +7,7 @@ export const styles = StyleSheet.create({
       padding: 20,
       borderTopWidth: 1,
       borderBottomWidth: 1,
-      borderColor: "#dadada",
+      borderColor: Colors.darkGray,
     },
   });
   

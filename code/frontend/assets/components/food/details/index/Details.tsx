@@ -22,7 +22,7 @@ const Details: React.FC<DetailsProps> = ({ user, food, hook }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}> {food.name}</Text>
+      <Text style={styles.title}>{food.name}</Text>
       <Overview
         food={food}
         quantity={quantity}
@@ -42,7 +42,7 @@ const Button: React.FC<ButtonProps> = ({ hook }) => (
   <TouchableOpacity style={styles.button} onPress={hook}>
   <Image
     source={require("@/assets/images/save.png")}
-    style={{ marginRight: 0 }}
+    style={styles.buttonImg}
   />
 </TouchableOpacity>
 </View>

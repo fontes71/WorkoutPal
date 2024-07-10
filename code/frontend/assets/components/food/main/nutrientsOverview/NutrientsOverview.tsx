@@ -1,6 +1,7 @@
 import styles from "./styles";
 import { Text, View } from "react-native";
 import getNutrients from "./utils";
+import Nutrient from "../../common/nutrient/Nutrient";
 
 const NutrientsOverview: React.FC<NutrientsOverviewProps> = ({ food }) => {
   const { calories, protein, carbs, fat } = getNutrients(food);
@@ -15,17 +16,6 @@ const NutrientsOverview: React.FC<NutrientsOverviewProps> = ({ food }) => {
   );
 };
 
-type NutrientProps = {
-  nutrientValue: number;
-  nutrient: string;
-  unit: string
-};
 
-const Nutrient: React.FC<NutrientProps> = ({ nutrientValue, nutrient, unit }) => (
-  <View style={styles.nutrientWrapper}>
-    <Text style={styles.nutrientValue}>{Math.round(nutrientValue)}{unit}</Text>
-    <Text style={styles.nutrient}>{nutrient}</Text>
-  </View>
-);
 
 export default NutrientsOverview;

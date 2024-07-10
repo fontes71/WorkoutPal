@@ -1,21 +1,25 @@
+import { Colors } from "@/assets/styles/common";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  overviewText: {
+  mainNutrientsContainer: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "space-evenly",
     height: 90,
   },
   macronutrientsContainer: {
+    flex:1,
     flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: 'center'
   },
-  text_medium: {
-    fontSize: 18,
+  text: {
+    color: Colors.white,
+    fontSize: 15
   },
-  text_small: {
-    fontSize: 16,
+  caloriesWrapper: {
+    alignItems: 'center'
   }
+ 
 })
 
 export default styles

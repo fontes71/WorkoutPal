@@ -1,20 +1,19 @@
-import round from "@/assets/functions/round";
 import styles from "./styles";
 import { Text, View } from "react-native";
+import Nutrient from "../../common/nutrient/Nutrient";
 
 const MainNutrientsDisplay: React.FC<MainNutrientsDisplayProps> = ({ mainNutrients }) => (
-  <View style={styles.overviewText}>
-    <Text style={styles.text_medium}> {Math.round(mainNutrients.calories)} cal </Text>
+  <View style={styles.mainNutrientsContainer}>
+    <View style={styles.caloriesWrapper}>
+    <Text style={styles.text}> {Math.round(mainNutrients.calories)} cal </Text>
+    </View>
     <View style={styles.macronutrientsContainer}>
-      <MainNutrient nutrient={mainNutrients.carbs} />
-      <MainNutrient nutrient={mainNutrients.fat} />
-      <MainNutrient nutrient={mainNutrients.protein} />
+      <Nutrient nutrientValue={mainNutrients.protein.value} nutrient={"protein"} unit="g"/>
+      <Nutrient nutrientValue={mainNutrients.carbs.value} nutrient={"carbs"} unit="g"/>
+      <Nutrient nutrientValue={mainNutrients.fat.value} nutrient={"fat"} unit="g" />
     </View>
   </View>
 );
 
-const MainNutrient: React.FC<MainNutrientProps> = ({ nutrient }) => (
-  <Text style={styles.text_small}> {round(nutrient.value)}{nutrient?.unit} </Text>
-);
 
 export default MainNutrientsDisplay;
