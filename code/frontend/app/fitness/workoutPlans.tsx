@@ -9,7 +9,6 @@ import { Text, View } from "react-native";
 import { Stack, router } from "expo-router";
 import { useState, useEffect, useContext } from "react";
 import {  localhost } from "@/assets/constants";
-import { Colors } from "@/assets/styles/common";
 import search_exercises_styles from "@/assets/styles/exercises";
 import CreateWorkoutPlansModalScreen from "@/assets/components/modals/createWorkoutPlan";
 import { UserContext } from "@/assets/components/auth/AuthContext";

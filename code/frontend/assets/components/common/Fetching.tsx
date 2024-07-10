@@ -1,4 +1,4 @@
-import { Colors } from "@/assets/constants";
+import { Colors } from "@/assets/styles/common";
 import { View } from "react-native";
 
 import Spinner from 'react-native-loading-spinner-overlay';
