@@ -3,6 +3,7 @@ import { Colors } from "@/assets/styles/common";
 
 const auth_styles = StyleSheet.create({
     main_container: {
+        flex: 1,
         marginTop: 0
     },
     show_password_button: {
@@ -21,7 +22,7 @@ const auth_styles = StyleSheet.create({
         alignSelf: "flex-end"
     },
     horizontal_line: { 
-        borderBottomColor: 'black', 
+        borderBottomColor: Colors.white, 
         borderBottomWidth: 1,
         marginTop: 10
     },
@@ -31,9 +32,8 @@ const auth_styles = StyleSheet.create({
         paddingBottom: 40
     },
     logo_image_login: {
-        marginTop: 30,
-        width: 280,
-        height: 234,
+        width: 238,
+        height: 206,
         alignSelf: 'center'
     },
     logo_image_signup: {
@@ -42,9 +42,10 @@ const auth_styles = StyleSheet.create({
         alignSelf: 'center'
     },
     login_container: {
+        flex: 1,
         paddingHorizontal: 30,
-        height: '100%',
-        backgroundColor: '#1F2123'
+        backgroundColor: '#1F2123',
+        justifyContent: 'center',
     },
     text: {
         textAlign: 'center',
