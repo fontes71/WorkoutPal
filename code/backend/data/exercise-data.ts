@@ -269,9 +269,7 @@ export class ExerciseData implements IExerciseData {
       exercises.push(exercise);
     });
 
-    await mongodbHandler(async () => {
-      await ExerciseModel.deleteMany({});
-      await ExerciseModel.insertMany(exercises);
-    });
+    await ExerciseModel.deleteMany({});
+    await ExerciseModel.insertMany(exercises);
   }
 }

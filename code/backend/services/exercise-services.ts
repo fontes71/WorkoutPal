@@ -176,6 +176,12 @@ export class ExerciseServices implements IExerciseServices {
     });
   }
 
+  cloneExerciseDB = async () => {
+      return transactionHandler(async () => {
+        await this.data.cloneExerciseDB();
+      });
+  }
+
   cloneExerciseDBScheduler() {
     cron.schedule("0 0 0 * * *", () => {
       this.data.cloneExerciseDB();

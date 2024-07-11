@@ -61,6 +61,7 @@ export interface IExerciseServices {
   logWorkoutPlan(token: string, workoutPlan: string): Promise<WorkoutPlan>;
   getDailyLoggedWorkoutPlans(token: string, day: string): Promise<Array<string>>;
   getExercisesFromWorkoutPlan(token: string, workoutPlanName: string): Promise<Array<Exercise>>;
+  cloneExerciseDB(): void;
   cloneExerciseDBScheduler(): void;
 }
 
