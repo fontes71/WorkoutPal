@@ -6,6 +6,7 @@ export const onClose = (closeModal: () => void, setCurrentQuantity: React.Dispat
 export  const inputOnChange = (value:string, currentQuantity: CurrentQuantity, setCurrentQuantity: React.Dispatch<React.SetStateAction<CurrentQuantity>> ) => {
     const newValue = value && value.length > 0 ? parseInt(value) : 0
 
+    if (newValue < 1000000)
     setCurrentQuantity({ ...currentQuantity, value: newValue })
   }
   

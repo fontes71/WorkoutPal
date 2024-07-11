@@ -72,7 +72,7 @@ const Buttons: React.FC<ButtonsProps> = ({ closeModal, handleSubmit }) => (
       <Text>Exit</Text>
       </TouchableOpacity>
     <TouchableOpacity onPress={handleSubmit} style={styles.saveButton}>
-       <Text>Save</Text>
+       <Text style={styles.saveButtonText}>Save</Text>
        </TouchableOpacity>
   </View>
 )

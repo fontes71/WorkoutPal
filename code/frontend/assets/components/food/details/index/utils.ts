@@ -6,8 +6,8 @@ import { FoodDetailsHookType } from "./types";
 
 export const getFood = () => {
   const { foodJSON } = useLocalSearchParams<{ foodJSON: string }>();
-  if (!foodJSON) return null;
-  return JSON.parse(foodJSON) as Food;
+  
+  return JSON.parse(foodJSON as string);
 };
 
 export const getHookType = () => {
@@ -65,9 +65,7 @@ const getProportion = (oldQuantity: ValueAndUnit, newQuantity: ValueAndUnit) => 
 }
 
 const getQuantityInBaseUnit = (quantity: ValueAndUnit) => {
-  const conversionValue = UNIT_VALUES.find((item) => item.value === quantity.unit)?.conversionValue;
-  if (!conversionValue )
-    throw Error
+  const conversionValue = UNIT_VALUES.find((item) => item.value === quantity.unit)?.conversionValue as number;
   return quantity.value * conversionValue
 }
 

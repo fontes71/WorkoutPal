@@ -16,17 +16,19 @@ const styles = StyleSheet.create({
   modalContent: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
-    borderColor: "#000",
-    borderWidth: 1,
+    backgroundColor: Colors.lightBlack,
+    borderColor: Colors.white,
+    borderWidth: 0.2,
     height: 150,
     borderRadius: 10
   },
   input: {
-    borderColor: 'gray',
-    borderRadius: 5,
-    borderWidth: 1,
-    padding: 10,
+    color: Colors.white,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.white,
+    fontSize: 15,
+    width:55,
+    marginRight: 10
 
   },
   inputsWrapper: {
@@ -35,19 +37,32 @@ const styles = StyleSheet.create({
   },
   buttonsWrapper: {
     flexDirection: 'row',
-    marginTop: 10
+    marginTop: 20
   },
   exitButton: {
     elevation: 8,
-    backgroundColor: 'red',
+    backgroundColor: Colors.white,
     paddingVertical: 10,
-    paddingHorizontal: 12
+    paddingHorizontal: 12,
+    marginRight: 8,
+    borderRadius: 8,
+    width: 60,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   saveButton: {
     elevation: 8,
-    backgroundColor: '#009688',
+    backgroundColor: Colors.blue,
     paddingVertical: 10,
-    paddingHorizontal: 12
+    paddingHorizontal: 12,
+    marginLeft: 8,
+    borderRadius: 8,
+    width: 60,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  saveButtonText: {
+    color: Colors.white,
   }
 })
 

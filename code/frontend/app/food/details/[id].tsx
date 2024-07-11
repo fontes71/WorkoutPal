@@ -14,11 +14,11 @@ export default function FoodDetailsScreen() {
   const { userContext } = useContext(UserContext);
   const food = getFood();
   const hookType = getHookType()
-  if (!food || !userContext) throw Error;
+
 
   const update = (token: string | undefined, food: Food, quantity: ValueAndUnit, mainNutrients: MainNutrients, secondaryNutrients: SecondaryNutrients) =>  updateHook(token, food, quantity, mainNutrients, secondaryNutrients, logIndex as string)
   
   const hook = hookType == FoodDetailsHookType.Log ? logHook : update
   
-  return <Details user={userContext} food={food} hook={hook}/>;
+  return <Details user={userContext as User} food={food} hook={hook}/>;
 }
