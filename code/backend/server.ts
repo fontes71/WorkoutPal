@@ -41,7 +41,7 @@ const progressServices = new ProgressServices(progressData, userData)
 const progressApi = new ProgressApi(progressServices)
 
 
-const port = 8080;
+const port = 3000;
 
 const app = express();
 
@@ -106,7 +106,7 @@ process.on("SIGINT", cleanup);
 process.on("SIGTERM", cleanup);
 process.on("SIGHUP", cleanup);
 
-app.listen(8080, () => {
+app.listen(3000, () => {
   console.log(`Listening...\nhttp://localhost:` + port);
   exerciseServices.cloneExerciseDBScheduler();
 });
