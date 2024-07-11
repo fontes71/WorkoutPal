@@ -20,7 +20,6 @@ const FoodMain = () => {
     <View style={styles.container}>
       <NutrientsOverview food={food}/>
       <LoggedFood food={food} setFood={setFood}/>
-      <AddFoodLink />
     </View>
   );
 }

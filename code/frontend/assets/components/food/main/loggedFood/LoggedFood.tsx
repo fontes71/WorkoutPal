@@ -1,8 +1,9 @@
-import { Alert, Pressable, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Alert, FlatList, Pressable, Text, TouchableWithoutFeedback, View } from "react-native";
 import { useContext } from "react";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import { deleteAction, handlePress } from "./utils";
 import styles from "./styles";
+import AddFoodLink from "../addFoodLink/AddFoodLink";
 
 const LoggedFood: React.FC<ConsumedFoodProps> = ({ food, setFood }) => {
   const { userContext } = useContext(UserContext);
@@ -14,12 +15,18 @@ const LoggedFood: React.FC<ConsumedFoodProps> = ({ food, setFood }) => {
   return (
   <>
     {food && (
-      <View>
-        {food.map((item, index) => (
-          <Pressable onPress={() => handlePress(item, index)} key={index} onLongPress={() => handleLongPress(userContext?.token, index, setFood)}> 
+      <View style={styles.container}>
+          <FlatList
+          data={food}
+          keyExtractor={(_, index) => String(index)}
+          renderItem={({ item, index }) => (
+            <Pressable onPress={() => handlePress(item, index)} key={index} onLongPress={() => handleLongPress(userContext?.token, index, setFood)}> 
             <FoodLog log={item} />
           </Pressable>
-        ))}
+          )}
+          ListFooterComponent={<AddFoodLink />}
+          />
+
       </View>
     )}
   </>

@@ -20,6 +20,9 @@ const styles = StyleSheet.create({
     },
     logCalories: {
         color: Colors.darkGray,
+    },
+    container: {
+        flex: 1
     }
 });
 
