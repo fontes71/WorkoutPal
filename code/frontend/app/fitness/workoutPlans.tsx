@@ -5,7 +5,7 @@ import {
   RefreshControl,
   TouchableOpacity,
 } from "react-native";
-import { Text, View } from "react-native";
+import { Text, View, Image } from "react-native";
 import { Stack, router } from "expo-router";
 import { useState, useEffect, useContext } from "react";
 import {  localhost } from "@/assets/constants";
@@ -13,10 +13,7 @@ import search_exercises_styles from "@/assets/styles/exercises";
 import CreateWorkoutPlansModalScreen from "@/assets/components/modals/createWorkoutPlan";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import NoBottomCutView from "@/assets/components/common/NoBottomCutView";
-import workoutPlans_styles from "@/assets/styles/workoutPlans";
-import { BottomText } from "@/assets/components/exercises/bottomText";
-import { Button } from "@rneui/base";
-import { set } from "date-fns";
+import { Colors } from "@/assets/styles/common";
 
 export default function WorkoutPlansScreen() {
   const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>([]);
@@ -89,21 +86,18 @@ export default function WorkoutPlansScreen() {
     });
   };
 
-  const WorkoutPlanResult: React.FC<any> = ({ name, description }) => {
+  const WorkoutPlanResult: React.FC<any> = ({ name }) => {
     return (
-      <View style={workoutPlans_styles.workoutPlansResultContainer}>
-        <View style={workoutPlans_styles.workoutPlansResultTextContainer}>
-          <Text style={workoutPlans_styles.topText}>{name}</Text>
-          <BottomText str={"Description: " + description} />
-          <Button
-            color={"error"}
-            onPress={() => {
-              handleDeletePress(name, token);
-            }}
-            style={{ marginTop: 5, width: 70, height: 35 }}
-            titleStyle={{ fontSize: 16, alignItems: "center"}}
-            title={"Delete"}
-          />
+      <View style={{alignItems: "center"}}>
+        <View style={search_exercises_styles.itemsContainer}>
+            <View style={search_exercises_styles.itemsImageAndTextContainer}>
+                <Text style={search_exercises_styles.itemsText}>{name}</Text>
+            </View>
+            <View style={search_exercises_styles.itemsRemoveButtonContainer}>
+                <TouchableOpacity onPress={() => handleDeletePress(name, token)}>
+                  <Image style={search_exercises_styles.itemsRemoveImage} source={require("@images/minus_circle.png")}/>
+                </TouchableOpacity>
+            </View>
         </View>
       </View>
     );

@@ -55,9 +55,7 @@ export const search_exercises_styles = StyleSheet.create({
     },
     workoutPlansResultContainer: {
       flex: 1,
-      flexDirection: "column",
-      padding: 10,
-      justifyContent: "flex-start"
+      padding: 10
     },
     separator: {
       marginVertical: 30,
@@ -85,10 +83,10 @@ export const search_exercises_styles = StyleSheet.create({
     },
     floatingButton: {
         position: 'absolute',
-        bottom: 20,
-        right: 20,
-        width: 60,
-        height: 60,
+        bottom: 10,
+        right: 5,
+        width: 50,
+        height: 50,
         backgroundColor: Colors.blue,
         borderRadius: 30,
         alignItems: 'center',
@@ -97,8 +95,8 @@ export const search_exercises_styles = StyleSheet.create({
     },
     floatingButtonText: {
         color: 'white',
-        fontSize: 30,
-        lineHeight: 30,
+        fontSize: 25,
+        lineHeight: 25,
     },
     filtersFloatingButton: {
         position: 'absolute',
@@ -145,6 +143,48 @@ export const search_exercises_styles = StyleSheet.create({
     detailsContainer: {
         alignItems: "center",
         justifyContent: "space-evenly",
+    },
+    itemsContainer: {
+      backgroundColor: Colors.lightBlack, 
+      height: 70, 
+      marginTop: 20, 
+      width: "90%", 
+      flexDirection: "row", 
+      justifyContent: "center",
+      borderRadius: 10
+    },
+    itemsImageAndTextContainer: {
+      width: "70%", 
+      height: "100%", 
+      alignItems: "center", 
+      justifyContent: "center", 
+      flexDirection: "row"
+    },
+    itemsImage: {
+      width: 35, 
+      height: 35
+    },
+    itemsText: {
+      fontSize: 18, 
+      color: Colors.white, 
+      fontWeight: "bold",
+      marginLeft: 20
+    },
+    itemsRemoveButtonContainer: {
+      width: "30%", 
+      justifyContent: "center",
+    },
+    itemsRemoveImage: {
+      width: 25, 
+      height: 25,
+      marginRight: 20
+    },
+    exercisesContainer: {
+      flex: 1,
+      margin: 15,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: Colors.white,
     }
 });
 
