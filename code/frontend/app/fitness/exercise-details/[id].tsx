@@ -1,7 +1,7 @@
 import { Image, Text, View } from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { Button } from "@rneui/base";
-import search_exercises_styles from "@/assets/styles/exercises";
+import exercise_screen_styles from "@/assets/styles/exercises";
 import WorkoutPlansModalScreen from "@/assets/components/modals/workoutPlan";
 import { useState } from "react";
 import { BottomText } from "@/assets/components/exercises/bottomText";
@@ -19,13 +19,13 @@ const ExerciseDetailsScreen = () => {
   return (
     <View>
       <Stack.Screen options={{ title: "Details" }} />
-      <View style={search_exercises_styles.exercisesResultContainer}>
-        <View style={search_exercises_styles.exerciseResultTextContainer}>
-          <Text style={search_exercises_styles.topText}>{exercise.name}</Text>
-          <View style={search_exercises_styles.imageContainer}>
+      <View style={exercise_screen_styles.exercisesResultContainer}>
+        <View style={exercise_screen_styles.exerciseResultTextContainer}>
+          <Text style={exercise_screen_styles.topText}>{exercise.name}</Text>
+          <View style={exercise_screen_styles.imageContainer}>
             {exercise.gifUrl && (
               <Image
-                style={search_exercises_styles.exerciseGifResult}
+                style={exercise_screen_styles.exerciseGifResult}
                 source={{ uri: exercise.gifUrl }}
               />
             )}
@@ -36,10 +36,10 @@ const ExerciseDetailsScreen = () => {
           <BottomText
             str={"Secondary Muscles: " + exercise.secondaryMuscles.join(", ")}
           />
-          <Text style={search_exercises_styles.topText}></Text>
-          <Text style={search_exercises_styles.topText}>Instructions:</Text>
+          <Text style={exercise_screen_styles.topText}></Text>
+          <Text style={exercise_screen_styles.topText}>Instructions:</Text>
           {exercise.instructions.map((instruction, index) => (
-            <Text key={index} style={search_exercises_styles.bottomText}>
+            <Text key={index} style={exercise_screen_styles.bottomText}>
               {instruction}
             </Text>
           ))}

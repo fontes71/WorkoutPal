@@ -16,6 +16,7 @@ import { UserContext } from "@/assets/components/auth/AuthContext";
 import { BottomText } from "@/assets/components/exercises/bottomText";
 import { removeParenthesesFromExerciseName } from "@/assets/components/exercises/removeParenthesesFromExerciseName";
 import NoBottomCutView from "@/assets/components/common/NoBottomCutView";
+import { Colors } from "@/assets/styles/common";
 
 const WorkoutPlanDetailsScreen = () => {
   const { workoutPlanJSON: workoutPlanJSON } = useLocalSearchParams<{
@@ -121,28 +122,26 @@ const WorkoutPlanDetailsScreen = () => {
     _id,
     name,
     gifUrl,
-    equipment,
+    target,
   }) => {
     return (
-      <View style={search_exercises_styles.exerciseResultTextContainer}>
-        <View style={search_exercises_styles.imageContainer}>
-          {gifUrl && (
-            <Image
-              style={search_exercises_styles.exerciseGifResult}
-              source={{ uri: gifUrl }}
-            />
-          )}
+      <View style={{alignItems: "center", paddingHorizontal: 10}}>
+        <View style={{ backgroundColor: Colors.lightBlack, height: 70, marginTop: 20, width: "100%", flexDirection: "row", borderRadius: 10, justifyContent: "center" }}>
+          <View style={{ width: "100%", height: "100%", alignItems: "center", flexDirection: "row" }}>
+            <View style={{ width: "17%", paddingLeft: "10%", paddingRight: "20%"}}>
+              {gifUrl && (
+                <Image
+                  style={{ width: 50, height: 50 }}
+                  source={{ uri: gifUrl }}
+                />
+              )}
+            </View>
+            <View style={{flexDirection: "column", alignItems: "center", width: "63%", justifyContent: "center"}}>
+              <Text style={{ fontSize: 14, color: Colors.white, fontWeight: "bold" }}>{name}</Text>
+              <Text style={{ fontSize: 14, color: Colors.white }}>{target}</Text>
+            </View>
+          </View>
         </View>
-        <Text style={search_exercises_styles.bottomText}>{name}</Text>
-        <BottomText str={"Equipment: " + equipment} />
-        <Button
-          color={"error"}
-          onPress={() => {
-            handleDeletePress(workoutPlan.name, _id, token);
-          }}
-        >
-          Delete
-        </Button>
       </View>
     );
   };
@@ -207,33 +206,38 @@ const WorkoutPlanDetailsScreen = () => {
         <View style={search_exercises_styles.workoutPlansResultContainer}>
           {loaded ? (
             <View style={search_exercises_styles.exerciseResultTextContainer}>
-              <Text style={search_exercises_styles.topText}>
+              <Text style={search_exercises_styles.title}>
                 {workoutPlan.name}
               </Text>
-              <Text style={search_exercises_styles.topText} />
-              <Text style={search_exercises_styles.topText}>{"Description: " + workoutPlan.description}</Text>
+              <Text style={search_exercises_styles.bottomText}>{"  " + workoutPlan.description}</Text>
+              <Text style={search_exercises_styles.topText}></Text>
               <Text style={search_exercises_styles.topText}></Text>
               <Text style={search_exercises_styles.topText}>Exercises:</Text>
-              {exercises.length === 0 && (
-                <Text style={search_exercises_styles.bottomText}>
-                  No exercises added yet
-                </Text>
-              )}
-              <FlatList
-                data={exercises}
-                renderItem={({ item }) => (
-                  <Pressable
-                    onPress={() => {
-                      handleExercisePress(item);
-                    }}
-                  >
-                    <ExerciseResult {...item} />
-                  </Pressable>
+              <View style={{flex: 1, borderRadius: 10, borderColor: Colors.white, borderWidth: 1}}>
+                {exercises.length === 0 && (
+                  <Text style={search_exercises_styles.bottomText}>
+                    No exercises added yet
+                  </Text>
                 )}
-                keyExtractor={(item: Exercise) => item._id}
-                contentContainerStyle={{ paddingBottom: 40 }}
-                onEndReachedThreshold={0.4}
-              />
+                <FlatList
+                  data={exercises}
+                  renderItem={({ item }) => (
+                    <Pressable
+                      onPress={() => {
+                        handleExercisePress(item);
+                      }}
+                      onLongPress={() => {
+                        handleDeletePress(workoutPlan.name, item._id, token);
+                      }}
+                    >
+                      <ExerciseResult {...item} />
+                    </Pressable>
+                  )}
+                  keyExtractor={(item: Exercise) => item._id}
+                  contentContainerStyle={{ paddingBottom: 40 }}
+                  onEndReachedThreshold={0.4}
+                />
+              </View>
             </View>
           ) : (
             <View style={search_exercises_styles.exerciseResultTextContainer}>

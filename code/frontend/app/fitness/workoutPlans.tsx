@@ -190,12 +190,12 @@ export default function WorkoutPlansScreen() {
           {loaded ? (
             <View>
               <TouchableOpacity
-                style={search_exercises_styles.floatingButton}
+                style={search_exercises_styles.workoutPlansfloatingButton}
                 onPress={() => {
                   setModalVisible(true);
                 }}
               >
-                <Text style={search_exercises_styles.floatingButtonText}>
+                <Text style={search_exercises_styles.workoutPlansfloatingButtonText}>
                   +
                 </Text>
               </TouchableOpacity>
