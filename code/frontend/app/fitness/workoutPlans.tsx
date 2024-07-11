@@ -93,11 +93,6 @@ export default function WorkoutPlansScreen() {
             <View style={search_exercises_styles.itemsImageAndTextContainer}>
                 <Text style={search_exercises_styles.itemsText}>{name}</Text>
             </View>
-            <View style={search_exercises_styles.itemsRemoveButtonContainer}>
-                <TouchableOpacity onPress={() => handleDeletePress(name, token)}>
-                  <Image style={search_exercises_styles.itemsRemoveImage} source={require("@images/minus_circle.png")}/>
-                </TouchableOpacity>
-            </View>
         </View>
       </View>
     );
@@ -165,6 +160,9 @@ export default function WorkoutPlansScreen() {
                   <Pressable
                     onPress={() => {
                       handleWorkoutPlanPress(item);
+                    }}
+                    onLongPress={() => {
+                      handleDeletePress(item.name, token);
                     }}
                   >
                     <WorkoutPlanResult {...item} />

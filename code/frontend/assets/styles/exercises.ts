@@ -167,8 +167,7 @@ export const search_exercises_styles = StyleSheet.create({
     itemsText: {
       fontSize: 18, 
       color: Colors.white, 
-      fontWeight: "bold",
-      marginLeft: 20
+      fontWeight: "bold"
     },
     itemsRemoveButtonContainer: {
       width: "30%", 
