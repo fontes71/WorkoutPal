@@ -43,7 +43,7 @@ export const search_exercises_styles = StyleSheet.create({
       flexDirection: "row",
       padding: 10,
       alignItems: "center",
-      justifyContent: "space-evenly"
+      justifyContent: "space-evenly",
     },
     exerciseResultContainer: {
       flexDirection: "row",
@@ -66,13 +66,13 @@ export const search_exercises_styles = StyleSheet.create({
         justifyContent: "center",
     },
     exerciseGifResult: {
-        flex: 1
+        width: 150,
+        height: 150,
     },
     exerciseResultTextContainer: {
         flex: 1,
         paddingHorizontal: 20,
         flexDirection: "column",
-        alignItems: "center",
         justifyContent: "space-evenly",
         marginBottom: 20,
     },
@@ -200,27 +200,9 @@ export const search_exercises_styles = StyleSheet.create({
 
 export const exercise_screen_styles = StyleSheet.create({
   exercisesResultContainer: {
-    flexDirection: "row",
     padding: 10,
     alignItems: "center",
     justifyContent: "space-evenly"
-  },
-  exerciseResultContainer: {
-    flexDirection: "row",
-    padding: 10,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    borderBottomWidth: 0.2,
-    borderBottomColor: Colors.darkGray,
-  },
-  workoutPlansResultContainer: {
-    flex: 1,
-    padding: 10
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
   imageContainer: {
       justifyContent: "center",

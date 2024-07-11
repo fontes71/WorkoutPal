@@ -5,6 +5,7 @@ import { apiErrorHandler, sendResponse } from "../utils/functions/api";
 import { ParamsDictionary } from "express-serve-static-core";
 import { ParsedQs } from "qs";
 import { StatusCode } from "../domain/api";
+import { transactionHandler } from "../utils/functions/data";
 
 export class ExerciseApi implements IExerciseApi {
   private service: IExerciseServices;
@@ -182,9 +183,9 @@ export class ExerciseApi implements IExerciseApi {
       });
   }
 
-  cloneExerciseDB = (req: Request, res: Response) => {
-    apiErrorHandler(res, async () => {
-      this.data.cloneExerciseDB();
+  cloneExerciseDB = async (req: Request, res: Response) => {
+    await apiErrorHandler(res, async () => {
+      await this.service.cloneExerciseDB();
       res.sendStatus(200)
     });
   }
