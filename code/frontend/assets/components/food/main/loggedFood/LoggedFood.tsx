@@ -35,7 +35,7 @@ const FoodLog: React.FC<FoodLogProps> = ({ log }) => (
       <Text style={styles.logQuantity} >{log.quantity.value.toString() + log.quantity.unit}</Text>
     </View>
     <View>
-      <Text style={styles.logCalories}>{log.mainNutrients.calories}</Text>
+      <Text style={styles.logCalories}>{Math.round(log.mainNutrients.calories)}</Text>
     </View>
   </View>
 )

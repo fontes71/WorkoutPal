@@ -14,4 +14,5 @@ export class InvalidBarcodeError extends AppError {}
 export class NoItemToDeleteError extends AppError {}
 export class InvalidLoggedFoodIndexError extends AppError {}
 export class InvalidDateError extends AppError {}
+export class InvalidQuantityError extends AppError {}
 export class InvalidLogIndexError extends AppError {}

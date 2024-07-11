@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Food } from "../domain/types";
 import { IFoodApi, IFoodServices } from "../domain/interfaces";
-import { InvalidDateError, InvalidLogIndexError, InvalidParamsError } from "../errors/app_errors";
+import { InvalidDateError, InvalidLogIndexError, InvalidParamsError, InvalidQuantityError } from "../errors/app_errors";
 import { apiErrorHandler, getToken, sendResponse } from "../utils/functions/api";
 import { StatusCode } from "../domain/api";
 import isValidDate from "../utils/functions/app/isValidDate";
@@ -53,6 +53,9 @@ export class FoodApi implements IFoodApi {
       if (!isValidDate(date))
         throw InvalidDateError
 
+      if (foodItem.quantity.value < 0)
+        throw InvalidQuantityError
+
       const food = await this.service.log(
         token,
         foodItem,
@@ -77,6 +80,10 @@ export class FoodApi implements IFoodApi {
 
       if (!isValidDate(date))
         throw InvalidDateError
+
+      
+      if (foodItem.quantity.value < 0)
+        throw InvalidQuantityError
 
       const food = await this.service.updateLog(
         token,

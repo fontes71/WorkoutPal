@@ -15,6 +15,7 @@ const errorsMap: Record<string, HttpError> = {
   'InvalidBarcodeError': { code: 400, status: 'BAD_REQUEST', message: 'Invalid barcode value' },
   'InvalidParamsError': { code: 400, status: 'BAD_REQUEST', message: 'Missing or invalid parameters' },
   'InvalidCredentialsError': { code: 400, status: 'BAD_REQUEST', message: 'Invalid Credentials' },
+  'InvalidQuantityError': { code: 400, status: 'BAD_REQUEST', message: 'Quantity must be a number above zero' },
   'IncorrectPasswordError': { code: 400, status: 'BAD_REQUEST', message: 'Password is incorrect' },
   'NonExistentEmailError': { code: 404, status: 'NOT_FOUND', message: 'No user associated with the inserted email' },
   'ExistentEmailError': { code: 409, status: 'CONFLICT', message: 'There is already an account with the inserted email' },

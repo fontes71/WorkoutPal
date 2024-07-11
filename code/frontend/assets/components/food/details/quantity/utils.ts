@@ -4,8 +4,8 @@ export const onClose = (closeModal: () => void, setCurrentQuantity: React.Dispat
   }
 
 export  const inputOnChange = (value:string, currentQuantity: CurrentQuantity, setCurrentQuantity: React.Dispatch<React.SetStateAction<CurrentQuantity>> ) => {
-    const newValue = value && value.length > 0 ? parseInt(value) : null
-  
+    const newValue = value && value.length > 0 ? parseInt(value) : 0
+
     setCurrentQuantity({ ...currentQuantity, value: newValue })
   }
   

@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
     },
     text: {
       color: Colors.white,
-      marginRight: 3
+      marginRight: 3,
+   
     },
     image: {
       marginLeft: 3
