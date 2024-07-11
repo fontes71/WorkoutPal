@@ -7,7 +7,7 @@ export  const inputOnChange = (value:string, currentQuantity: CurrentQuantity, s
     const newValue = value && value.length > 0 ? parseInt(value) : 0
 
     if (newValue < 1000000)
-    setCurrentQuantity({ ...currentQuantity, value: newValue })
+      setCurrentQuantity({ ...currentQuantity, value: newValue })
   }
   
 export  const getInputValue = (value: number | null) => value != null ? `${value}` : ``
