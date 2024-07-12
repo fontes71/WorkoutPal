@@ -1,11 +1,12 @@
-import { Image, Text, View } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { Button } from "@rneui/base";
-import exercise_screen_styles from "@/assets/styles/exercises";
+import exercise_screen_styles, { search_exercises_styles } from "@/assets/styles/exercises";
 import WorkoutPlansModalScreen from "@/assets/components/modals/workoutPlan";
 import { useState } from "react";
 import { BottomText } from "@/assets/components/exercises/bottomText";
 import { Colors } from "@/assets/styles/common";
+import styles from "@/assets/components/common/dropdownMenu/styles";
 
 const ExerciseDetailsScreen = () => {
   const { exerciseJSON } = useLocalSearchParams<{ exerciseJSON: string }>();
@@ -18,33 +19,47 @@ const ExerciseDetailsScreen = () => {
 
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{ padding: 20, alignItems: "center" }}>
-        <Text style={exercise_screen_styles.title}>{exercise.name}</Text>
-        <Text style={exercise_screen_styles.title}></Text>
-        <View style={exercise_screen_styles.imageContainer}>
+    <ScrollView style={{ flex: 1 }}>
+      <View style={search_exercises_styles.exerciseDetailsContainer}>
+        <Text style={search_exercises_styles.title}>{exercise.name}</Text>
+        <Text style={search_exercises_styles.title}></Text>
+        <View style={search_exercises_styles.exerciseDetailsImageAndTextContainer}>
           {exercise.gifUrl && (
             <Image
-              style={exercise_screen_styles.exerciseGifResult}
+              style={search_exercises_styles.exerciseGifResult}
               source={{ uri: exercise.gifUrl }}
             />
           )}
+          <View style={search_exercises_styles.exerciseDetailsTextContainer}>
+            <View style={search_exercises_styles.exerciseDetailsHorizontalTextContainer}>
+              <View style={search_exercises_styles.exerciseDetailsPropertyTextContainer}>
+                <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.bodyPart}</Text>
+                <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Body Part</Text>
+              </View>
+              <View style={search_exercises_styles.exerciseDetailsPropertyTextContainer}>
+                <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.target}</Text>
+                <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Target</Text>
+              </View> 
+            </View>
+            <View style={search_exercises_styles.exerciseDetailsPropertyTextContainer}>
+              <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.equipment}</Text>
+              <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Equipment</Text>
+            </View>        
+          </View>
         </View>
-        <Text style={exercise_screen_styles.topText}></Text>
-        <BottomText str={"Equipment: " + exercise.equipment} />
-        <BottomText str={"Body Part: " + exercise.bodyPart} />
-        <BottomText str={"Target: " + exercise.target} />
-        <BottomText
-          str={"Secondary Muscles: " + exercise.secondaryMuscles.join(", ")}
-        />
-        <Text style={exercise_screen_styles.topText}></Text>
-        <Text style={exercise_screen_styles.topText}>Instructions:</Text>
-        {exercise.instructions.map((instruction, index) => (
-          <Text key={index} style={exercise_screen_styles.bottomText}>
-            {instruction}
-          </Text>
-        ))}
-        <Text style={exercise_screen_styles.topText}></Text>
+        <Text style={search_exercises_styles.topText}></Text>
+        <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Secondary Muscles</Text>
+        <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.secondaryMuscles.join(", ")}</Text>
+        <Text style={search_exercises_styles.topText}></Text>
+        <Text style={search_exercises_styles.topText}>Instructions:</Text>
+        <View style={{ borderRadius: 10, borderColor: Colors.white, borderWidth: 0.2, padding: 20 }}>
+          {exercise.instructions.map((instruction, index) => (
+            <Text key={index} style={search_exercises_styles.bottomText}>
+              {instruction}
+            </Text>
+          ))}
+        </View>
+        <Text style={search_exercises_styles.topText}></Text>
         <Button
           onPress={() => {
             setModalVisible(true);
@@ -61,7 +76,7 @@ const ExerciseDetailsScreen = () => {
           exerciseId={exercise._id}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

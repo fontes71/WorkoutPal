@@ -201,11 +201,10 @@ const WorkoutPlanDetailsScreen = () => {
 
   return (
     <NoBottomCutView marginBottom={10}>
-      <View style={{ flex: 1}}>
-        <Stack.Screen options={{ title: "Details" }} />
+      <View style={{ flex: 1 }}>
         <View style={search_exercises_styles.workoutPlansResultContainer}>
           {loaded ? (
-            <View style={search_exercises_styles.exerciseResultTextContainer}>
+            <View style={search_exercises_styles.workoutPlanResultTextContainer}>
               <Text style={search_exercises_styles.title}>
                 {workoutPlan.name}
               </Text>

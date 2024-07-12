@@ -4,25 +4,31 @@ import { Colors } from "@/assets/styles/common";
 export const exercise_styles = StyleSheet.create({
     container: {
       flex: 1,
+      alignItems: "center"
     },
     linksContainer: {
+      width: "60%",
+      height: 50,
+      flexDirection: "row",
       alignItems: "center",
-      paddingBottom: 10,
-      justifyContent: "space-evenly",
+      justifyContent: 'space-evenly',
+      margin: 15,
+      borderRadius: 15,
+      borderWidth: 2,
+      borderColor: Colors.blue,
+      marginTop: 30
     },
     title: {
+      paddingTop: 20,
       fontSize: 20,
       fontWeight: "bold",
       color: Colors.white,
       textAlign: "center",
-      marginBottom: 10,
-      marginTop: 10,
     },
     link: {
-      marginTop: 20,
-      fontSize: 35,
-      color: Colors.blue,
-      fontWeight: "bold",
+      fontSize: 20,
+      color: Colors.white,
+      fontWeight: "bold"
     },
     separator: {
       marginVertical: 5,
@@ -31,9 +37,10 @@ export const exercise_styles = StyleSheet.create({
     },
     workoutPlansContainer: {
       flex: 1,
+      width: "90%",
       margin: 15,
       borderRadius: 10,
-      borderWidth: 1,
+      borderWidth: 2,
       borderColor: Colors.white,
     }
   });
@@ -55,7 +62,7 @@ export const search_exercises_styles = StyleSheet.create({
     },
     workoutPlansResultContainer: {
       flex: 1,
-      padding: 10
+      padding: 10,
     },
     separator: {
       marginVertical: 30,
@@ -66,8 +73,8 @@ export const search_exercises_styles = StyleSheet.create({
         justifyContent: "center",
     },
     exerciseGifResult: {
-        width: 150,
-        height: 150,
+        width: 75,
+        height: 75,
     },
     exerciseResultTextContainer: {
         flex: 1,
@@ -75,6 +82,14 @@ export const search_exercises_styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "space-evenly",
         marginBottom: 20,
+    },
+    workoutPlanResultTextContainer: {
+      flex: 1,
+      paddingHorizontal: 20,
+      flexDirection: "column",
+      justifyContent: "space-evenly",
+      alignItems: "center",
+      marginBottom: 20,
     },
     bottomTextContainer: {
         flexDirection: "row",
@@ -195,6 +210,40 @@ export const search_exercises_styles = StyleSheet.create({
       borderRadius: 10,
       borderWidth: 1,
       borderColor: Colors.white,
+    },
+    exerciseDetailsContainer: {
+      padding: 20, 
+      alignItems: "center"
+    },
+    exerciseDetailsImageAndTextContainer: { 
+      flexDirection: "row", 
+      padding: 20, 
+      borderTopWidth: 1, 
+      borderBottomWidth: 1, 
+      borderColor: Colors.darkGray
+    },
+    exerciseDetailsTextContainer: { 
+      flex: 1, 
+      height: 90, 
+      flexDirection: "column", 
+      alignItems: 'center' 
+    },
+    exerciseDetailsHorizontalTextContainer: { 
+      flexDirection: 'row', 
+      alignItems: 'center', 
+      marginBottom: 10 
+    },
+    exerciseDetailsPropertyTextContainer: { 
+      flexDirection: 'column', 
+      alignItems: 'center',
+      marginHorizontal: 10 
+    },
+    exerciseDetailsPropertyText: { 
+      color: Colors.white 
+    },
+    exerciseDetailsPropertyTextBold: { 
+      fontWeight: 'bold', 
+      color: Colors.white 
     }
 });
 
