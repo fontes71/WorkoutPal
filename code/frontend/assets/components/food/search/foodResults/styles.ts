@@ -22,6 +22,12 @@ const styles = StyleSheet.create({
   bottomText: {
     color: Colors.darkGray
   },
+  noResults: {
+    color: Colors.white,
+    textAlign: 'center',
+    padding: 15,
+    fontWeight: 'bold'
+  }
 });
 
 export default styles;

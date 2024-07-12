@@ -4,14 +4,15 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   nutrientWrapper: {
     alignItems: 'center',
-    minWidth:40
+    width:80,
+   
   },
   nutrientValue: {
     color:Colors.white
   },
   nutrient: {
-    color: Colors.darkGray
-    
+    color: Colors.darkGray,
+  
   },
 });
 

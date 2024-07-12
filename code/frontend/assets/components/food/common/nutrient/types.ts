@@ -1,5 +1,5 @@
 type NutrientProps = {
-    nutrientValue: number;
+    nutrientValue: number ;
     nutrient: string;
-    unit: string
+    unit: string | undefined
   };

@@ -34,7 +34,7 @@ const FoodResults: React.FC<FoodResultsProps> = ({ name }) => {
   return (
     <>
       {results.length == 0 && !isFetching ? (
-        <Text>No results were found</Text>
+        <Text style={styles.noResults}>No results were found</Text>
       ) : (
         <FlatList
           ref={flatListRef}

@@ -1,7 +1,9 @@
-import { TouchableOpacity, Image, Text, View  } from "react-native";
+import { TouchableOpacity, Image, Text, View, FlatList  } from "react-native";
 import {  useState } from "react";
 import styles from "./styles";
 import round from "@/assets/functions/round";
+import Nutrient from "../../common/nutrient/Nutrient";
+import { getSecondaryNutrientsAsList } from "./utils";
 
 const SecondaryNutrientsAndScoreDisplay: React.FC<SecondaryNutrientsAndScoreDisplayProps> = ({ secondaryNutrients, nutriscore }) => {
   const [buttonClicked, setButtonClicked] = useState(false);
@@ -35,25 +37,50 @@ const ShowItemsButton: React.FC<ShowItemsButtonProps> = ({
   </TouchableOpacity>
 );
 
-const SecondaryNutrientsAndScore: React.FC<SecondaryNutrientsAndScoreDisplayProps> = ({ secondaryNutrients, nutriscore }) => (
-  <View style={styles.moreInfoContainer}>
-    <SecondaryNutrient label="Fiber" nutrient={secondaryNutrients.fiber} />
-    <SecondaryNutrient label="Saturated Fats" nutrient={secondaryNutrients.saturatedFat} />
-    <SecondaryNutrient label="Salt" nutrient={secondaryNutrients.salt} />
-    <SecondaryNutrient label="Sodium" nutrient={secondaryNutrients.sodium} />
-    <SecondaryNutrient label="Sugars" nutrient={secondaryNutrients.sugars} />
-    <Text>
-    {"Nutriscore Grade"}: {nutriscore}
-  </Text>
-  </View>
-);
+const SecondaryNutrientsAndScore: React.FC<SecondaryNutrientsAndScoreDisplayProps> = ({ secondaryNutrients, nutriscore }) => {
+  const secondaryNutrientsList = getSecondaryNutrientsAsList(secondaryNutrients, nutriscore)
 
-const SecondaryNutrient: React.FC<SecondaryNutrientProps> = ({ label, nutrient }) => (
-  nutrient !== null && (
-    <Text>
-      {label}: {round(nutrient.value)}{nutrient.unit}
-    </Text>
-  ) 
-);
+  return (
+  <View style={styles.moreInfoContainer}>
+         <FlatList
+        data={secondaryNutrientsList}
+        renderItem={({item}) => <SecondaryNutrient nutrientValue={item.value} nutrient={item.name} unit={item.unit}/>}
+        keyExtractor={ (value, index) => index.toString()}
+        numColumns={2}
+        columnWrapperStyle={styles.row}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+      />
+  </View>
+  )
+}
+
+
+
+
+const SecondaryNutrient: React.FC<SecondaryNutrientProps> = ({ nutrientValue, nutrient, unit }) => {
+  if (nutrientValue == null)
+    return null
+  if (typeof nutrientValue === 'string')
+    return <Nutriscore nutriscore={nutrientValue}/>
+
+  return <Nutrient nutrientValue={nutrientValue}  nutrient={nutrient} unit={unit}/>
+}
+
+
+const Nutriscore: React.FC<NutriscoreProps> = ({ nutriscore }) => {
+  if (nutriscore == null)
+    return null
+
+  return (
+      <View style={styles.nutriscoreWrapper}>
+        <Text style={styles.nutriscoreValue}>
+        {nutriscore}
+        </Text>
+        <Text style={styles.nutriscore}>
+        Nutriscore
+        </Text>
+      </View>
+)}
+
 
 export default SecondaryNutrientsAndScoreDisplay;

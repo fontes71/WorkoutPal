@@ -8,7 +8,13 @@ type ShowItemsButtonProps = {
   setButtonClicked: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+type NutriscoreProps = {
+  nutriscore: string | null
+}
+
 type SecondaryNutrientProps = {
-  label: string;
-  nutrient: ValueAndUnit | null;
-};
+  nutrientValue: number | string,
+  nutrient: string,
+  unit: string | undefined
+
+}
