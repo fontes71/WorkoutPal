@@ -1,6 +1,6 @@
 import { Modal, FlatList, Pressable } from "react-native";
 import { View, Text } from "react-native";
-import { Stack, router } from "expo-router";
+import { router } from "expo-router";
 import { useContext, useEffect, useState } from "react";
 import {  localhost } from "@/assets/constants";
 import { Colors } from "@/assets/styles/common";

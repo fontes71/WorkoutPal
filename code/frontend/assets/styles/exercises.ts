@@ -40,7 +40,7 @@ export const exercise_styles = StyleSheet.create({
       width: "90%",
       margin: 15,
       borderRadius: 10,
-      borderWidth: 2,
+      borderWidth: 1,
       borderColor: Colors.white,
     }
   });

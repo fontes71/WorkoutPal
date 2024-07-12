@@ -1,12 +1,9 @@
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { useLocalSearchParams, Stack } from "expo-router";
-import { Button } from "@rneui/base";
-import exercise_screen_styles, { search_exercises_styles } from "@/assets/styles/exercises";
+import { useLocalSearchParams } from "expo-router";
+import { search_exercises_styles } from "@/assets/styles/exercises";
 import WorkoutPlansModalScreen from "@/assets/components/modals/workoutPlan";
 import { useState } from "react";
-import { BottomText } from "@/assets/components/exercises/bottomText";
 import { Colors } from "@/assets/styles/common";
-import styles from "@/assets/components/common/dropdownMenu/styles";
 
 const ExerciseDetailsScreen = () => {
   const { exerciseJSON } = useLocalSearchParams<{ exerciseJSON: string }>();

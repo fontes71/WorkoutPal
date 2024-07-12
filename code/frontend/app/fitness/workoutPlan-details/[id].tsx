@@ -7,13 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useLocalSearchParams, Stack, router } from "expo-router";
-import { Button } from "@rneui/base";
+import { useLocalSearchParams, router } from "expo-router";
 import search_exercises_styles from "@/assets/styles/exercises";
 import { useContext, useEffect, useState } from "react";
 import {  localhost } from "@/assets/constants";
 import { UserContext } from "@/assets/components/auth/AuthContext";
-import { BottomText } from "@/assets/components/exercises/bottomText";
 import { removeParenthesesFromExerciseNameAndCapitalizeFirstLetter } from "@/assets/components/exercises/removeParenthesesFromExerciseName";
 import NoBottomCutView from "@/assets/components/common/NoBottomCutView";
 import { Colors } from "@/assets/styles/common";

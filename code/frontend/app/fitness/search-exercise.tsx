@@ -1,10 +1,8 @@
-import { FlatList, Pressable, TextInput, Image } from "react-native";
-import { Stack, router } from "expo-router";
+import { FlatList, Pressable, TextInput } from "react-native";
+import { router } from "expo-router";
 import { useState, useEffect, useRef } from "react";
 import { localhost } from "@/assets/constants";
-import search_exercises_styles from "@/assets/styles/exercises";
 import { Text, View } from "react-native";
-import { SearchBar } from "@rneui/themed";
 import SearchExerciseFilters from "../../assets/components/modals/search-exercise-filters";
 import { FilterButton } from "@/assets/components/exercises/filterButton";
 import { ExerciseResult } from "@/assets/components/exercises/ExerciseResult";

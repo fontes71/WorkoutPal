@@ -5,15 +5,14 @@ import {
   RefreshControl,
   TouchableOpacity,
 } from "react-native";
-import { Text, View, Image } from "react-native";
+import { Text, View } from "react-native";
 import { Stack, router } from "expo-router";
 import { useState, useEffect, useContext } from "react";
-import {  localhost } from "@/assets/constants";
+import { localhost } from "@/assets/constants";
 import search_exercises_styles from "@/assets/styles/exercises";
 import CreateWorkoutPlansModalScreen from "@/assets/components/modals/createWorkoutPlan";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import NoBottomCutView from "@/assets/components/common/NoBottomCutView";
-import { Colors } from "@/assets/styles/common";
 
 export default function WorkoutPlansScreen() {
   const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>([]);
