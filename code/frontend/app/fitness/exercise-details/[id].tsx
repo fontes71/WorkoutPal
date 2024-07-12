@@ -33,24 +33,22 @@ const ExerciseDetailsScreen = () => {
           <View style={search_exercises_styles.exerciseDetailsTextContainer}>
             <View style={search_exercises_styles.exerciseDetailsHorizontalTextContainer}>
               <View style={search_exercises_styles.exerciseDetailsPropertyTextContainer}>
-                <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.bodyPart}</Text>
                 <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Body Part</Text>
+                <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.bodyPart}</Text>
               </View>
               <View style={search_exercises_styles.exerciseDetailsPropertyTextContainer}>
-                <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.target}</Text>
                 <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Target</Text>
-              </View> 
+                <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.target}</Text>
+              </View>
+              <View style={search_exercises_styles.exerciseDetailsPropertyTextContainer}>
+                <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Equipment</Text>
+                <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.equipment}</Text>
+              </View>  
             </View>
-            <View style={search_exercises_styles.exerciseDetailsPropertyTextContainer}>
-              <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.equipment}</Text>
-              <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Equipment</Text>
-            </View>        
-          </View>
+              <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Secondary Muscles</Text>
+              <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.secondaryMuscles.join(", ")}</Text>      
+            </View>
         </View>
-        <Text style={search_exercises_styles.topText}></Text>
-        <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Secondary Muscles</Text>
-        <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.secondaryMuscles.join(", ")}</Text>
-        <Text style={search_exercises_styles.topText}></Text>
         <Text style={search_exercises_styles.topText}>Instructions:</Text>
         <View style={{ borderRadius: 10, borderColor: Colors.white, borderWidth: 0.2, padding: 20 }}>
           {exercise.instructions.map((instruction, index) => (

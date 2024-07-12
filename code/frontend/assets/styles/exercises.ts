@@ -160,10 +160,10 @@ export const search_exercises_styles = StyleSheet.create({
       fontSize: 12,
     },
     topText: {
-        fontWeight: "bold",
-        paddingBottom: 5,
-        fontSize: 18,
-        color: Colors.white
+      fontWeight: "bold",
+      paddingBottom: 5,
+      fontSize: 18,
+      color: Colors.white
     },
     title: {
       fontWeight: "bold",
@@ -217,16 +217,18 @@ export const search_exercises_styles = StyleSheet.create({
     },
     exerciseDetailsImageAndTextContainer: { 
       flexDirection: "row", 
-      padding: 20, 
+      paddingTop: 12, 
       borderTopWidth: 1, 
       borderBottomWidth: 1, 
-      borderColor: Colors.darkGray
+      borderColor: Colors.darkGray,
+      marginBottom: 10
     },
     exerciseDetailsTextContainer: { 
       flex: 1, 
       height: 90, 
       flexDirection: "column", 
-      alignItems: 'center' 
+      alignItems: 'center',
+      marginLeft: 20
     },
     exerciseDetailsHorizontalTextContainer: { 
       flexDirection: 'row', 
