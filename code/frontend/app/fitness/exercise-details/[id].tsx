@@ -1,4 +1,4 @@
-import { Image, ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { Button } from "@rneui/base";
 import exercise_screen_styles, { search_exercises_styles } from "@/assets/styles/exercises";
@@ -19,62 +19,68 @@ const ExerciseDetailsScreen = () => {
 
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <View style={search_exercises_styles.exerciseDetailsContainer}>
-        <Text style={search_exercises_styles.title}>{exercise.name}</Text>
-        <Text style={search_exercises_styles.title}></Text>
-        <View style={search_exercises_styles.exerciseDetailsImageAndTextContainer}>
-          {exercise.gifUrl && (
-            <Image
-              style={search_exercises_styles.exerciseGifResult}
-              source={{ uri: exercise.gifUrl }}
-            />
-          )}
-          <View style={search_exercises_styles.exerciseDetailsTextContainer}>
-            <View style={search_exercises_styles.exerciseDetailsHorizontalTextContainer}>
-              <View style={search_exercises_styles.exerciseDetailsPropertyTextContainer}>
-                <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Body Part</Text>
-                <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.bodyPart}</Text>
+    <View style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }}>
+        <View style={search_exercises_styles.exerciseDetailsContainer}>
+          <Text style={search_exercises_styles.title}>{exercise.name}</Text>
+          <Text style={search_exercises_styles.title}></Text>
+          <View style={search_exercises_styles.exerciseDetailsImageAndTextContainer}>
+            <View style={search_exercises_styles.exerciseDetailsTextContainer}>
+              <View style={search_exercises_styles.exerciseDetailsHorizontalTextContainer}>
+                <View style={search_exercises_styles.exerciseDetailsPropertyTextContainer}>
+                  <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Body Part</Text>
+                  <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.bodyPart}</Text>
+                </View>
+                <View style={search_exercises_styles.exerciseDetailsPropertyTextContainer}>
+                  <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Target</Text>
+                  <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.target}</Text>
+                </View>
+                <View style={search_exercises_styles.exerciseDetailsPropertyTextContainer}>
+                  <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Equipment</Text>
+                  <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.equipment}</Text>
+                </View>  
               </View>
-              <View style={search_exercises_styles.exerciseDetailsPropertyTextContainer}>
-                <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Target</Text>
-                <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.target}</Text>
+                <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Secondary Muscles</Text>
+                <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.secondaryMuscles.join(", ")}</Text>      
               </View>
-              <View style={search_exercises_styles.exerciseDetailsPropertyTextContainer}>
-                <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Equipment</Text>
-                <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.equipment}</Text>
-              </View>  
-            </View>
-              <Text style={search_exercises_styles.exerciseDetailsPropertyTextBold}>Secondary Muscles</Text>
-              <Text style={search_exercises_styles.exerciseDetailsPropertyText}>{exercise.secondaryMuscles.join(", ")}</Text>      
-            </View>
-        </View>
-        <Text style={search_exercises_styles.topText}>Instructions:</Text>
-        <View style={{ borderRadius: 10, borderColor: Colors.white, borderWidth: 0.2, padding: 20 }}>
-          {exercise.instructions.map((instruction, index) => (
-            <Text key={index} style={search_exercises_styles.bottomText}>
-              {instruction}
-            </Text>
-          ))}
-        </View>
-        <Text style={search_exercises_styles.topText}></Text>
-        <Button
-          onPress={() => {
-            setModalVisible(true);
-          }}
-          color={Colors.blue}
-        >
-          Add To Workout Plan
-        </Button>
-        <WorkoutPlansModalScreen
-          isVisible={modalVisible}
-          onClose={() => {
-            setModalVisible(false);
-          }}
-          exerciseId={exercise._id}
-        />
-      </View>
-    </ScrollView>
+          </View>
+          <View style={{ marginTop: 20, marginBottom: 20 }}>
+            {exercise.gifUrl && (
+                <Image
+                  style={search_exercises_styles.exerciseDetailsGifResult}
+                  source={{ uri: exercise.gifUrl }}
+                />
+            )}
+          </View>
+          <Text style={search_exercises_styles.topText}>Instructions</Text>
+          <View style={{ borderRadius: 10, borderColor: Colors.white, borderWidth: 0.2, padding: 20 }}>
+            {exercise.instructions.map((instruction, index) => (
+              <Text key={index} style={search_exercises_styles.bottomText}>
+                {instruction}
+              </Text>
+            ))}
+          </View>
+          <Text style={search_exercises_styles.topText}></Text>
+        </View>  
+      </ScrollView>
+      <TouchableOpacity
+        style={search_exercises_styles.workoutPlanfloatingButton}
+        onPress={() => {
+          setModalVisible(true);
+        }}
+      >
+        <Text style={search_exercises_styles.workoutPlanfloatingButtonText}>
+          +
+        </Text>
+      </TouchableOpacity>
+      <WorkoutPlansModalScreen
+        isVisible={modalVisible}
+        onClose={() => {
+          setModalVisible(false);
+        }}
+        exerciseId={exercise._id}
+      />
+    </View> 
   );
 };
 

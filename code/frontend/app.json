@@ -22,7 +22,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/workoutpal-logo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.miguelagostinho.workoutpal"
     },
     "web": {
       "bundler": "metro",
@@ -34,6 +35,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "57f6c21a-01a2-48e1-9b85-739acfad993c"
+      }
     }
   }
 }

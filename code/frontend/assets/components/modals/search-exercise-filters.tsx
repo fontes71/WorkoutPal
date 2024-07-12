@@ -29,6 +29,7 @@ export default function SearchExerciseFilters({ isVisible, onClose, filters, set
                             items={bodyParts}
                             value={filters.bodyPart}
                             style={pickerSelectStyles}
+                            darkTheme={true}
                             placeholder={{ label: 'Select body part...', value: "", color: Colors.gray }}
                         />
                         <View style={workoutPlans_styles.separator} />
@@ -38,6 +39,7 @@ export default function SearchExerciseFilters({ isVisible, onClose, filters, set
                             items={equipments}
                             value={filters.equipment}
                             style={pickerSelectStyles}
+                            darkTheme={true}
                             placeholder={{ label: 'Select equipment...', value: "", color: Colors.gray }}
                         />
                         <View style={workoutPlans_styles.separator} />
@@ -47,6 +49,7 @@ export default function SearchExerciseFilters({ isVisible, onClose, filters, set
                             items={targets}
                             value={filters.target}
                             style={pickerSelectStyles}
+                            darkTheme={true}
                             placeholder={{ label: 'Select target...', value: "", color: Colors.gray }}
                         />
                     </View>

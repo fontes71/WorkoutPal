@@ -1,4 +1,4 @@
-export const localhost = process.env.EXPO_PUBLIC_LOCALHOST
+export const localhost = "https://backend-workoutpal.fly.dev"
 
 export const UNIT_VALUES = [
     { label: "kg", value: "kg", conversionValue: 1000 },

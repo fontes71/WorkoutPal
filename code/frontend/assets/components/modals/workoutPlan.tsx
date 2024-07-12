@@ -80,9 +80,8 @@ export default function WorkoutPlansModalScreen({
   };
 
   return (
-    <NoBottomCutView>
-      <Modal animationType="slide" transparent={true} visible={isVisible}>
-        <Stack.Screen options={{ title: "Workout Plans" }} />
+    <Modal animationType="slide" transparent={true} visible={isVisible}>
+      <NoBottomCutView>
         <View style={modal_styles.modalContent}>
           <View style={modal_styles.titleContainer}>
             <Text style={modal_styles.title}>Select a Workout Plan</Text>
@@ -109,7 +108,7 @@ export default function WorkoutPlansModalScreen({
             </View>
           </View>
         </View>
-      </Modal>
-    </NoBottomCutView>
+      </NoBottomCutView>
+    </Modal>
   );
 }

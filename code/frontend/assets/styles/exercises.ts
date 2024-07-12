@@ -73,9 +73,15 @@ export const search_exercises_styles = StyleSheet.create({
         justifyContent: "center",
     },
     exerciseGifResult: {
-        width: 75,
-        height: 75,
+      width: 75,
+      height: 75
     },
+    exerciseDetailsGifResult: {
+      width: 250,
+      height: 250,
+      borderRadius: 10,
+      borderWidth: 3,
+  },
     exerciseResultTextContainer: {
         flex: 1,
         paddingHorizontal: 20,
@@ -123,6 +129,23 @@ export const search_exercises_styles = StyleSheet.create({
       justifyContent: 'center',
       zIndex: 1,
     },
+    workoutPlanfloatingButton: {
+      position: 'absolute',
+      bottom: 10,
+      right: 5,
+      width: 60,
+      height: 60,
+      backgroundColor: Colors.blue,
+      borderRadius: 50,
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 1,
+    },
+    workoutPlanfloatingButtonText: {
+      color: 'white',
+      fontSize: 30,
+      lineHeight: 30,
+  },
     workoutPlansfloatingButtonText: {
         color: 'white',
         fontSize: 25,

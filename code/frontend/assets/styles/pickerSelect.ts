@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { Colors } from "@/assets/styles/common";
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
@@ -6,9 +7,9 @@ const pickerSelectStyles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 10,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: Colors.gray,
     borderRadius: 4,
-    color: 'black',
+    color: Colors.white,
     paddingRight: 30, // to ensure the text is never behind the icon
   },
   inputAndroid: {
@@ -18,7 +19,7 @@ const pickerSelectStyles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: 'purple',
     borderRadius: 8,
-    color: 'black',
+    color: Colors.white,
     paddingRight: 30, // to ensure the text is never behind the icon
   },
 });
