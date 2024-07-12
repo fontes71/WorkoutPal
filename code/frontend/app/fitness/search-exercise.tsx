@@ -1,4 +1,4 @@
-import { FlatList, Pressable } from "react-native";
+import { FlatList, Pressable, TextInput, Image } from "react-native";
 import { Stack, router } from "expo-router";
 import { useState, useEffect, useRef } from "react";
 import { localhost } from "@/assets/constants";
@@ -8,10 +8,11 @@ import { SearchBar } from "@rneui/themed";
 import SearchExerciseFilters from "../../assets/components/modals/search-exercise-filters";
 import { FilterButton } from "@/assets/components/exercises/filterButton";
 import { ExerciseResult } from "@/assets/components/exercises/ExerciseResult";
-import { removeParenthesesFromExerciseNames } from "@/assets/components/exercises/removeParenthesesFromExerciseName";
+import { removeParenthesesFromExerciseNamesAndCapitalizeFirstLetter } from "@/assets/components/exercises/removeParenthesesFromExerciseName";
 import { FiltersInfo } from "@/assets/components/exercises/FiltersInfo";
 import { ExerciseInfo } from "@/assets/components/exercises/ExerciseInfo";
 import NoBottomCutView from "@/assets/components/common/NoBottomCutView";
+import { Colors } from "@/assets/styles/common";
 
 const RESULTS_SIZE = 10;
 const RESULTS_OFFSET = 10;
@@ -48,8 +49,7 @@ export default function SearchExerciseScreen() {
         }
 
         const exercises: ExerciseResponse = await response.json();
-        const modifiedExercises: Exercise[] =
-          removeParenthesesFromExerciseNames(exercises.obj);
+        const modifiedExercises: Exercise[] = removeParenthesesFromExerciseNamesAndCapitalizeFirstLetter(exercises.obj);
         setExerciseInfo({ ...exerciseInfo, exercises: modifiedExercises });
       } catch (error) {
         console.error("handleEnter ERROR -> ", error);
@@ -126,7 +126,7 @@ export default function SearchExerciseScreen() {
       if (exercises.obj.length == 0) {
         return;
       }
-      const modifiedExercises: Exercise[] = removeParenthesesFromExerciseNames(
+      const modifiedExercises: Exercise[] = removeParenthesesFromExerciseNamesAndCapitalizeFirstLetter(
         exercises.obj
       );
 
@@ -165,14 +165,23 @@ export default function SearchExerciseScreen() {
   return (
     <NoBottomCutView marginBottom={20}>
       <View style={{ flex: 1 }}>
-        <Stack.Screen options={{ title: "Search exercise" }} />
-        <SearchBar
-          placeholder="Type Here..."
-          onSubmitEditing={handleEnter}
-          returnKeyType="search"
-          onChangeText={updateExerciseName}
-          value={exerciseInfo.exerciseName}
-        />
+        <View style={{ padding: 30, borderWidth: 1, borderBottomColor: Colors.darkGray}}>
+          <TextInput
+            style={{ color: Colors.white,
+              borderBottomWidth: 1,
+              borderBottomColor: Colors.white,
+              fontSize: 15}}
+            placeholder="Search"
+            onChangeText={(value: string) => updateExerciseName(value)}
+            onSubmitEditing={() => { if (exerciseInfo.exerciseName.length > 1) {
+              handleEnter();
+            }}}
+            returnKeyType="search"
+            value={exerciseInfo.exerciseName}
+            placeholderTextColor={'white'}
+            selectionColor={'white'}
+          />
+        </View>
         <View>
           {exerciseInfo.exercises.length == 0 && !isFetching ? (
             <Text>No results were found</Text>

@@ -32,9 +32,7 @@ const auth_styles = StyleSheet.create({
         paddingBottom: 40
     },
     logo_image_login: {
-        width: 238,
-        height: 206,
-        alignSelf: 'center'
+        
     },
     logo_image_signup: {
         width: 238,

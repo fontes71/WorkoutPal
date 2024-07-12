@@ -14,7 +14,7 @@ import { useContext, useEffect, useState } from "react";
 import {  localhost } from "@/assets/constants";
 import { UserContext } from "@/assets/components/auth/AuthContext";
 import { BottomText } from "@/assets/components/exercises/bottomText";
-import { removeParenthesesFromExerciseName } from "@/assets/components/exercises/removeParenthesesFromExerciseName";
+import { removeParenthesesFromExerciseNameAndCapitalizeFirstLetter } from "@/assets/components/exercises/removeParenthesesFromExerciseName";
 import NoBottomCutView from "@/assets/components/common/NoBottomCutView";
 import { Colors } from "@/assets/styles/common";
 
@@ -61,7 +61,7 @@ const WorkoutPlanDetailsScreen = () => {
         let modifiedExercises: Exercise[] = [];
         for (let exerciseResult of exercisesResult.obj) {
           modifiedExercises.push(
-            removeParenthesesFromExerciseName(exerciseResult)
+            removeParenthesesFromExerciseNameAndCapitalizeFirstLetter(exerciseResult)
           );
         }
 
