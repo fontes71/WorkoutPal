@@ -50,6 +50,7 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.24.1",
+    "@flydotio/dockerfile": "^0.5.7",
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/jest": "^29.5.12",
