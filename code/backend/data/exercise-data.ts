@@ -271,5 +271,7 @@ export class ExerciseData implements IExerciseData {
 
     await ExerciseModel.deleteMany({});
     await ExerciseModel.insertMany(exercises);
+
+    console.log("DATA -> Exercises cloned successfully");
   }
 }
