@@ -62,7 +62,14 @@ export const search_exercises_styles = StyleSheet.create({
     },
     workoutPlansResultContainer: {
       flex: 1,
-      padding: 10,
+      padding: 10
+    },
+    workoutPlansContainer: {
+      flex: 1, 
+      borderRadius: 10, 
+      borderColor: Colors.white, 
+      borderWidth: 1, 
+      width:"90%"
     },
     separator: {
       marginVertical: 30,

@@ -14,7 +14,7 @@ export default function UpdateWeight() {
         setFetching(true)
         if (value && token) {
             const newWeight = parseFloat(value)
-            if (isNaN(newWeight)) alert("Weight needs to be a number")
+            if (isNaN(newWeight) || newWeight <= 20) alert("Invalid Weight")
             else {
                 await updateWeight(newWeight, token)
                 alert(`Weight successfully updated to ${newWeight}`)

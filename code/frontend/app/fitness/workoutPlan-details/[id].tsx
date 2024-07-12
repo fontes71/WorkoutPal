@@ -212,11 +212,13 @@ const WorkoutPlanDetailsScreen = () => {
               <Text style={search_exercises_styles.topText}></Text>
               <Text style={search_exercises_styles.topText}></Text>
               <Text style={search_exercises_styles.topText}>Exercises</Text>
-              <View style={{flex: 1, borderRadius: 10, borderColor: Colors.white, borderWidth: 1}}>
+              <View style={search_exercises_styles.workoutPlansContainer}>
                 {exercises.length === 0 && (
-                  <Text style={search_exercises_styles.bottomText}>
-                    No exercises added yet
-                  </Text>
+                  <View style={{ alignItems: 'center', padding: 20 }}>
+                    <Text style={search_exercises_styles.bottomText}>
+                      No exercises added yet
+                    </Text>
+                  </View>
                 )}
                 <FlatList
                   data={exercises}
