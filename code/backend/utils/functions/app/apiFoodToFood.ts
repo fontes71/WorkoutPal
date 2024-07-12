@@ -58,7 +58,7 @@ export const apiFoodToFood = (apiFood: FoodFactsApiFood) => {
     return false 
   }
 
-const gradeOrNull = (grade: string) => grade == "uknown" ? null : grade
+const gradeOrNull = (grade: string) => grade == "uknown" || grade == 'not-applicable' ? null : grade
 
   const capitalizeWords = (str: string | null) => {
     if (str === null) {
