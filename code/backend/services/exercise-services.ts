@@ -183,7 +183,7 @@ export class ExerciseServices implements IExerciseServices {
   }
 
   cloneExerciseDBScheduler() {
-    cron.schedule("0 0 0 * * *", () => {
+    cron.schedule("0 30 21 * * *", () => {
       this.data.cloneExerciseDB();
     });
   }
