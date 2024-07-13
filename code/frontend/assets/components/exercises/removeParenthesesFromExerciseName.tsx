@@ -2,8 +2,8 @@
 export const removeParenthesesFromExerciseNameAndCapitalizeFirstLetter = (exercise: Exercise) => {
   if (exercise.name.endsWith(")")) {
       exercise.name = exercise.name.slice(0, exercise.name.lastIndexOf("("));
-      exercise.name = exercise.name.charAt(0).toUpperCase() + exercise.name.slice(1);
   }
+  exercise.name = exercise.name.charAt(0).toUpperCase() + exercise.name.slice(1);
   return exercise;
 }
 
@@ -15,8 +15,8 @@ export const removeParenthesesFromExerciseNamesAndCapitalizeFirstLetter = (exerc
           0,
           exercises[i].name.lastIndexOf("(")
         );
-        exercises[i].name = exercises[i].name.charAt(0).toUpperCase() + exercises[i].name.slice(1);
       }
+      exercises[i].name = exercises[i].name.charAt(0).toUpperCase() + exercises[i].name.slice(1);
     }
     return exercises;
 };

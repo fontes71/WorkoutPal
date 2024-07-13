@@ -11,6 +11,7 @@ import { FiltersInfo } from "@/assets/components/exercises/FiltersInfo";
 import { ExerciseInfo } from "@/assets/components/exercises/ExerciseInfo";
 import NoBottomCutView from "@/assets/components/common/NoBottomCutView";
 import { Colors } from "@/assets/styles/common";
+import search_exercises_styles from "@/assets/styles/exercises";
 
 const RESULTS_SIZE = 10;
 const RESULTS_OFFSET = 10;
@@ -182,7 +183,9 @@ export default function SearchExerciseScreen() {
         </View>
         <View>
           {exerciseInfo.exercises.length == 0 && !isFetching ? (
-            <Text>No results were found</Text>
+            <View style={{ alignItems: "center", padding: 20 }}>
+              <Text style={search_exercises_styles.topText}>No results were found</Text>
+            </View>
           ) : (
             <FlatList
               ref={flatListRef}
